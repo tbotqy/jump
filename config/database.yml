@@ -1,6 +1,6 @@
 development:
   adapter: mysql2
-  database: timedline
+  database: timedline_rails
   username: root
   password:
   host: 127.0.0.1
@@ -8,7 +8,7 @@ development:
 
 test:
   adapter: mysql2
-  database: testtimedline
+  database: testtimedline_rails
   username: root
   password:
   host: 127.0.0.1
@@ -16,7 +16,7 @@ test:
 
 production:
   adapter: mysql2
-  database: timedline
+  database: timedline_rails
   username: root
   password:
   host: 127.0.0.1

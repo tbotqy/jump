@@ -1,0 +1,95 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Twitter:</b>
+  <%= @user.twitter_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @user.name %>
+</p>
+
+<p>
+  <b>Screen name:</b>
+  <%= @user.screen_name %>
+</p>
+
+<p>
+  <b>Profile image url https:</b>
+  <%= @user.profile_image_url_https %>
+</p>
+
+<p>
+  <b>Time zone:</b>
+  <%= @user.time_zone %>
+</p>
+
+<p>
+  <b>Utc offset:</b>
+  <%= @user.utc_offset %>
+</p>
+
+<p>
+  <b>Tweet created at:</b>
+  <%= @user.tweet_created_at %>
+</p>
+
+<p>
+  <b>Lang:</b>
+  <%= @user.lang %>
+</p>
+
+<p>
+  <b>Token:</b>
+  <%= @user.token %>
+</p>
+
+<p>
+  <b>Token secret:</b>
+  <%= @user.token_secret %>
+</p>
+
+<p>
+  <b>Initialized flag:</b>
+  <%= @user.initialized_flag %>
+</p>
+
+<p>
+  <b>Token updated:</b>
+  <%= @user.token_updated %>
+</p>
+
+<p>
+  <b>Statuses updated:</b>
+  <%= @user.statuses_updated %>
+</p>
+
+<p>
+  <b>Friends updated:</b>
+  <%= @user.friends_updated %>
+</p>
+
+<p>
+  <b>Closed only:</b>
+  <%= @user.closed_only %>
+</p>
+
+<p>
+  <b>Deleted flag:</b>
+  <%= @user.deleted_flag %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%= @user.created_at %>
+</p>
+
+<p>
+  <b>Updated at:</b>
+  <%= @user.updated_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
