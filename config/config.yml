@@ -1,0 +1,12 @@
+production:
+    site_name: Timedline - あの日のタイムラインを眺められる、ちょっとしたアプリケーション
+    site_url: http://timedline.me
+    site_mode: production
+development:
+    site_name: Timedline - あの日のタイムラインを眺められる、ちょっとしたアプリケーション
+    site_url: http://localhost:3000/
+    site_mode: development
+test:
+    site_name: Timedline - あの日のタイムラインを眺められる、ちょっとしたアプリケーション
+    site_url: http://localhost:3000/
+    site_mode: test
