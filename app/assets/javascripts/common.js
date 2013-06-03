@@ -7,9 +7,6 @@ $(function(){
 
   // make loading social plugin delayed
   setTimeout(function(){
-    $.getScript('/js/twitter_follow_button.js');
-    $.getScript('/js/twitter_tweet_button.js');
-    $.getScript('//b.st-hatena.com/js/bookmark_button.js');
     facebook(document, 'script', 'facebook-jssdk');
   },3000);
 
