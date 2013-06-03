@@ -1,0 +1,5 @@
+require "configatron"
+
+twitter = YAML.load(File.open("config/twitter_keys.yml"))
+configatron.twitter.consumer_key = twitter["consumer_key"]
+configatron.twitter.consumer_secret = twitter["consumer_secret"]
