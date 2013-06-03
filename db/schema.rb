@@ -13,6 +13,11 @@
 
 ActiveRecord::Schema.define(:version => 20130602160613) do
 
+  create_table "cake_sessions", :force => true do |t|
+    t.text    "data",    :null => false
+    t.integer "expires"
+  end
+
   create_table "entities", :force => true do |t|
     t.integer "status_id",              :limit => 8, :null => false
     t.integer "status_id_str",          :limit => 8, :null => false

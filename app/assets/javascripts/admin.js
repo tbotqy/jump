@@ -1,1 +1,95 @@
-$(function(){var f=$("#wrap-admin");var g=$("#container-footer");g.css("position","relative");f.on("click",".toggler",function(e){var a=$(this);e.preventDefault();var b=a.data("dest-content-type");if(!b)return;f.find(".area-"+b).find(".content").toggle()});f.find(".delete-each").click(function(){var a=$(this);var b=a.parent();showLoader(b);var c=a.data('dest-id');deleteHim(c)});f.find("#delete-selected").click(function(){var b=$(this);var c=b.parent();showLoader(c);var d;var e=f.find("tbody tr .chk button.active");if(e.length>0){e.each(function(i,a){d=$(a).data("dest-id");deleteHim(d)},hideLoader(c))}else{alert("nothing is selected");hideLoader(".wrap-button")}})});function deleteHim(b){var c=$("#wrap-admin");$.ajax({url:"/ajax/delete_him",type:"post",data:{"dest_id":b},dataType:"text",success:function(a){if(a=="NG"){alert("something went wrong with deleting account")}else{c.find("tr[data-dest-id="+b+"]").fadeOut()}},error:function(){alert("Ajax error")}})}
+$(function(){
+
+  // admin screen
+  var admin = $("#wrap-admin");
+  
+  // ----
+  //var footer = $("#container-footer");
+  //footer.css("position","relative");
+ 
+  // show and hide the tables
+  admin.on("click",".toggler",function(e){
+    
+    var self = $(this);
+    e.preventDefault();
+
+    var destContentType = self.data("dest-content-type");
+    if(!destContentType) return;
+    
+    admin.find(".area-"+destContentType).find(".content").toggle();
+
+  });
+  
+  // click event handler for the button to delete each single account
+  admin.find(".delete-each").click(function(){
+    var self = $(this);
+    var parent = self.parent();
+
+    // show the loader
+    showLoader(parent);
+
+    // check which user id does clicked button point
+    var dest_id = self.data('dest-id');
+    deleteHim(dest_id);
+    
+    
+  });
+                                  
+  // click event handler for the button to delete selected accounts 
+  admin.find("#delete-selected").click(function(){
+    var self = $(this);
+    var parent = self.parent();
+
+    // show the loader
+    showLoader(parent);
+    
+    // array to contain the destination ids
+    var dest_id;
+    
+    var checked_buttons = admin.find("tbody tr .chk button.active");
+  
+    if(checked_buttons.length > 0){
+        
+      checked_buttons.each(function(i,element){
+        
+        dest_id = $(element).data("dest-id");
+        
+        deleteHim(dest_id);
+
+      },hideLoader(parent));;
+
+    }else{
+      
+      // no button is selected 
+      alert("nothing is selected");
+      hideLoader(".wrap-button");
+    }
+
+  });
+
+});
+
+function deleteHim(dest_id){
+  
+  var admin = $("#wrap-admin");
+
+  $.ajax({
+    url:"/ajax/delete_him",
+    type:"post",
+    data:{"dest_id":dest_id},
+    dataType: "text",
+    success: function(res){
+      if(res == "NG"){
+        
+        alert("something went wrong with deleting account");
+      }else{
+        // hide the element of deleted account
+        admin.find("tr[data-dest-id="+dest_id+"]").fadeOut();
+      }
+    },
+    error: function(){
+
+      alert("Ajax error");
+    }
+  });
+}

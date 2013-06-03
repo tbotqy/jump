@@ -1,1 +1,37 @@
-$(function(){var b=$("#wrap-dashbord");b.html("<img src=\"/img/ajax-loader.gif\" alt=\"読込中\" />");var c=getDashbordType();var d={actionType:c};var e=$(document.createElement("div")).html("<p>日付ナビゲーションの生成に失敗しました。<br/>画面をリロードして下さい。");$.ajax({url:'/ajax/get_dashbord',type:'get',data:d,dataType:'html',success:function(a){if(a){b.html(a)}else{alert("");b.html(e)}},error:function(){}})});
+$(function(){
+  
+  /**
+   * acquires html code for dashbord and insert it to the html
+   */
+
+  var elmWholeWrapper = $("#wrap-dashbord");
+  // show the loading icon
+  elmWholeWrapper.html("<img src=\"/img/ajax-loader.gif\" alt=\"読込中\" />");
+
+  var actionType = getDashbordType();
+
+  var sendData = {
+      actionType:actionType
+  };
+
+  var elmErrorHtml = $(document.createElement("div")).html("<p>日付ナビゲーションの生成に失敗しました。<br/>画面をリロードして下さい。");
+  $.ajax({
+    
+    url:'/ajax/get_dashbord',
+    type:'get',
+    data:sendData,
+    dataType:'html',
+    success:function(res){
+      if(res){
+        elmWholeWrapper.html(res);
+      }else{
+        alert("");
+        elmWholeWrapper.html(elmErrorHtml);
+      }
+    },
+    error:function(){
+    }
+
+  });
+
+});
