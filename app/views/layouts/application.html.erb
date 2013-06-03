@@ -40,9 +40,10 @@
     <% end %>
   </head>
   <body>
-    <div id="fb-root"></div>
+    <div id="fb-root"></div>i
+    <%= render "shared/global_header",{ "logged_in" => @logged_in, "user_is_initialized" => @user_is_initialized } %>
     <!-- #container-main -->
-    <div id="container-main" class="<?php echo $actionType;?>">
+    <div id="container-main" class="<%= controller.action_name %>">
       <div class="inner">
 	<%= yield %>
       </div>
