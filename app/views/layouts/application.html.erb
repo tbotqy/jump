@@ -22,8 +22,10 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
 	<![endif]-->    
     <link href='http://fonts.googleapis.com/css?family=Contrail+One|Fugaz+One|Emblema+One|Questrial|PT+Sans' rel='stylesheet' type='text/css'>
-    <%= stylesheet_link_tag "bootstrap.min","bootstrap.2.1.nav.min","font-awesome","style", :media => "all" %>
-    <%= javascript_include_tag "libs/jquery-1.9.0.min","libs/bootstrap.min","functions","common","twitter_tweet_button","twitter_follow_button" %>
+    <% stylesheet_link_tag "bootstrap.min","bootstrap.2.1.nav.min","font-awesome","style", :media => "all" %>
+    <% javascript_include_tag "libs/jquery-1.9.0.min","libs/bootstrap.min","functions","common","twitter_tweet_button","twitter_follow_button" %>
+    <%= stylesheet_link_tag "application", :media => "all", :debug => true %>
+    <%= javascript_include_tag "application", :debug => true %>
     <%= csrf_meta_tags %>
     <% if configatron.site_mode == "production" %>
     <script type="text/javascript">
@@ -40,7 +42,7 @@
     <% end %>
   </head>
   <body>
-    <div id="fb-root"></div>i
+    <div id="fb-root"></div>
     <%= render "shared/global_header",{ "logged_in" => @logged_in, "user_is_initialized" => @user_is_initialized } %>
     <!-- #container-main -->
     <div id="container-main" class="<%= controller.action_name %>">

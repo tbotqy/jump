@@ -12,7 +12,7 @@ body{
   font-family: Helvetica,"メイリオ", sans-serif;
   color: #7a6e7e;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); 
-  background-image: url(/img/html_bg_fibers.png);
+  background-image: url(../assets/html_bg_fibers.png);
   overflow-x: hidden;
 }
 
@@ -488,7 +488,7 @@ footer .copyright{
   border-bottom: solid 2px #808080;
   z-index: 1000;
   opacity: 1;
-  background-image: url(/img/html_bg_fibers.png);
+  background-image: url(/assets/html_bg_fibers.png);
 }
 
 #wrap-term-selectors{
@@ -658,7 +658,7 @@ footer .copyright{
   float: left;
   width: 16px !important;
   height: 16px !important;
-  background:url('../img/everything-spritev2.png') no-repeat;
+  background:url('../assets/everything-spritev2.png') no-repeat;
   background-position: -96px 0;
   overflow:hidden;
   margin: -5px 5px 0 0;
@@ -698,7 +698,7 @@ footer .copyright{
   height: 16px;
   float: left;
   text-decoration: none;
-  background:url('../img/everything-spritev2.png') no-repeat;
+  background:url('../assets/everything-spritev2.png') no-repeat;
   overflow:hidden;
   margin-right: 3px;
 }
@@ -1090,7 +1090,7 @@ footer .copyright{
 
 .btn-auth:link,
 .btn-auth:visited{
-  background: #39D url(../img/bg-btn-blue.png) repeat-x 0 0;
+  background: #39D url(../assets/bg-btn-blue.png) repeat-x 0 0;
   border: 1px solid #39D;
   color: #FFF;
   font-weight: 700;
