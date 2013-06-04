@@ -1,6 +1,6 @@
 development:
   adapter: mysql2
-  database: timedline
+  database: timedline_rails
   username: root
   password:
   host: 127.0.0.1
