@@ -1,4 +1,4 @@
-g$(function(){
+(function(){
 
   /////////////////////////////
   // code for popstate event //

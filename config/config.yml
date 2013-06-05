@@ -11,6 +11,7 @@ development:
     site_mode: development
     consumer_key: 'QpuamfxMZNsByQle3Bzsmg'
     consumer_secret: 'T3N5sczTaQf1igyJkyzDGpzLrb7P7WEa1ce06LD5Q'
+
 test:
     site_name: Timedline - あの日のタイムラインを眺められる、ちょっとしたアプリケーション
     site_url: http://localhost:3000/

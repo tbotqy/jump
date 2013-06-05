@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
   protect_from_forgery
   before_filter :set_vars
   
@@ -45,15 +46,15 @@ class ApplicationController < ActionController::Base
       access_token = user.token
       access_token_secret = user.token_secret
     end
-
+    
     Twitter.configure do |config|
       config.consumer_key = configatron.consumer_key
-      config.consumer_secret = configatron.consumer_secret_key
+      config.consumer_secret = configatron.consumer_secret
       config.oauth_token = access_token
       config.oauth_token_secret = access_token_secret
     end
     
-    @twitter_client = Twitter::Client.new
+    Twitter::Client.new
   end
 
 end
