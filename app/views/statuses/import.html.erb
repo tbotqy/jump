@@ -6,16 +6,18 @@
     <h2>タイムラインを取り込む</h2>
 
     <h4>
-      <a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
-	<img width="30" src="/img/twitter-bird-light-bgs.png"/>
-	@<%= current_user.screen_name %></a>のツイートを
-      <button id="start-import" data-loading-text="保存中..." data-complete-text="取得完了" class="btn btn-success"><i class="icon-random icon-white"></i>取り込み開始</button><img class="loader" src="/img/ajax-loader.gif" />
+      <a href="https://twitter.com/<%= @current_user.screen_name %>" target="_blank">
+	<img width="30" src="/assets/twitter-bird-light-bgs.png"/>
+	@<%= @current_user.screen_name %></a>のツイートを
+      <button id="start-import" data-loading-text="保存中..." data-complete-text="取得完了" class="btn btn-success"><i class="icon-random icon-white"></i>取り込み開始</button><img class="loader" src="/assets/
+ajax-loader.gif" />
     </h4>
   </div>
-
+  <!-- /.wrap-upper -->
+  
   <!-- .wrap-progress-bar -->
   <div class="wrap-progress-bar" style="display:none;">
-    <input type="hidden" id="statuses-count" value="<?php echo $statuses_count;?>" />
+    <input type="hidden" id="statuses-count" value="<%= @statuses_count %>" />
 
     <div class="progress progress-striped progress-primary active">
       <div class="bar" style="width: 0%;height: 30px;"></div>
@@ -49,7 +51,7 @@
       <div class="wrap-profile-image">
 	<div class="profile-image">
 	  <div class="viewport">
-            <a href="https://twitter.com/<?php echo $screen_name; ?>"><img src="<?php echo $profile_image_url_https;?>" alt="<?php echo $screen_name; ?>" /></a>
+            <a href="https://twitter.com/<%= @current_user.screen_name %>"><img src="<%= @current_user.profile_image_url_https %>" alt="<?php echo $screen_name; ?>" /></a>
 	  </div>
 	</div>
       </div>

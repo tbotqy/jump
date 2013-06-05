@@ -14,4 +14,3 @@
 //= require bootstrap.min
 //= require functions
 //= require common
-//= require_tree .
