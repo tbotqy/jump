@@ -1,12 +1,7 @@
 class User < ActiveRecord::Base
-  # attr_accessible :title, :body
-
-  def self.twitter_id_exists?(twitter_id)
-    # check if user exists by searching given twitter id
-    self.exists?(:twitter_id => twitter_id)
-  end
 
   def self.create_account(auth)
+  
     info = auth.extra.raw_info
 
     user = User.new(
@@ -31,6 +26,7 @@ class User < ActiveRecord::Base
       )
 
     user.save
+  
   end
 
   def self.update_account(auth)
@@ -52,6 +48,20 @@ class User < ActiveRecord::Base
         :token_updated => true,
         :updated_at => Time.now.to_i
       })
+  
+  end
+
+  def self.twitter_id_exists?(twitter_id)
+    
+    # check if user exists by searching given twitter id
+    self.exists?(:twitter_id => twitter_id)
+  
+  end
+
+  def has_imported?
+
+    # check if user has imported own tweets
+    self.initialized_flag
 
   end
 

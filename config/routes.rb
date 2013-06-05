@@ -1,7 +1,7 @@
 Tlviewer::Application.routes.draw do
-  resources :users
-  match "/auth/twitter/callback" => "users#callback"
 
+  match "/auth/twitter/callback" => "logs#login"
+  match "/statuses/import" => "statuses#import" 
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

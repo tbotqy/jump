@@ -1,21 +1,7 @@
-class UsersController < ApplicationController
-
-  before_filter :check_login, :except => ["index","callback"]
-  before_filter :check_tweet_import, :except => ["index","callback"]
-
-  def index
-
-    # check if user is logged in
-    if @logged_in
-      redirect_to :action => "home_timeline"
-    else
-      @show_footer = true
-      @total_status_num = Status.get_total_status_num
-    end
-
-  end
+class LogsController < ApplicationController
   
-  def callback
+  def login
+
     # called when user was redirected back to our service from twitter.com
 
     # read acquired access tokens
@@ -42,14 +28,23 @@ class UsersController < ApplicationController
       # create new account
       User.create_account(auth)
     end
-
-    # log the user in
-    redirect_to :controller => "logs", :action => "login"
     
+    # log the user in
+    session[:user_id] = User.find_by_twitter_id(auth.uid).id
+    @current_user = User.find(session[:user_id])
+
+    # check if user has imported own tweets
+    unless User.find(session[:user_id]).has_imported?
+      redirect_to :controller => "statuses", :action => "import"
+    else
+      redirect_to root_url
+    end
+ 
   end
 
-  def home_timeline
-    raise "welcome!"
+  def logout
+    session[:user_id] = nil
+    redirect_to root_url
   end
-
+  
 end

@@ -1,18 +1,42 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_vars
-
+  
   def set_vars
-    # set vars only if reqeust is not Ajax
+
+    # set vars only if request is not Ajax
     unless request.xhr?
-      # implement later
-      @show_footer = true
-      @logged_in = false
-      @user_is_initialized = false
-      @logging_user = false
+      @logged_in = logged_in?
+      @current_user = @logged_in ? User.find(session[:user_id]) : false
+      @show_footer = false
     end
+    
+  end
+
+  def check_login
+  
+    unless @logged_in 
+      redirect_to root_url
+    else
+      return true
+    end
+    
+  end
+
+  def check_tweet_import
+
+    if check_login
+      unless User.find(session[:user_id]).has_imported?
+        redirect_to :controller => "statuses", :action => "import"
+      end
+    end
+    
   end
   
+  def logged_in?
+    session[:user_id]
+  end
+
   def create_twitter_client(access_token = nil, access_token_secret = nil)
     
     if !access_token || !access_token_secret
@@ -29,7 +53,7 @@ class ApplicationController < ActionController::Base
       config.oauth_token_secret = access_token_secret
     end
     
-    return @twitter_client = Twitter::Client.new
+    @twitter_client = Twitter::Client.new
   end
 
 end
