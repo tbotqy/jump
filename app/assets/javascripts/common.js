@@ -10,6 +10,12 @@ $(function(){
     facebook(document, 'script', 'facebook-jssdk');
   },3000);
 
+
+  $.ajaxSetup({
+    data:{"authenticity_token":getCsrfToken()}
+  });
+
+  
   //////////////////////////
   // code for each status //
   //////////////////////////

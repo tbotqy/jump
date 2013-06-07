@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <title><%= title %></title>
+    <title><%= title @title %></title>
     <meta charset="UTF-8"/>
     <% if configatron.site_mode == "production" %>
     <meta name="robots" content="index,follow"/>
@@ -13,7 +13,7 @@
     <meta property="og:locale" content="ja_JP">
     <meta property="fb:app_id" content="258025897640441" />
     <meta property="og:site_name" content="Timdeline" />
-    <meta property="og:title" content="<%= title %>" />
+    <meta property="og:title" content="<%= title @title %>" />
     <meta property="og:description" content="Timedline is a simple view system for those who want to have the access to their past timeline." />
     <meta property="og:url" content="<%= request.url %>" />
     <meta property="og:type" content="website" />
@@ -43,7 +43,7 @@
   </head>
   <body>
     <div id="fb-root"></div>
-    <%= render "shared/global_header",{ "logged_in" => @logged_in, "user_is_initialized" => @current_user ? @current_user.initialized_flag : false } %>
+    <%= render "shared/global_header",{ :current_user => @current_user || false, :logged_in => @logged_in} %>
     <!-- #container-main -->
     <div id="container-main" class="<%= controller.action_name %>">
       <div class="inner">

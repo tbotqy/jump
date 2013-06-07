@@ -26,6 +26,10 @@ function getUserAgent(){
     
 }
 
+function getCsrfToken(){
+  return $("meta[name=csrf-token]").attr("content");
+}
+
 function scrollToPageTop(e){
   
   if(e){

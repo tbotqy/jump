@@ -3,17 +3,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_vars
   
+  @@current_user = nil
+
   def set_vars
-
-    # set vars only if request is not Ajax
-    unless request.xhr?
-      @logged_in = logged_in?
-      @current_user = @logged_in ? User.find(session[:user_id]) : false
-      @show_footer = false
-    end
-    
+    @logged_in = logged_in?
+    @@current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @show_footer = false
+    @current_user = @@current_user
   end
-
+  
   def check_login
   
     unless @logged_in 
@@ -35,17 +33,16 @@ class ApplicationController < ActionController::Base
   end
   
   def logged_in?
-    session[:user_id]
+    session[:user_id] ? true : false
   end
 
-  def create_twitter_client(access_token = nil, access_token_secret = nil)
+  def create_twitter_client
     
-    if !access_token || !access_token_secret
-      # load keys from database
-      user = User.find(session[:user_id])
-      access_token = user.token
-      access_token_secret = user.token_secret
-    end
+    user = User.find(session[:user_id])
+    
+    # user = User.find(@@current_user.id)
+    access_token = user.token
+    access_token_secret = user.token_secret
     
     Twitter.configure do |config|
       config.consumer_key = configatron.consumer_key
