@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+  has_many :status
+  has_many :friend
+
   def self.create_account(auth)
   
     info = auth.extra.raw_info

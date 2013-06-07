@@ -1,12 +1,12 @@
 module ApplicationHelper
 
-  def title
-    base_title = configatron.site_name.to_s.concat(" -")
-    if @title.nil?
+  def title(given_title = nil)
+    base_title = configatron.site_name
+    if given_title.nil?
       base_title
     else
-      base_title.concat(@title)
+      base_title + " - "+given_title
     end
   end
-
+  
 end

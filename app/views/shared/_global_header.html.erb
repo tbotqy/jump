@@ -11,7 +11,7 @@
 	  <div class="container">
 	    <a  class="brand" href="/">Timedline</a>
 	    <% if logged_in %>
-	    <% if user_is_initialized %>
+	    <% if current_user.initialized_flag %>
 	    
 	    <!-- .nav .pull-left -->
 	    <ul class="nav pull-left">
@@ -33,11 +33,11 @@
 	    <ul class="nav pull-right">
 	      
 	      <li class="twitter-profile">
-		<a href="https://twitter.com/<?php echo $loggingUser['Twitter']['screen_name'];?>" target="_blank">
-		  <img width="20" src="<?php echo $loggingUser['Twitter']['profile_image_url_https'];?>" />
+		<a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
+		  <img width="20" src="<%= current_user.profile_image_url_https %>" />
 		</a>
-                <a href="https://twitter.com/<?php echo $loggingUser['Twitter']['screen_name'];?>" target="_blank">
-		  @<%= logging_user.twitter.screen_name %>
+                <a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
+		  @<%= current_user.screen_name %>
 		</a>
 	      </li>
 	      
@@ -46,7 +46,7 @@
 		
 		<!-- .dropdown-menu -->
 		<ul class="dropdown-menu">
-		  <% if user_is_initialized %>
+		  <% if current_user.initialized_flag %>
 		  <li>
 		    <a class="link-config" href="/your/data"><i class="icon-hdd"></i>データ管理</a>
 		  </li>
