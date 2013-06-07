@@ -26,6 +26,10 @@ function getUserAgent(){
     
 }
 
+function getCsrfToken(){
+  return $("meta[name=csrf-token]").attr("content");
+}
+
 function scrollToPageTop(e){
   
   if(e){
@@ -434,7 +438,7 @@ function getStatuses(params){
       if(ret.continue){
 
 	$(".wrap-importing-status").fadeOut(function(){
-
+          console.log(ret);
 	  //show the result
 	  wrap_progress_bar.find(".total").html(total_imported_count+"件");
 	  wrap_tweet.find(".body").html(ret.status.text);

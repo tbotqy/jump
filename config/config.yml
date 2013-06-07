@@ -1,18 +1,19 @@
 production:
-    site_name: Timedline - あの日のタイムラインを眺められる、ちょっとしたアプリケーション
+    site_name: Timedline
     site_url: http://timedline.me
     site_mode: production
     consumer_key: 'ezVQtY2ynBclmnCWitozfA'
     consumer_secret: 'AcToliJBBh5OyzZd1M1HwVCEt9npRyO8zO2O0SecY'
     
 development:
-    site_name: Timedline - あの日のタイムラインを眺められる、ちょっとしたアプリケーション
+    site_name: Timedline
     site_url: http://localhost:3000/
     site_mode: development
     consumer_key: 'QpuamfxMZNsByQle3Bzsmg'
     consumer_secret: 'T3N5sczTaQf1igyJkyzDGpzLrb7P7WEa1ce06LD5Q'
+
 test:
-    site_name: Timedline - あの日のタイムラインを眺められる、ちょっとしたアプリケーション
+    site_name: Timedline
     site_url: http://localhost:3000/
     site_mode: test
     consumer_key: 'QpuamfxMZNsByQle3Bzsmg'

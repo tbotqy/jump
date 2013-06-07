@@ -30,9 +30,8 @@ class LogsController < ApplicationController
     end
     
     # log the user in
-    session[:user_id] = User.find_by_twitter_id(auth.uid).id
-    @current_user = User.find(session[:user_id])
-
+    session[:user_id] = User.find_by_twitter_id(auth.uid).id.to_s
+    
     # check if user has imported own tweets
     unless User.find(session[:user_id]).has_imported?
       redirect_to :controller => "statuses", :action => "import"
@@ -43,7 +42,7 @@ class LogsController < ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
+    reset_session
     redirect_to root_url
   end
   
