@@ -28,7 +28,7 @@ class AjaxController < ApplicationController
       api_params[:count] = 101
       api_params[:max_id] = max_id
       
-      statuses = create_twitter_client.user_timeline(@@current_user.screen_name, api_params)
+      statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
       
       # remove the newest status from result because it has been already saved in previous ajax call
       if statuses.size > 0
@@ -43,8 +43,8 @@ class AjaxController < ApplicationController
       statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
 
       # retrieve following list and save them as user's friend
-      friends = create_twitter_client.friend_ids(@@current_user.screen_name, {:stringify_ids=>true}).all
-      Friend.save_friends(@@current_user.id,friends)
+      friends = create_twitter_client.friend_ids(@@current_user.screen_name.to_s, {:stringify_ids=>true}).all
+      Friend.save_friends(@@current_user.id.to_i,friends)
       
       if !statuses
         no_status_at_all = true
@@ -55,7 +55,7 @@ class AjaxController < ApplicationController
     # save
     saved_count = statuses.size
     if saved_count > 0
-      Status.save_statuses(@@current_user,statuses)
+      Status.save_statuses(@@current_user.id.to_i,statuses)
       continue = true
     else
       continue = false
@@ -76,16 +76,16 @@ class AjaxController < ApplicationController
       created_at = Time.parse(last_status[:attrs][:created_at]).strftime("%Y年%m月%d日 - %H:%M")
       
       ret[:id_str_oldest] = id_str_oldest
-      ret[:status] = [:date =>created_at,:text=>text]
+      ret[:status] = {:date =>created_at,:text=>text}
     else
       
       unless no_status_at_all
         
         # mark this user as initialized
-        User.find(@@current_user.id).update_attribute( :initialized_flag => true)
+        User.find(@@current_user.id.to_i).update_attribute(:initialized_flag,true)
         
         # make pre-saved statuses saved
-        Status.save_pre_saved_status(@@current_user.id)
+        Status.save_pre_saved_status(@@current_user.id.to_i)
 
       end
     end
