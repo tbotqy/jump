@@ -13,23 +13,19 @@ class ApplicationController < ActionController::Base
   end
   
   def check_login
-  
     unless @logged_in 
       redirect_to root_url
     else
       return true
     end
-    
   end
 
   def check_tweet_import
-
     if check_login
       unless User.find(session[:user_id]).has_imported?
         redirect_to :controller => "statuses", :action => "import"
       end
     end
-    
   end
   
   def logged_in?
@@ -37,7 +33,6 @@ class ApplicationController < ActionController::Base
   end
 
   def create_twitter_client
-    
     user = User.find(session[:user_id])
     
     # user = User.find(@@current_user.id)

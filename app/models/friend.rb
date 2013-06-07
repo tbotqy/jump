@@ -1,12 +1,11 @@
 class Friend < ActiveRecord::Base
-  # attr_accessible :title, :body
-  
+  belongs_to :user
+
   def self.save_friends(user_id,friend_ids)
-
     created_at = Time.now.to_i
-
+    
     friend_ids.each do |fid|
-      User.create(
+      self.create(
         :user_id => user_id,
         :following_twitter_id => fid,
         :created_at => created_at

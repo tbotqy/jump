@@ -5,7 +5,7 @@ class StatusesController < ApplicationController
 
   def import
     # show the screen for operating import method
-
+    
     @title = "データの取り込み"
     
     # redirect initialized user
@@ -16,7 +16,6 @@ class StatusesController < ApplicationController
     # get the total number of tweets user has on twitter
     user_twitter = create_twitter_client.user(@@current_user.twitter_id)
     @statuses_count = user_twitter.attrs[:statuses_count]
-    
   end
 
 end
