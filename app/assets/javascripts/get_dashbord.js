@@ -25,7 +25,6 @@ $(function(){
       if(res){
         elmWholeWrapper.html(res);
       }else{
-        alert("");
         elmWholeWrapper.html(elmErrorHtml);
       }
     },
