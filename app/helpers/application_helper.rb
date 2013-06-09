@@ -5,7 +5,7 @@ module ApplicationHelper
     if given_title.nil?
       base_title
     else
-      base_title + " - "+given_title
+      given_title + " - " + base_title
     end
   end
   

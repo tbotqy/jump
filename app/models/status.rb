@@ -27,7 +27,15 @@ class Status < ActiveRecord::Base
       PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
     end
   end
+
+  def self.get_latest_status(user_id,limit)
+    self.where(:user_id => user_id,:pre_saved => false).order('twitter_created_at DESC').limit(limit)
+  end
     
+  def self.get_status_with_date(user,date,limit)
+    
+  end
+
   def self.create_hash_to_save(user_id,tweet)
     ret = {}
     tweet = tweet[:attrs]
