@@ -49,7 +49,6 @@ class AjaxController < ApplicationController
       if !statuses
         no_status_at_all = true
       end
-
     end
     
     # save
@@ -80,18 +79,14 @@ class AjaxController < ApplicationController
     else
       
       unless no_status_at_all
-        
         # mark this user as initialized
         User.find(@@current_user.id.to_i).update_attribute(:initialized_flag,true)
         
         # make pre-saved statuses saved
         Status.save_pre_saved_status(@@current_user.id.to_i)
-
       end
     end
-
-    render :json => ret
     
+    render :json => ret
   end
-  
 end

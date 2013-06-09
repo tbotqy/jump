@@ -3,17 +3,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :set_vars
   
-  @@current_user = nil
-
   def set_vars
-    @logged_in = logged_in?
-    @@current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @@current_user = get_current_user
     @show_footer = false
     @current_user = @@current_user
   end
   
   def check_login
-    unless @logged_in 
+    unless logged_in? 
       redirect_to root_url
     else
       return true
@@ -28,25 +25,22 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def get_current_user
+    User.find(session[:user_id]) if logged_in?
+  end
+
   def logged_in?
     session[:user_id] ? true : false
   end
 
   def create_twitter_client
-    user = User.find(session[:user_id])
-    
-    # user = User.find(@@current_user.id)
-    access_token = user.token
-    access_token_secret = user.token_secret
-    
+    user = @current_user || User.find(session[:user_id])
     Twitter.configure do |config|
       config.consumer_key = configatron.consumer_key
       config.consumer_secret = configatron.consumer_secret
-      config.oauth_token = access_token
-      config.oauth_token_secret = access_token_secret
+      config.oauth_token = user.token
+      config.oauth_token_secret = user.token_secret
     end
-    
     Twitter::Client.new
   end
-
 end

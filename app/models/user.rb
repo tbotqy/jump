@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   has_many :friends
 
   def self.create_account(auth)
-  
     info = auth.extra.raw_info
 
     user = User.new(
@@ -29,13 +28,11 @@ class User < ActiveRecord::Base
       )
 
     user.save
-  
   end
 
   def self.update_account(auth)
-    
     dest_user = self.find_by_twitter_id(auth.uid)
-
+    
     info = auth.extra.raw_info
     dest_user.update_attributes({
         :twitter_id => info.id,
@@ -51,21 +48,15 @@ class User < ActiveRecord::Base
         :token_updated => true,
         :updated_at => Time.now.to_i
       })
-  
   end
 
   def self.twitter_id_exists?(twitter_id)
-    
     # check if user exists by searching given twitter id
     self.exists?(:twitter_id => twitter_id)
-  
   end
 
   def has_imported?
-
     # check if user has imported own tweets
     self.initialized_flag
-
   end
-
 end
