@@ -1,98 +1,12 @@
 <div class="wrap-one-result">
   <% statuses.each do |status| %>
-    <% if status.is_retweet
-	 retweeter_name = status.user.name 
-	 status.user.name = status.rt_name
-	 status.user.screen_name = status.rt_screen_name
-	 status.user.profile_image_url_https = status.rt_profile_image_url_https
-	 status.text = status.rt_text
-	 status.cource = status.rt_source
-	 status.created_at = status.rt_created_at
-	 end %>
-
-      <!-- .wrap-each-status -->
-      <div class="wrap-each-status" <% if logged_in && status.user.twitter_id == current_user.twitter_id) %>data-status-id="<%= status.id %>"<% end %>>
-	<!-- .profile-image -->
-	<div class="profile-image">
-	  <div class="viewport">
-	    <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank"><img src="<%= status.user.profile_image_url_https %>" alt="<%= status.user.screen_name %>" width="48" height="48"/></a>
-	  </div>
-	</div>
-	<!-- /.profile-image -->
-	
-	<!-- .status-content -->
-	<div class="status-content">
-	  <!-- .top -->      
-	  <span class="top">
-	    <span class="logo">
-	      <img src="/img/twitter-bird-light-bgs.png" alt="Twitterブランド" />
-	    </span>      
-	    <span class="name">
-              <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank"><%= status.user.name %></a>
-	    </span>
-	    <span class="screen-name">
-              <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank">@<%= status.user.screen_name %></a>
-	    </span>
-	    <span class="date">
-              <a href="https://twitter.com/<%= status.user.screen_name %>/status/<%= status.status_id_str %>" target="_blank"><%= calc_tweet_posted_time %></a>
-	    </span>
-	  </span>
-	  <!-- /.top -->
-	  
-	  <span class="text"><% linkify_tweet_body status.text,status.entities %>
-            // echo this->Link->addLinks(status.text)
-	  </span>
-    <% if(status.is_retweet): %>
-    <div class="retweet-info">
-      <p><span class="icon">&nbsp</span><%= retweeter_name %>さんがリツイート</p>
-    </div>
-    <% endif %>
-    <!-- .bottom -->
-    <span class="bottom">
-      <!-- .pull-left -->
-      <div class="pull-left">
-	<span class="specific-date">
-	  <%= date('Y年n月j日 - H:i',status.created_at+status.user.utc_offset) %>
-	</span>
-	<span class="source">
-	  <%= status.source %>から
-	</span>
-	<span class="link-official">
-          <a href="https://twitter.com/<%= status.user.screen_name %>/status/<%= status.status_id_str %>" target="_blank">詳細</a>
-	</span>
-	<!-- .area-intents -->
-	<div class="area-intents">
-	  <a class="intent intent-reply" href="https://twitter.com/intent/tweet?in_reply_to=<%= status.status_id_str %>">&nbsp</a>
-	  <a class="intent intent-retweet" href="https://twitter.com/intent/retweet?tweet_id=<%= status.status_id_str %>">&nbsp</a>
-	  <a class="intent intent-favorite" href="https://twitter.com/intent/favorite?tweet_id=<%= status.status_id_str %>">&nbsp</a>
-	</div>
-	<!-- /.area-intents -->
-      </div>
-      <!-- /.pull-left -->
-      
-      <%
-        if(loggedIn && status.user.twitter_id === logginguser.Twitter.id):
-      %>
-      <span class="link-delete" data-status-id="<%= status.id %>">
-	<a href="#"> <i class="icon-trash"></i> </a>
-      </span>
-      <%
-           endif
-      %>
-    </span>
-    <!-- /.bottom -->
-  </div>
-  <!-- /.status-content -->
- 
-  </div><!-- /.wrap-each-status -->
-<%
-    if( isInitialRequest && !isset(statuses[loopCnt+1]) ){
-        echo this->element('adsense468-link-unit')
-    }
-  loopCnt++
- %>
-<% endforeach %>
-<% if(isset(oldest_timestamp)): %>
-<input type="hidden" class="oldest-timestamp" value="<%= oldest_timestamp %>"/>
-<% endif %>
+    <% if status.is_retweet %>
+      <%= render "shared/tweet_card_rt",{:status => status, :current_user => current_user} %>
+    <% else %>
+      <%= render "shared/tweet_card",{:status => status, :current_user => current_user} %>
+    <% end %>
+  <% end %>
+  <% if oldest_timestamp %>
+    <input type="hidden" class="oldest-timestamp" value="<%= oldest_timestamp %>"/>
+  <% end %>
 </div>

@@ -2,10 +2,10 @@
 class UsersController < ApplicationController
 
   before_filter :check_login, :except => ["index"]
-
+  
   def index
     # check if user is logged in
-    if @logged_in
+    if logged_in?
       redirect_to :action => "home_timeline"
     else
       @show_footer = true
@@ -34,6 +34,7 @@ class UsersController < ApplicationController
     
     if !@statuses
       @show_footer = true
+      @oldest_timestamp = false
     else
       if @statuses.size == initial_fetch_num
         @has_next = true
@@ -41,6 +42,8 @@ class UsersController < ApplicationController
       else
         @has_next = false
       end
+      # get the oldest tweet's posted timestamp
+      @oldest_timestamp = @statuses.last.twitter_created_at
     end
   end
 end

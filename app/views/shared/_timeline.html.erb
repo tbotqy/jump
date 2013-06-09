@@ -1,8 +1,7 @@
 <!-- #wrap-timeline -->
 <div id="wrap-timeline">
-
   <% if statuses %>
-    <%= render "shared/each_status", {:statuses => statuses} %>
+    <%= render "shared/each_status", {:statuses => statuses, :current_user => current_user, :oldest_timestamp => oldest_timestamp} %>
     <% if has_next %>
       <%= render "shared/read_more", {:has_next => has_next} %>
     <% else %>
