@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
 
-  before_filter :check_login, :except => ["index","callback"]
-  before_filter :check_tweet_import, :except => ["index","callback"]
+  before_filter :check_login, :except => ["index"]
 
   def index
     # check if user is logged in
