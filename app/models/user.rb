@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  has_many :status
-  has_many :friend
+  has_many :statuses
+  has_many :friends
 
   def self.create_account(auth)
   
