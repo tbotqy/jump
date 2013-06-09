@@ -3,7 +3,7 @@
 <div id="wrap-timeline-lower">
   <!-- #wrap-main -->
   <div id="wrap-main">
-    <%= render "shared/timeline" %>
+    <%= render "shared/timeline", { :statuses => @statuses, :has_next => @has_next} %>
   </div>
   <!-- /#wrap-main -->
   <%= render "shared/adsense/ads-timeline.html.erb" %>

@@ -28,10 +28,10 @@ class Status < ActiveRecord::Base
     end
   end
 
-  def get_latest_status
-    self.where(:user_id => user_id,:pre_saved => false).order('twitter_created_at DESC').limit(limit)
+  def self.get_latest_status(user_id,limit)
+    self.includes(:user,:entities).where(:user_id => user_id,:pre_saved => false).order('twitter_created_at DESC').limit(limit)
   end
-    
+
   def self.get_status_with_date(user,date,limit)
     
   end
