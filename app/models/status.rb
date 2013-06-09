@@ -2,7 +2,7 @@
 class Status < ActiveRecord::Base
 
   belongs_to :user
-  has_many :entity, :dependent => :delete_all
+  has_many :entities, :dependent => :delete_all
  
   def self.get_total_status_num
     self.where(:pre_saved => false).count
@@ -28,7 +28,7 @@ class Status < ActiveRecord::Base
     end
   end
 
-  def self.get_latest_status(user_id,limit)
+  def get_latest_status
     self.where(:user_id => user_id,:pre_saved => false).order('twitter_created_at DESC').limit(limit)
   end
     
