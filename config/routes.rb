@@ -3,6 +3,7 @@ Tlviewer::Application.routes.draw do
   match "/auth/twitter/callback" => "logs#login"
   match "/statuses/import" => "statuses#import" 
   match "/your/home_timeline" => "users#home_timeline"
+  match "/your/tweets/(:date)" => "users#sent_tweets"
   match "/logout" => "logs#logout"
 
   # The priority is based upon order of creation:

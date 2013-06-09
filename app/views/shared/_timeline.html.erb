@@ -1,0 +1,27 @@
+<!-- #wrap-timeline -->
+<div id="wrap-timeline">
+
+  <% if statuses %>
+  <%= render "shared/each_status" %>
+    <% if 
+
+  <% else %>
+  <%= render "shared/no_status" %>
+  <% end %>
+
+     <?php 
+     if($statuses){
+         echo $this->element('each-status');
+         if($hasNext){
+             echo $this->element('read-more');
+         }else{
+             echo $this->element('no-more-status');
+         }
+
+     }else{
+         echo $this->element('no-status');
+     }
+     ?>
+
+</div>
+<!-- /#wrap-timeline -->
