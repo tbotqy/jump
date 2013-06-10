@@ -26,7 +26,7 @@ class Entity < ActiveRecord::Base
       :indice_f => entity_body[:indices][0],
       :indice_l => entity_body[:indices][1],
       :entity_type => entity_type,
-      :created_at => Time.now.to_i
+      :created_at => Time.zone.now.to_i
     }
     
     case entity_type.to_s
