@@ -32,10 +32,7 @@ class UsersController < ApplicationController
       @statuses = Status.get_latest_status(@@current_user.id,initial_fetch_num)
     end
     
-    if !@statuses
-      @show_footer = true
-      @oldest_timestamp = false
-    else
+    if @statuses.present?
       if @statuses.size == initial_fetch_num
         @has_next = true
         @statuses.pop
@@ -44,6 +41,9 @@ class UsersController < ApplicationController
       end
       # get the oldest tweet's posted timestamp
       @oldest_timestamp = @statuses.last.twitter_created_at
+    else
+      @show_footer = true
+      @oldest_timestamp = false
     end
   end
 end

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
-  include Twitter::Autolink
-  
   def logged_in?
     session[:user_id] ? true : false
   end
@@ -23,25 +21,6 @@ module ApplicationHelper
     format += " %-H:%M" if show_minute
     
     Time.zone.at(dest_unixtime).strftime( format )
-  end
-
-  def linkify_tweet_body(tweet_body,entities_from_api)
-    return tweet_body if entities_from_api.empty?
-   
-    # linkify urls obeying Twitter display requirements
-    entities_from_api.each do |entity|
-      if entity.url
-        tweet_body.gsub!(entity.url,'<a href="'+entity.url+'" target="_blank">'+entity.display_url+'</a>')
-      end
-    end
-
-    # linkify user mentions
-    tweet_body.gsub!(/@(\w+)/,"<a href=\"https://twitter.com/\\1\" target=\"_blank\">@\\1</a>")
-
-    # linkify hashtags
-    tweet_body.gsub!(/ #(\w+)/,"<a href=\"http://twitter.com/search?q=%23\\1\" target=\"_blank\"> #\\1</a>")
-
-    tweet_body
   end
 
   def calc_relative_timestamp(dest_unixtime)
@@ -67,4 +46,22 @@ module ApplicationHelper
     end
   end
 
+  def linkify_tweet_body(tweet_body,entities_from_api)
+    return tweet_body if entities_from_api.empty?
+   
+    # linkify urls obeying Twitter display requirements
+    entities_from_api.each do |entity|
+      if entity.url
+        tweet_body.gsub!(entity.url,'<a href="'+entity.url+'" target="_blank">'+entity.display_url+'</a>')
+      end
+    end
+
+    # linkify user mentions
+    tweet_body.gsub!(/@(\w+)/,"<a href=\"https://twitter.com/\\1\" target=\"_blank\">@\\1</a>")
+
+    # linkify hashtags
+    tweet_body.gsub!(/ #(\w+)/,"<a href=\"http://twitter.com/search?q=%23\\1\" target=\"_blank\"> #\\1</a>")
+
+    tweet_body
+  end
 end
