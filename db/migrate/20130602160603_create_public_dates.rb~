@@ -1,8 +1,0 @@
-class CreatePublicDates < ActiveRecord::Migration
-  def change
-    create_table :public_dates do |t|
-
-      t.timestamps
-    end
-  end
-end
