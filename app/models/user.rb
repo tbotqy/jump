@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
       :profile_image_url_https => info.profile_image_url_https,
       :time_zone => info.time_zone,
       :utc_offset => info.utc_offset,
-      :twitter_created_at => Time.parse(info.created_at).to_i,
+      :twitter_created_at => Time.zone.parse(info.created_at).to_i,
       :lang => info.lang,
       :token => auth.credentials.token,
       :token_secret => auth.credentials.secret,
@@ -23,8 +23,8 @@ class User < ActiveRecord::Base
       :closed_only => false,
       :initialized_flag => false,
       :deleted_flag => false,
-      :twitter_created_at => Time.now.to_i,
-      :updated_at => Time.now.to_i
+      :twitter_created_at => Time.zone.now.to_i,
+      :updated_at => Time.zone.now.to_i
       )
 
     user.save
@@ -41,12 +41,12 @@ class User < ActiveRecord::Base
         :profile_image_url_https => info.profile_image_url_https,
         :time_zone => info.time_zone,
         :utc_offset => info.utc_offset,
-        :twitter_created_at => Time.parse(info.created_at).to_i,
+        :twitter_created_at => Time.zone.parse(info.created_at).to_i,
         :lang => info.lang,
         :token => auth.credentials.token,
         :token_secret => auth.credentials.secret,
         :token_updated => true,
-        :updated_at => Time.now.to_i
+        :updated_at => Time.zone.now.to_i
       })
   end
 
