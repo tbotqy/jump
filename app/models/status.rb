@@ -3,9 +3,10 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, :dependent => :delete_all
- 
+  default_scope where(:pre_saved => false)
+
   def self.get_total_status_num
-    self.where(:pre_saved => false).count
+    self.count
   end
   
   def self.delete_pre_saved_status(user_id)
@@ -28,12 +29,17 @@ class Status < ActiveRecord::Base
     end
   end
 
-  def get_latest_status
-    self.where(:user_id => user_id,:pre_saved => false).order('twitter_created_at DESC').limit(limit)
+  def self.get_latest_status(user_id,limit)
+    self.includes(:user,:entities).where(:user_id => user_id).order('statuses.twitter_created_at DESC').limit(limit)
   end
-    
-  def self.get_status_with_date(user,date,limit)
-    
+
+  def self.get_older_status(user_id,threshold_unixtime,limit = 10)
+     self.includes(:user,:entities).where('statuses.user_id = ? AND statuses.twitter_created_at < ?',user_id,threshold_unixtime).order('statuses.twitter_created_at DESC').limit(limit)
+  end
+ 
+  def self.get_status_with_date(user_id,date,limit)
+    dates = calc_from_and_to_of(date)
+    self.includes(:user,:entities).where('statuses.user_id = ? AND statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',user_id,dates[:from],dates[:to]).order('statuses.twitter_created_at DESC').limit(limit)
   end
 
   def self.create_hash_to_save(user_id,tweet)
@@ -74,6 +80,32 @@ class Status < ActiveRecord::Base
       ret[:rt_text] = nil
       ret[:rt_source] = nil
       ret[:rt_created_at] = nil
+    end
+
+    ret
+  end
+  
+  def self.calc_from_and_to_of(date)
+  # calculate the start/end date of given date in unixtime
+
+    # detect the type of given date
+    parts = date.to_s.split(/-/)
+    
+    year = parts[0].to_i
+    month = parts[1].to_i
+    day = parts[2].to_i
+    
+    ret = {}
+    case parts.size
+    when 1 # only year is specified
+      ret[:from] = DateTime.new(year).beginning_of_year.to_i
+      ret[:to] = DateTime.new(year).end_of_year.to_i
+    when 2 # year and month is specified
+      ret[:from] = DateTime.new(year,month).beginning_of_month.to_i
+      ret[:to] = DateTime.new(year,month).end_of_month.to_i
+    when 3 # year and month and day is specified
+      ret[:from] = DateTime.new(year,month,day).beginning_of_day.to_i
+      ret[:to] = DateTime.new(year,month,day).end_of_day.to_i
     end
 
     ret
