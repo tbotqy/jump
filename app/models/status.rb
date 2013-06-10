@@ -3,9 +3,10 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, :dependent => :delete_all
- 
+  default_scope where(:pre_saved => false)
+
   def self.get_total_status_num
-    self.where(:pre_saved => false).count
+    self.count
   end
   
   def self.delete_pre_saved_status(user_id)
@@ -29,9 +30,13 @@ class Status < ActiveRecord::Base
   end
 
   def self.get_latest_status(user_id,limit)
-    self.includes(:user,:entities).where(:user_id => user_id,:pre_saved => false).order('twitter_created_at DESC').limit(limit)
+    self.includes(:user,:entities).where(:user_id => user_id).order('twitter_created_at DESC').limit(limit)
   end
 
+  def self.get_older_status(user_id,threshold_unixtime,limit = 10)
+     self.includes(:user,:entities).where('statuses.user_id = ? AND statuses.twitter_created_at < ?',user_id,threshold_unixtime).order('twitter_created_at DESC').limit(limit)
+  end
+ 
   def self.get_status_with_date(user,date,limit)
     
   end
