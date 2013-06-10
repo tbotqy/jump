@@ -1,12 +1,18 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery
-  before_filter :set_vars
+  before_filter :set_vars, :apply_user_time_zone
   
   def set_vars
-    @@current_user = get_current_user
+    @@current_user = get_current_user || nil
     @show_footer = false
     @current_user = @@current_user
+  end
+
+  def apply_user_time_zone
+    if @@current_user
+      Time.zone = @@current_user.time_zone
+    end
   end
   
   def check_login
