@@ -15,7 +15,7 @@ class PublicDate < ActiveRecord::Base
   end
 
   def self.convert_time_to_date(unixtime_created_at)
-    Time.at(unixtime_created_at).strftime('%Y/%-m/%-d')
+    Time.zone.at(unixtime_created_at).strftime('%Y/%-m/%-d')
   end
 
 end
