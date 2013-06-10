@@ -15,13 +15,14 @@ module ApplicationHelper
     end
   end
 
-  def calc_tweet_posted_time(dest_unixtime,utc_offset,force_full_format = false)
+  def calc_tweet_posted_time(dest_unixtime,utc_offset,force_full_format = false,show_minute = false)
     dest_unixtime += utc_offset
     
     dest_year = Time.at(dest_unixtime).strftime('%Y%').to_i
     current_year = Time.now.strftime('%Y').to_i
 
     format = current_year > dest_year || force_full_format ? '%Y年%-m月%-d日' : '%-m月%-d日'
+    format += " %-H:%-M" if show_minute
     
     Time.at(dest_unixtime).strftime( format )
   end

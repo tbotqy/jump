@@ -92,7 +92,6 @@ $(function(){
     self.button('loading');
     var elmOldestTimestamp = $(".oldest-timestamp");
     var oldestTimestamp = elmOldestTimestamp.val();
-   
     // fetch more statuses to show
     $.ajax({
 

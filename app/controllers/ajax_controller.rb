@@ -89,4 +89,32 @@ class AjaxController < ApplicationController
     
     render :json => ret
   end
+
+  def read_more
+    @oldest_timestamp = params[:oldest_timestamp]
+    destination_action_type = params[:destination_action_type]
+ 
+    @statuses = nil
+    @has_next = false
+   
+    fetch_num = 10 # fetches 10 statuses at one request
+    _fetch_num = fetch_num + 1 # plus 1 to check if 'read more buttton' should be shown in the view
+    
+    case destination_action_type.to_s
+    when 'tweets'
+      # fetch older statuses
+      @statuses = Status.get_older_status(@current_user.id,@oldest_timestamp,_fetch_num)
+      
+      # check if any older status exists
+      if @statuses.count != _fetch_num
+        @has_next = false
+      else
+        @statuses.pop
+        @has_next = true
+      end
+      @oldest_timestamp = @statuses.last.twitter_created_at
+    end
+    
+    render :layout => false
+  end
 end

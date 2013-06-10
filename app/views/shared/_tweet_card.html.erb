@@ -39,7 +39,7 @@
       <!-- .pull-left -->
       <div class="pull-left">
 	<span class="specific-date">
-	  <%= calc_tweet_posted_time status.created_at, current_user.utc_offset, true %>
+	  <%= calc_tweet_posted_time status.created_at, current_user.utc_offset, true ,true %>
 	</span>
 	<span class="source">
 	  <%== status.source %>から
