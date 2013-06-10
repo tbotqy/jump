@@ -26,6 +26,7 @@ gem 'jquery-rails', "2.1.4"
 # gem 'omniauth', "1.1.4"
 gem 'twitter', "4.7.0"
 gem 'omniauth-twitter', :github => 'arunagw/omniauth-twitter'
+gem 'twitter-text', :github => 'twitter/twitter-text-rb'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
