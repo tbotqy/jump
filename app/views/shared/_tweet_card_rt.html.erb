@@ -26,7 +26,7 @@
       </span>
       <span class="date">
         <a href="https://twitter.com/<%= status.rt_screen_name %>/status/<%= status.status_id_str %>" target="_blank">
-	  <%= calc_tweet_posted_time status.rt_created_at%>
+	  <%= calc_relative_timestamp status.rt_created_at%>
 	</a>
       </span>
     </span>
