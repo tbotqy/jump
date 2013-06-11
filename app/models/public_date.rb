@@ -14,6 +14,10 @@ class PublicDate < ActiveRecord::Base
     self.where(:posted_date => date).exists?
   end
 
+  def self.get_list
+    self.select(:posted_unixtime).order('posted_unixtime DESC')
+  end
+
   def self.convert_time_to_date(unixtime_created_at)
     Time.zone.at(unixtime_created_at).strftime('%Y/%-m/%-d')
   end
