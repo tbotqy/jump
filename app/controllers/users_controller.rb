@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 
     # check if user has any friend
     unless User.find(@@current_user.id).has_friend?
-      @errorType = "no_friend_list" || "no_registored_frind"
+      @error_type = "no_friend_list" || "no_registored_frind"
       return
     end
     
@@ -86,7 +86,6 @@ class UsersController < ApplicationController
       @show_footer = true
       @oldest_timestamp = false
     end
-    
 =begin
 $this->set('isInitialRequest',true);
 =end
