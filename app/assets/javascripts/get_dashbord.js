@@ -6,12 +6,12 @@ $(function(){
 
   var elmWholeWrapper = $("#wrap-dashbord");
   // show the loading icon
-  elmWholeWrapper.html("<img src=\"/img/ajax-loader.gif\" alt=\"読込中\" />");
+  elmWholeWrapper.html("<img src=\"/assets/ajax-loader.gif\" alt=\"読込中\" />");
 
   var actionType = getDashbordType();
 
   var sendData = {
-      actionType:actionType
+      action_type:actionType
   };
 
   var elmErrorHtml = $(document.createElement("div")).html("<p>日付ナビゲーションの生成に失敗しました。<br/>画面をリロードして下さい。");
