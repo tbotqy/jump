@@ -121,16 +121,17 @@ class Status < ActiveRecord::Base
     day = parts[2].to_i
     
     ret = {}
+    offset_rational =  Rational( Time.zone.utc_offset/3600,24)
     case parts.size
     when 1 # only year is specified
-      ret[:from] = DateTime.new(year).beginning_of_year.to_i
-      ret[:to] = DateTime.new(year).end_of_year.to_i
+      ret[:from] = DateTime.new(year).new_offset( offset_rational ).beginning_of_year.to_i
+      ret[:to] = DateTime.new(year).new_offset( offset_rational ).end_of_year.to_i
     when 2 # year and month is specified
-      ret[:from] = DateTime.new(year,month).beginning_of_month.to_i
-      ret[:to] = DateTime.new(year,month).end_of_month.to_i
+      ret[:from] = DateTime.new(year,month).new_offset( offset_rational ).beginning_of_month.to_i
+      ret[:to] = DateTime.new(year,month).new_offset( offset_rational ).end_of_month.to_i
     when 3 # year and month and day is specified
-      ret[:from] = DateTime.new(year,month,day).beginning_of_day.to_i
-      ret[:to] = DateTime.new(year,month,day).end_of_day.to_i
+      ret[:from] = DateTime.new(year,month,day).new_offset( offset_rational ).beginning_of_day.to_i
+      ret[:to] = DateTime.new(year,month,day).new_offset( offset_rational ).end_of_day.to_i
     end
 
     ret
