@@ -59,8 +59,8 @@ class Status < ActiveRecord::Base
 
   def self.owned_by_active_user
     # used for users#public_timeline
-    active_user_ids = User.where(:deleted_flag => false)
-    self.where('statuses.user_id IN (?)',active_user_ids)
+    active_user_ids = User.select(:id).where(:deleted_flag => false)
+    self.where('statuses.user_id IN (?)',active_user_ids.plunk(:id))
   end
 
   # utils
