@@ -4,6 +4,7 @@ Tlviewer::Application.routes.draw do
   match "/statuses/import" => "statuses#import" 
   match "/your/tweets/(:date)" => "users#sent_tweets"
   match "/your/home_timeline/(:date)" => "users#home_timeline"
+  match "/your/public_timeline/(:date)" => "users#public_timeline"
   match "/logout" => "logs#logout"
 
   # The priority is based upon order of creation:
