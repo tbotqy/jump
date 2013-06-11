@@ -41,9 +41,10 @@ class Status < ActiveRecord::Base
     self.where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
   end
 
-  def self.get_status_older_than(threshold_unixtime,limit)
+  def self.get_status_older_than(threshold_unixtime,limit = 10,include_threshold = false)
     # used to proccess read more button's request
-    self.where('statuses.twitter_created_at <= ?',threshold_unixtime).limit(limit)
+    operator = include_threshold ? "<=" : "<"
+    self.where('statuses.twitter_created_at '+operator+' ?',threshold_unixtime).limit(limit)
   end
 
   def self.owned_by_current_user(user_id)
