@@ -99,21 +99,23 @@ class AjaxController < ApplicationController
    
     fetch_num = 10 # fetches 10 statuses at one request
     _fetch_num = fetch_num + 1 # plus 1 to check if 'read more buttton' should be shown in the view
-    
+
+    # fetch older statuses    
     case destination_action_type.to_s
     when 'tweets'
-      # fetch older statuses
-      @statuses = Status.get_older_status(@current_user.id,@oldest_timestamp,_fetch_num)
-      
-      # check if any older status exists
-      if @statuses.count != _fetch_num
-        @has_next = false
-      else
-        @statuses.pop
-        @has_next = true
-      end
-      @oldest_timestamp = @statuses.last.twitter_created_at
+      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_current_user(@current_user.id)
+    when 'home_timeline'
+      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_friend_of(@current_user.id)
     end
+
+    # check if any older status exists
+    if @statuses.count != _fetch_num
+      @has_next = false
+    else
+      @statuses.pop
+      @has_next = true
+    end
+    @oldest_timestamp = @statuses.last.twitter_created_at
     
     render :layout => false
   end
