@@ -3,8 +3,7 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, :dependent => :delete_all
-  default_scope where(:pre_saved => false)
-
+  default_scope where(:pre_saved => false).order('status_id_str DESC')
   def self.get_total_status_num
     self.count
   end
@@ -28,20 +27,45 @@ class Status < ActiveRecord::Base
       PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
     end
   end
+  
+  # get methods for retrieving timeline
 
-  def self.get_latest_status(user_id,limit)
-    self.includes(:user,:entities).where(:user_id => user_id).order('statuses.twitter_created_at DESC').limit(limit)
+  def self.get_latest_status(limit = 10)
+    self.limit(limit)
   end
 
-  def self.get_older_status(user_id,threshold_unixtime,limit = 10)
-     self.includes(:user,:entities).where('statuses.user_id = ? AND statuses.twitter_created_at < ?',user_id,threshold_unixtime).order('statuses.twitter_created_at DESC').limit(limit)
-  end
- 
-  def self.get_status_with_date(user_id,date,limit)
-    dates = calc_from_and_to_of(date)
-    self.includes(:user,:entities).where('statuses.user_id = ? AND statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',user_id,dates[:from],dates[:to]).order('statuses.twitter_created_at DESC').limit(limit)
+  def self.get_status_between(dates,limit = 10)
+    # used to create the timeline with term to include specified
+    date = calc_from_and_to_of(dates)
+    self.where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
   end
 
+  def self.get_status_older_than(threshold_unixtime,limit = 10,include_threshold = false)
+    # used to proccess read more button's request
+    operator = include_threshold ? "<=" : "<"
+    self.where('statuses.twitter_created_at '+operator+' ?',threshold_unixtime).limit(limit)
+  end
+
+  def self.owned_by_current_user(user_id)
+    # used for users#sent_tweets
+    self.where('statuses.user_id = ?',user_id)
+  end
+
+  def self.owned_by_friend_of(user_id)
+    # used for users#home_timeline
+    friend_ids = Friend.select(:following_twitter_id).where(:user_id => user_id)
+    self.where('statuses.twitter_id IN (?)',friend_ids.pluck(:following_twitter_id))
+  end
+
+  def self.owned_by_active_user
+    # used for users#public_timeline
+    active_user_ids = User.where(:deleted_flag => false)
+    self.where('statuses.user_id IN (?)',active_user_ids)
+  end
+
+  # utils
+
+  private
   def self.create_hash_to_save(user_id,tweet)
     ret = {}
     tweet = tweet[:attrs]
@@ -84,7 +108,8 @@ class Status < ActiveRecord::Base
 
     ret
   end
-  
+
+  private
   def self.calc_from_and_to_of(date)
   # calculate the start/end date of given date in unixtime
 
@@ -96,16 +121,17 @@ class Status < ActiveRecord::Base
     day = parts[2].to_i
     
     ret = {}
+    offset_rational =  Rational( Time.zone.utc_offset/3600,24)
     case parts.size
     when 1 # only year is specified
-      ret[:from] = DateTime.new(year).beginning_of_year.to_i
-      ret[:to] = DateTime.new(year).end_of_year.to_i
+      ret[:from] = DateTime.new(year).new_offset( offset_rational ).beginning_of_year.to_i
+      ret[:to] = DateTime.new(year).new_offset( offset_rational ).end_of_year.to_i
     when 2 # year and month is specified
-      ret[:from] = DateTime.new(year,month).beginning_of_month.to_i
-      ret[:to] = DateTime.new(year,month).end_of_month.to_i
+      ret[:from] = DateTime.new(year,month).new_offset( offset_rational ).beginning_of_month.to_i
+      ret[:to] = DateTime.new(year,month).new_offset( offset_rational ).end_of_month.to_i
     when 3 # year and month and day is specified
-      ret[:from] = DateTime.new(year,month,day).beginning_of_day.to_i
-      ret[:to] = DateTime.new(year,month,day).end_of_day.to_i
+      ret[:from] = DateTime.new(year,month,day).new_offset( offset_rational ).beginning_of_day.to_i
+      ret[:to] = DateTime.new(year,month,day).new_offset( offset_rational ).end_of_day.to_i
     end
 
     ret

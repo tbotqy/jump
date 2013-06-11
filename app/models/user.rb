@@ -3,6 +3,10 @@ class User < ActiveRecord::Base
   has_many :statuses
   has_many :friends
 
+  def has_friend?
+    Friend.exists?(:user_id=>self.id)
+  end
+
   def self.create_account(auth)
     info = auth.extra.raw_info
 
