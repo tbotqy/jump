@@ -27,6 +27,38 @@ class Status < ActiveRecord::Base
       PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
     end
   end
+
+  def self.get_date_list(type_of_timeline,user_id = nil)
+    unixtime_list = self.get_twitter_created_at_list(type_of_timeline,user_id)
+    self.seriarize_unixtime_list(unixtime_list)
+  end
+
+  def self.seriarize_unixtime_list(unixtime_list)
+   
+    # create 3D hash
+    ret = Hash.new { |hash,key| hash[key] = Hash.new { |hash,key| hash[key] = {} } }
+    
+    unixtime_list.each do |t|
+      
+      y = Time.zone.at(t).year.to_s
+      m = Time.zone.at(t).month.to_s
+      d = Time.zone.at(t).day.to_s
+
+      ret[y.to_s][m.to_s][d.to_s] = y+"-"+m+"-"+d
+    end
+    ret
+  end
+
+  def self.get_twitter_created_at_list(type_of_timeline,user_id = nil)
+    case type_of_timeline
+    when 'sent_tweets'
+      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_current_user(user_id).pluck(:twitter_created_at)
+    when 'home_timeline'
+      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).pluck(:twitter_created_at)
+    when 'public_timeline'
+      PublicDate.get_list.pluck(:posted_unixtime)
+    end
+  end
   
   # get methods for retrieving timeline
 

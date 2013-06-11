@@ -121,4 +121,26 @@ class AjaxController < ApplicationController
     
     render :layout => false
   end
+
+  def get_dashbord
+
+    @action_type = params[:action_type]
+
+    raise "action type is not specified" if !@action_type
+
+    @date_list = Status.get_date_list(@action_type,@current_user.id)
+    
+    @base_url = ""
+    case @action_type
+    when 'public_timeline'
+      @base_url = "/public_timeline"
+    when 'sent_tweets'
+      @base_url = "/your/tweets"
+    when 'home_timeline'
+      @base_url = "/your/home_timeline"
+    end
+
+    render :layout => false
+  end
+  
 end
