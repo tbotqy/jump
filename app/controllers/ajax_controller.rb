@@ -106,6 +106,8 @@ class AjaxController < ApplicationController
       @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_current_user(@current_user.id)
     when 'home_timeline'
       @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_friend_of(@current_user.id)
+    when 'public_timeline'
+      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_active_user
     end
 
     # check if any older status exists
