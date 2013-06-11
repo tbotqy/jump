@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+# -*- coding: utf-8 -*-
 module ApplicationHelper
   def logged_in?
     session[:user_id] ? true : false

@@ -16,6 +16,7 @@ rerun.txt
 pickle-email-*.html
 /config/twitter_keys.yml
 #*
+*#
 .#*
 *~
 wget-log
