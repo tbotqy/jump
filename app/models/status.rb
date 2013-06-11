@@ -3,8 +3,7 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, :dependent => :delete_all
-  default_scope where(:pre_saved => false).order('twitter_created_at DESC')
-  
+  default_scope where(:pre_saved => false).order('status_id_str DESC')
   def self.get_total_status_num
     self.count
   end
