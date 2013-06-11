@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
 
-  before_filter :check_login, :except => ["index"]
+  before_filter :check_login, :except => ["index","public_timeline"]
   
   def index
     # check if user is logged in
@@ -66,7 +66,6 @@ class UsersController < ApplicationController
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      # @statuses = Status.get_status_with_date(@@current_user,specified_date,initial_fetch_num)
       @statuses = Status.get_status_between(specified_date,initial_fetch_num).owned_by_friend_of(@@current_user.id)
     else
       # just fetch 10(+1) latest statuses
@@ -101,11 +100,10 @@ class UsersController < ApplicationController
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      # @statuses = Status.get_status_with_date(@@current_user,specified_date,initial_fetch_num)
-      @statuses = Status.get_status_between(specified_date,initial_fetch_num).owned_by_friend_of(@@current_user.id)
+      @statuses = Status.get_status_between(specified_date,initial_fetch_num).owned_by_active_user
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_friend_of(@@current_user.id)
+      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_active_user
     end
     
     if @statuses.present?
