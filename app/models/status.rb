@@ -4,9 +4,6 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :entities, :dependent => :delete_all
   default_scope where(:pre_saved => false).order('status_id_str DESC')
-  def self.get_total_status_num
-    self.count
-  end
   
   def self.delete_pre_saved_status(user_id)
     self.delete_all(:user_id => user_id, :pre_saved => true)

@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       redirect_to :action => "home_timeline"
     else
       @show_footer = true
-      @total_status_num = Status.get_total_status_num
+      @total_status_num = Status.owned_by_active_user.count
     end
   end
   
@@ -119,10 +119,5 @@ class UsersController < ApplicationController
       @show_footer = true
       @oldest_timestamp = false
     end
-  end
-
-  def setting
-    
-  end
-  
+  end  
 end
