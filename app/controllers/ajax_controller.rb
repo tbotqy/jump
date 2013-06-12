@@ -7,6 +7,59 @@ class AjaxController < ApplicationController
     redirect_to :status => :method_not_allowed  unless request.xhr?
   end
 
+  def read_more
+    @oldest_timestamp = params[:oldest_timestamp]
+    destination_action_type = params[:destination_action_type]
+ 
+    @statuses = nil
+    @has_next = false
+   
+    fetch_num = 10 # fetches 10 statuses at one request
+    _fetch_num = fetch_num + 1 # plus 1 to check if 'read more buttton' should be shown in the view
+
+    # fetch older statuses    
+    case destination_action_type.to_s
+    when 'tweets'
+      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_current_user(@current_user.id)
+    when 'home_timeline'
+      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_friend_of(@current_user.id)
+    when 'public_timeline'
+      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_active_user
+    end
+
+    # check if any older status exists
+    if @statuses.count != _fetch_num
+      @has_next = false
+    else
+      @statuses.pop
+      @has_next = true
+    end
+    @oldest_timestamp = @statuses.last.twitter_created_at
+    
+    render :layout => false
+  end
+
+  def get_dashbord
+
+    @action_type = params[:action_type]
+
+    raise "action type is not specified" if !@action_type
+
+    @date_list = Status.get_date_list(@action_type,@current_user.id)
+    
+    @base_url = ""
+    case @action_type
+    when 'public_timeline'
+      @base_url = "/public_timeline"
+    when 'sent_tweets'
+      @base_url = "/your/tweets"
+    when 'home_timeline'
+      @base_url = "/your/home_timeline"
+    end
+
+    render :layout => false
+  end
+
   def acquire_statuses
     # calls twitter api to retrieve user's twitter statuses and returns json
 
@@ -88,59 +141,6 @@ class AjaxController < ApplicationController
     end
     
     render :json => ret
-  end
-
-  def read_more
-    @oldest_timestamp = params[:oldest_timestamp]
-    destination_action_type = params[:destination_action_type]
- 
-    @statuses = nil
-    @has_next = false
-   
-    fetch_num = 10 # fetches 10 statuses at one request
-    _fetch_num = fetch_num + 1 # plus 1 to check if 'read more buttton' should be shown in the view
-
-    # fetch older statuses    
-    case destination_action_type.to_s
-    when 'tweets'
-      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_current_user(@current_user.id)
-    when 'home_timeline'
-      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_friend_of(@current_user.id)
-    when 'public_timeline'
-      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_active_user
-    end
-
-    # check if any older status exists
-    if @statuses.count != _fetch_num
-      @has_next = false
-    else
-      @statuses.pop
-      @has_next = true
-    end
-    @oldest_timestamp = @statuses.last.twitter_created_at
-    
-    render :layout => false
-  end
-
-  def get_dashbord
-
-    @action_type = params[:action_type]
-
-    raise "action type is not specified" if !@action_type
-
-    @date_list = Status.get_date_list(@action_type,@current_user.id)
-    
-    @base_url = ""
-    case @action_type
-    when 'public_timeline'
-      @base_url = "/public_timeline"
-    when 'sent_tweets'
-      @base_url = "/your/tweets"
-    when 'home_timeline'
-      @base_url = "/your/home_timeline"
-    end
-
-    render :layout => false
   end
   
 end
