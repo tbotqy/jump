@@ -1266,26 +1266,26 @@ footer .copyright{
   right: -2px;
 }
 /* --------------------------------------------------
-   users.configurations
+   users.setting
 -------------------------------------------------- */
 
-#wrap-configurations{ 
+#wrap-setting{ 
   width:1085px;
   margin: 20px auto;
 }
 
-#wrap-configurations h1{ 
+#wrap-setting h1{ 
   text-align: left;
   width: 100%;
   float: left;
   border-bottom: solid 1px gray;
 }
 
-#wrap-configurations h1 span{ 
+#wrap-setting h1 span{ 
   font-size: 70%;
 }
 
-#wrap-configurations .wrap-profile{ 
+#wrap-setting .wrap-profile{ 
   width: 100%;
   float: left;
   margin: 20px 0 10px 0;
@@ -1297,81 +1297,81 @@ footer .copyright{
 
 }
 
-#wrap-configurations .wrap-profile .area-profile-image{ 
+#wrap-setting .wrap-profile .area-profile-image{ 
   float: left;
   width: 80px;
   height: 80px;
   padding: 10px;
 }
 
-#wrap-configurations .wrap-profile .area-profile-image img{ 
+#wrap-setting .wrap-profile .area-profile-image img{ 
   border-radius: 2px;
 }
 
-#wrap-configurations .wrap-profile .area-center{ 
+#wrap-setting .wrap-profile .area-center{ 
   width: 835px;
   float: left;
 }
 
-#wrap-configurations .wrap-profile .area-names{ 
+#wrap-setting .wrap-profile .area-names{ 
   float: left;
   width: 730px;
   margin-top:15px;
   
 }
 
-#wrap-configurations .wrap-profile .area-names p{ 
+#wrap-setting .wrap-profile .area-names p{ 
   padding-left: 10px;
   font-size: 150%;
 }
 
-#wrap-configurations .wrap-profile .area-updated{ 
+#wrap-setting .wrap-profile .area-updated{ 
   float: left;
   width: 210px;  
 }
 
-#wrap-configurations .wrap-profile .area-updated p{ 
+#wrap-setting .wrap-profile .area-updated p{ 
   font-size: 80%;
   padding-left: 10px;
   color: #696969;
 } 
 
-#wrap-configurations .wrap-profile .area-result{ 
+#wrap-setting .wrap-profile .area-result{ 
   float: left;
   width: 520px;
   margin: -1px 0 0 0;
 }
 
-#wrap-configurations .wrap-profile .area-result .alert{ 
+#wrap-setting .wrap-profile .area-result .alert{ 
   text-align: center;
   padding: 10px;
   display: none;
   font-size: 70%;
 }
 
-#wrap-configurations .wrap-profile .area-button{
+#wrap-setting .wrap-profile .area-button{
   float: left;
   margin-top: 35px;
   margin-left: 2px;
   width: 148px;
 } 
 
-#wrap-configurations .wrap-profile .area-button button{
+#wrap-setting .wrap-profile .area-button button{
   float: left;
 }
 
-#wrap-configurations .wrap-profile .area-button span{
+#wrap-setting .wrap-profile .area-button span{
   float: left;
   font-size:80%;
   padding-top: 4px;
 }
 
-#wrap-configurations .wrap-profile .loader{
+#wrap-setting .wrap-profile .loader{
   float: left;
   margin: 2px 0 0 10px;
 }
 
-#wrap-configurations .table{ 
+#wrap-setting .table{ 
   margin: 10px 0 20px 0;
   float: left;
   border-top: solid 1px #fefefe;
@@ -1381,26 +1381,26 @@ footer .copyright{
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);  
 }
 
-#wrap-configurations .table td{ 
+#wrap-setting .table td{ 
   line-height: 30px;
   padding-left: 10px;
 }
 
   
 
-#wrap-configurations .table tbody{ 
+#wrap-setting .table tbody{ 
   border-top: solid 1px #fefefe;
   border-bottom: solid 1px #d7d7d7;  
 }
 
-#wrap-configurations .total-num{
+#wrap-setting .total-num{
   float: left;
   width: 50px;
   text-align: right;
   padding-right: 5px;
 }
 
-#wrap-configurations .additional-num{
+#wrap-setting .additional-num{
   position: relative;
   top: -1px;
   left: 5px;
@@ -1413,31 +1413,31 @@ footer .copyright{
   display:none;
 }
 
-#wrap-configurations tbody .count{ 
+#wrap-setting tbody .count{ 
   width: 210px;
 }
 
-#wrap-configurations tbody .button{ 
+#wrap-setting tbody .button{ 
   width: 200px;
 }
 
-#wrap-configurations tbody button{ 
+#wrap-setting tbody button{ 
   float: left;
   margin: 0 0 0 60px;
 }
 
-#wrap-configurations tbody .loader{ 
+#wrap-setting tbody .loader{ 
   float: left;
   margin: 2px 0 0 10px;
 }
 
-#wrap-configurations .wrap-delete-button{ 
+#wrap-setting .wrap-delete-button{ 
   border-top: solid 1px #c0c0c0;
   float: left;
   width: 100%;
 }
 
-#wrap-configurations .wrap-delete-button button{ 
+#wrap-setting .wrap-delete-button button{ 
   float: right;
   margin: 8px 0 0 0;
 }

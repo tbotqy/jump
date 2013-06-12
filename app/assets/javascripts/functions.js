@@ -88,7 +88,7 @@ function checkStatusUpdate(){
   
   var doUpdate = false;
   var updated_date = "";
-  var box_tweets =$("#wrap-configurations").find(".tweets");
+  var box_tweets =$("#wrap-setting").find(".tweets");
  
   $.ajax({
       
@@ -146,7 +146,7 @@ function checkFriendUpdate(){
   var count;
   var updated;
   var updated_date;
-  var area_friends = $("#wrap-configurations").find(".friends");
+  var area_friends = $("#wrap-setting").find(".friends");
 
   $.ajax({
 
@@ -298,7 +298,7 @@ var updated_date = "";
 
 function updateStatus(){
   
-  var area_tweets = $("#wrap-configurations").find(".tweets");
+  var area_tweets = $("#wrap-setting").find(".tweets");
   var update_button = $("#update-statuses");
   
   $.ajax({

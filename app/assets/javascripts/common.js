@@ -165,12 +165,12 @@ $(function(){
   });
 
   ////////////////////////////////////
-  // code for /users/configurations //
+  // code for /users/setting        //
   ////////////////////////////////////
 
   /**
-   *    * the process to update profile
-   *    */
+   * the process to update profile
+   */
 
   $("#update-profile").click(function(){
     var self = $(this);
