@@ -14,3 +14,5 @@
 //= require bootstrap.min
 //= require functions
 //= require common
+//= require get_dashbord
+//= require popstate
