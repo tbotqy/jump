@@ -1,5 +1,6 @@
-(function(){
-
+$(function(){
+  if( $("#wrap-dashbord").size() == 0 ) return;
+  
   /////////////////////////////
   // code for popstate event //
   /////////////////////////////

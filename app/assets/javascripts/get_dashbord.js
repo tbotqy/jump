@@ -4,6 +4,9 @@ $(function(){
    * acquires html code for dashbord and insert it to the html
    */
 
+  // check if dashbord already exists
+  if( $("#wrap-term-selectors").size() > 0 ) return;
+
   var elmWholeWrapper = $("#wrap-dashbord");
   // show the loading icon
   elmWholeWrapper.html("<img src=\"/assets/ajax-loader.gif\" alt=\"読込中\" />");
