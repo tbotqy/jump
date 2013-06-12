@@ -21,9 +21,9 @@ class User < ActiveRecord::Base
       :lang => info.lang,
       :token => auth.credentials.token,
       :token_secret => auth.credentials.secret,
-      :token_updated => false,
-      :statuses_updated => false,
-      :friends_updated => false,
+      :token_updated_at => false,
+      :statuses_updated_at => false,
+      :friends_updated_at => false,
       :closed_only => false,
       :initialized_flag => false,
       :deleted_flag => false,
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
         :lang => info.lang,
         :token => auth.credentials.token,
         :token_secret => auth.credentials.secret,
-        :token_updated => true,
+        :token_updated_at => true,
         :updated_at => Time.zone.now.to_i
       })
   end

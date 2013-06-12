@@ -4,7 +4,13 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :entities, :dependent => :delete_all
   default_scope where(:pre_saved => false).order('status_id_str DESC')
+  after_save :update_user_timestamp
   
+  def update_user_timestamp
+    user_id = self.user_id
+    User.find(user_id).update_attribute(:statuses_updated_at,Time.now.to_i)
+  end
+
   def self.delete_pre_saved_status(user_id)
     self.delete_all(:user_id => user_id, :pre_saved => true)
   end
