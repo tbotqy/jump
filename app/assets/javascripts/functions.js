@@ -593,7 +593,7 @@ function ajaxSwitchTerm(date,action_type,mode){
    * @param action_type : the type of timeline
    * @param mode : the name of event which fired this function
    */
-  
+
   if(!date || !action_type || !action_type || !mode){
     alert("required params not supplied");
     return ;
@@ -609,7 +609,7 @@ function ajaxSwitchTerm(date,action_type,mode){
   cover.animate({
     opacity: 0.8
   },200);
-    
+  
   // fetch statuses 
   $.ajax({
     type: 'GET',

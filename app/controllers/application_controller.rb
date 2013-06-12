@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   
   def set_vars
     @@current_user = get_current_user || nil
+    @@user_id = @@current_user ? @@current_user.id : nil
     @show_footer = false
     @current_user = @@current_user
   end
