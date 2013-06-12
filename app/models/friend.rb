@@ -2,7 +2,7 @@ class Friend < ActiveRecord::Base
   belongs_to :user
 
   def self.save_friends(user_id,friend_ids)
-    created_at = Time.zone.now.to_i
+    created_at = Time.now.to_i
     
     friend_ids.each do |fid|
       self.create(
@@ -17,7 +17,7 @@ class Friend < ActiveRecord::Base
       if u.nil?
         put "not found"
       else
-        u.update_attribute(:friends_updated,created_at)
+        u.update_attribute(:friends_updated_at,created_at)
       end
     end
   end

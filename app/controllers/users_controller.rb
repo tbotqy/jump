@@ -119,5 +119,16 @@ class UsersController < ApplicationController
       @show_footer = true
       @oldest_timestamp = false
     end
-  end  
+  end
+
+  def setting
+    @title = "データ管理"
+    @count_statuses = @@current_user.statuses.count
+    @count_friends = @@current_user.friends.count
+    @status_updated_at = Time.zone.at(@@current_user.statuses_updated_at).strftime('%F %T')
+    @friend_updated_at = Time.zone.at(@@current_user.friends_updated_at).strftime('%F %T')
+    @profile_updated_at = Time.zone.at(@@current_user.updated_at).strftime('%F %T')
+    @show_footer = true
+  end
+  
 end

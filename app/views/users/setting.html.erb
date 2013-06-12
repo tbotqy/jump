@@ -1,43 +1,29 @@
 <!-- #wrap-setting -->
 <div id="wrap-setting">
-  
   <h1><i class="icon-hdd"></i><span>データ管理</span></h1>
-
   <!-- .wrap-profile -->
   <div class="wrap-profile">
-        
     <div class="area-profile-image">
-      <img class="profile-image-url-https" src="<?php echo str_replace('_normal','_reasonably_small',$loggingUser['Twitter']['profile_image_url_https']); ?>" />
+      <img class="profile-image-url-https" src="<%= @current_user.profile_image_url_https.to_s.gsub(/_normal/,'_reasonably_small') %>">
     </div>
-    
     <div class="area-center">
       <div class="area-names">
-
-	<p class="name"><?php echo $loggingUser['Twitter']['name'];?></p>
-
-	<p>@<span class="screen-name"><?php echo $loggingUser['Twitter']['screen_name'];?></span></p>
-
+	<p class="name"><%= @current_user.name %></p>
+	<p>@<span class="screen-name"><%= @current_user.screen_name %></span></p>
       </div>
-    
       <div class="area-updated">
-          <p>最終更新 : <span class="updated-date"><?php echo $profile_updated_time;?></span></p>
+        <p>最終更新 : <span class="updated-date"><%= @profile_updated_at %></span></p>
       </div>
-    
       <div class="area-result">
 	<span class="alert"></span>
       </div>
-
     </div>
     <!-- /.area-center -->
-    
     <div class="area-button">
       <button id="update-profile" class="btn btn-success" data-loading-text="読み込み中"><i class="icon-refresh"></i>更新</button>
-
     </div>
-
   </div>
   <!-- /.wrap-profile -->
-
   <table class="table">
 <!--  
     <thead>
@@ -50,42 +36,33 @@
     </thead>
 -->
     <tbody>
-
       <tr class="tweets">
 	<td class="head">ツイート</td>
 	<td class="count">
-	  <span class="total-num"><?php echo $count_statuses;?></span>件
+	  <span class="total-num"><%= @count_statuses %></span>件
 	  <span class="additional-num"></span>
 	</td>
-	<td class="last-update"><span class="date"><?php echo $status_updated_time;?></span></td>
+	<td class="last-update"><span class="date"><%= @status_updated_at %></span></td>
 	<td class="button">
 	  <button id="update-statuses" class="btn btn-success" data-loading-text="読み込み中"><i class="icon-refresh icon-white"></i>更新</button>
 	</td>
       </tr>
-      
       <tr class="friends">
 	<td class="head">フォローリスト</td>
 	<td class="count">
-	  <span class="total-num"><?php echo $count_friends;?></span>件
+	  <span class="total-num"><%= @count_friends %></span>件
 	  <span class="additional-num"></span>
 	</td>
-	<td class="last-update"><span class="date"><?php echo $friend_updated_time;?></span></td>
+	<td class="last-update"><span class="date"><%= @friend_updated_at %></span></td>
 	<td class="button"><button id="update-friends" class="btn btn-success" data-loading-text="読み込み中">
 	    <i class="icon-refresh icon-white"></i>更新</button>
 	</td>
       </tr>
-
     </tbody>      
-
   </table>
-  
   <div class="wrap-delete-button">
     <button class="btn btn-danger" href="#modal-delete-account" data-toggle="modal"><i class="icon-trash icon-white"></i>アカウントを削除する</button>
   </div>
-  
 </div>
 <!-- /#wrap-setting -->
-
-<?php
-    echo $this->element('modal-delete-account');
-?>
+<%= render "shared/modal_delete_account" %>
