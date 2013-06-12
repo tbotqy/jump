@@ -120,5 +120,9 @@ class UsersController < ApplicationController
       @oldest_timestamp = false
     end
   end
+
+  def setting
+    
+  end
   
 end
