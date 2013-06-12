@@ -26,10 +26,10 @@ class UsersController < ApplicationController
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_between(specified_date,initial_fetch_num).owned_by_current_user(@@current_user.id)
+      @statuses = Status.get_status_between(specified_date,initial_fetch_num).owned_by_current_user(@@user_id)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_current_user(@@current_user.id)
+      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_current_user(@@user_id)
     end
     
     if @statuses.present?
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
     @title = "ホームタイムライン"
 
     # check if user has any friend
-    unless User.find(@@current_user.id).has_friend?
+    unless User.find(@@user_id).has_friend?
       @error_type = "no_friend_list" || "no_registored_frind"
       return
     end
@@ -66,10 +66,10 @@ class UsersController < ApplicationController
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_between(specified_date,initial_fetch_num).owned_by_friend_of(@@current_user.id)
+      @statuses = Status.get_status_between(specified_date,initial_fetch_num).owned_by_friend_of(@@user_id)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_friend_of(@@current_user.id)
+      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_friend_of(@@user_id)
     end
     
     if @statuses.present?
