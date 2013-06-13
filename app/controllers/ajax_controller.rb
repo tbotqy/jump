@@ -2,10 +2,23 @@
 class AjaxController < ApplicationController
 
   before_filter :reject_non_ajax
+  before_filter :check_login, :exept => ['read_more']
   layout false
 
   def reject_non_ajax
     redirect_to :status => :method_not_allowed  unless request.xhr?
+  end
+
+  def check_profile_update
+  end
+  
+  def check_friend_update
+  end
+
+  def check_status_update
+  end
+
+  def deactivate_account
   end
 
   def read_more
