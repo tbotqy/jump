@@ -97,11 +97,7 @@ function checkStatusUpdate(){
     dataType:"json",
     
     success: function(responce){
-  
-      doUpdate = responce.result;
-      updated_date = responce.updated_date;
-     
-      if(doUpdate){
+      if(responce.do_update){
 	
 	updateStatus();
 	
@@ -117,7 +113,7 @@ function checkStatusUpdate(){
 	}).fadeIn();
 	
 	box_tweets.find(".last-update .date").fadeOut(function(){
-	  $(this).text(updated_date);
+	  $(this).text(responce.checked_at);
 	}).fadeIn();
 	
       }
