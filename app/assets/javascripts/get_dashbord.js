@@ -3,7 +3,9 @@ $(function(){
   /**
    * acquires html code for dashbord and insert it to the html
    */
-
+  // check if dashbord should be requested
+  if( $("#wrap-timeline-lower").size() == 0 ) return;
+  
   // check if dashbord already exists
   if( $("#wrap-term-selectors").size() > 0 ) return;
 

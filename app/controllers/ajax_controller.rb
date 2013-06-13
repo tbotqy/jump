@@ -10,6 +10,30 @@ class AjaxController < ApplicationController
   end
 
   def check_profile_update
+    ret = {}
+
+    values_to_check = ['name','screen_name','profile_image_url_https','time_zone','utc_offset','lang']
+    fresh_data = create_twitter_client.user(@@current_user.twitter_id)
+    existing_data = @@current_user.attribute
+    
+    updated = false
+    updated_value = {}
+    # check for each value
+    values_to_check.each do |value_name|
+      new_data = fresh_data[value_name]
+      if new_data != existing_data[value_name]
+        # udpate db with fresh data
+        @@current_user.update_attribute(value_name,new_data)
+        updated = true
+        updated_value[value_name] = new_data
+      end
+    end
+    
+    ret[:updated] = updated     
+    ret[:updated_value] = updated_value
+    ret[:updated_date] = Time.zone.at(@@current_user.updated_at.to_i).strftime('%F %T')
+    
+    render :json => ret
   end
   
   def check_friend_update
@@ -194,6 +218,6 @@ class AjaxController < ApplicationController
       @show_footer = true
       @oldest_timestamp = false
     end
-    
   end
+
 end
