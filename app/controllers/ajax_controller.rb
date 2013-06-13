@@ -35,14 +35,37 @@ class AjaxController < ApplicationController
     
     render :json => ret
   end
+
+  def check_status_update
+    # just check if status can be updated
+    ret = {}
+
+    api_params = {:user_id => @@user_id, :count => 1, :include_rts => true}
+    
+    # check if new status exists by comparing posted time
+    latest_tweet = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
+    fresh_latest_created_at = Time.zone.parse(latest_tweet[0][:attrs][:created_at].to_s).to_i
+    existing_latest_created_at = Status.find(:first,:select => 'twitter_created_at',:order => 'twitter_created_at DESC')
+    # if fresh data's timestamp is greater than existing one, answers true
+    ret['do_update'] = fresh_latest_created_at.to_i > existing_latest_created_at.twitter_created_at.to_i
+    
+    unless ret['do_update']
+      # mark current time
+      checked_at = Time.zone.now
+      User.find(@@user_id).update_attribute(:statuses_updated_at,checked_at.to_i)
+      ret['checked_at'] = checked_at.strftime("%F %T")
+    end
+    
+    render :json => ret 
+  end
   
   def check_friend_update
   end
 
-  def check_status_update
+  def deactivate_account
   end
 
-  def deactivate_account
+  def update_status
   end
 
   def read_more
