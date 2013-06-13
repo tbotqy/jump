@@ -14,7 +14,7 @@ class AjaxController < ApplicationController
 
     values_to_check = ['name','screen_name','profile_image_url_https','time_zone','utc_offset','lang']
     fresh_data = create_twitter_client.user(@@current_user.twitter_id)
-    existing_data = @@current_user.attribute
+    existing_data = @@current_user.attributes
     
     updated = false
     updated_value = {}
