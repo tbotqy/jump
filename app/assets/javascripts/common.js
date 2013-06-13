@@ -178,7 +178,7 @@ $(function(){
     self.button('loading');
 
     // show the loading icon 
-    self.after("<img class=\"loader\" src=\"/img/ajax-loader.gif\" />");
+    self.after("<img class=\"loader\" src=\"/assets/ajax-loader.gif\" />");
     $(".wrap-profile").find(".loader").fadeIn();
 
     checkProfileUpdate();
@@ -195,7 +195,7 @@ $(function(){
     self.button('loading');
 
     // show the loading icon 
-    self.after("<img class=\"loader\" src=\"/img/ajax-loader.gif\" />");
+    self.after("<img class=\"loader\" src=\"/assets/ajax-loader.gif\" />");
     $(".tweets").find(".loader").fadeIn();
 
     checkStatusUpdate();
@@ -213,7 +213,7 @@ $(function(){
     self.button('loading');
 
     // show the loading icon
-    self.after("<img class=\"loader\" src=\"/img/ajax-loader.gif\" />");
+    self.after("<img class=\"loader\" src=\"/assets/ajax-loader.gif\" />");
     $(".friends").find(".loader").fadeIn();
 
     checkFriendUpdate();
@@ -238,7 +238,7 @@ $(function(){
     elmModalDeleteAccount
       .find(".status")
       .fadeOut(function(){
-      $(this).html("処理中...<img src=\"/img/ajax-loader.gif\" class=\"loader\" />"); 
+      $(this).html("処理中...<img src=\"/assets/ajax-loader.gif\" class=\"loader\" />"); 
       })
       .fadeIn();
     
