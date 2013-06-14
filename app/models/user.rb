@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
 
-  has_many :statuses
-  has_many :friends
-
+  has_many :statuses, :dependent => :delete_all
+  has_many :friends, :dependent => :delete_all
+  
   def has_friend?
     Friend.exists?(:user_id=>self.id)
   end
@@ -52,6 +52,11 @@ class User < ActiveRecord::Base
         :token_updated_at => true,
         :updated_at => Time.zone.now.to_i
       })
+  end
+
+  def self.deactivate_account(user_id)
+    # just turn the flag off, not actually delete account from database
+    self.find(user_id).update_attribute(:deleted_flag,true)
   end
 
   def self.twitter_id_exists?(twitter_id)
