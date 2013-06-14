@@ -69,7 +69,7 @@ class AjaxController < ApplicationController
   def check_friend_update
     # initialization
     ret = {}
-    do_update = false # will be overwritten some times
+    do_update = false
     
     # fetch the list of user's friends
     existing_friend_ids = Friend.get_list.owned_by_current_user(@@user_id).pluck(:following_twitter_id)
