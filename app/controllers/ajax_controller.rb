@@ -2,7 +2,7 @@
 class AjaxController < ApplicationController
 
   before_filter :reject_non_ajax
-  before_filter :check_login, :exept => ['read_more']
+  before_filter :check_login, :except => ['reject_non_ajax','get_dashbord','read_more','switch_term']
   layout false
 
   def reject_non_ajax
