@@ -11,7 +11,7 @@ class Friend < ActiveRecord::Base
         :created_at => created_at
         )
     end
-  
+    
     # update the time stamp in User model
     User.find(user_id) do |u|
       if u.nil?

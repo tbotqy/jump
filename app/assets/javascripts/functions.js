@@ -299,7 +299,7 @@ function updateStatus(){
   
   $.ajax({
     
-    url:"/ajax/update_statuses",
+    url:"/ajax/update_status",
     type:"post",
     dataType:"json",
     data:{"oldest_id_str":oldest_id_str},
@@ -310,7 +310,7 @@ function updateStatus(){
 
       if(continue_process){
 	
-	total_count += responce.count_saved;
+	total_count += responce.saved_count;
 	oldest_id_str = responce.oldest_id_str;
 
 	// show the total number of statuses that have been imported so far
@@ -322,7 +322,7 @@ function updateStatus(){
 	
       }else{
 	  
-	total_count += responce.count_saved;
+	total_count += responce.saved_count;
 
 	var final_total = 0;
 	var current_num = parseInt($(".tweets").find(".count .total-num").text());
