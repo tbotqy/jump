@@ -399,7 +399,7 @@ function showDeleteErrorMessage(){
 
 function redirect(){
  
-  location.href="/users/logout";
+  location.href="/logout";
 
 }
 
