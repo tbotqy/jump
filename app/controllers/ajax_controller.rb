@@ -108,6 +108,28 @@ class AjaxController < ApplicationController
     render :json => ret
   end
 
+  def delete_status
+    ret = {}
+    status_id = params[:status_id_to_delete]
+    deleted = false;
+    owns = false;
+        
+    # check if user owns the status with given status_id
+    if Status.where(:user_id => @@user_id,:id => status_id).exists?
+      
+      # delete the status and turn the flag
+      if Status.find(status_id).destroy
+        deleted = true
+        owns = true
+      end
+    end
+       
+    ret[:deleted] = deleted
+    ret[:owns] = owns
+
+    render :json => ret
+  end
+
   def update_status
     # initialization
     count_saved = 0
