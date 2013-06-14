@@ -88,7 +88,7 @@ function checkStatusUpdate(){
   
   var doUpdate = false;
   var updated_date = "";
-  var box_tweets =$("#wrap-configurations").find(".tweets");
+  var box_tweets =$("#wrap-setting").find(".tweets");
  
   $.ajax({
       
@@ -97,11 +97,7 @@ function checkStatusUpdate(){
     dataType:"json",
     
     success: function(responce){
-  
-      doUpdate = responce.result;
-      updated_date = responce.updated_date;
-     
-      if(doUpdate){
+      if(responce.do_update){
 	
 	updateStatus();
 	
@@ -117,7 +113,7 @@ function checkStatusUpdate(){
 	}).fadeIn();
 	
 	box_tweets.find(".last-update .date").fadeOut(function(){
-	  $(this).text(updated_date);
+	  $(this).text(responce.checked_at);
 	}).fadeIn();
 	
       }
@@ -146,7 +142,7 @@ function checkFriendUpdate(){
   var count;
   var updated;
   var updated_date;
-  var area_friends = $("#wrap-configurations").find(".friends");
+  var area_friends = $("#wrap-setting").find(".friends");
 
   $.ajax({
 
@@ -298,12 +294,12 @@ var updated_date = "";
 
 function updateStatus(){
   
-  var area_tweets = $("#wrap-configurations").find(".tweets");
+  var area_tweets = $("#wrap-setting").find(".tweets");
   var update_button = $("#update-statuses");
   
   $.ajax({
     
-    url:"/ajax/update_statuses",
+    url:"/ajax/update_status",
     type:"post",
     dataType:"json",
     data:{"oldest_id_str":oldest_id_str},
@@ -314,7 +310,7 @@ function updateStatus(){
 
       if(continue_process){
 	
-	total_count += responce.count_saved;
+	total_count += responce.saved_count;
 	oldest_id_str = responce.oldest_id_str;
 
 	// show the total number of statuses that have been imported so far
@@ -326,7 +322,7 @@ function updateStatus(){
 	
       }else{
 	  
-	total_count += responce.count_saved;
+	total_count += responce.saved_count;
 
 	var final_total = 0;
 	var current_num = parseInt($(".tweets").find(".count .total-num").text());
