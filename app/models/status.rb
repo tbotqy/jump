@@ -21,14 +21,18 @@ class Status < ActiveRecord::Base
 
   def self.save_statuses(user_id,tweets)
     tweets.each do |tweet|
-      new_record = Status.create( self.create_hash_to_save(user_id,tweet) )
-      
-      # also save the entity belongs to the tweet
-      Entity.save_entities(new_record.id.to_i,tweet)
-        
-      # save status's created_at value to the table of its list
-      PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
+      self.save_single_status(user_id,tweet)
     end
+  end
+
+  def self.save_single_status(user_id,tweet)
+    new_record = Status.create( self.create_hash_to_save(user_id,tweet) )
+      
+    # also save the entity belongs to the tweet
+    Entity.save_entities(new_record.id.to_i,tweet)
+    
+    # save status's created_at value to the table of its list
+    PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
   end
 
   def self.get_date_list(type_of_timeline,user_id = nil)
