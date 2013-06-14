@@ -4,10 +4,13 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :entities, :dependent => :delete_all
   default_scope where(:pre_saved => false).order('status_id_str DESC')
-  def self.get_total_status_num
-    self.count
-  end
+  after_save :update_user_timestamp
   
+  def update_user_timestamp
+    user_id = self.user_id
+    User.find(user_id).update_attribute(:statuses_updated_at,Time.now.to_i)
+  end
+
   def self.delete_pre_saved_status(user_id)
     self.delete_all(:user_id => user_id, :pre_saved => true)
   end
@@ -18,14 +21,18 @@ class Status < ActiveRecord::Base
 
   def self.save_statuses(user_id,tweets)
     tweets.each do |tweet|
-      new_record = Status.create( self.create_hash_to_save(user_id,tweet) )
-      
-      # also save the entity belongs to the tweet
-      Entity.save_entities(new_record.id.to_i,tweet)
-        
-      # save status's created_at value to the table of its list
-      PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
+      self.save_single_status(user_id,tweet)
     end
+  end
+
+  def self.save_single_status(user_id,tweet)
+    new_record = Status.create( self.create_hash_to_save(user_id,tweet) )
+      
+    # also save the entity belongs to the tweet
+    Entity.save_entities(new_record.id.to_i,tweet)
+    
+    # save status's created_at value to the table of its list
+    PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
   end
 
   def self.get_date_list(type_of_timeline,user_id = nil)
