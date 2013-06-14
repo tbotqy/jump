@@ -152,7 +152,7 @@ function checkFriendUpdate(){
   
     success: function(responce){
     
-      count = responce.count_friends;
+      count = responce.friends_count;
       updated = responce.updated;
       updated_date = responce.updated_date;
      

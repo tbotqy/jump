@@ -65,10 +65,35 @@ class AjaxController < ApplicationController
     
     render :json => ret 
   end
-  
-  def check_friend_update
-  end
 
+  def check_friend_update
+    # initialization
+    ret = {}
+    do_update = false # will be overwritten some times
+    
+    # fetch the list of user's friends
+    existing_friend_ids = Friend.get_list.owned_by_current_user(@@user_id).pluck(:following_twitter_id)
+    fresh_friend_ids = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)
+    
+    # check if update is required by comparing 
+    do_update = existing_friend_ids.sort! != fresh_friend_ids.sort!
+    
+    if do_update
+      Friend.update_list(@@user_id,fresh_friend_ids)
+    else
+      # just update timestamp
+      @@current_user.update_attribute(:friends_updated_at,Time.now.to_i)
+    end
+
+    ret = {
+      :updated => do_update,
+      :friends_count => @@current_user.friends.count,
+      :updated_date => Time.zone.at(@@current_user.friends_updated_at).strftime('%F %T')
+    }
+    
+    render :json => ret
+  end
+          
   def deactivate_account
   end
 
@@ -239,7 +264,8 @@ class AjaxController < ApplicationController
       statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
 
       # retrieve following list and save them as user's friend
-      friends = create_twitter_client.friend_ids(@@current_user.screen_name.to_s, {:stringify_ids=>true}).all
+      #friends = create_twitter_client.friend_ids(@@current_user.screen_name.to_s, {:stringify_ids=>true}).all
+      friends = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)
       Friend.save_friends(@@user_id.to_i,friends)
       
       if !statuses
