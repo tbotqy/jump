@@ -4,13 +4,15 @@ production:
     site_mode: production
     consumer_key: 'ezVQtY2ynBclmnCWitozfA'
     consumer_secret: 'AcToliJBBh5OyzZd1M1HwVCEt9npRyO8zO2O0SecY'
-    
+    admin_users : "704706890"
+
 development:
     site_name: Timedline
     site_url: http://localhost:3000/
     site_mode: development
     consumer_key: 'QpuamfxMZNsByQle3Bzsmg'
     consumer_secret: 'T3N5sczTaQf1igyJkyzDGpzLrb7P7WEa1ce06LD5Q'
+    admin_users : "704706890"
 
 test:
     site_name: Timedline
@@ -18,3 +20,4 @@ test:
     site_mode: test
     consumer_key: 'QpuamfxMZNsByQle3Bzsmg'
     consumer_secret: 'T3N5sczTaQf1igyJkyzDGpzLrb7P7WEa1ce06LD5Q'
+    admin_users : "704706890"
