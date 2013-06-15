@@ -64,6 +64,14 @@ class User < ActiveRecord::Base
     self.exists?(:twitter_id => twitter_id)
   end
 
+  def self.get_active_users
+    self.where(:deleted_flag => false).order('created_at DESC')
+  end
+  
+  def self.get_gone_users
+    self.where(:deleted_flag => true).order('updated_at DESC')
+  end
+
   def has_imported?
     # check if user has imported own tweets
     self.initialized_flag

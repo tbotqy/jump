@@ -1,8 +1,8 @@
 class AdminController < ApplicationController
 
-  beforeFilter :check_login
-  beforeFilter :admin_user_check
-
+  before_filter :check_login
+  before_filter :admin_user_check
+  
   def admin_user_check
     # check if current user is an admin user
     admin_list = configatron.admin_users.split(/,/)
@@ -17,7 +17,7 @@ class AdminController < ApplicationController
   
   def accounts
     @active_users = User.get_active_users
-    @gone_users User.get_gone_users
+    @gone_users = User.get_gone_users
     @show_footer = true
   end
   
