@@ -108,6 +108,20 @@ class AjaxController < ApplicationController
     render :json => ret
   end
 
+  def delete_account
+    ret = {}
+    dest_id = params[:dest_id]
+    
+    # deletes all the associated data
+    if User.find(dest_id).destroy
+      ret[:result] = true
+    else
+      ret[:result] = false
+    end
+    
+    render :json => ret
+  end
+
   def delete_status
     ret = {}
     status_id = params[:status_id_to_delete]
@@ -260,7 +274,7 @@ class AjaxController < ApplicationController
       @base_url = "/your/home_timeline"
     end
   end
-
+  
   def acquire_statuses
     # calls twitter api to retrieve user's twitter statuses and returns json
 
