@@ -20,3 +20,4 @@ pickle-email-*.html
 .#*
 *~
 wget-log
+/config/*
