@@ -38,7 +38,7 @@ $(function () {
           },
           yAxis:{
             title:{
-                text:"ツイート数",
+                text:"ツイート数"
             },
             min:-10
           },

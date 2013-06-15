@@ -74,13 +74,12 @@ function deleteHim(dest_id){
   var admin = $("#wrap-admin");
 
   $.ajax({
-    url:"/ajax/delete_him",
+    url:"/ajax/delete_account",
     type:"post",
     data:{"dest_id":dest_id},
-    dataType: "text",
+    dataType: "json",
     success: function(res){
-      if(res == "NG"){
-        
+      if(!res.result){
         alert("something went wrong with deleting account");
       }else{
         // hide the element of deleted account
