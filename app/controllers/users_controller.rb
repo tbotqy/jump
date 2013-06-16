@@ -39,11 +39,11 @@ class UsersController < ApplicationController
       else
         @has_next = false
       end
-      # get the oldest tweet's posted timestamp
-      @oldest_timestamp = @statuses.last.twitter_created_at
+      # get the oldest tweet's status_id_str
+      @oldest_tweet_id = @statuses.last.status_id_str
     else
       @show_footer = true
-      @oldest_timestamp = false
+      @oldest_tweet_id = false
     end
   end
 
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 
     # check if user has any friend
     unless User.find(@@user_id).has_friend?
-      @error_type = "no_friend_list" || "no_registored_frind"
+      @error_type = "no_friend_list"
       return
     end
     
@@ -79,11 +79,11 @@ class UsersController < ApplicationController
       else
         @has_next = false
       end
-      # get the oldest tweet's posted timestamp
-      @oldest_timestamp = @statuses.last.twitter_created_at
+      # get the oldest tweet's status_id_str
+      @oldest_tweet_id = @statuses.last.status_id_str
     else
       @show_footer = true
-      @oldest_timestamp = false
+      @oldest_tweet_id = false
     end
   end
 
@@ -113,11 +113,11 @@ class UsersController < ApplicationController
       else
         @has_next = false
       end
-      # get the oldest tweet's posted timestamp
-      @oldest_timestamp = @statuses.last.twitter_created_at
+      # get the oldest tweet's status_id_str
+      @oldest_tweet_id = @statuses.last.status_id_str
     else
       @show_footer = true
-      @oldest_timestamp = false
+      @oldest_tweet_id = false
     end
   end
 
