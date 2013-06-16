@@ -42,3 +42,5 @@ gem 'twitter-text', :github => 'twitter/twitter-text-rb'
 
 # To use debugger
 # gem 'debugger'
+
+gem  'yui-compressor'

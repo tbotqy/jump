@@ -285,6 +285,13 @@ footer .copyright{
   margin:0;
 }
 
+.error-inner.error404 .alert.not-found h3{ 
+  float: left;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 5px;
+}
+
 /* --------------------------------------------------
    scroller toward top
 -------------------------------------------------- */
