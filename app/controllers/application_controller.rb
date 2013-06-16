@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
   end
 
   def render_500(exception = nil)
-    raise exception.to_yaml
     @title = "サーバーエラー"
     @show_footer = true
     if exception
