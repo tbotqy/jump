@@ -103,7 +103,7 @@ class UsersController < ApplicationController
       @statuses = Status.get_status_in_date(specified_date,initial_fetch_num).owned_by_active_user
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_active_users
+      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_active_user
     end
     
     if @statuses.present?
