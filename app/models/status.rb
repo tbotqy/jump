@@ -73,9 +73,11 @@ class Status < ActiveRecord::Base
     self.limit(limit)
   end
 
-  def self.get_status_between(dates,limit = 10)
-    # used to create the timeline with term to include specified
-    date = calc_from_and_to_of(dates)
+  def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
+    # search the statuses tweeted in given date
+    
+    # calculate the beginning and ending time of given date in unixtime
+    date = calc_from_and_to_of(date)
     self.where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
   end
 
