@@ -227,7 +227,7 @@ class AjaxController < ApplicationController
   end
 
   def read_more
-    @oldest_timestamp = params[:oldest_timestamp]
+    @oldest_tweet_id = params[:oldest_tweet_id]
     destination_action_type = params[:destination_action_type]
  
     @statuses = nil
@@ -236,14 +236,14 @@ class AjaxController < ApplicationController
     fetch_num = 10 # fetches 10 statuses at one request
     _fetch_num = fetch_num + 1 # plus 1 to check if 'read more buttton' should be shown in the view
 
-    # fetch older statuses    
+    # fetch older statuses 
     case destination_action_type.to_s
     when 'tweets'
-      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,_fetch_num).owned_by_current_user(@@user_id)
     when 'home_timeline'
-      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,_fetch_num).owned_by_friend_of(@@user_id)
     when 'public_timeline'
-      @statuses = Status.get_status_older_than(@oldest_timestamp,_fetch_num).owned_by_active_user
+      @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,_fetch_num).owned_by_active_user
     end
 
     # check if any older status exists
@@ -253,7 +253,7 @@ class AjaxController < ApplicationController
       @statuses.pop
       @has_next = true
     end
-    @oldest_timestamp = @statuses.last.twitter_created_at
+    @oldest_tweet_id = @statuses.last.status_id_str
   end
 
   def get_dashbord
@@ -369,19 +369,19 @@ class AjaxController < ApplicationController
     case action_type
     when 'tweets'
       if date
-        @statuses = Status.get_status_between(date,_fetch_num).owned_by_current_user(@@user_id)
+        @statuses = Status.get_status_in_date(date,_fetch_num).owned_by_current_user(@@user_id)
       else
         @statuses = Status.get_latest_status(_fetch_num).owned_by_current_user(@@user_id)
       end
     when 'home_timeline'
       if date
-        @statuses = Status.get_status_between(date,_fetch_num).owned_by_friend_of(@@user_id)
+        @statuses = Status.get_status_in_date(date,_fetch_num).owned_by_friend_of(@@user_id)
       else
         @statuses = Status.get_latest_status(_fetch_num).owned_by_friend_of(@@user_id)
       end
       when 'public_timeline'
         if date
-          @statuses = Status.get_status_between(date,_fetch_num).owned_by_active_user      
+          @statuses = Status.get_status_in_date(date,_fetch_num).owned_by_active_user      
         else
           @statuses = Status.get_latest_status(_fetch_num).owned_by_active_user
         end 
@@ -395,10 +395,10 @@ class AjaxController < ApplicationController
         @has_next = false
       end
       # get the oldest tweet's posted timestamp
-      @oldest_timestamp = @statuses.last.twitter_created_at
+      @oldest_tweet_id = @statuses.last.status_id_str
     else
       @show_footer = true
-      @oldest_timestamp = false
+      @oldest_tweet_id = false
     end
   end
 
