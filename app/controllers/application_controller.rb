@@ -1,8 +1,31 @@
+# -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
+
+  # handlers for exceptions
+ 
+  rescue_from Exception, :with => :render_500
 
   protect_from_forgery
   before_filter :set_vars, :apply_user_time_zone
-  
+
+  def render_404(exception = nil)
+    @title = "ページが見つかりません"
+    @show_footer = true
+    if exception
+      logger.info "Rendering 404 with exception: #{exception.message}"
+    end
+    render :file => "errors/404", :status => 404, :layout => "error", :content_type => 'text/html'
+  end
+
+  def render_500(exception = nil)
+    @title = "サーバーエラー"
+    @show_footer = true
+    if exception
+      logger.info "Rendering 500 with exception: #{exception.message}"
+    end
+    render :file => "errors/500", :status => 500, :layout => "error", :content_type => 'text/html'
+  end
+
   def set_vars
     @@current_user = get_current_user || nil
     @@user_id = @@current_user ? @@current_user.id : nil
@@ -16,7 +39,7 @@ class ApplicationController < ActionController::Base
       Time.zone = @@current_user.time_zone
     end
   end
-  
+
   def check_login
     unless logged_in? 
       redirect_to root_url
