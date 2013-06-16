@@ -90,34 +90,31 @@ $(function(){
 
     // let button say 'loading'
     self.button('loading');
-    var elmOldestTimestamp = $(".oldest-timestamp");
-    var oldestTimestamp = elmOldestTimestamp.val();
+    var elmOldestTweetId = $(".oldest-tweet-id");
+    var oldestTweetId = elmOldestTweetId.val();
     // fetch more statuses to show
     $.ajax({
 
       type:"POST",
       dataType:"html",
       data:{
-      "oldest_timestamp":oldestTimestamp,
-      "destination_action_type":detectActionType(location.pathname)
+        "oldest_tweet_id":oldestTweetId,
+        "destination_action_type":detectActionType(location.pathname)
       },
       url: '/ajax/read_more',
       success: function(responce){
-      // remove the element representing last status's timestamp
-      elmOldestTimestamp.remove();
-      
-      $("#wrap-read-more").remove();
-
-      // insert loaded html code 
-      $(".wrap-one-result:last").after(responce);
+        // remove the element representing last status's timestamp
+        elmOldestTweetId.remove();
+        $("#wrap-read-more").remove();
+        
+        // insert loaded html code 
+        $(".wrap-one-result:last").after(responce);
       },
       error: function(responce){
-      alert("読み込みに失敗しました。");
+        alert("読み込みに失敗しました。");
       },
       complete: function(){
-      
-      scrollDownToDestination(e,distance);
-
+        scrollDownToDestination(e,distance);
       }
     });
   });

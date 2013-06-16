@@ -73,16 +73,18 @@ class Status < ActiveRecord::Base
     self.limit(limit)
   end
 
-  def self.get_status_between(dates,limit = 10)
-    # used to create the timeline with term to include specified
-    date = calc_from_and_to_of(dates)
+  def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
+    # search the statuses tweeted in given date
+    
+    # calculate the beginning and ending time of given date in unixtime
+    date = calc_from_and_to_of(date)
     self.where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
   end
 
-  def self.get_status_older_than(threshold_unixtime,limit = 10,include_threshold = false)
+  def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
+    # search the statuses whose status_id_str is smaller than given threshold_tweet_id
     # used to proccess read more button's request
-    operator = include_threshold ? "<=" : "<"
-    self.where('statuses.twitter_created_at '+operator+' ?',threshold_unixtime).limit(limit)
+    self.where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
   end
 
   def self.owned_by_current_user(user_id)

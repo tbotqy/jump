@@ -6,7 +6,7 @@
       <%= render "shared/tweet_card",{:status => status, :current_user => current_user} %>
     <% end %>
   <% end %>
-  <% if oldest_timestamp %>
-    <input type="hidden" class="oldest-timestamp" value="<%= oldest_timestamp %>"/>
+  <% if oldest_tweet_id %>
+    <input type="hidden" class="oldest-tweet-id" value="<%= oldest_tweet_id %>"/>
   <% end %>
 </div>
