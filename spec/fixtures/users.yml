@@ -1,4 +1,10 @@
 one:
   id: 1
+  twitter_id: 1111
+  initialized_flag: true
+  deleted_flag: false
 two:
-  id :2
+  id: 2
+  twitter_id: 2222
+  initialized_flag: false
+  deleted_flag: true
