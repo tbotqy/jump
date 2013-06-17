@@ -162,7 +162,7 @@ DEPENDENCIES
   omniauth-twitter!
   rails (= 3.2.13)
   rspec
-  rspec-rails
+  rspec-rails (~> 2.0)
   therubyracer
   twitter (= 4.7.0)
   twitter-text!

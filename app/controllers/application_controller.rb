@@ -2,8 +2,9 @@
 class ApplicationController < ActionController::Base
 
   # handlers for exceptions
- 
-  rescue_from Exception, :with => :render_500
+  if Rails.env.production?
+    rescue_from Exception, :with => :render_500
+  end
 
   protect_from_forgery
   before_filter :set_vars, :apply_user_time_zone
@@ -25,7 +26,7 @@ class ApplicationController < ActionController::Base
     end
     render :file => "errors/500", :status => 500, :layout => "error", :content_type => 'text/html'
   end
-
+  
   def set_vars
     @@current_user = get_current_user || nil
     @@user_id = @@current_user ? @@current_user.id : nil

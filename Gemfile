@@ -45,7 +45,7 @@ gem 'twitter-text', :github => 'twitter/twitter-text-rb'
 
 gem  'yui-compressor'
 
-group :test,:development do
+group :development,:test do
   gem "rspec"
-  gem "rspec-rails"
+  gem "rspec-rails", '~> 2.0'
 end
