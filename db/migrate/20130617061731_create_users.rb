@@ -7,18 +7,18 @@ class CreateUsers < ActiveRecord::Migration
       t.string  "profile_image_url_https",                                 :null => false
       t.string  "time_zone"
       t.integer "utc_offset"
-      t.integer "created_at",                                              :null => false
+      t.integer "twitter_created_at",                                      :null => false
       t.string  "lang",                                                    :null => false
       t.string  "token",                                                   :null => false
       t.string  "token_secret",                                            :null => false
       t.boolean "initialized_flag",                                        :null => false
-      t.integer "token_updated",                                           :null => false
-      t.integer "statuses_updated",                                        :null => false
-      t.integer "friends_updated",                                         :null => false
+      t.integer "token_updated_at",                                        :null => false
+      t.integer "statuses_updated_at",                                     :null => false
+      t.integer "friends_updated_at",                                      :null => false
       t.boolean "closed_only",                          :default => false
       t.boolean "deleted_flag",                         :default => false, :null => false
-      t.integer "created",                                                 :null => false
-      t.integer "updated",                                                 :null => false
+      t.integer "created_at",                                              :null => false
+      t.integer "updated_at",                                              :null => false
     end
   end
 end

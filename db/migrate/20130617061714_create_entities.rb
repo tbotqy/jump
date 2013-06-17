@@ -10,8 +10,8 @@ class CreateEntities < ActiveRecord::Migration
       t.integer "mention_to_user_id_str", :limit => 8
       t.integer "indice_f",                            :null => false
       t.integer "indice_l",                            :null => false
-      t.string  "type",                                :null => false
-      t.integer "created",                             :null => false
+      t.string  "entity_type",                         :null => false
+      t.integer "created_at",                          :null => false
     end
   end
 end
