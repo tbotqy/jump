@@ -7,9 +7,15 @@ class User < ActiveRecord::Base
     Friend.exists?(:user_id=>self.id)
   end
 
-  def self.create_account(auth)
-    info = auth.extra.raw_info
+  def has_imported?
+    # check if user has imported own tweets
+    self.initialized_flag
+  end
 
+  def self.create_account(auth)
+    return false unless auth.instance_of?(OmniAuth::AuthHash)
+
+    info = auth.extra.raw_info
     user = User.new(
       :twitter_id => info.id,
       :name => info.name,
@@ -35,6 +41,8 @@ class User < ActiveRecord::Base
   end
 
   def self.update_account(auth)
+    return false unless auth.instance_of?(OmniAuth::AuthHash)
+
     dest_user = self.find_by_twitter_id(auth.uid)
     
     info = auth.extra.raw_info
@@ -70,10 +78,5 @@ class User < ActiveRecord::Base
   
   def self.get_gone_users
     self.where(:deleted_flag => true).order('updated_at DESC')
-  end
-
-  def has_imported?
-    # check if user has imported own tweets
-    self.initialized_flag
   end
 end
