@@ -1,0 +1,23 @@
+development:
+  adapter: mysql2
+  database: dev_timedline
+  username: root
+  password:
+  host: 127.0.0.1
+  encoding: utf8
+
+test:
+  adapter: mysql2
+  database: test_timedline
+  username: root
+  password:
+  host: 127.0.0.1
+  encoding: utf8
+
+production:
+  adapter: mysql2
+  database: prod_timedline
+  username: root
+  password:
+  host: 127.0.0.1
+  encoding: utf8
