@@ -9,7 +9,7 @@ class CreateStatuses < ActiveRecord::Migration
       t.string  "in_reply_to_screen_name"
       t.string  "place_full_name"
       t.integer "retweet_count"
-      t.integer "created_at",                                                 :null => false
+      t.integer "twitter_created_at",                                         :null => false
       t.string  "source",                                                     :null => false
       t.string  "text",                                                       :null => false
       t.boolean "is_retweet",                              :default => false, :null => false
@@ -21,9 +21,9 @@ class CreateStatuses < ActiveRecord::Migration
       t.integer "rt_created_at"
       t.boolean "possibly_sensitive",                                         :null => false
       t.boolean "pre_saved",                                                  :null => false
-      t.integer "created",                                                    :null => false
+      t.integer "created_at",                                                 :null => false
     end
     
-    add_index "statuses", ["created_at"], :name => "created_at"
+    add_index "statuses", ["twitter_created_at"], :name => "created_at"
   end
 end
