@@ -1,4 +1,4 @@
 timeline-viewer-on-rails
 ========================
 
-What if CakePHP is replaced by Rails ?
+Replaced framework to RoR. origin : https://github.com/tbotaq/timeline-viewer
