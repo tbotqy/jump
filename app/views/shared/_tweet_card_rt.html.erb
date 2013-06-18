@@ -36,7 +36,7 @@
     </span>
     <% if status.is_retweet %>
       <div class="retweet-info">
-	<p><span class="icon">&nbsp</span><%= status.rt_screen_name %>さんがリツイート</p>
+	<p><span class="icon">&nbsp</span><%= status.user.screen_name %>さんがリツイート</p>
       </div>
     <% end %>
     <!-- .bottom -->
