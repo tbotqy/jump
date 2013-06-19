@@ -4,7 +4,8 @@
     <title><%= title @title %></title>
     <meta charset="UTF-8"/>
     <% if configatron.site_mode == "production" %>
-    <meta name="robots" content="index,follow"/>
+    <!--<meta name="robots" content="index,follow"/>-->
+    <meta name="robots" content="noindex,nofollow"/>
     <% else %>
     <meta name="robots" content="noindex,nofollow,nocache"/>
     <% end %>
