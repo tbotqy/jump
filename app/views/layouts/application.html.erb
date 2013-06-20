@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<% if @show_scrollbar %>
+  <html lang="ja" class="show-scrollbar">
+<% else %>
+  <html lang="ja">
+<% end %>
   <head>
     <title><%= title @title %></title>
     <meta charset="UTF-8"/>

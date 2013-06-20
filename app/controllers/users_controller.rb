@@ -9,6 +9,7 @@ class UsersController < ApplicationController
       redirect_to :action => "home_timeline"
     else
       @show_footer = true
+      @show_scrollbar = true
       @total_status_num = Status.owned_by_active_user.count
     end
   end
