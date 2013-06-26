@@ -27,11 +27,15 @@ ActiveRecord::Schema.define(:version => 20130617061827) do
     t.integer "created_at",                          :null => false
   end
 
+  add_index "entities", ["status_id"], :name => "status_id"
+
   create_table "friends", :force => true do |t|
     t.integer "user_id",              :limit => 8, :null => false
     t.integer "following_twitter_id", :limit => 8, :null => false
     t.integer "created_at",                        :null => false
   end
+
+  add_index "friends", ["user_id"], :name => "user_id"
 
   create_table "public_dates", :force => true do |t|
     t.string  "posted_date",     :limit => 10, :null => false
@@ -73,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130617061827) do
   end
 
   add_index "statuses", ["twitter_created_at"], :name => "created_at"
+  add_index "statuses", ["user_id"], :name => "user_id"
 
   create_table "users", :force => true do |t|
     t.integer "twitter_id",              :limit => 8,                    :null => false
