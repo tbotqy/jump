@@ -20,16 +20,16 @@ class LogsController < ApplicationController
     end
 
     # check if user already exists
-    if User.twitter_id_exists?(auth.uid)
+    if User.active_twitter_id_exists?(auth.uid)
       # update account with auth
       User.update_account(auth)
     else
       # create new account
       User.create_account(auth)
     end
-    
+
     # log the user in
-    session[:user_id] = User.find_by_twitter_id(auth.uid).id.to_s
+    session[:user_id] = User.select(:id).where("twitter_id = ? AND deleted_flag = false",auth.uid)[0].id
     
     # check if user has imported own tweets
     unless User.find(session[:user_id]).has_imported?

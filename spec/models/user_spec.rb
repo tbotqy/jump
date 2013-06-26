@@ -114,16 +114,16 @@ describe User do
     end
   end
 
-  describe "test of twitter_id_exists?" do
-    context "if given twitter id exists" do
+  describe "test of active_twitter_id_exists?" do
+    context "if given twitter id exists and is active" do
       it "returns true" do
-        result = User::twitter_id_exists?(1111)
+        result = User::active_twitter_id_exists?(1111)
         expect(result).to be_true
       end
     end
     context "if given twitter id doesn't exist" do
       it "returns false" do
-        result = User::twitter_id_exists?(9999)
+        result = User::active_twitter_id_exists?(9999)
         expect(result).to be_false
       end
     end
