@@ -1,7 +1,7 @@
 # coding:utf-8
 # unicron.rb
-worker_processes  1
-working_directory '/var/www/timedline/'
+worker_processes  3
+working_directory '/var/www/timedline.me/'
 
 listen '/tmp/unicorn.sock', :backlog => 1
 listen 4422, :tcp_nopush => true
@@ -10,8 +10,8 @@ pid '/tmp/unicorn.pid'
 
 timeout 60
 
-stdout_path '/var/www/timedline/log/unicorn.stdout.log'
-stderr_path '/var/www/timedline/log/unicorn.stderr.log'
+stdout_path '/var/www/timedline.me/log/unicorn.stdout.log'
+stderr_path '/var/www/timedline.me/log/unicorn.stderr.log'
 
 preload_app  true
 GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true

@@ -8,11 +8,11 @@
     <title><%= title @title %></title>
     <meta charset="UTF-8"/>
     <% if configatron.site_mode == "production" %>
-    <!--<meta name="robots" content="index,follow"/>-->
-    <meta name="robots" content="noindex,nofollow"/>
+      <meta name="robots" content="index,follow"/>
     <% else %>
-    <meta name="robots" content="noindex,nofollow,nocache"/>
+      <meta name="robots" content="noindex,nofollow,nocache"/>
     <% end %>
+    <%= favicon_link_tag %>
     <meta name="description" content="あの日のタイムラインを眺められる、ちょっとしたアプリケーション"/>
     <meta name="keywords" content="タイムライン,過去のタイムライン,過去のつぶやき,過去のツイート"/>
     <meta property="og:locale" content="ja_JP">
