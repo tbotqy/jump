@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     if logged_in?
       redirect_to :action => "home_timeline"
     else
+      @title = "あの日のタイムラインを眺められる、ちょっとしたアプリケーション"
       @show_footer = true
       @show_scrollbar = true
       @total_status_num = Status.owned_by_active_user.count

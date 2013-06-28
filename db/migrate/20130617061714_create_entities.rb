@@ -13,5 +13,8 @@ class CreateEntities < ActiveRecord::Migration
       t.string  "entity_type",                         :null => false
       t.integer "created_at",                          :null => false
     end
+
+    add_index "entities", ["status_id"], :name => "status_id"
+
   end
 end

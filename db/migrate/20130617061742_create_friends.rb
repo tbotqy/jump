@@ -5,5 +5,8 @@ class CreateFriends < ActiveRecord::Migration
       t.integer "following_twitter_id", :limit => 8, :null => false
       t.integer "created_at",                        :null => false
     end
+
+    add_index "friends", ["user_id"], :name => "user_id"
+
   end
 end
