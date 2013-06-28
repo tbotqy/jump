@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
       :closed_only => false,
       :initialized_flag => false,
       :deleted_flag => false,
-      :twitter_created_at => Time.zone.now.to_i,
+      :created_at => Time.zone.now.to_i,
       :updated_at => Time.zone.now.to_i
       )
 
