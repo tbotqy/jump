@@ -67,9 +67,9 @@ class User < ActiveRecord::Base
     self.find(user_id).update_attribute(:deleted_flag,true)
   end
 
-  def self.active_twitter_id_exists?(twitter_id)
+  def self.twitter_id_exists?(twitter_id)
     # check if user exists by searching given twitter id
-    self.where(:twitter_id => twitter_id).where(:deleted_flag => false).exists?
+    self.exists?(:twitter_id => twitter_id)
   end
 
   def self.get_active_users
