@@ -89,6 +89,13 @@ footer .copyright{
   margin: 10px 4px;
 } 
 
+.adsense-timeline-lower{ 
+  float: left;
+  width: 100%;
+  margin: 10px;
+  text-align: center;
+}
+
 .btn{ 
   font-size: 13px;
   padding: 4px 10px 4px;
@@ -1161,6 +1168,7 @@ footer .copyright{
 #wrap-timeline-lower{ 
   width: 100%;
   float: left;
+  min-height: 700px;
 }
 
 #wrap-main{ 
