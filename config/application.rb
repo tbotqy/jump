@@ -57,9 +57,8 @@ module Tlviewer
     config.assets.enabled = true
     
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '2.0'
-    config.assets.compile = true
-
+    config.assets.version = '2.5'
+    
     # add fonts dir for font awesome
     config.assets.paths << Rails.root.join("app","assets","fonts")
   end
