@@ -31,4 +31,6 @@
     <!-- /#wrap-main.home_timeline.error -->
   <% end %>
 <% end %>
-<%= render "shared/ads_timeline_footer" %>
+<% if !@show_footer %>
+  <%= render "shared/ads_timeline_footer" %>
+<% end %>

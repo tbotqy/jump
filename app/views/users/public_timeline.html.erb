@@ -9,4 +9,6 @@
   <%= render "shared/adsense/ads_timeline" %>
 </div>
 <!-- /#wrap-timeline-lower -->
-<%= render "shared/ads_timeline_footer" %>
+<% if !@show_footer %>
+  <%= render "shared/ads_timeline_footer" %>
+<% end %>
