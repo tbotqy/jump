@@ -407,18 +407,24 @@ function redirect(){
 var total_imported_count = 0;
 
 function getStatuses(params){
-
+  
   /**
    * throw request to acquire all the statuses recursively
    */
-
+  
   var wrap_progress_bar = $(".wrap-progress-bar");
   var wrap_tweet = $(".wrap-tweet");
   var import_button = $("#start-import");  
   var noStatusAtAll = "";
   var data_to_post = params;
   var progress;
-
+  
+  var count_so_far = $("input[name=count-so-far]").val();
+  if( count_so_far != "false" ){
+    total_imported_count = parseInt( count_so_far );
+    $("input[name=count-so-far]").val("false");
+  }
+  
   $.ajax({
     
     url: "/ajax/acquire_statuses",
@@ -444,7 +450,7 @@ function getStatuses(params){
 	  
 	//throw new request
 	data_to_post.id_str_oldest = ret.id_str_oldest;
-	progress = getPersentage(total_imported_count);
+        progress = getPersentage(total_imported_count);
 	getStatuses(data_to_post);
 	
       }else{
