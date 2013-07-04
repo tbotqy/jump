@@ -12,7 +12,7 @@ class Status < ActiveRecord::Base
   end
 
   def self.delete_pre_saved_status(user_id)
-    self.delete_all(:user_id => user_id, :pre_saved => true)
+    self.destroy_all(:user_id => user_id, :pre_saved => true)
   end
 
   def self.save_pre_saved_status(user_id)

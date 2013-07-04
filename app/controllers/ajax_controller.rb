@@ -182,8 +182,9 @@ class AjaxController < ApplicationController
 
       # check latest status's tweeted time
       existing_latest_status = Status.get_latest_status(1).owned_by_current_user(@@user_id)[0]
+  
       if existing_latest_status
-        existing_latst_unixtime = ( Status.get_latest_status(1).owned_by_current_user(@@user_id)[0] ).twitter_created_at
+        existing_latest_unixtime = ( Status.get_latest_status(1).owned_by_current_user(@@user_id)[0] ).twitter_created_at
       else
         existing_latest_unixtime = 0
       end
@@ -303,14 +304,10 @@ class AjaxController < ApplicationController
         statuses.shift
       end
     else
-      Status.delete_pre_saved_status(@@user_id.to_i)
-      
       # acqurie 100 tweets
       api_params[:count] = 100
-      user_twitter = create_twitter_client.user(@@current_user.twitter_id)
       statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
       # retrieve following list and save them as user's friend
-      #friends = create_twitter_client.friend_ids(@@current_user.screen_name.to_s, {:stringify_ids=>true}).all
       friends = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)
       Friend.save_friends(@@user_id.to_i,friends)
       
@@ -322,7 +319,12 @@ class AjaxController < ApplicationController
     # save
     saved_count = statuses.size
     if saved_count > 0
+      # clean the pre saved statuses up
+      Status.delete_pre_saved_status(@@user_id.to_i)
+      # save statuses with pre_saved_flags set to true
       Status.save_statuses(@@user_id.to_i,statuses)
+      # turn all the statuses' pre_saved_flag false
+      Status.save_pre_saved_status(@@user_id.to_i)
       continue = true
     else
       continue = false
@@ -349,9 +351,6 @@ class AjaxController < ApplicationController
       unless no_status_at_all
         # mark this user as initialized
         User.find(@@user_id.to_i).update_attribute(:initialized_flag,true)
-        
-        # make pre-saved statuses saved
-        Status.save_pre_saved_status(@@user_id.to_i)
       end
     end
     
