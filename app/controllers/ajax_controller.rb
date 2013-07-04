@@ -309,7 +309,6 @@ class AjaxController < ApplicationController
       api_params[:count] = 100
       user_twitter = create_twitter_client.user(@@current_user.twitter_id)
       statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
-
       # retrieve following list and save them as user's friend
       #friends = create_twitter_client.friend_ids(@@current_user.screen_name.to_s, {:stringify_ids=>true}).all
       friends = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)

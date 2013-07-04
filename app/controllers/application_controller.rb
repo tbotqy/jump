@@ -93,6 +93,10 @@ class ApplicationController < ActionController::Base
       config.consumer_secret = configatron.consumer_secret
       config.oauth_token = user.token
       config.oauth_token_secret = user.token_secret
+      config.connection_options = Twitter::Default::CONNECTION_OPTIONS.merge(:request => { 
+          :open_timeout => 60,
+          :timeout => 60
+        })
     end
     Twitter::Client.new
   end
