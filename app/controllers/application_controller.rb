@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
 
+  protect_from_forgery
+  before_filter :is_available_ua?, :set_vars, :apply_user_time_zone
+
   # handlers for exceptions
   if Rails.env.production?
     rescue_from Exception, :with => :render_500
   end
-
-  protect_from_forgery
-  before_filter :set_vars, :apply_user_time_zone
-
+  
   def render_404(exception = nil)
     @title = "ページが見つかりません"
     @show_footer = true
@@ -25,6 +25,12 @@ class ApplicationController < ActionController::Base
       logger.info "Rendering 500 with exception: #{exception.message}"
     end
     render :file => "errors/500", :status => 500, :layout => "error", :content_type => 'text/html'
+  end
+
+  def is_available_ua?
+    # accepts chrome,firefox,safari,google bot,and facebook
+    ua = request.env['HTTP_USER_AGENT']
+    raise ua.to_s
   end
   
   def set_vars
