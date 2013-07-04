@@ -140,7 +140,16 @@ $(function(){
     });
       
     //initialize data to post
-    var data_to_post = {"id_str_oldest":""};
+    var data_to_post = {};
+      
+    // check if id_str_oldest is specified
+    var specified_id_str_oldest = $("input[name=id-oldest]").val();
+    if( specified_id_str_oldest != "false"){
+      data_to_post.id_str_oldest = specified_id_str_oldest;
+      $("#recover-msg").fadeOut();
+    }else{
+      data_to_post.id_str_oldest = "";        
+    }
     
     // post ajax request 
     getStatuses(data_to_post);

@@ -2,6 +2,7 @@
 class UsersController < ApplicationController
 
   before_filter :check_login, :except => ["index","browsers","public_timeline"]
+  before_filter :check_tweet_import, :except => ["index","browsers","public_timeline"]
   
   def index
     # check if user is logged in
