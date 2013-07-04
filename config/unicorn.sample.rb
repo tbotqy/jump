@@ -1,17 +1,18 @@
 # coding:utf-8
 # unicron.rb
+=begin
 worker_processes  3
-working_directory '/var/www/timedline.me/'
+working_directory '/var/www/SITE_URL/'
 
-listen '/tmp/unicorn.sock', :backlog => 1
+listen '/tmp/unicorn.NAME.sock', :backlog => 1
 listen 4422, :tcp_nopush => true
 
-pid '/tmp/unicorn.pid'
+pid '/tmp/unicorn.NAME.pid'
 
 timeout 60
 
-stdout_path '/var/www/timedline.me/log/unicorn.stdout.log'
-stderr_path '/var/www/timedline.me/log/unicorn.stderr.log'
+stdout_path '/var/www/SITE_URL/log/unicorn.stdout.log'
+stderr_path '/var/www/SITE_URL/log/unicorn.stderr.log'
 
 preload_app  true
 GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
@@ -34,3 +35,4 @@ end
 after_fork do |server, worker|
   defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
 end
+=end

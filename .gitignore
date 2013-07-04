@@ -22,3 +22,5 @@ pickle-email-*.html
 wget-log
 /config/database.yml
 /config/config.yml
+/config/unicorn.rb
+start_unicorn.sh
