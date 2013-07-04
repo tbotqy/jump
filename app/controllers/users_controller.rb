@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
 
-  before_filter :check_login, :except => ["index","public_timeline"]
+  before_filter :check_login, :except => ["index","browsers","public_timeline"]
   
   def index
     # check if user is logged in
@@ -13,6 +13,11 @@ class UsersController < ApplicationController
       @show_scrollbar = true
       @total_status_num = Status.owned_by_active_user.count
     end
+  end
+
+  def browsers
+    @title = "対応ブラウザについて"
+    @show_footer = true
   end
   
   def sent_tweets
