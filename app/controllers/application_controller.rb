@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   def is_available_ua?
     # accepts chrome,firefox,safari,google bot,and facebook
     ua = request.env['HTTP_USER_AGENT']
-    raise ua.to_s
+    #raise ua.to_s
   end
   
   def set_vars
