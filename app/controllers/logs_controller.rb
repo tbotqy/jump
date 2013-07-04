@@ -8,7 +8,7 @@ class LogsController < ApplicationController
     
     # check whether user's twitter account is protected
     if auth.extra.raw_info.protected
-      #render :file => "/shared/_we_are_sorry" and return
+      render :file => "/shared/_we_are_sorry" and return
     end
 
     # check if tokens are acquired correctly
