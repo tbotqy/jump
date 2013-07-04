@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require bootstrap.min
+//= require bootstrap.2.3.1.min
 //= require functions
 //= require common
 //= require get_dashbord
