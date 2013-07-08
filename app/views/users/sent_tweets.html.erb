@@ -1,4 +1,5 @@
 <%= render "shared/dashbord" %>
+<%= render "shared/adsense_timeline_upper" %>
 <!-- #wrap-timeline-lower -->
 <div id="wrap-timeline-lower">
   <!-- #wrap-main -->
@@ -6,9 +7,9 @@
     <%= render "shared/timeline", {:statuses => @statuses, :has_next => @has_next, :current_user => @current_user, :oldest_tweet_id => @oldest_tweet_id} %>
   </div>
   <!-- /#wrap-main -->
-  <%= render "shared/adsense/ads_timeline.html.erb" %>
+  <%= render "shared/adsense_timeline_right.html.erb" %>
 </div>
 <!-- /#wrap-timeline-lower -->
 <% if !@show_footer %>
-  <%= render "shared/ads_timeline_footer" %>
+  <%= render "shared/adsense_timeline_lower" %>
 <% end %>

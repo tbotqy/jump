@@ -69,25 +69,18 @@ footer .copyright{
   margin: 0 auto;
 }
 
-.adsense.in-timeline{ 
+.adsense-timeline-right{ 
+  float: right;
+  width: 400px;
+  text-align: center;
+}
+
+.adsense-timeline-upper{ 
   float: left;
   width: 100%;
+  margin: 0 0 3px 0;
   text-align: center;
-  padding: 5px 0;
-  
 }
-
-.adsense.timeline{ 
-  float: right;
-  width: 336px;
-  height: 250px;
-}
-
-.adsense.timeline div{
-  float: left;
-  width: 160px;
-  margin: 10px 4px;
-} 
 
 .adsense-timeline-lower{ 
   float: left;
