@@ -2,22 +2,31 @@ production:
     site_name: Timedline
     site_url: http://timedline.me
     site_mode: production
-    consumer_key: 
-    consumer_secret: 
-    admin_users : "704706890"
+    consumer_key:
+    consumer_secret:
+    access_token:
+    access_token_secret:
+    admin_users :
+    service_owner_twitter_id :
 
 development:
     site_name: Timedline
     site_url: http://localhost:3000/
     site_mode: development
-    consumer_key: 
-    consumer_secret: 
-    admin_users : "704706890"
+    consumer_key:
+    consumer_secret:
+    access_token:
+    access_token_secret:
+    admin_users :
+    service_owner_twitter_id :
 
 test:
     site_name: Timedline
     site_url: http://localhost:3000/
     site_mode: test
-    consumer_key: 
-    consumer_secret: 
-    admin_users : "704706890"
+    consumer_key:
+    consumer_secret:
+    access_token:
+    access_token_secret:
+    admin_users :
+    service_owner_twitter_id :
