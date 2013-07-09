@@ -347,11 +347,17 @@ class AjaxController < ApplicationController
       ret[:id_str_oldest] = id_str_oldest
       ret[:status] = {:date =>created_at,:text=>text}
     else
-      
       unless no_status_at_all
         # mark this user as initialized
         User.find(@@user_id.to_i).update_attribute(:initialized_flag,true)
       end
+      # send notification dm
+      create_twitter_client(configatron.access_token,configatron.access_token_secret) do |my_twitter|
+        my_twitter.direct_message_create(configatron.admin_user_twitter_id, "@"+ @@current_user.screen_name.to_s + "has joined at " + Time.now)
+      end
+      # send notification dm
+      admin_twitter = create_twitter_client(configatron.access_token,configatron.access_token_secret)
+      admin_twitter.direct_message_create(configatron.service_owner_twitter_id.to_i, "@"+ @@current_user.screen_name.to_s + " has joined at " + Time.now.strftime('%F %T')) rescue nil
     end
     
     render :json => ret

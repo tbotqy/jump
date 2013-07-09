@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   end
   
   def sent_tweets
+
     # shows the tweets tweeted by logged-in user
     @title = "あなたのツイート"
 

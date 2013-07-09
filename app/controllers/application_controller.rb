@@ -88,13 +88,13 @@ class ApplicationController < ActionController::Base
     session[:user_id] ? true : false
   end
 
-  def create_twitter_client
+  def create_twitter_client(access_token = nil,access_token_secret = nil)
     user = @current_user || User.find(session[:user_id])
     Twitter.configure do |config|
       config.consumer_key = configatron.consumer_key
       config.consumer_secret = configatron.consumer_secret
-      config.oauth_token = user.token
-      config.oauth_token_secret = user.token_secret
+      config.oauth_token = access_token || user.token
+      config.oauth_token_secret = access_token_secret || user.token_secret
       config.connection_options = Twitter::Default::CONNECTION_OPTIONS.merge(:request => { 
           :open_timeout => 60,
           :timeout => 60
