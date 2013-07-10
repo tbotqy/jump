@@ -10,6 +10,7 @@ class UsersController < ApplicationController
       redirect_to :action => "home_timeline"
     else
       @title = "あの日のタイムラインを眺められる、ちょっとしたアプリケーション"
+      @show_header = false
       @show_footer = true
       @show_scrollbar = true
       @total_status_num = Status.owned_by_active_user.count
@@ -25,6 +26,7 @@ class UsersController < ApplicationController
 
     # shows the tweets tweeted by logged-in user
     @title = "あなたのツイート"
+    @show_scrollbar = true
 
     # check if date is specified
     specified_date = params[:date]
@@ -59,6 +61,7 @@ class UsersController < ApplicationController
   def home_timeline
     # shows the home timeline 
     @title = "ホームタイムライン"
+    @show_scrollbar = true
 
     # check if user has any friend
     unless User.find(@@user_id).has_friend?
@@ -99,7 +102,8 @@ class UsersController < ApplicationController
   def public_timeline
     # shows the public timeline 
     @title = "パブリックタイムライン"
-
+    @show_scrollbar = true
+    
     # check if date is specified
     specified_date = params[:date]
     

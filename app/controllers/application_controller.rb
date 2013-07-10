@@ -50,7 +50,8 @@ class ApplicationController < ActionController::Base
   def set_vars
     @@current_user = get_current_user || nil
     @@user_id = @@current_user ? @@current_user.id : nil
-      
+
+    @show_header = true
     @show_footer = false
     @show_scrollbar = false
     @current_user = @@current_user

@@ -19,7 +19,6 @@ body{
   font-family: Helvetica,"メイリオ", sans-serif;
   color: #7a6e7e;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); 
-  background-image: url(../assets/html_bg_fibers.png);
   overflow-x: hidden;
 }
 
@@ -113,15 +112,14 @@ footer .copyright{
 
 #container-header .brand{ 
   padding: 7px 20px 10px 20px;
-
- }
+  color: #777;
+}
 
 #container-header .navbar .container{ 
   width: 1085px;
 }
 
 #container-header .navbar-inner{ 
-  border-top: solid 3px #e8e0cf;
   background-color: #F2EEE6;
 }
 
@@ -131,8 +129,9 @@ footer .copyright{
   line-height: 20px;
 }
 
-#container-header .link-timeline{
-  color: silver;
+#container-header #link-timeline a{
+  color: gray;
+  font-size: 14px;
 }
 
 #container-header .twitter-profile img{ 
@@ -144,6 +143,7 @@ footer .copyright{
   float: left;
   margin:0;
   padding-left: 0;
+  color: gray;
 }
 
 /* --------------------------------------------------
@@ -171,11 +171,6 @@ footer .copyright{
   width: 100%;
   bottom: 0px;
   color: #7a6e7e;
-  background: #F2EEE6;
-}
-
-#container-footer:hover{ 
-  //background: #E8E0CF;
 }
 
 #container-footer a:link,
@@ -499,10 +494,10 @@ footer .copyright{
   height: 123px;
   position: fixed;
   top: 40px;
-  border-bottom: solid 2px #808080;
+  border-bottom: solid 1px #eee;
   z-index: 1000;
   opacity: 1;
-  background-image: url(/assets/html_bg_fibers.png);
+  background: white;
 }
 
 #wrap-term-selectors{
@@ -784,7 +779,6 @@ footer .copyright{
   width: 100%;
   float: left;
   text-align:center;
-  border-bottom: solid 1px #987;
   margin: 20px 0 0 0;
 }
 
@@ -1299,7 +1293,7 @@ footer .copyright{
   text-align: left;
   width: 100%;
   float: left;
-  border-bottom: solid 1px gray;
+  border-bottom: solid 1px #eee;
 }
 
 #wrap-setting h1 span{ 
@@ -1453,7 +1447,7 @@ footer .copyright{
 }
 
 #wrap-setting .wrap-delete-button{ 
-  border-top: solid 1px #c0c0c0;
+  border-top: solid 1px #eee;
   float: left;
   width: 100%;
 }
