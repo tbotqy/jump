@@ -15,6 +15,23 @@ $(function(){
     data:{"authenticity_token":getCsrfToken()}
   });
 
+  ////////////////////////////
+  // code for global header //
+  ////////////////////////////
+  if( $("#link-timeline").size() > 0 ){
+      
+    // detect current page type and add active class to the button
+    var elmLinkList = $("#link-timeline");
+    var currentActionName = elmLinkList.data("current-action-name");
+    elmLinkList.find("."+currentActionName).addClass("active");
+  
+    // make link active on it is clicked
+    elmLinkList.on("click","li",function(){
+      elmLinkList.find("li").removeClass("active");
+      $(this).addClass("active");
+    });
+
+  }
   
   //////////////////////////
   // code for each status //

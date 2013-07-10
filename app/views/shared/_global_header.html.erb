@@ -14,17 +14,10 @@
 	    <% if current_user.initialized_flag %>
 	    
 	    <!-- .nav .pull-left -->
-	    <ul class="nav pull-left">
-	      <li class="dropdown">
-		<a class="dropdown-toggle link-timeline" data-toggle="dropdown" href="#">  <i class="icon-comments-alt"></i>  <b class="caret"></b></a>
-		
-		<ul class="dropdown-menu">
-		  <li><a href="/your/home_timeline">ホームタイムライン</a></li>
-		  <li><a href="/public_timeline">パブリックタイムライン</a></li>
-		  <li class="divider"></li>
-		  <li><a href="/your/tweets">あなたのツイート</a></li>
-		</ul>
-	      </li>
+	    <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
+	      <li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
+	      <li class="home_timeline"><a href="/your/home_timeline"><i class="icon-group margin"></i>友達</a></li>
+	      <li class="sent_tweets"><a href="/your/tweets"><i class="icon-user margin"></i>あなた</a></li>
 	    </ul>
 	    <!-- /.nav .pull-left -->
 	    <% end %>
