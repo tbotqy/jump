@@ -134,6 +134,10 @@ footer .copyright{
   font-size: 14px;
 }
 
+#container-header #link-twitter-profile a{ 
+  color: gray;
+}
+
 #container-header .twitter-profile img{ 
   border-radius: 2px;
   float:left;
@@ -143,7 +147,6 @@ footer .copyright{
   float: left;
   margin:0;
   padding-left: 0;
-  color: gray;
 }
 
 /* --------------------------------------------------
