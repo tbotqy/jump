@@ -375,29 +375,28 @@ class AjaxController < ApplicationController
     when 'tweets'
       if date
         @statuses = Status.get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
+        @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_current_user(@@User_id).exists? if @statuses.present?
       else
         @statuses = Status.get_latest_status(_fetch_num).owned_by_current_user(@@user_id)
       end
     when 'home_timeline'
       if date
         @statuses = Status.get_status_in_date(date,fetch_num).owned_by_friend_of(@@user_id)
+        @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_friend_of(@@User_id).exists? if @statuses.present?
       else
         @statuses = Status.get_latest_status(_fetch_num).owned_by_friend_of(@@user_id)
       end
       when 'public_timeline'
         if date
-          @statuses = Status.get_status_in_date(date,fetch_num).owned_by_active_user      
+          @statuses = Status.get_status_in_date(date,fetch_num).owned_by_active_user
+          @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_active_user.exists? if @statuses.present?
         else
           @statuses = Status.get_latest_status(_fetch_num).owned_by_active_user
         end 
     end
     
     if @statuses.present?
-      if date
-        last_status_tweet_id = @statuses.last.status_id_str.to_i
-        # check if there is more status to show
-        @has_next = Status.where("status_id_str < ?",last_status_tweet_id).exists?
-      else
+      unless date_list
         if @statuses.size == _fetch_num
           @has_next = true
           @statuses.pop
