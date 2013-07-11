@@ -27,31 +27,27 @@ class UsersController < ApplicationController
     # shows the tweets tweeted by logged-in user
     @title = "あなたのツイート"
     @show_scrollbar = true
-
+    @has_next = false
     # check if date is specified
     specified_date = params[:date]
     
     @statuses = nil
     fetch_num = 10
-    initial_fetch_num = fetch_num + 1
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_in_date(specified_date,initial_fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.get_status_in_date(specified_date,fetch_num).owned_by_current_user(@@user_id)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
     end
     
     if @statuses.present?
-      if @statuses.size == initial_fetch_num
-        @has_next = true
-        @statuses.pop
-      else
-        @has_next = false
-      end
       # get the oldest tweet's status_id_str
       @oldest_tweet_id = @statuses.last.status_id_str
+      
+      # check if there is more status to show
+      @has_next = Status.get_older_status_by_tweet_id( @oldest_tweet_id ).owned_by_current_user(@@user_id).exists?
     else
       @show_footer = true
       @oldest_tweet_id = false
@@ -62,7 +58,7 @@ class UsersController < ApplicationController
     # shows the home timeline 
     @title = "ホームタイムライン"
     @show_scrollbar = true
-
+    @has_next = false
     # check if user has any friend
     unless User.find(@@user_id).has_friend?
       @error_type = "no_friend_list"
@@ -74,25 +70,21 @@ class UsersController < ApplicationController
     
     @statuses = nil
     fetch_num = 10
-    initial_fetch_num = fetch_num + 1
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_in_date(specified_date,initial_fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@@user_id)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
     end
     
     if @statuses.present?
-      if @statuses.size == initial_fetch_num
-        @has_next = true
-        @statuses.pop
-      else
-        @has_next = false
-      end
       # get the oldest tweet's status_id_str
       @oldest_tweet_id = @statuses.last.status_id_str
+      
+      # check if there is more status to show
+      @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_friend_of(@@user_id).exists?
     else
       @show_footer = true
       @oldest_tweet_id = false
@@ -103,31 +95,27 @@ class UsersController < ApplicationController
     # shows the public timeline 
     @title = "パブリックタイムライン"
     @show_scrollbar = true
-    
+    @has_next = false
     # check if date is specified
     specified_date = params[:date]
     
     @statuses = nil
     fetch_num = 10
-    initial_fetch_num = fetch_num + 1
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_in_date(specified_date,initial_fetch_num).owned_by_active_user
+      @statuses = Status.get_status_in_date(specified_date,fetch_num).owned_by_active_user
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(initial_fetch_num).owned_by_active_user
+      @statuses = Status.get_latest_status(fetch_num).owned_by_active_user
     end
     
     if @statuses.present?
-      if @statuses.size == initial_fetch_num
-        @has_next = true
-        @statuses.pop
-      else
-        @has_next = false
-      end
       # get the oldest tweet's status_id_str
       @oldest_tweet_id = @statuses.last.status_id_str
+      
+      # check if there is more status to show
+     @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_active_user.exists?
     else
       @show_footer = true
       @oldest_tweet_id = false
