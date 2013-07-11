@@ -160,7 +160,7 @@ footer .copyright{
   color: #bbb;
 }
 
-#container-header #link-twitter-profile a{ 
+#container-header #link-twitter-profile .twitter-profile a{ 
   color: gray;
 }
 
@@ -1253,7 +1253,7 @@ footer .copyright{
 
 #wrap-timeline .alert{ 
   float: left;
-  width: 498px;
+  width: 548px;
   height: 40px;
   margin: 0;
   padding: 0;
