@@ -367,6 +367,7 @@ class AjaxController < ApplicationController
     
     action_type = params[:action_type]
     date = params[:date]
+    date = nil if date == "notSpecified"
 
     fetch_num = 10
     _fetch_num = fetch_num + 1
