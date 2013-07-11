@@ -68,9 +68,28 @@ footer .copyright{
   margin: 0 auto;
 }
 
+.wrap-timeline-right-ads{ 
+  float: right;
+  width: 400px;
+}
+
 .adsense-timeline-right{ 
   float: right;
   width: 400px;
+  text-align: center;
+}
+
+.admax-timeline-right { 
+  float: right;
+  width: 400px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.amazon-timeline-right { 
+  float: right;
+  width: 400px;
+  margin: 10px 0;
   text-align: center;
 }
 
