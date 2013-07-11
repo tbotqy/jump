@@ -374,30 +374,36 @@ class AjaxController < ApplicationController
     case action_type
     when 'tweets'
       if date
-        @statuses = Status.get_status_in_date(date,_fetch_num).owned_by_current_user(@@user_id)
+        @statuses = Status.get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
       else
         @statuses = Status.get_latest_status(_fetch_num).owned_by_current_user(@@user_id)
       end
     when 'home_timeline'
       if date
-        @statuses = Status.get_status_in_date(date,_fetch_num).owned_by_friend_of(@@user_id)
+        @statuses = Status.get_status_in_date(date,fetch_num).owned_by_friend_of(@@user_id)
       else
         @statuses = Status.get_latest_status(_fetch_num).owned_by_friend_of(@@user_id)
       end
       when 'public_timeline'
         if date
-          @statuses = Status.get_status_in_date(date,_fetch_num).owned_by_active_user      
+          @statuses = Status.get_status_in_date(date,fetch_num).owned_by_active_user      
         else
           @statuses = Status.get_latest_status(_fetch_num).owned_by_active_user
         end 
     end
-
+    
     if @statuses.present?
-      if @statuses.size == _fetch_num
-        @has_next = true
-        @statuses.pop
+      if date
+        last_status_tweet_id = @statuses.last.status_id_str.to_i
+        # check if there is more status to show
+        @has_next = Status.where("status_id_str < ?",last_status_tweet_id).exists?
       else
-        @has_next = false
+        if @statuses.size == _fetch_num
+          @has_next = true
+          @statuses.pop
+        else
+          @has_next = false
+        end
       end
       # get the oldest tweet's posted timestamp
       @oldest_tweet_id = @statuses.last.status_id_str
