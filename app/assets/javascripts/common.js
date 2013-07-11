@@ -26,9 +26,13 @@ $(function(){
     elmLinkList.find("."+currentActionName).addClass("active");
   
     // make link active on it is clicked
-    elmLinkList.on("click","li",function(){
-      elmLinkList.find("li").removeClass("active");
-      $(this).addClass("active");
+    elmLinkList.on("click","li",function(e){
+      if( $(this).hasClass("disabled") ){
+        e.preventDefault();
+      }else{
+        elmLinkList.find("li").removeClass("active");
+        $(this).addClass("active");          
+      }
     });
 
   }

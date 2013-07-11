@@ -56,6 +56,19 @@
 	    </ul>
 	    <!-- /.nav .pull-right -->
 
+	    <% else %>
+	      <!-- .nav .pull-left -->
+	      <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
+		<li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
+		<li class="home_timeline disabled"><a href="#"><i class="icon-group margin"></i>友達</a></li>
+		<li class="sent_tweets disabled"><a href="#"><i class="icon-user margin"></i>あなた</a></li>
+	      </ul>
+	      <!-- /.nav .pull-left -->
+	      <!-- .nav .pull-right -->
+	      <ul id="link-auth" class="nav pull-right">
+		<li><a class="btn-auth" href="/auth/twitter">Sign in with Twitter</a></li>
+	      </ul>
+	      <!-- /.nav .pull-right -->
 	    <% end %>
 	  </div>
 	  <!-- /.container -->

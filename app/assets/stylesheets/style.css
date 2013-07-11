@@ -153,8 +153,11 @@ footer .copyright{
 }
 
 #container-header #link-timeline a{
-  color: gray;
   font-size: 14px;
+}
+
+#container-header #link-timeline .disabled a{ 
+  color: #bbb;
 }
 
 #container-header #link-twitter-profile a{ 
@@ -170,6 +173,17 @@ footer .copyright{
   float: left;
   margin:0;
   padding-left: 0;
+}
+
+#container-header #link-auth .btn-auth { 
+  height: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 #39D;
+  color: white;
+  padding: 10px;
+  line-height: 10px;
+  margin: 3px 0 0 0;
 }
 
 /* --------------------------------------------------
