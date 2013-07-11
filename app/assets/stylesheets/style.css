@@ -103,7 +103,7 @@ footer .copyright{
 .adsense-timeline-lower{ 
   float: left;
   width: 100%;
-  margin: 10px;
+  margin: 10px 0 100px 0;
   text-align: center;
 }
 
@@ -325,30 +325,26 @@ footer .copyright{
 -------------------------------------------------- */
 
 .to-page-top{ 
-  width: 120px;
+  width: 94px;
+  height: 35px;
   position: fixed;
-  top: 174px;
-  left: 620px;
+  bottom: 200px;
+  left: 644px;
   background: black;
   opacity: 0.5;
-  border-radius: 10px;
+  border-radius: 3px;
   display: none;
+  font-size: 12px;
 }
 
 .to-page-top a{ 
   float: left;
   width: 100%;
-}
-
-.to-page-top span{ 
-  float: left;
-  width: 100%;
-  font-size: 13px;
-  line-height: 29px;
+  line-height: 34px;
   text-align: center;
   color: white;
   text-shadow: none;
-  margin: 0 0 0 -2px;
+  text-decoration: none;
 }
 
 /* --------------------------------------------------
@@ -619,11 +615,29 @@ footer .copyright{
 .wrap-each-status{ 
   float: left;
   clear: both;
-  width: 500px;
-  font-size: 14px;
+  width: 100%;
+  font-size: 13px;
   border-top: solid 1px #fefefe;
   border-bottom: solid 1px #d7d7d7;  
   background: #f2eee6;
+}
+
+.wrap-each-status .top .name a{ 
+  color: #D19628;
+}
+
+.wrap-each-status .top .screen-name a,
+.wrap-each-status .top .date a{ 
+  color: #999;
+}
+
+
+.wrap-each-status .text a{ 
+  color: #CD8500;
+}
+
+.wrap-each-status .bottom .link-official a{ 
+  color: #CD8500;
 }
 
 .wrap-each-status:hover{
@@ -648,7 +662,7 @@ footer .copyright{
 
 .wrap-each-status .status-content{ 
   float: left;
-  width: 412px;
+  width: 462px;
   padding: 10px 10px 10px 0;
   color: #49360D;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
@@ -662,6 +676,7 @@ footer .copyright{
 
 .wrap-each-status .status-content .top .logo img{ 
   width: 18px;
+  margin: -3px 0 0 0;
 }
 
 .wrap-each-status .status-content .top .date{ 
@@ -1192,7 +1207,7 @@ footer .copyright{
 
 #wrap-main{ 
   float: left;
-  width: 500px
+  width: 550px
 }
 
 #wrap-timeline{ 
@@ -1220,10 +1235,6 @@ footer .copyright{
   font-size: 200%;
   color: #08C;
   font-family: 'Questrial', sans-serif;
-}
-
-#wrap-timeline a{ 
-  color:#CD8500;
 }
 
 #wrap-timeline .alert{ 
