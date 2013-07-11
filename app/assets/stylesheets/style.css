@@ -115,6 +115,10 @@ footer .copyright{
   color: #777;
 }
 
+#container-header .brand:hover{ 
+  color: #555;
+}
+
 #container-header .navbar .container{ 
   width: 1085px;
 }
