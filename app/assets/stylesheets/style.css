@@ -348,7 +348,7 @@ footer .copyright{
   opacity: 0.5;
   border-radius: 3px;
   display: none;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .to-page-top a{ 
@@ -636,22 +636,23 @@ footer .copyright{
   background: #f2eee6;
 }
 
-.wrap-each-status .top .name a{ 
+.wrap-each-status .top .name a,
+.wrap-each-status .bottom .link-official a,
+.wrap-each-status .bottom .source a{
   color: #D19628;
 }
 
 .wrap-each-status .top .screen-name a,
-.wrap-each-status .top .date a{ 
+.wrap-each-status .top .date a{
   color: #999;
 }
-
 
 .wrap-each-status .text a{ 
   color: #CD8500;
 }
 
-.wrap-each-status .bottom .link-official a{ 
-  color: #CD8500;
+.wrap-each-status .bottom .link-delete a{
+  color: #A27576;
 }
 
 .wrap-each-status:hover{
