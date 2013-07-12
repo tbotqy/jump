@@ -1,6 +1,7 @@
 Tlviewer::Application.routes.draw do
   match "/browsers" => "users#browsers"
   match "/auth/twitter/callback" => "logs#login"
+  match "/auth/failure" => "logs#logout"
   match "/statuses/import" => "statuses#import" 
   match "/your/tweets/(:date)" => "users#sent_tweets"
   match "/your/home_timeline/(:date)" => "users#home_timeline"
