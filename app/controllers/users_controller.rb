@@ -129,6 +129,7 @@ class UsersController < ApplicationController
     @status_updated_at = Time.zone.at(@@current_user.statuses_updated_at).strftime('%F %T')
     @friend_updated_at = Time.zone.at(@@current_user.friends_updated_at).strftime('%F %T')
     @profile_updated_at = Time.zone.at(@@current_user.updated_at).strftime('%F %T')
+    @show_scrollbar = true
     @show_footer = true
   end
   
