@@ -493,5 +493,7 @@ application.js: application.js
 application/index.js: application.js
 application.css: application.css
 application/index.css: application.css
+smart_phone/application.css: smart_phone/application.css
+smart_phone/application/index.css: smart_phone/application.css
 manifest.yml: manifest.yml
 manifest/index.yml: manifest.yml
