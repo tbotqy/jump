@@ -53,6 +53,7 @@ class ApplicationController < ActionController::Base
     @@user_id = @@current_user ? @@current_user.id : nil
 
     @show_header = true
+    @show_to_page_top = true
     @show_footer = false
     @show_scrollbar = false
     @current_user = @@current_user
