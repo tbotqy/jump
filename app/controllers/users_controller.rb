@@ -11,8 +11,10 @@ class UsersController < ApplicationController
     else
       @title = "あの日のタイムラインを眺められる、ちょっとしたアプリケーション"
       @show_header = false
+      @show_to_page_top = false
       @show_footer = true
       @show_scrollbar = true
+      @total_user_num = User.get_active_users.count
       @total_status_num = Status.owned_by_active_user.count
     end
   end

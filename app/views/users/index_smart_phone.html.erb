@@ -1,0 +1,34 @@
+<!-- .wrap-login -->
+<div class="wrap-login">
+  <!-- .area-head -->
+  <div class="area-head">
+    <header>
+      <h1 class="brand"><a href="/">Timedline</a></h1>
+      <h2>あの日のつぶやきをチェック</h2>
+    </header>
+  </div>
+  <!-- /.area-head -->
+  
+  <!-- .area-main -->
+  <div class="area-main">
+    <article>
+      <h4>あなたのあの日のつぶやきを</h4>
+      <p>あなた や あなたがフォローしている人たちのつぶやきを、日付を指定して見ることができます</p>
+      <p class="wrap-btn"><a class="btn btn-info"  href="/auth/twitter">ツイッターでサインイン</a></p>
+    </article>
+
+    <article>
+      <h4>みんなのあの日のつぶやきも</h4>
+      <p><span class="brand">Timedline</span>に登録している人たちのつぶやきも、日付を指定して見ることができます</p>
+      <p>( <%= number_with_delimiter(@total_user_num,:delimiter=>",") %>人 / <%= number_with_delimiter(@total_status_num,:delimiter=>",") %>ツイート )</p>
+      <p class="wrap-btn"><a class="btn btn-primary" href="/public_timeline">パブリックタイムラインを見てみる</a></p>
+    </article>
+  </div>
+  <!-- /.area-main -->
+
+  <div class="area-ad">
+    <%= render "shared/adsense/smart_phone/bottom.login" %>
+  </div>
+
+</div>
+<!-- /.wrap-login -->
