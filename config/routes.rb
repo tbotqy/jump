@@ -1,5 +1,6 @@
 Tlviewer::Application.routes.draw do
   match "/browsers" => "users#browsers"
+  match "/for_users" => "users#for_users"
   match "/auth/twitter/callback" => "logs#login"
   match "/auth/failure" => "logs#logout"
   match "/statuses/import" => "statuses#import" 
