@@ -111,6 +111,10 @@ a.brand{
   margin-bottom: 20px;
 }
 
+.wrap-login .area-main .read-me{ 
+  margin-bottom: 0;
+}
+
 .wrap-login .area-main article .wrap-btn{ 
   margin-top: 20px;
 }
