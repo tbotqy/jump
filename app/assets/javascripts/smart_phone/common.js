@@ -37,6 +37,12 @@ $(function(){
 
   }
   
+  var containerHeader = $("#container-header");
+  containerHeader.on("click",".drop-down",function(e){
+    e.preventDefault();
+    containerHeader.find(".drop-down-nav").slideToggle("fast");
+  });
+  
   //////////////////////////
   // code for each status //
   //////////////////////////
