@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
 
     @show_header = true
     @show_to_page_top = !request.smart_phone?
-    @show_footer = false
+    @show_footer = request.smart_phone?
     @show_scrollbar = false
     @current_user = @@current_user
   end
