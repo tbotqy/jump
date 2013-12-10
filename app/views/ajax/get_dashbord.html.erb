@@ -1,4 +1,8 @@
-<script src="/assets/dashbord.js"></script>
+<% if request.smart_phone? %>
+  <script src="/assets/smart_phone/dashbord.js"></script>
+<% else %>
+  <script src="/assets/dashbord.js"></script>
+<% end %>
 <!-- .inner -->
 <div class="inner">
   <div class="space"></div>
