@@ -36,6 +36,6 @@
     <!-- /#wrap-main.home_timeline.error -->
   <% end %>
 <% end %>
-<% if !@show_footer %>
+<% if !@show_footer || request.smart_phone? %>
   <%= render "shared/adsense_timeline_lower" %>
 <% end %>
