@@ -84,6 +84,25 @@ img.loader{
 }
 
 /* --------------------------------------------------
+   timeline nav
+-------------------------------------------------- */
+
+#timeline-nav{ 
+  width: 100%;
+  float: left;
+  text-align:center;
+  padding:10px 0 0 0;
+}
+
+#timeline-nav .btn{
+  width: 70px;
+}
+
+#timeline-nav i{ 
+  margin-right: 5px;
+}
+
+/* --------------------------------------------------
    footer
 -------------------------------------------------- */
 #container-footer{ 
@@ -355,6 +374,7 @@ img.loader{
 #wrap-dashbord{ 
   float: left;
   width: 100%;
+  min-height: 55px;
   font-family: 'Questrial', sans-serif;
   padding: 0 10px;
 }
