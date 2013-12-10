@@ -16,27 +16,28 @@ $(function(){
   });
 
   ////////////////////////////
+  // code for timeline nav  //
+  ////////////////////////////
+
+  // detect current page type and add active class to the button
+  var elmTimelineNav = $("#timeline-nav");
+  var currentActionName = elmTimelineNav.data("current-action-name");
+  elmTimelineNav.find("."+currentActionName).addClass("active");
+
+  // make link active when it is clicked
+  elmTimelineNav.on("click","a",function(e){
+    if( $(this).is(":disabled") ){
+      e.preventDefault();
+    }else{
+      elmTimelineNav.find("a").removeClass("active");
+      $(this).addClass("active");          
+    }
+  });
+
+  ////////////////////////////
   // code for global header //
   ////////////////////////////
-  if( $("#link-timeline").size() > 0 ){
-      
-    // detect current page type and add active class to the button
-    var elmLinkList = $("#link-timeline");
-    var currentActionName = elmLinkList.data("current-action-name");
-    elmLinkList.find("."+currentActionName).addClass("active");
-  
-    // make link active on it is clicked
-    elmLinkList.on("click","li",function(e){
-      if( $(this).hasClass("disabled") ){
-        e.preventDefault();
-      }else{
-        elmLinkList.find("li").removeClass("active");
-        $(this).addClass("active");          
-      }
-    });
 
-  }
-  
   var containerHeader = $("#container-header");
   containerHeader.on("click",".drop-down",function(e){
     e.preventDefault();
