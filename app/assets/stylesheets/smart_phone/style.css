@@ -75,6 +75,11 @@ img.loader{
   display: none;
 }
 
+#container-header a.drop-down{ 
+  text-decoration: none;
+  color: gray;
+}
+
 #container-header .drop-down-nav a.link-config{ 
   margin-right: 5px;
 }
