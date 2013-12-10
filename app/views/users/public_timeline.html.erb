@@ -16,6 +16,6 @@
   <% end %>
 </div>
 <!-- /#wrap-timeline-lower -->
-<% if !@show_footer %>
+<% if !@show_footer || request.smart_phone? %>
   <%= render "shared/adsense_timeline_lower" %>
 <% end %>

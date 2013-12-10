@@ -113,7 +113,7 @@ $(function(){
     var self = $(this);
 
     e.preventDefault();
-    var distance = self.offset().top;
+    //var distance = self.offset().top;
 
     // let button say 'loading'
     self.button('loading');
@@ -141,7 +141,7 @@ $(function(){
         alert("読み込みに失敗しました。");
       },
       complete: function(){
-        scrollDownToDestination(e,distance);
+        //scrollDownToDestination(e,distance);
       }
     });
   });
