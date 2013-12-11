@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def index
     # check if user is logged in
     if logged_in?
-      redirect_to :action => "home_timeline"
+      redirect_to :action => "sent_tweets"
     else
       @title = "あの日のタイムラインを眺められる、ちょっとしたアプリケーション"
       @show_header = false
