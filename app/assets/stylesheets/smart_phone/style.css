@@ -717,3 +717,19 @@ img.loader{
   line-height: 40px;
   font-size: 80%;
 }
+
+#wrap-main.error{ 
+  padding: 10px;
+}
+
+#wrap-main.error .not-found{ 
+  text-align: center;
+}
+
+#wrap-main .area-alert{ 
+  text-align: center;
+}
+
+#wrap-main .area-alert .invite-friends{ 
+  text-align: left;
+}
