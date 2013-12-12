@@ -163,7 +163,7 @@ function checkFriendUpdate(){
 	  $(this).text(count);
 	}).fadeIn();
 
-	area_friends.find(".count .additional-num").fadeOut(function(){
+	area_friends.find(".additional-num").fadeOut(function(){
 	  $(this).addClass("alert alert-success").text("更新しました");
 	}).fadeIn();
 
@@ -171,7 +171,7 @@ function checkFriendUpdate(){
 	
       }else{
 
-	area_friends.find(".count .additional-num").fadeOut(function(){
+	area_friends.find(".additional-num").fadeOut(function(){
 	  $(this).addClass("alert alert-info").text("変更はありません");
 	}).fadeIn();
 	
@@ -186,7 +186,7 @@ function checkFriendUpdate(){
 
     error: function(){
       
-      area_friends.find(".count .additional-num").fadeOut(function(){
+      area_friends.find(".additional-num").fadeOut(function(){
 	$(this).addClass("alert alert-danger").text("もう一度お試しください");
       }).fadeIn();
   
@@ -377,16 +377,16 @@ function updateStatus(){
 function showDeleteCompleteMessage(flag){
   
   var message = "";
-  var area_status = $("#modal-delete-account").find(".status");		  
+  var area_status = $("#wrap-delete-account").find(".status");		  
   
   if(flag){
-    message = "アカウント削除が完了しました。自動的にログアウトします。";
+    message = "アカウント削除が完了しました。<br/>自動的にログアウトします。";
   }else{
-    message = "すみません！処理が完了しませんでした。画面をリロードしてもう一度お試しください。";  
+    message = "すみません！処理が完了しませんでした。<br/>画面をリロードしてもう一度お試しください。";  
   }
 
   area_status.fadeOut(function(){
-    $(this).text(message);
+    $(this).html(message);
   }).fadeIn();
 
 }

@@ -22,6 +22,10 @@ img.loader{
   text-align: center;
 }
 
+i{ 
+  margin-right: 5px;
+}
+
 /* --------------------------------------------------
    read-more
 -------------------------------------------------- */
@@ -226,6 +230,8 @@ img.loader{
 -------------------------------------------------- */
 #wrap-import{ 
   width: 100%;
+  float: left;
+  padding-top: 10px;
 }
 
 #wrap-import .wrap-upper{
@@ -732,4 +738,205 @@ img.loader{
 
 #wrap-main .area-alert .invite-friends{ 
   text-align: left;
+}
+
+/* --------------------------------------------------
+   users.setting
+-------------------------------------------------- */
+
+#wrap-setting{ 
+  width: 100%;
+  padding: 10px;
+}
+
+#wrap-setting h3{ 
+  width: 100%;
+  float: left;
+  border-bottom: solid 1px #eee;
+  padding-bottom: 5px;
+}
+
+#wrap-setting .wrap-profile{ 
+  width: 100%;
+  float: left;
+  margin: 20px 0 0 0;
+  padding: 10px;
+  border-top: solid 1px #FEFEFE;
+  border-bottom: solid 1px #D7D7D7;
+  background: #F2EEE6;
+  color: #49360D;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+
+}
+
+#wrap-setting .wrap-profile .area-profile-image{ 
+  float: left;
+  width: 70px;
+}
+
+#wrap-setting .wrap-profile .area-profile-image img{ 
+  border-radius: 5px;
+}
+
+#wrap-setting .wrap-profile .area-center{ 
+  float: left;
+  width: 70%;
+  padding-left: 10px;
+}
+
+#wrap-setting .wrap-profile .area-names{ 
+  float: left;
+}
+
+#wrap-setting .wrap-profile .area-names p{ 
+}
+
+#wrap-setting .wrap-profile .area-updated{ 
+  float: left;
+}
+
+#wrap-setting .wrap-profile .area-updated p,
+#wrap-setting .last-update{ 
+  color: #696969;
+} 
+
+#wrap-setting .wrap-profile .area-result{ 
+  float: left;
+  margin: -1px 0 0 0;
+}
+
+#wrap-setting .wrap-profile .area-result .alert{ 
+  text-align: center;
+  font-size: 70%;
+  width: 100%;
+  float: left;
+  padding: 9px;
+  margin: 0;
+}
+
+#wrap-setting .wrap-profile .area-button{
+  float: left;
+  width: 100%;
+} 
+
+#wrap-setting .wrap-profile .area-button .loader{ 
+  float: right;
+  padding-right: 10px;
+}
+
+#wrap-setting .wrap-profile .area-button button{
+  float: right;
+}
+
+#wrap-setting .wrap-profile .area-button span{
+  float: left;
+}
+
+#wrap-setting .wrap-profile .loader{
+  float: left;
+  margin: 2px 0 0 10px;
+}
+
+#wrap-setting .tweets,
+#wrap-setting .friends{ 
+  border-top: solid 1px #fefefe;
+  border-bottom: solid 1px #d7d7d7;  
+  background: #f2eee6;
+  color: #49360D;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);  
+  margin-top: 10px;
+  width: 100%;
+  float: left;
+  padding: 10px;
+}
+
+#wrap-setting .tweets div.margin,
+#wrap-setting .friends div.margin{
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+#wrap-setting .tweets .alert,
+#wrap-setting .friends .alert{
+  padding: 9px;
+  margin: 0;
+  float: left;
+  font-size: 70%;
+}
+
+#wrap-setting .tweets .loader,
+#wrap-setting .friends .loader{
+  float:right;
+  padding-right: 5px;
+  margin: 2px 0 0 10px;
+}
+
+#wrap-setting .tweets button,
+#wrap-setting .friends button{
+  float: right;
+}
+
+#wrap-setting .head{
+  font-weight: bold;
+} 
+
+#wrap-setting .total-num{
+}
+
+#wrap-setting .additional-num{
+  display:none;
+}
+
+#wrap-setting .wrap-delete-button{ 
+  border-top: solid 1px #eee;
+  float: left;
+  width: 100%;
+  margin: 10px 0;
+  padding-top: 10px;
+}
+
+#wrap-setting .wrap-delete-button a.btn{ 
+  float: right;
+}
+
+#wrap-delete-account{ 
+  padding: 10px;
+}
+
+#wrap-delete-account h3{ 
+  width: 100%;
+  float: left;
+  border-bottom: solid 1px #eee;
+  padding-bottom: 5px;
+}
+
+#wrap-delete-account .area-body{ 
+  padding-top: 10px;
+}
+
+#wrap-delete-account .area-body p{ 
+  padding-left: 10px;
+}
+
+#wrap-delete-account .area-footer{ 
+  text-align: right;
+  border-top: solid 1px #eee;
+  padding-top: 5px;
+}
+
+.wrap-status{ 
+  float:left;
+  width:100%;
+  padding: 5px 0;
+}
+
+#wrap-delete-account .status .now{ 
+  float: right;
+  margin: 5px 0;
+}
+
+#wrap-delete-account .status .loader{ 
+  display: block;
+  float: right;
+  margin-right: 5px;
 }
