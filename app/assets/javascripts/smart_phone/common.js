@@ -262,17 +262,14 @@ $(function(){
  
   // click event to delete account
   $("#delete-account").click(function(){
-    var elmModalDeleteAccount = $("#modal-delete-account");
-    // disable cancel button
-    elmModalDeleteAccount.find(".modal-header .close").fadeOut();
-    elmModalDeleteAccount.find(".modal-footer .cancel-delete").addClass("disabled");
+    var wrapDeleteAccount = $("#wrap-delete-account");
 
     $(this).button('loading');
     
-    elmModalDeleteAccount
+    wrapDeleteAccount
       .find(".status")
       .fadeOut(function(){
-      $(this).html("処理中...<img src=\"/assets/ajax-loader.gif\" class=\"loader\" />"); 
+      $(this).html("<span class=\"now\">処理中...</span><img src=\"/assets/ajax-loader.gif\" class=\"loader\" /> "); 
       })
       .fadeIn();
     
@@ -283,12 +280,12 @@ $(function(){
       dataType: 'json',
       
       success: function(res){
-      deleted = res.deleted;
-      showDeleteCompleteMessage(res.deleted);
+        deleted = res.deleted;
+        showDeleteCompleteMessage(res.deleted);
       },
 
       error: function(){
-      showDeleteErrorMessage();
+        showDeleteErrorMessage();
       },
       
       complete: function(){
@@ -302,7 +299,7 @@ $(function(){
         
       }else{
           alert("処理がうまくいきませんでした。");
-        }
+      }
       }
 
     });

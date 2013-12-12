@@ -140,5 +140,8 @@ class UsersController < ApplicationController
     @show_scrollbar = true
     @show_footer = true
   end
+
+  def delete_account
+  end
   
 end
