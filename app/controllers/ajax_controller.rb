@@ -96,14 +96,13 @@ class AjaxController < ApplicationController
           
   def deactivate_account
     ret = {}
-    deleted = false;
 
     if User.deactivate_account(@@user_id)
       deleted = true
     end
     
     sleep 3
-
+    
     ret[:deleted] = deleted
     render :json => ret
   end

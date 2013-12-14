@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
   before_filter :reject_incompatible_ua, :set_vars, :apply_user_time_zone
+  include Jpmobile::ViewSelector
 
   # handlers for exceptions
   if Rails.env.production?
@@ -52,7 +53,8 @@ class ApplicationController < ActionController::Base
     @@user_id = @@current_user ? @@current_user.id : nil
 
     @show_header = true
-    @show_footer = false
+    @show_to_page_top = !request.smart_phone?
+    @show_footer = request.smart_phone?
     @show_scrollbar = false
     @current_user = @@current_user
   end
