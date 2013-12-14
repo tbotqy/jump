@@ -7,6 +7,9 @@
   <head>
     <title><%= title @title %></title>
     <meta charset="UTF-8"/>
+    <% if request.smart_phone? %>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <% end %>
     <% if configatron.site_mode == "production" %>
       <meta name="robots" content="index,follow"/>
     <% else %>
@@ -28,11 +31,23 @@
     <![endif]-->    
     <link href='http://fonts.googleapis.com/css?family=Contrail+One|Fugaz+One|Emblema+One|Questrial|PT+Sans' rel='stylesheet' type='text/css'>
     <% if configatron.site_mode == "production" %>
-      <link href="/assets/application.css?v=3.1" media="all" rel="stylesheet" type="text/css" />
-      <script src="/assets/application.js?v=2.4" type="text/javascript"></script>
+      <% if request.smart_phone? %>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+	<link href="/assets/smart_phone/application.css?v=1" media="all" rel="stylesheet" type="text/css" />
+	<script src="/assets/smart_phone/application.js?v=1" type="text/javascript"></script>
+      <% else %>
+	<link href="/assets/application.css?v=3.1" media="all" rel="stylesheet" type="text/css" />
+	<script src="/assets/application.js?v=2.4" type="text/javascript"></script>
+      <% end %>
     <% else %>
-      <link href="/assets/application.css?v=<%= Time.now.to_i %>" media="all" rel="stylesheet" type="text/css" />
-      <script src="/assets/application.js?v=<%= Time.now.to_i %>" type="text/javascript"></script>
+      <% if request.smart_phone? %>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+      	<link href="/assets/smart_phone/application.css?v=<%= Time.now.to_i %>" media="all" rel="stylesheet" type="text/css" />
+	<script src="/assets/smart_phone/application.js?v=<%= Time.now.to_i %>" type="text/javascript"></script>
+      <% else %>
+	<link href="/assets/application.css?v=<%= Time.now.to_i %>" media="all" rel="stylesheet" type="text/css" />
+	<script src="/assets/application.js?v=<%= Time.now.to_i %>" type="text/javascript"></script>
+      <% end %>
     <% end %>
     <%= csrf_meta_tags %>
     <% if configatron.site_mode == "production" %>
@@ -59,9 +74,11 @@
       </div>
     </div>
     <!-- /#container-main -->
-    <%= render "shared/to_page_top" %>
+    <% if @show_to_page_top %>
+      <%= render "shared/to_page_top" %>
+    <% end %>
     <% if @show_footer %>
-    <%= render "shared/footer" %>
+      <%= render "shared/footer" %>
     <% end %>
   </body>
 </html>

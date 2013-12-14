@@ -49,3 +49,5 @@ group :development,:test do
   gem "rspec"
   gem "rspec-rails", '~> 2.0'
 end
+
+gem 'jpmobile'

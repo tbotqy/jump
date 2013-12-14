@@ -4,77 +4,77 @@
     
     <div class="navbar navbar-fixed-top">
       <nav>
-	<!-- .navbar-inner -->
-	<div class="navbar-inner">
-	  
-	  <!-- .container -->
-	  <div class="container">
-	    <a  class="brand" href="/">Timedline</a>
-	    <% if logged_in? %>
-	    <% if current_user.initialized_flag %>
-	    
-	    <!-- .nav .pull-left -->
-	    <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
-	      <li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
-	      <li class="home_timeline"><a href="/your/home_timeline"><i class="icon-group margin"></i>友達</a></li>
-	      <li class="sent_tweets"><a href="/your/tweets"><i class="icon-user margin"></i>あなた</a></li>
-	    </ul>
-	    <!-- /.nav .pull-left -->
-	    <% end %>
-	    
-	    <!-- .nav .pull-right -->
-	    <ul id="link-twitter-profile" class="nav pull-right">
-	      
-	      <li class="twitter-profile">
-		<a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
-		  <img width="20" src="<%= current_user.profile_image_url_https %>" />
-		</a>
+        <!-- .navbar-inner -->
+        <div class="navbar-inner">
+          
+          <!-- .container -->
+          <div class="container">
+            <a  class="brand" href="/">Timedline</a>
+            <% if logged_in? %>
+            <% if current_user.initialized_flag %>
+            
+            <!-- .nav .pull-left -->
+            <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
+              <li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
+              <li class="home_timeline"><a href="/your/home_timeline"><i class="icon-group margin"></i>友達</a></li>
+              <li class="sent_tweets"><a href="/your/tweets"><i class="icon-user margin"></i>あなた</a></li>
+            </ul>
+            <!-- /.nav .pull-left -->
+            <% end %>
+            
+            <!-- .nav .pull-right -->
+            <ul id="link-twitter-profile" class="nav pull-right">
+              
+              <li class="twitter-profile">
                 <a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
-		  @<%= current_user.screen_name %>
-		</a>
-	      </li>
-	      
-	      <li class="dropbown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-caret-down"></i></a>
-		
-		<!-- .dropdown-menu -->
-		<ul class="dropdown-menu">
-		  <% if current_user.initialized_flag %>
-		  <li>
-		    <a class="link-config" href="/your/data"><i class="icon-hdd"></i>データ管理</a>
-		  </li>
-		  <li class="divider"></li>
-		  <% end %>
-		  <li>
-		    <a class="link-logout" href="/logout"><i class="icon-signout"></i>ログアウト</a>
-		  </li>
-		</ul>
-		<!-- /.dropdown-menu -->
-	      
-	      </li>
-	    
-	    </ul>
-	    <!-- /.nav .pull-right -->
+                  <img width="20" src="<%= current_user.profile_image_url_https %>" />
+                </a>
+                <a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
+                  @<%= current_user.screen_name %>
+                </a>
+              </li>
+              
+              <li class="dropbown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-caret-down"></i></a>
+                
+                <!-- .dropdown-menu -->
+                <ul class="dropdown-menu">
+                  <% if current_user.initialized_flag %>
+                  <li>
+                    <a class="link-config" href="/your/data"><i class="icon-hdd"></i>データ管理</a>
+                  </li>
+                  <li class="divider"></li>
+                  <% end %>
+                  <li>
+                    <a class="link-logout" href="/logout"><i class="icon-signout"></i>ログアウト</a>
+                  </li>
+                </ul>
+                <!-- /.dropdown-menu -->
+              
+              </li>
+            
+            </ul>
+            <!-- /.nav .pull-right -->
 
-	    <% else %>
-	      <!-- .nav .pull-left -->
-	      <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
-		<li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
-		<li class="home_timeline disabled"><a href="#"><i class="icon-group margin"></i>友達</a></li>
-		<li class="sent_tweets disabled"><a href="#"><i class="icon-user margin"></i>あなた</a></li>
-	      </ul>
-	      <!-- /.nav .pull-left -->
-	      <!-- .nav .pull-right -->
-	      <ul id="link-auth" class="nav pull-right">
-		<li><a class="btn-auth" href="/auth/twitter">Sign in with Twitter</a></li>
-	      </ul>
-	      <!-- /.nav .pull-right -->
-	    <% end %>
-	  </div>
-	  <!-- /.container -->
+            <% else %>
+              <!-- .nav .pull-left -->
+              <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
+                <li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
+                <li class="home_timeline disabled"><a href="#"><i class="icon-group margin"></i>友達</a></li>
+                <li class="sent_tweets disabled"><a href="#"><i class="icon-user margin"></i>あなた</a></li>
+              </ul>
+              <!-- /.nav .pull-left -->
+              <!-- .nav .pull-right -->
+              <ul id="link-auth" class="nav pull-right">
+                <li><a class="btn-auth" href="/auth/twitter">Sign in with Twitter</a></li>
+              </ul>
+              <!-- /.nav .pull-right -->
+            <% end %>
+          </div>
+          <!-- /.container -->
 
-	</div>
-	<!-- /.navbar-inner -->
+        </div>
+        <!-- /.navbar-inner -->
       </nav>
 
     </div>

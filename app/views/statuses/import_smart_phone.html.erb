@@ -1,0 +1,69 @@
+<!-- #wrap-import -->
+<div id="wrap-import">
+  
+  <!-- .wrap-upper -->
+  <div class="wrap-upper">
+    <h2>タイムラインを取り込む</h2>
+    <h4>
+      <a href="https://twitter.com/<%= @current_user.screen_name %>" target="_blank">
+	<img width="30" src="/assets/twitter-bird-light-bgs.png"/>
+	@<%= @current_user.screen_name %></a>のツイートを</br>
+      <button id="start-import" data-loading-text="保存中..." data-complete-text="取得完了" class="btn btn-success"><i class="icon-random icon-white"></i> 取り込み開始</button>
+      <p class="msg" style="color:gray;font-size:70%;margin-top:10px">サーバーとデータのキャッチボールをします。<br/>安定した通信環境下で実行して下さい :-)</p>
+      <div class="wrap-loader" style="width:26px;margin:10px auto;">
+	<img class="loader" src="/assets/ajax-loader.gif" />
+      </div>
+      <% if @id_oldest != "false" %>
+	<div class="wrap-recover-msg">
+	  <p id="recover-msg" class="alert alert-info">続きから取り込みます</p>
+	</div>
+      <% end %>
+    </h4>
+    <input type="hidden" name="id-oldest" value="<%= @id_oldest %>" />
+    <input type="hidden" name="count-so-far" value="<%= @count_so_far %>" />
+  </div>
+  <!-- /.wrap-upper -->
+
+  <!-- .wrap-progress-bar -->
+  <div class="wrap-progress-bar" style="display:none;">
+    <input type="hidden" id="statuses-count" value="<%= @statuses_count %>" />
+    <div class="progress active">
+      <div class="bar progress-bar progress-bar-info" style="width: 0%;height: 30px;"></div>
+    </div>
+    <div class="wrap-total">
+      <p class="total"></p>
+    </div>
+  </div>
+  <!-- /.wrap-progress-bar -->
+  
+  <!-- .wrap-lower -->
+  <div class="wrap-lower">
+    <!-- .wrap-importing-status -->
+    <div class="wrap-importing-status" style="display:none;">
+      <!-- .wrap-tweet -->
+      <div class="wrap-tweet">
+	<div class="inner">
+	  <p class="body"></p>
+	  <p class="date"></p>	
+	</div>
+	<div class="triangle"></div>
+      </div>
+      <!-- /.wrap-tweet -->
+      <!-- .wrap-profile-image -->
+      <div class="wrap-profile-image">
+	<div class="profile-image">
+	  <div class="viewport">
+            <a href="https://twitter.com/<%= @current_user.screen_name %>"><img src="<%= @current_user.profile_image_url_https %>" alt="<%= @current_user.screen_name %>" /></a>
+	  </div>
+	</div>
+      </div>
+      <!-- /.wrap-profile-image -->   
+    </div>
+    <!-- /.wrap-importing-status -->
+  </div>
+  <!-- /.wrap-lower -->
+  <div class="ad">
+    <%= render "shared/adsense/smart_phone/bottom.import.html.erb" %>
+  </div>
+</div>
+<!-- /#wrap-import" -->
