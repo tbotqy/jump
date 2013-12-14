@@ -1,3 +1,4 @@
+
 @charset 'utf-8';
 
 h1,h2,h3{
@@ -19,7 +20,10 @@ img.loader{
 }
 
 .ad{ 
+  width: 100%;
+  float: left;
   text-align: center;
+  margin: 10px 0;
 }
 
 i{ 
@@ -245,10 +249,6 @@ i{
 
 #wrap-import .wrap-upper h4{ 
   font-weight: normal;
-}
-
-#wrap-import .wrap-upper .ad{ 
-  margin:10px 0;
 }
 
 #wrap-import .wrap-recover-msg{ 
@@ -672,7 +672,7 @@ i{
 #wrap-timeline-lower{ 
   width: 100%;
   float: left;
-  min-height: 700px;
+  min-height: 600px;
 }
 
 #wrap-main{ 
@@ -726,13 +726,10 @@ i{
 
 #wrap-main.error{ 
   padding: 10px;
+  min-height: 600px;
 }
 
 #wrap-main.error .not-found{ 
-  text-align: center;
-}
-
-#wrap-main .area-alert{ 
   text-align: center;
 }
 

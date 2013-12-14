@@ -21,9 +21,6 @@
     </h4>
     <input type="hidden" name="id-oldest" value="<%= @id_oldest %>" />
     <input type="hidden" name="count-so-far" value="<%= @count_so_far %>" />
-    <div style="margin:10px 0;text-align:center;" class="ad">
-      <%= render "shared/adsense/smart_phone/middle.import.html.erb" %>
-    </div>
   </div>
   <!-- /.wrap-upper -->
 
@@ -65,5 +62,8 @@
     <!-- /.wrap-importing-status -->
   </div>
   <!-- /.wrap-lower -->
+  <div class="ad">
+    <%= render "shared/adsense/smart_phone/bottom.import.html.erb" %>
+  </div>
 </div>
 <!-- /#wrap-import" -->
