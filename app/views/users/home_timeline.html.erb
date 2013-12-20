@@ -12,7 +12,7 @@
   <!-- /#wrap-main.home_timeline.error -->
 <% else %>
   <%= render "shared/dashbord" %>
-  <%= render "shared/adsense_timeline_upper" %>
+  <%= render "shared/admax/above_timeline" %>
   <% if @statuses.present? %>
     <!-- #wrap-timeline-lower -->
     <div id="wrap-timeline-lower">
@@ -21,11 +21,6 @@
 	<%= render "shared/timeline", {:statuses => @statuses, :has_next => @has_next, :current_user => @current_user, :oldest_tweet_id => @oldest_tweet_id} %>
       </div>
       <!-- /#wrap-main -->
-      <div class="wrap-timeline-right-ads">
-	<%= render "shared/adsense_timeline_right" %>
-	<%= render "shared/amazon_timeline_right" %>
-	<%= render "shared/admax_timeline_right" %>
-      </div>
     </div>
     <!-- /#wrap-timeline-lower -->
   <% else %>
@@ -37,5 +32,5 @@
   <% end %>
 <% end %>
 <% if !@show_footer %>
-  <%= render "shared/adsense_timeline_lower" %>
+  <%= render "shared/admax/under_timeline" %>
 <% end %>
