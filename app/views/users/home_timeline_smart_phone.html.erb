@@ -13,7 +13,9 @@
   <!-- /#wrap-main.home_timeline.error -->
 <% else %>
   <%= render "shared/dashbord" %>
-  <%= render "shared/admax/smart_phone/above_timeline" %>
+  <div class="ad">
+    <%= render "shared/admax/smart_phone/above_timeline" %>
+  </div>
   <% if @statuses.present? %>
     <!-- #wrap-timeline-lower -->
     <div id="wrap-timeline-lower">

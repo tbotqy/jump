@@ -26,6 +26,10 @@ img.loader{
   margin: 10px 0;
 }
 
+.ad.no-margin{ 
+  margin: 0;
+}
+
 i{ 
   margin-right: 5px;
 }
@@ -741,22 +745,23 @@ i{
    users.setting
 -------------------------------------------------- */
 
-#wrap-setting{ 
+#wrap-setting-upper,
+#wrap-setting-lower{ 
   width: 100%;
   padding: 10px;
 }
 
-#wrap-setting h3{ 
+#wrap-setting-upper h3{ 
   width: 100%;
   float: left;
   border-bottom: solid 1px #eee;
   padding-bottom: 5px;
 }
 
-#wrap-setting .wrap-profile{ 
+#wrap-setting-lower .wrap-profile{ 
   width: 100%;
   float: left;
-  margin: 20px 0 0 0;
+  margin: 5px 0 0 0;
   padding: 10px;
   border-top: solid 1px #FEFEFE;
   border-bottom: solid 1px #D7D7D7;
@@ -766,43 +771,43 @@ i{
 
 }
 
-#wrap-setting .wrap-profile .area-profile-image{ 
+#wrap-setting-lower .wrap-profile .area-profile-image{ 
   float: left;
   width: 70px;
 }
 
-#wrap-setting .wrap-profile .area-profile-image img{ 
+#wrap-setting-lower .wrap-profile .area-profile-image img{ 
   border-radius: 5px;
 }
 
-#wrap-setting .wrap-profile .area-center{ 
+#wrap-setting-lower .wrap-profile .area-center{ 
   float: left;
   width: 70%;
   padding-left: 10px;
 }
 
-#wrap-setting .wrap-profile .area-names{ 
+#wrap-setting-lower .wrap-profile .area-names{ 
   float: left;
 }
 
-#wrap-setting .wrap-profile .area-names p{ 
+#wrap-setting-lower .wrap-profile .area-names p{ 
 }
 
-#wrap-setting .wrap-profile .area-updated{ 
+#wrap-setting-lower .wrap-profile .area-updated{ 
   float: left;
 }
 
-#wrap-setting .wrap-profile .area-updated p,
-#wrap-setting .last-update{ 
+#wrap-setting-lower .wrap-profile .area-updated p,
+#wrap-setting-lower .last-update{ 
   color: #696969;
 } 
 
-#wrap-setting .wrap-profile .area-result{ 
+#wrap-setting-lower .wrap-profile .area-result{ 
   float: left;
   margin: -1px 0 0 0;
 }
 
-#wrap-setting .wrap-profile .area-result .alert{ 
+#wrap-setting-lower .wrap-profile .area-result .alert{ 
   text-align: center;
   font-size: 70%;
   width: 100%;
@@ -811,31 +816,31 @@ i{
   margin: 0;
 }
 
-#wrap-setting .wrap-profile .area-button{
+#wrap-setting-lower .wrap-profile .area-button{
   float: left;
   width: 100%;
 } 
 
-#wrap-setting .wrap-profile .area-button .loader{ 
+#wrap-setting-lower .wrap-profile .area-button .loader{ 
   float: right;
   padding-right: 10px;
 }
 
-#wrap-setting .wrap-profile .area-button button{
+#wrap-setting-lower .wrap-profile .area-button button{
   float: right;
 }
 
-#wrap-setting .wrap-profile .area-button span{
+#wrap-setting-lower .wrap-profile .area-button span{
   float: left;
 }
 
-#wrap-setting .wrap-profile .loader{
+#wrap-setting-lower .wrap-profile .loader{
   float: left;
   margin: 2px 0 0 10px;
 }
 
-#wrap-setting .tweets,
-#wrap-setting .friends{ 
+#wrap-setting-lower .tweets,
+#wrap-setting-lower .friends{ 
   border-top: solid 1px #fefefe;
   border-bottom: solid 1px #d7d7d7;  
   background: #f2eee6;
@@ -847,44 +852,44 @@ i{
   padding: 10px;
 }
 
-#wrap-setting .tweets div.margin,
-#wrap-setting .friends div.margin{
+#wrap-setting-lower .tweets div.margin,
+#wrap-setting-lower .friends div.margin{
   padding-top: 5px;
   padding-left: 5px;
 }
 
-#wrap-setting .tweets .alert,
-#wrap-setting .friends .alert{
+#wrap-setting-lower .tweets .alert,
+#wrap-setting-lower .friends .alert{
   padding: 9px;
   margin: 0;
   float: left;
   font-size: 70%;
 }
 
-#wrap-setting .tweets .loader,
-#wrap-setting .friends .loader{
+#wrap-setting-lower .tweets .loader,
+#wrap-setting-lower .friends .loader{
   float:right;
   padding-right: 5px;
   margin: 2px 0 0 10px;
 }
 
-#wrap-setting .tweets button,
-#wrap-setting .friends button{
+#wrap-setting-lower .tweets button,
+#wrap-setting-lower .friends button{
   float: right;
 }
 
-#wrap-setting .head{
+#wrap-setting-lower .head{
   font-weight: bold;
 } 
 
-#wrap-setting .total-num{
+#wrap-setting-lower .total-num{
 }
 
-#wrap-setting .additional-num{
+#wrap-setting-lower .additional-num{
   display:none;
 }
 
-#wrap-setting .wrap-delete-button{ 
+#wrap-setting-lower .wrap-delete-button{ 
   border-top: solid 1px #eee;
   float: left;
   width: 100%;
@@ -892,7 +897,7 @@ i{
   padding-top: 10px;
 }
 
-#wrap-setting .wrap-delete-button a.btn{ 
+#wrap-setting-lower .wrap-delete-button a.btn{ 
   float: right;
 }
 
