@@ -13,7 +13,7 @@
   <!-- /#wrap-main.home_timeline.error -->
 <% else %>
   <%= render "shared/dashbord" %>
-  <%= render "shared/adsense_timeline_upper" %>
+  <%= render "shared/admax/smart_phone/above_timeline" %>
   <% if @statuses.present? %>
     <!-- #wrap-timeline-lower -->
     <div id="wrap-timeline-lower">
@@ -32,4 +32,6 @@
     <!-- /#wrap-main.home_timeline.error -->
   <% end %>
 <% end %>
-<%= render "shared/adsense_timeline_lower" %>
+<div class="ad">
+  <%= render "shared/admax/smart_phone/under_timeline" %>
+</div>
