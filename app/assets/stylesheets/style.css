@@ -25,6 +25,11 @@ body{
 /* --------------------------------------------------
    elements
 -------------------------------------------------- */
+.ad.timeline{ 
+  width: 100%;
+  float: left;
+  margin: 10px 0;
+}
 
 .cake-sql-log tr{ 
   border: solid 1px gray;
@@ -341,9 +346,6 @@ footer .copyright{
 .to-page-top{ 
   width: 94px;
   height: 35px;
-  position: fixed;
-  bottom: 200px;
-  left: 644px;
   background: black;
   opacity: 0.5;
   border-radius: 3px;
