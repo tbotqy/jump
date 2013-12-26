@@ -101,7 +101,8 @@ class Status < ActiveRecord::Base
   def self.owned_by_active_user
     # used for users#public_timeline
     active_user_ids = User.select(:id).where(:deleted_flag => false)
-    self.from("#{self.table_name} FORCE INDEX(#{:three_index})").where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
+    # self.from("#{self.table_name} FORCE INDEX(#{:three_index})").where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
+    self.where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
   end
 
   # utils
