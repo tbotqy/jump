@@ -79,6 +79,8 @@ ActiveRecord::Schema.define(:version => 20130617061827) do
   add_index "statuses", ["twitter_created_at"], :name => "created_at"
   add_index "statuses", ["user_id"], :name => "user_id"
   add_index "statuses", ["status_id_str"], :name => "status_id_str"
+  add_index "statuses", ["pre_saved"], :name => "pre_saved"
+  add_index "statuses", ["user_id,status_id_str,pre_saved"], :name => "three_index"
 
   create_table "users", :force => true do |t|
     t.integer "twitter_id",              :limit => 8,                    :null => false
