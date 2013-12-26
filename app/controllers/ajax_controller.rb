@@ -384,7 +384,7 @@ class AjaxController < ApplicationController
         @statuses = Status.get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
       end
       @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_friend_of(@@user_id).exists? if @statuses.present?
-      when 'public_timeline'
+    when 'public_timeline'
         if date
           @statuses = Status.get_status_in_date(date,fetch_num).owned_by_active_user
         else
