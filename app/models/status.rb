@@ -105,6 +105,11 @@ class Status < ActiveRecord::Base
     self.where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
   end
 
+  def self.get_active_status_count
+    active_user_ids = User.select(:id).where(:deleted_flag => false)
+    self.select(:id).where('statuses.user_id IN (?)',active_user_ids.pluck(:id)).count
+  end
+
   # utils
 
   private

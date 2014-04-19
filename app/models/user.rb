@@ -87,6 +87,10 @@ class User < ActiveRecord::Base
   def self.get_active_users
     self.where(:deleted_flag => false).order('created_at DESC')
   end
+
+  def self.get_active_user_count
+    self.select(:id).where(:deleted_flag => false).count
+  end
   
   def self.get_gone_users
     self.where(:deleted_flag => true).order('updated_at DESC')
