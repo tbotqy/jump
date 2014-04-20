@@ -49,6 +49,7 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     builder (3.0.4)
+    chronic (0.10.2)
     configatron (2.10.0)
       yamler (>= 0.1.0)
     diff-lcs (1.2.4)
@@ -161,6 +162,9 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    whenever (0.9.2)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
     yamler (0.1.0)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
@@ -183,4 +187,5 @@ DEPENDENCIES
   twitter-text!
   uglifier (>= 1.0.3)
   unicorn
+  whenever
   yui-compressor
