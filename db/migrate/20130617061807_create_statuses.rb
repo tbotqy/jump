@@ -24,7 +24,7 @@ class CreateStatuses < ActiveRecord::Migration
       t.integer "created_at",                                                 :null => false
     end
     
-    add_index "statuses", ["twitter_created_at"], :name => "created_at"
+    add_index "statuses", ["twitter_created_at"], :name => "twitter_created_at_idx"
     add_index "statuses", ["user_id"], :name => "user_id"
     add_index "statuses", ["status_id_str"], :name => "status_id_str"
 

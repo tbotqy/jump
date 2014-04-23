@@ -70,7 +70,7 @@ class Status < ActiveRecord::Base
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
-    self.limit(limit)
+    self.use_index(:twitter_created_at_idx).limit(limit)
   end
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
@@ -78,7 +78,7 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    self.where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
+    self.use_index(:twitter_created_at_idx).where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
   end
 
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
@@ -182,6 +182,11 @@ class Status < ActiveRecord::Base
     end
 
     ret
+  end
+
+  private
+  def self.use_index(index_name)
+    self.from("#{self.table_name} USE INDEX(#{index_name})")
   end
 
 end
