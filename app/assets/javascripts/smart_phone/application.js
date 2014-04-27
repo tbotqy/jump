@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require bootstrap.min
+//= require detect_timezone
+//= require jquery.detect_timezone
+//= require jquery.cookie
 //= require smart_phone/functions
 //= require smart_phone/common
 //= require smart_phone/get_dashbord
