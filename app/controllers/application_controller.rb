@@ -62,6 +62,8 @@ class ApplicationController < ActionController::Base
   def apply_user_time_zone
     if @@current_user
       Time.zone = @@current_user.time_zone
+    else
+      Time.zone = cookies[:timezone] || 'UTC'
     end
   end
 

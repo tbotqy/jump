@@ -4,12 +4,16 @@ $(function(){
   var userAgent = getUserAgent();
   var uaWhiteList = ['chrome','safari','firefox'];
   var isValidUA = false;
+ 
+  // check user's timezone
+  if (!$.cookie('timezone')){
+    $.cookie('timezone', $("html").get_timezone(), {expires: 1});
+  }
 
   // make loading social plugin delayed
   setTimeout(function(){
     facebook(document, 'script', 'facebook-jssdk');
   },3000);
-
 
   $.ajaxSetup({
     data:{"authenticity_token":getCsrfToken()}

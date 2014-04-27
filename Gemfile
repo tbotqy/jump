@@ -12,6 +12,7 @@ gem 'yui-compressor'
 gem 'jpmobile'
 gem 'turnout'
 gem 'whenever', :require => false
+gem 'detect_timezone_rails'
 
 group :assets do
   gem 'therubyracer', :platforms => :ruby
