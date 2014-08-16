@@ -2,7 +2,9 @@
 class ApplicationController < ActionController::Base
 
   protect_from_forgery
-  before_filter :reject_incompatible_ua, :set_vars, :apply_user_time_zone
+  # stop rejecting incompatible ua
+  # before_filter :reject_incompatible_ua, :set_vars, :apply_user_time_zone
+  before_filter :set_vars, :apply_user_time_zone
   include Jpmobile::ViewSelector
 
   # handlers for exceptions
