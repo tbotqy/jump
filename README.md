@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 timeline-viewer-on-rails
 ========================
 
