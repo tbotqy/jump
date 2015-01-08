@@ -22,7 +22,7 @@
     <meta property="fb:app_id" content="258025897640441" />
     <meta property="og:site_name" content="Timdeline" />
     <meta property="og:title" content="<%= title @title %>" />
-    <meta property="og:description" content="Timedline is a simple view system for those who want to have the access to their past timeline." />
+    <meta property="og:description" content="Click and jump to your passed days." />
     <meta property="og:url" content="<%= request.url %>" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="<%= request.url %>/favicon.ico" />
@@ -57,7 +57,9 @@
 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 	
-	ga('create', 'UA-28886746-8', 'timedline.me');
+	ga('create', 'UA-28886746-8', 'auto', {'allowLinker': true}); 
+	ga('require', 'linker'); 
+	ga('linker:autoLink', ['timedline.me'] );
 	ga('send', 'pageview');
       </script>
     <% end %>
