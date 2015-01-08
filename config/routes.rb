@@ -1,17 +1,17 @@
 Tlviewer::Application.routes.draw do
-  get "/browsers" => "users#browsers"
-  get "/for_users" => "users#for_users"
-  get "/auth/twitter/callback" => "logs#login"
-  get "/auth/failure" => "logs#logout"
-  get "/statuses/import" => "statuses#import" 
-  get "/your/tweets/(:date)" => "users#sent_tweets"
-  get "/your/home_timeline/(:date)" => "users#home_timeline"
-  get "/your/data" => "users#setting"
-  get "/public_timeline/(:date)" => "users#public_timeline"
-  get "/logout" => "logs#logout"
-  get "/admin/accounts" => "admin#accounts"
-  get "/admin/statuses" => "admin#statuses"
+  match "/browsers" => "users#browsers"
+  match "/for_users" => "users#for_users"
+  match "/auth/twitter/callback" => "logs#login"
+  match "/auth/failure" => "logs#logout"
+  match "/statuses/import" => "statuses#import" 
+  match "/your/tweets/(:date)" => "users#sent_tweets"
+  match "/your/home_timeline/(:date)" => "users#home_timeline"
+  match "/your/data" => "users#setting"
+  match "/public_timeline/(:date)" => "users#public_timeline"
+  match "/logout" => "logs#logout"
+  match "/admin/accounts" => "admin#accounts"
+  match "/admin/statuses" => "admin#statuses"
   root :to => 'users#index'
-  get ':controller(/:action(/:id))(.:format)'
-  #get "*path" => "application#render_404"
+  match ':controller(/:action(/:id))(.:format)'
+  #match "*path" => "application#render_404"
 end
