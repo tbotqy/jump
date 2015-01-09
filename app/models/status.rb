@@ -70,7 +70,7 @@ class Status < ActiveRecord::Base
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
-    self.use_index(:twitter_created_at_idx).limit(limit)
+    self.includes(:user,:entities).use_index(:twitter_created_at_idx).limit(limit)
   end
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
@@ -78,13 +78,13 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    self.use_index(:twitter_created_at_idx).where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
+    self.includes(:user,:entities).use_index(:twitter_created_at_idx).where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
   end
 
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
     # search the statuses whose status_id_str is smaller than given threshold_tweet_id
     # used to proccess read more button's request
-    self.where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
+    self.includes(:user).where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
   end
 
   def self.owned_by_current_user(user_id)
