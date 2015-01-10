@@ -84,12 +84,12 @@ class Status < ActiveRecord::Base
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
     # search the statuses whose status_id_str is smaller than given threshold_tweet_id
     # used to proccess read more button's request
-    self.includes(:user).where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
+    self.includes(:user).use_index(:status_id_str).where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
   end
 
   def self.owned_by_current_user(user_id)
     # used for users#sent_tweets
-    self.where('statuses.user_id = ?',user_id)
+    self.use_index(:user_id).where('statuses.user_id = ?',user_id)
   end
 
   def self.owned_by_friend_of(user_id)
@@ -107,7 +107,7 @@ class Status < ActiveRecord::Base
 
   def self.get_active_status_count
     active_user_ids = User.select(:id).where(:deleted_flag => false)
-    self.select(:id).where('statuses.user_id IN (?)',active_user_ids.pluck(:id)).count
+    self.select(:id).force_index(:user_id).where('statuses.user_id IN (?)',active_user_ids.pluck(:id)).count
   end
 
   # utils
@@ -184,9 +184,11 @@ class Status < ActiveRecord::Base
     ret
   end
 
-  private
   def self.use_index(index_name)
     self.from("#{self.table_name} USE INDEX(#{index_name})")
   end
 
+  def self.force_index(index_name)
+    self.from("#{self.table_name} FORCE INDEX(#{index_name})")
+  end
 end
