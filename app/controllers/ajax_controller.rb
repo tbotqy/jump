@@ -346,7 +346,10 @@ OB  layout false
     else
       unless no_status_at_all
         # mark this user as initialized
-        User.find(@@user_id.to_i).update_attribute(:initialized_flag,true)
+        @@current_user.update_attribute(:initialized_flag,true)
+        # update statistics database
+        added_tweets_count = @@current_user.get_active_status_count
+        Stat.increase('active_status_count', added_tweets_count)
       end
 =begin
       # send notification dm
