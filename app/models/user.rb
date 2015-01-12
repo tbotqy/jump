@@ -75,9 +75,12 @@ class User < ActiveRecord::Base
   end
 
   def self.deactivate_account(user_id)
-    # just turn the flag off, not actually delete account from database
+    # just turn the flag off, not actually delete user's status from database
+    deleted_status_count = Status.where(:user_id => user_id).update_all(:deleted_flag => true)    
+    # update stats    
+    Stat.decrease('active_status_count',deleted_status_count)
+    # turn the flag off for users table
     self.find(user_id).update_attribute(:deleted_flag,true)
-    Status.where(:user_id => user_id).update_all(:deleted_flag => true)
   end
 
   def self.active_twitter_id_exists?(twitter_id)

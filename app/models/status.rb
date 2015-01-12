@@ -107,7 +107,7 @@ class Status < ActiveRecord::Base
   end
 
   def self.get_active_status_count
-    self.where(:deleted_flag => false).count
+    Stat.get_value_of("active_status_count")
   end
 
   # utils
