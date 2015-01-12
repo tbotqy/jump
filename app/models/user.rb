@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def get_active_status_count
-    Status.where(:user_id => self.id).count
+    Status.where(:user_id => self.id,:deleted_flag => false).count
   end
 
   def self.create_account(auth)
