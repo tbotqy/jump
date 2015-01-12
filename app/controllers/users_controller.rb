@@ -9,13 +9,13 @@ class UsersController < ApplicationController
     if logged_in?
       redirect_to :action => "sent_tweets"
     else
-      @title = "クリック一つであの日のつぶやきへ"
+      @title = "あの日のつぶやきへジャンプ"
       @show_header = false
       @show_to_page_top = false
       @show_footer = true
       @show_scrollbar = true
       @total_user_num = User.get_active_user_count
-      @total_status_num = Status.count
+      @total_status_num = Status.get_active_status_count
     end
   end
   

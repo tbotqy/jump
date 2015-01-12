@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130617061827) do
+ActiveRecord::Schema.define(:version => 20150112081659) do
 
   create_table "entities", :force => true do |t|
     t.integer "status_id",              :limit => 8, :null => false
@@ -52,6 +52,12 @@ ActiveRecord::Schema.define(:version => 20130617061827) do
     t.integer "done_at"
   end
 
+  create_table "stats", :force => true do |t|
+    t.string  "type"
+    t.integer "value",      :limit => 8
+    t.integer "updated_at"
+  end
+
   create_table "statuses", :force => true do |t|
     t.integer "user_id",                    :limit => 8,                    :null => false
     t.integer "twitter_id",                 :limit => 8,                    :null => false
@@ -74,13 +80,14 @@ ActiveRecord::Schema.define(:version => 20130617061827) do
     t.boolean "possibly_sensitive",                                         :null => false
     t.boolean "pre_saved",                                                  :null => false
     t.integer "created_at",                                                 :null => false
+    t.integer "deleted_flag",               :limit => 1, :default => 0,     :null => false
   end
 
-  add_index "statuses", ["twitter_created_at"], :name => "twitter_created_at_idx"
-  add_index "statuses", ["user_id"], :name => "user_id"
-  add_index "statuses", ["status_id_str"], :name => "status_id_str"
-  add_index "statuses", ["pre_saved"], :name => "pre_saved"
-  add_index "statuses", ["user_id,status_id_str,pre_saved"], :name => "three_index"
+  add_index "statuses", ["deleted_flag"], :name => "idx_deleted_flag"
+  add_index "statuses", ["pre_saved"], :name => "idx_pre_saved"
+  add_index "statuses", ["status_id_str"], :name => "idx_status_id_str"
+  add_index "statuses", ["twitter_created_at"], :name => "idx_twitter_created_at"
+  add_index "statuses", ["user_id"], :name => "idx_user_id"
 
   create_table "users", :force => true do |t|
     t.integer "twitter_id",              :limit => 8,                    :null => false

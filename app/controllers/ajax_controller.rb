@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 class AjaxController < ApplicationController
-
   before_filter :reject_non_ajax
   before_filter :check_login, :except => ['reject_non_ajax','get_dashbord','read_more','switch_term']
-  layout false
+OB  layout false
 
   def reject_non_ajax
     redirect_to :status => :method_not_allowed  unless request.xhr?
