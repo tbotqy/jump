@@ -31,7 +31,7 @@ class Status < ActiveRecord::Base
     # also save the entity belongs to the tweet
     Entity.save_entities(new_record.id.to_i,tweet)
     
-    # save status's created_at value to the table of its list
+    # save status's created_at value
     PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
   end
 
@@ -70,7 +70,7 @@ class Status < ActiveRecord::Base
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
-    self.includes(:user,:entities).use_index(:twitter_created_at_idx).limit(limit)
+    self.includes(:user,:entities).use_index(:idx_twitter_created_at).limit(limit)
   end
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
@@ -78,18 +78,18 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    self.includes(:user,:entities).use_index(:twitter_created_at_idx).where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
+    self.includes(:user,:entities).use_index(:idx_twitter_created_at).where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
   end
 
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
     # search the statuses whose status_id_str is smaller than given threshold_tweet_id
     # used to proccess read more button's request
-    self.includes(:user).use_index(:status_id_str).where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
+    self.includes(:user).use_index(:idx_status_id_str).where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
   end
 
   def self.owned_by_current_user(user_id)
     # used for users#sent_tweets
-    self.use_index(:user_id).where('statuses.user_id = ?',user_id)
+    self.use_index(:idx_user_id).where('statuses.user_id = ?',user_id)
   end
 
   def self.owned_by_friend_of(user_id)
@@ -100,14 +100,14 @@ class Status < ActiveRecord::Base
 
   def self.owned_by_active_user
     # used for users#public_timeline
-    active_user_ids = User.select(:id).where(:deleted_flag => false)
-    # self.from("#{self.table_name} FORCE INDEX(#{:three_index})").where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
-    self.where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
+    #active_user_ids = User.select(:id).where(:deleted_flag => false)
+    #self.from("#{self.table_name} FORCE INDEX(#{:three_index})").where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
+    #self.where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
+    self.use_index(:idx_deleted_flag).where(:deleted_flag => false)
   end
 
   def self.get_active_status_count
-    active_user_ids = User.select(:id).where(:deleted_flag => false)
-    self.select(:id).force_index(:user_id).where('statuses.user_id IN (?)',active_user_ids.pluck(:id)).count
+    self.where(:deleted_flag => false).count
   end
 
   # utils
