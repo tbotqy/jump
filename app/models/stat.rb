@@ -36,5 +36,12 @@ class Stat < ActiveRecord::Base
     # subtruct given number from current record
     update_attributes(:value => (self.value - number_to_subtract))
   end
+
+  def self.sync_active_status_count
+    # sync the value of active status count with the count on status table
+    count_on_statuses = Status.find_by_deleted_flag(false).count
+    self.get_dest_record("active_status_count").update_attributes(:value => count_on_statuses)
+  end
+
   
 end
