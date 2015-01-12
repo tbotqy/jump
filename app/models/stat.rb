@@ -17,7 +17,12 @@ class Stat < ActiveRecord::Base
     # substruct given number from the value in destinated record
     dest_record.subtract_value(number_to_subtract)
   end
-  
+
+  def self.get_value_of(dest_type_name)
+    # returns the value of given type
+    select(:value).find_by_type(dest_type_name).value
+  end
+
   def self.get_dest_record(dest_type_name)
     find_by_type(dest_type_name)
   end

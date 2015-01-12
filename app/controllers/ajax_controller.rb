@@ -2,7 +2,7 @@
 class AjaxController < ApplicationController
   before_filter :reject_non_ajax
   before_filter :check_login, :except => ['reject_non_ajax','get_dashbord','read_more','switch_term']
-OB  layout false
+  layout false
 
   def reject_non_ajax
     redirect_to :status => :method_not_allowed  unless request.xhr?
@@ -128,9 +128,11 @@ OB  layout false
         
     # check if user owns the status with given status_id
     if Status.where(:user_id => @@user_id,:id => status_id).exists?
-      
       # delete the status and turn the flag
       if Status.find(status_id).destroy
+        # update stats
+        Stat.decrease('active_status_count',1)
+        
         deleted = true
         owns = true
       end
@@ -214,6 +216,9 @@ OB  layout false
       # make pre-saved statuses saved
       Status.save_pre_saved_status(@@user_id)
     end
+
+    # update stats
+    Stat.increase('active_status_count',saved_count)
 
     # prepare data to return
     ret = {}

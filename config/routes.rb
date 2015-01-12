@@ -13,5 +13,4 @@ Tlviewer::Application.routes.draw do
   match "/admin/statuses" => "admin#statuses"
   root :to => 'users#index'
   match ':controller(/:action(/:id))(.:format)'
-  #match "*path" => "application#render_404"
 end
