@@ -246,7 +246,7 @@ class AjaxController < ApplicationController
     when 'home_timeline'
       @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_friend_of(@@user_id)
     when 'public_timeline'
-      @statuses = Status.use_index(:idx_sisr).get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_active_user
+      @statuses = Status.showable.use_index(:idx_p_d_sisr).get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num)
     end
 
     # check if any older status exists
@@ -395,11 +395,11 @@ class AjaxController < ApplicationController
       @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_friend_of(@@user_id).exists? if @statuses.present?
     when 'public_timeline'
         if date
-          @statuses = Status.use_index(:idx_tca_sisr).get_status_in_date(date,fetch_num).owned_by_active_user
+          @statuses = Status.showable.use_index(:idx_p_d_tca_sisr).get_status_in_date(date,fetch_num)
         else
-          @statuses = Status.use_index(:idx_sisr).get_latest_status(fetch_num).owned_by_active_user
+          @statuses = Status.showable.use_index(:idx_p_d_sisr).get_latest_status(fetch_num)
         end
-      @has_next = Status.use_index(:idx_sisr).get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_active_user.exists? if @statuses.present? 
+      @has_next = Status.showable.use_index(:idx_p_d_sisr).get_older_status_by_tweet_id( @statuses.last.status_id_str ).exists? if @statuses.present? 
     end
     
     if @statuses.present?
