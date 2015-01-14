@@ -2,6 +2,15 @@ class Friend < ActiveRecord::Base
   belongs_to :user
   default_scope order('created_at DESC')
 
+  def self.get_friend_user_ids(user_id)
+    # returns the array of friends' user_ids
+    
+    # retrieve twitter ids
+    following_twitter_ids = self.where(:user_id => user_id).pluck(:following_twitter_id)
+    # retrieve user ids by twitter ids
+    user_ids = User.where("twitter_id IN (?)",following_twitter_ids).pluck(:id)
+  end
+  
   def self.save_friends(user_id,friend_ids)
     created_at = Time.now.to_i
     

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150112081659) do
+ActiveRecord::Schema.define(:version => 20150114035046) do
 
   create_table "entities", :force => true do |t|
     t.integer "status_id",              :limit => 8, :null => false
@@ -81,13 +81,13 @@ ActiveRecord::Schema.define(:version => 20150112081659) do
     t.boolean "pre_saved",                                                  :null => false
     t.integer "created_at",                                                 :null => false
     t.integer "deleted_flag",               :limit => 1, :default => 0,     :null => false
+    t.integer "status_id_str_reversed",     :limit => 8
   end
 
-  add_index "statuses", ["deleted_flag"], :name => "idx_deleted_flag"
-  add_index "statuses", ["pre_saved"], :name => "idx_pre_saved"
-  add_index "statuses", ["status_id_str"], :name => "idx_status_id_str"
-  add_index "statuses", ["twitter_created_at"], :name => "idx_twitter_created_at"
-  add_index "statuses", ["user_id"], :name => "idx_user_id"
+  add_index "statuses", ["status_id_str_reversed"], :name => "idx_sisr"
+  add_index "statuses", ["twitter_created_at", "status_id_str_reversed"], :name => "idx_tca_sisr"
+  add_index "statuses", ["user_id", "status_id_str_reversed"], :name => "idx_uid_sisr"
+  add_index "statuses", ["user_id", "twitter_created_at", "status_id_str_reversed"], :name => "idx_uid_tca_sisr"
 
   create_table "users", :force => true do |t|
     t.integer "twitter_id",              :limit => 8,                    :null => false

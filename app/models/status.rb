@@ -3,7 +3,6 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, :dependent => :delete_all
-  default_scope where(:pre_saved => false).order('status_id_str DESC')
   after_save :update_user_timestamp
   
   def update_user_timestamp
@@ -70,7 +69,7 @@ class Status < ActiveRecord::Base
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
-    self.includes(:user,:entities).use_index(:idx_twitter_created_at).limit(limit)
+    self.includes(:user,:entities).where(:pre_saved => false).limit(limit).order('status_id_str_reversed ASC')
   end
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
@@ -78,32 +77,33 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    self.includes(:user,:entities).use_index(:idx_twitter_created_at).where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
+    self.includes(:user,:entities).where(:twitter_created_at => date[:from]..date[:to],:pre_saved => false).limit(limit).order('status_id_str_reversed ASC')
   end
 
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
     # search the statuses whose status_id_str is smaller than given threshold_tweet_id
     # used to proccess read more button's request
-    self.includes(:user).use_index(:idx_status_id_str).where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
+    # use status_id_str_reversed in order to search by index
+    threshold_tweet_id_revered = -1*threshold_tweet_id
+    self.includes(:user).where('statuses.status_id_str > ?',threshold_tweet_id_revered).limit(limit).order('status_id_str_reversed ASC')
   end
+
+  # methods to define whose tweets to be searched
 
   def self.owned_by_current_user(user_id)
     # used for users#sent_tweets
-    self.use_index(:idx_user_id).where('statuses.user_id = ?',user_id)
+    self.where('statuses.user_id = ?',user_id)
   end
 
   def self.owned_by_friend_of(user_id)
     # used for users#home_timeline
-    friend_ids = Friend.select(:following_twitter_id).where(:user_id => user_id)
-    self.where('statuses.twitter_id IN (?)',friend_ids.pluck(:following_twitter_id))
+    friend_user_ids = Friend.get_friend_user_ids(user_id)
+    self.where('statuses.user_id IN (?)',friend_user_ids)
   end
 
   def self.owned_by_active_user
     # used for users#public_timeline
-    #active_user_ids = User.select(:id).where(:deleted_flag => false)
-    #self.from("#{self.table_name} FORCE INDEX(#{:three_index})").where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
-    #self.where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
-    self.use_index(:idx_deleted_flag).where(:deleted_flag => false)
+    self.where(:deleted_flag => false)
   end
 
   def self.get_active_status_count
