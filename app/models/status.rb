@@ -31,7 +31,7 @@ class Status < ActiveRecord::Base
     # also save the entity belongs to the tweet
     Entity.save_entities(new_record.id.to_i,tweet)
     
-    # save status's created_at value
+    # save status's created_at values
     PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
   end
 
@@ -70,7 +70,7 @@ class Status < ActiveRecord::Base
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
-    self.includes(:user,:entities).where(:pre_saved => false).limit(limit).order('status_id_str_reversed ASC')
+    self.includes(:user,:entities).limit(limit).order('status_id_str_reversed ASC')
   end
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
@@ -93,7 +93,7 @@ class Status < ActiveRecord::Base
 
   def self.owned_by_current_user(user_id)
     # used for users#sent_tweets
-    self.where('statuses.user_id = ?',user_id)
+    self.where(:user_id => user_id)
   end
 
   def self.owned_by_friend_of(user_id)
@@ -121,6 +121,7 @@ class Status < ActiveRecord::Base
     ret[:user_id] = user_id
     ret[:twitter_id] = tweet[:user][:id_str]
     ret[:status_id_str] = tweet[:id_str]
+    ret[:status_id_str_reversed] = -1 * ret[:status_id_str].to_i
     ret[:in_reply_to_status_id_str] = tweet[:in_reply_to_status_id_str]
     ret[:in_reply_to_user_id_str] = tweet[:in_reply_to_user_id_str]
     ret[:in_reply_to_screen_name] = tweet[:in_reply_to_screen_name]
@@ -131,6 +132,7 @@ class Status < ActiveRecord::Base
     ret[:text] = tweet[:text]
     ret[:possibly_sensitive] = tweet[:possibly_sensitive] || false
     ret[:pre_saved] = true
+    ret[:deleted_flag] = false
     ret[:created_at] = Time.now.to_i
 
     # check if this is the rewteeted status
