@@ -59,9 +59,9 @@ class Status < ActiveRecord::Base
   def self.get_twitter_created_at_list(type_of_timeline,user_id = nil)
     case type_of_timeline
     when 'sent_tweets'
-      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_current_user(user_id).pluck(:twitter_created_at)
+      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_current_user(user_id).order('status_id_str_reversed ASC').pluck(:twitter_created_at)
     when 'home_timeline'
-      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).pluck(:twitter_created_at)
+      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).order('status_id_str_reversed ASC').pluck(:twitter_created_at)
     when 'public_timeline'
       PublicDate.get_list.pluck(:posted_unixtime)
     end
