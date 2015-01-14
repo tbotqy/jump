@@ -3,6 +3,7 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, :dependent => :delete_all
+  scope :showable , -> {where(:pre_saved => false,:deleted_flag => false)}
   after_save :update_user_timestamp
   
   def update_user_timestamp
@@ -77,7 +78,7 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    self.includes(:user,:entities).where(:twitter_created_at => date[:from]..date[:to],:pre_saved => false).limit(limit).order('status_id_str_reversed ASC')
+    self.includes(:user,:entities).where(:twitter_created_at => date[:from]..date[:to]).limit(limit).order('status_id_str_reversed ASC')
   end
 
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
@@ -103,7 +104,7 @@ class Status < ActiveRecord::Base
 
   def self.owned_by_active_user
     # used for users#public_timeline
-    self.where(:deleted_flag => false)
+    #return self
   end
 
   def self.get_active_status_count
