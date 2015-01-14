@@ -39,7 +39,7 @@ Tlviewer::Application.configure do
 
   config.after_initialize do
     Bullet.enable = true
-    Bullet.alert = true # show alterts with JavaScript
+    Bullet.alert = false # show alterts with JavaScript
     Bullet.bullet_logger = true # export log to log/bullet.log
     Bullet.console = true # show messages to console on web browser
     Bullet.rails_logger = true # export log to rails log file

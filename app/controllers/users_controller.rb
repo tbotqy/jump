@@ -83,10 +83,10 @@ class UsersController < ApplicationController
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.use_index(:idx_p_d_u_tca_sisr).get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@@user_id)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.use_index(:idx_p_d_u_sisr).get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
     end
     
     if @statuses.present?
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
       @oldest_tweet_id = @statuses.last.status_id_str
       
       # check if there is more status to show
-      older_status = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_friend_of(@@user_id)
+      older_status = Status.showable.use_index(:idx_p_d_u_sisr).get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_friend_of(@@user_id)
       @has_next = older_status.length > 0
     else
       @show_footer = true
