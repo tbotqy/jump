@@ -84,8 +84,8 @@ class Status < ActiveRecord::Base
     # search the statuses whose status_id_str is smaller than given threshold_tweet_id
     # used to proccess read more button's request
     # use status_id_str_reversed in order to search by index
-    threshold_tweet_id_revered = -1*threshold_tweet_id
-    self.includes(:user).where('statuses.status_id_str > ?',threshold_tweet_id_revered).limit(limit).order('status_id_str_reversed ASC')
+    threshold_tweet_id_revered = -1*threshold_tweet_id.to_i
+    self.includes(:user).where('statuses.status_id_str_reversed > ?',threshold_tweet_id_revered).limit(limit).order('status_id_str_reversed ASC')
   end
 
   # methods to define whose tweets to be searched
