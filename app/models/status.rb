@@ -48,7 +48,7 @@ class Status < ActiveRecord::Base
     ret = Hash.new { |hash,key| hash[key] = Hash.new { |hash,key| hash[key] = {} } }
     
     unixtime_list.each do |t|
-      
+      t = t.abs
       y = Time.zone.at(t).year.to_s
       m = Time.zone.at(t).month.to_s
       d = Time.zone.at(t).day.to_s
@@ -61,7 +61,7 @@ class Status < ActiveRecord::Base
   def self.get_twitter_created_at_list(type_of_timeline,user_id = nil)
     case type_of_timeline
     when 'sent_tweets'
-      self.use_index(:idx_p_d_u_tca_sisr).select(:twitter_created_at).group(:twitter_created_at).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at)
+      self.select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at_reversed)
     when 'home_timeline'
       self.use_index(:idx_p_d_u_tca_sisr).select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).order_for_timeline.pluck(:twitter_created_at)
     when 'public_timeline'

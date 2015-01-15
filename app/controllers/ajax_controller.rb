@@ -242,7 +242,7 @@ class AjaxController < ApplicationController
     # fetch older statuses 
     case destination_action_type.to_s
     when 'tweets'
-      @statuses = Status.showable.use_index(:idx_p_d_u_sisr).get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_current_user(@@user_id)
     when 'home_timeline'
       @statuses = Status.showable.use_index(:idx_p_d_u_sisr).get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_friend_of(@@user_id)
     when 'public_timeline'
@@ -381,12 +381,14 @@ class AjaxController < ApplicationController
     case action_type
     when 'tweets'
       if date
-        @statuses = Status.showable.use_index(:idx_p_d_u_tca_sisr).get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
+        #@statuses = Status.showable.use_index(:idx_p_d_u_tca_sisr).get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
+        @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
       else
-        @statuses = Status.showable.use_index(:idx_p_d_u_sisr).get_latest_status(fetch_num).owned_by_current_user(@@user_id)
+        #@statuses = Status.showable.use_index(:idx_p_d_u_sisr).get_latest_status(fetch_num).owned_by_current_user(@@user_id)
+        @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
       end
       if @statuses.present?
-        older_status = Status.showable.use_index(:idx_p_d_u_sisr).get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_current_user(@@user_id)
+        older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_current_user(@@user_id)
         @has_next = older_status.length > 0
       end
     when 'home_timeline'
