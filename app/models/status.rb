@@ -4,8 +4,10 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :entities, :dependent => :delete_all
   scope :showable , -> {where(:pre_saved => false,:deleted_flag => false)}
+  scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
+  #scope :order_for_timeline , ->{order("status_id_str_reversed ASC")}
   after_save :update_user_timestamp
-  
+
   def update_user_timestamp
     user_id = self.user_id
     User.find(user_id).update_attribute(:statuses_updated_at,Time.now.to_i)
@@ -59,9 +61,9 @@ class Status < ActiveRecord::Base
   def self.get_twitter_created_at_list(type_of_timeline,user_id = nil)
     case type_of_timeline
     when 'sent_tweets'
-      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_current_user(user_id).order('status_id_str_reversed ASC').pluck(:twitter_created_at)
+      self.use_index(:idx_p_d_u_tca_sisr).select(:twitter_created_at).group(:twitter_created_at).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at)
     when 'home_timeline'
-      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).order('status_id_str_reversed ASC').pluck(:twitter_created_at)
+      self.use_index(:idx_p_d_u_tca_sisr).select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).order_for_timeline.pluck(:twitter_created_at)
     when 'public_timeline'
       PublicDate.get_list.pluck(:posted_unixtime)
     end
@@ -70,7 +72,7 @@ class Status < ActiveRecord::Base
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
-    self.includes(:user,:entities).limit(limit).order('status_id_str_reversed ASC')
+    self.includes(:user,:entities).limit(limit).order_for_timeline
   end
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
@@ -78,7 +80,8 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    self.includes(:user,:entities).where(:twitter_created_at => date[:from]..date[:to]).limit(limit).order('status_id_str_reversed ASC')
+    #self.includes(:user,:entities).where(:twitter_created_at => date[:from]..date[:to]).limit(limit).order_for_timeline
+    self.includes(:user,:entities).where(:twitter_created_at_reversed => -1*date[:to]..-1*date[:from]).limit(limit).order_for_timeline
   end
 
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
@@ -86,7 +89,7 @@ class Status < ActiveRecord::Base
     # used to proccess read more button's request
     # use status_id_str_reversed in order to search by index
     threshold_tweet_id_revered = -1*threshold_tweet_id.to_i
-    self.includes(:user).where('statuses.status_id_str_reversed > ?',threshold_tweet_id_revered).limit(limit).order('status_id_str_reversed ASC')
+    self.includes(:user).where('statuses.status_id_str_reversed > ?',threshold_tweet_id_revered).limit(limit).order(:status_id_str_reversed)
   end
 
   # methods to define whose tweets to be searched
