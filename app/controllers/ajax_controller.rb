@@ -265,7 +265,7 @@ class AjaxController < ApplicationController
 
     raise "action type is not specified" if !@action_type
 
-    @date_list = Status.get_date_list(@action_type,@@user_id)
+    @date_list = Status.showable.get_date_list(@action_type,@@user_id)
     
     @base_url = ""
     case @action_type
@@ -401,12 +401,12 @@ class AjaxController < ApplicationController
       end
     when 'public_timeline'
         if date
-          @statuses = Status.showable.use_index(:idx_p_d_tca_sisr).get_status_in_date(date,fetch_num)
+          @statuses = Status.showable.get_status_in_date(date,fetch_num)
         else
-          @statuses = Status.showable.use_index(:idx_p_d_sisr).get_latest_status(fetch_num)
+          @statuses = Status.showable..get_latest_status(fetch_num)
         end
       if @statuses.present?
-        older_status = Status.showable.use_index(:idx_p_d_sisr).get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
+        older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
         @has_next = older_status.length > 0
       end
     end
