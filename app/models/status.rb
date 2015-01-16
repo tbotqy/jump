@@ -132,6 +132,7 @@ class Status < ActiveRecord::Base
     ret[:place_full_name] = tweet[:place].nil? ? nil : tweet[:place][:full_name]
     ret[:retweet_count] = tweet[:retweet_count]
     ret[:twitter_created_at] = Time.parse(tweet[:created_at].to_s).to_i
+    ret[:twitter_created_at_reversed] = -1*ret[:twitter_created_at]
     ret[:source] = tweet[:source]
     ret[:text] = tweet[:text]
     ret[:possibly_sensitive] = tweet[:possibly_sensitive] || false
