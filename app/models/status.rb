@@ -5,7 +5,7 @@ class Status < ActiveRecord::Base
   has_many :entities, :dependent => :delete_all
   scope :showable , -> {where(:pre_saved => false,:deleted_flag => false)}
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
-  #scope :order_for_timeline , ->{order("status_id_str_reversed ASC")}
+  scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
 
   def update_user_timestamp
@@ -63,7 +63,8 @@ class Status < ActiveRecord::Base
     when 'sent_tweets'
       self.select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at_reversed)
     when 'home_timeline'
-      self.use_index(:idx_p_d_u_tca_sisr).select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).order_for_timeline.pluck(:twitter_created_at)
+      self.select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_friend_of(user_id).order_for_date_list.pluck(:twitter_created_at_reversed)
+      #self.select(:twitter_created_at_reversed).uniq.owned_by_friend_of(user_id).pluck(:twitter_created_at_reversed)
     when 'public_timeline'
       PublicDate.get_list.pluck(:posted_unixtime)
     end
@@ -102,7 +103,7 @@ class Status < ActiveRecord::Base
   def self.owned_by_friend_of(user_id)
     # used for users#home_timeline
     friend_user_ids = Friend.get_friend_user_ids(user_id)
-    self.where('statuses.user_id IN (?)',friend_user_ids)
+    self.where('user_id IN (?)',friend_user_ids)
   end
 
   def self.owned_by_active_user
