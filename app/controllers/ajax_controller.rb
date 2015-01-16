@@ -71,7 +71,7 @@ class AjaxController < ApplicationController
     do_update = false
     
     # fetch the list of user's friends
-    existing_friend_ids = Friend.get_list.owned_by_current_user(@@user_id).pluck(:following_twitter_id)
+    existing_friend_ids = Friend.get_friend_twitter_ids(@@user_id)
     fresh_friend_ids = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)
     
     # check if update is required by comparing 
