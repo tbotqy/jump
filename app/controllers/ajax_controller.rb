@@ -45,9 +45,9 @@ class AjaxController < ApplicationController
     latest_tweet = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
     fresh_latest_created_at = Time.zone.parse(latest_tweet[0][:attrs][:created_at].to_s).to_i
     
-    existing_latest_status = Status.find(:first,:select => 'twitter_created_at',:order => 'twitter_created_at DESC')
-    if existing_latest_status
-      existing_latest_created_at = existing_latest_status.twitter_created_at.to_i
+    existing_latest_status = Status.showable.get_latest_status(1).owned_by_current_user(@@user_id)
+    if existing_latest_status.length > 0
+      existing_latest_created_at = existing_latest_status.pluck(:twitter_created_at)[0]
     else
       existing_latest_created_at = 0
     end
