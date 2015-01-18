@@ -99,4 +99,23 @@ class User < ActiveRecord::Base
   def self.get_gone_users
     self.where(:deleted_flag => true).order('updated_at DESC')
   end
+
+  def delete_gone_users
+    deleted_user_count = 0
+    
+    User.get_gone_users.each do |gone_user|
+      if gone_user.destroy 
+        deleted_user_count += 1
+      end
+    end
+    
+    if deleted_user_count == 0
+      puts "No user deleted"
+    else
+      puts "Deleted #{deleted_user_count} users"
+    end
+    
+    puts " on #{Time.now} .\n\n"
+  end
+  
 end

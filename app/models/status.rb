@@ -7,6 +7,32 @@ class Status < ActiveRecord::Base
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
+  
+  def delete_flagged_status
+    # delete all the statuses where deleted_flag = true
+    Status.where(:deleted_flag => true).destroy_all
+  end
+
+  def flag_duplicated_status
+    # turn the duplicated status's deleted_flag true
+    
+    # delete already-flagged statuses before this process
+    delete_flagged_status
+    
+    puts "start flagging"
+    User.get_active_users.each do |u|
+      statuses  = Status.owned_by_current_user(u.id)
+      # flag all the status's deleted flag true
+      statuses.update_all(:deleted_flag => true)
+      statuses.group("status_id_str_reversed").each do |s|
+        s.update_attributes(:deleted_flag => false)
+      end
+      puts "flagged duplicated status of #{u.id}:#{u.screen_name}."
+      sleep(2)
+    end
+    puts "Finished for all active users."
+    true
+  end
 
   def update_user_timestamp
     user_id = self.user_id
