@@ -28,7 +28,7 @@ class Status < ActiveRecord::Base
         s.update_attributes(:deleted_flag => false)
       end
       puts "flagged duplicated status of #{u.id}:#{u.screen_name}."
-      sleep(2)
+      sleep(1)
     end
     puts "Finished for all active users."
     true
@@ -107,7 +107,6 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    #self.includes(:user,:entities).where(:twitter_created_at => date[:from]..date[:to]).limit(limit).order_for_timeline
     self.includes(:user,:entities).where(:twitter_created_at_reversed => -1*date[:to]..-1*date[:from]).limit(limit).order_for_timeline
   end
 
@@ -130,11 +129,6 @@ class Status < ActiveRecord::Base
     # used for users#home_timeline
     friend_user_ids = Friend.get_friend_user_ids(user_id)
     self.where('user_id IN (?)',friend_user_ids)
-  end
-
-  def self.owned_by_active_user
-    # used for users#public_timeline
-    #return self
   end
 
   def self.get_active_status_count

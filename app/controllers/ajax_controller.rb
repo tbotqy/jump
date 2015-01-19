@@ -381,10 +381,8 @@ class AjaxController < ApplicationController
     case action_type
     when 'tweets'
       if date
-        #@statuses = Status.showable.use_index(:idx_p_d_u_tca_sisr).get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
         @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
       else
-        #@statuses = Status.showable.use_index(:idx_p_d_u_sisr).get_latest_status(fetch_num).owned_by_current_user(@@user_id)
         @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
       end
       if @statuses.present?
