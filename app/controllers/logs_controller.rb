@@ -7,9 +7,9 @@ class LogsController < ApplicationController
     auth = request.env['omniauth.auth']
     
     # check whether user's twitter account is protected
-    if auth.extra.raw_info.protected
-      render :file => "/shared/_we_are_sorry" and return
-    end
+    #if auth.extra.raw_info.protected
+    #  render :file => "/shared/_we_are_sorry" and return
+    #end
 
     # check if tokens are acquired correctly
     access_token = auth.credentials.token

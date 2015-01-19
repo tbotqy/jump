@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     if logged_in?
       redirect_to :action => "sent_tweets"
     else
-      @title = "あの日のタイムラインを眺められる、ちょっとしたアプリケーション"
+      @title = "あの日のつぶやきへジャンプ"
       @show_header = false
       @show_to_page_top = false
       @show_footer = true
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       @statuses = Status.get_status_in_date(specified_date,fetch_num).owned_by_current_user(@@user_id)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
     end
     
     if @statuses.present?
@@ -55,7 +55,9 @@ class UsersController < ApplicationController
       @oldest_tweet_id = @statuses.last.status_id_str
       
       # check if there is more status to show
-      @has_next = Status.get_older_status_by_tweet_id( @oldest_tweet_id ).owned_by_current_user(@@user_id).exists?
+      older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_current_user(@@user_id)
+      # use size to prevent un-indexed query
+      @has_next = older_status.length > 0 
     else
       @show_footer = true
       @oldest_tweet_id = false
@@ -81,10 +83,10 @@ class UsersController < ApplicationController
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@@user_id)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.force_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
     end
     
     if @statuses.present?
@@ -92,7 +94,8 @@ class UsersController < ApplicationController
       @oldest_tweet_id = @statuses.last.status_id_str
       
       # check if there is more status to show
-      @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_friend_of(@@user_id).exists?
+      older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_friend_of(@@user_id)
+      @has_next = older_status.length > 0
     else
       @show_footer = true
       @oldest_tweet_id = false
@@ -112,10 +115,10 @@ class UsersController < ApplicationController
     # plus 1 to check if 'read more' should be shown in the view
     if specified_date
       # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_in_date(specified_date,fetch_num).owned_by_active_user
+      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num)
     else
       # just fetch 10(+1) latest statuses
-      @statuses = Status.get_latest_status(fetch_num).owned_by_active_user
+      @statuses = Status.showable.get_latest_status(fetch_num)
     end
     
     if @statuses.present?
@@ -123,7 +126,8 @@ class UsersController < ApplicationController
       @oldest_tweet_id = @statuses.last.status_id_str
       
       # check if there is more status to show
-     @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_active_user.exists?
+      older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
+      @has_next = older_status.length > 0;
     else
       @show_footer = true
       @oldest_tweet_id = false
@@ -135,7 +139,13 @@ class UsersController < ApplicationController
     @count_statuses = @@current_user.statuses.count
     @count_friends = @@current_user.friends.count
     @status_updated_at = Time.zone.at(@@current_user.statuses_updated_at).strftime('%F %T')
-    @friend_updated_at = Time.zone.at(@@current_user.friends_updated_at).strftime('%F %T')
+    
+    @friend_updated_at = @@current_user.friends_updated_at
+    if @friend_updated_at == 0
+      @friend_updated_at = "---"
+    else
+      @friend_updated_at = Time.zone.at(@friend_updated_at).strftime('%F %T')
+    end
     @profile_updated_at = Time.zone.at(@@current_user.updated_at).strftime('%F %T')
     @show_scrollbar = true
     @show_footer = true

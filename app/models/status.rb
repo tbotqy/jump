@@ -3,9 +3,37 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, :dependent => :delete_all
-  default_scope where(:pre_saved => false).order('status_id_str DESC')
+  scope :showable , -> {where(:pre_saved => false,:deleted_flag => false)}
+  scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
+  scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
   
+  def delete_flagged_status
+    # delete all the statuses where deleted_flag = true
+    Status.where(:deleted_flag => true).destroy_all
+  end
+
+  def flag_duplicated_status
+    # turn the duplicated status's deleted_flag true
+    
+    # delete already-flagged statuses before this process
+    delete_flagged_status
+    
+    puts "start flagging"
+    User.get_active_users.each do |u|
+      statuses  = Status.owned_by_current_user(u.id)
+      # flag all the status's deleted flag true
+      statuses.update_all(:deleted_flag => true)
+      statuses.group("status_id_str_reversed").each do |s|
+        s.update_attributes(:deleted_flag => false)
+      end
+      puts "flagged duplicated status of #{u.id}:#{u.screen_name}."
+      sleep(1)
+    end
+    puts "Finished for all active users."
+    true
+  end
+
   def update_user_timestamp
     user_id = self.user_id
     User.find(user_id).update_attribute(:statuses_updated_at,Time.now.to_i)
@@ -31,7 +59,7 @@ class Status < ActiveRecord::Base
     # also save the entity belongs to the tweet
     Entity.save_entities(new_record.id.to_i,tweet)
     
-    # save status's created_at value to the table of its list
+    # save status's created_at values
     PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
   end
 
@@ -46,7 +74,7 @@ class Status < ActiveRecord::Base
     ret = Hash.new { |hash,key| hash[key] = Hash.new { |hash,key| hash[key] = {} } }
     
     unixtime_list.each do |t|
-      
+      t = t.abs
       y = Time.zone.at(t).year.to_s
       m = Time.zone.at(t).month.to_s
       d = Time.zone.at(t).day.to_s
@@ -59,9 +87,10 @@ class Status < ActiveRecord::Base
   def self.get_twitter_created_at_list(type_of_timeline,user_id = nil)
     case type_of_timeline
     when 'sent_tweets'
-      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_current_user(user_id).pluck(:twitter_created_at)
+      self.select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at_reversed)
     when 'home_timeline'
-      self.select(:twitter_created_at).group(:twitter_created_at).owned_by_friend_of(user_id).pluck(:twitter_created_at)
+      self.select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_friend_of(user_id).order_for_date_list.pluck(:twitter_created_at_reversed)
+      #self.select(:twitter_created_at_reversed).uniq.owned_by_friend_of(user_id).pluck(:twitter_created_at_reversed)
     when 'public_timeline'
       PublicDate.get_list.pluck(:posted_unixtime)
     end
@@ -70,7 +99,7 @@ class Status < ActiveRecord::Base
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
-    self.use_index(:twitter_created_at_idx).limit(limit)
+    self.includes(:user,:entities).limit(limit).order_for_timeline
   end
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
@@ -78,36 +107,32 @@ class Status < ActiveRecord::Base
     
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
-    self.use_index(:twitter_created_at_idx).where('statuses.twitter_created_at >= ? AND statuses.twitter_created_at <= ?',date[:from],date[:to]).limit(limit)
+    self.includes(:user,:entities).where(:twitter_created_at_reversed => -1*date[:to]..-1*date[:from]).limit(limit).order_for_timeline
   end
 
   def self.get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
     # search the statuses whose status_id_str is smaller than given threshold_tweet_id
     # used to proccess read more button's request
-    self.where('statuses.status_id_str < ?',threshold_tweet_id).limit(limit)
+    # use status_id_str_reversed in order to search by index
+    threshold_tweet_id_revered = -1*threshold_tweet_id.to_i
+    self.includes(:user).where('statuses.status_id_str_reversed > ?',threshold_tweet_id_revered).limit(limit).order(:status_id_str_reversed)
   end
+
+  # methods to define whose tweets to be searched
 
   def self.owned_by_current_user(user_id)
     # used for users#sent_tweets
-    self.where('statuses.user_id = ?',user_id)
+    self.where(:user_id => user_id)
   end
 
   def self.owned_by_friend_of(user_id)
     # used for users#home_timeline
-    friend_ids = Friend.select(:following_twitter_id).where(:user_id => user_id)
-    self.where('statuses.twitter_id IN (?)',friend_ids.pluck(:following_twitter_id))
-  end
-
-  def self.owned_by_active_user
-    # used for users#public_timeline
-    active_user_ids = User.select(:id).where(:deleted_flag => false)
-    # self.from("#{self.table_name} FORCE INDEX(#{:three_index})").where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
-    self.where('statuses.user_id IN (?)',active_user_ids.pluck(:id))
+    friend_user_ids = Friend.get_friend_user_ids(user_id)
+    self.where('user_id IN (?)',friend_user_ids)
   end
 
   def self.get_active_status_count
-    active_user_ids = User.select(:id).where(:deleted_flag => false)
-    self.select(:id).where('statuses.user_id IN (?)',active_user_ids.pluck(:id)).count
+    Stat.get_value_of("active_status_count")
   end
 
   # utils
@@ -120,16 +145,19 @@ class Status < ActiveRecord::Base
     ret[:user_id] = user_id
     ret[:twitter_id] = tweet[:user][:id_str]
     ret[:status_id_str] = tweet[:id_str]
+    ret[:status_id_str_reversed] = -1 * ret[:status_id_str].to_i
     ret[:in_reply_to_status_id_str] = tweet[:in_reply_to_status_id_str]
     ret[:in_reply_to_user_id_str] = tweet[:in_reply_to_user_id_str]
     ret[:in_reply_to_screen_name] = tweet[:in_reply_to_screen_name]
     ret[:place_full_name] = tweet[:place].nil? ? nil : tweet[:place][:full_name]
     ret[:retweet_count] = tweet[:retweet_count]
     ret[:twitter_created_at] = Time.parse(tweet[:created_at].to_s).to_i
+    ret[:twitter_created_at_reversed] = -1*ret[:twitter_created_at]
     ret[:source] = tweet[:source]
     ret[:text] = tweet[:text]
     ret[:possibly_sensitive] = tweet[:possibly_sensitive] || false
     ret[:pre_saved] = true
+    ret[:deleted_flag] = false
     ret[:created_at] = Time.now.to_i
 
     # check if this is the rewteeted status
@@ -184,9 +212,11 @@ class Status < ActiveRecord::Base
     ret
   end
 
-  private
   def self.use_index(index_name)
     self.from("#{self.table_name} USE INDEX(#{index_name})")
   end
 
+  def self.force_index(index_name)
+    self.from("#{self.table_name} FORCE INDEX(#{index_name})")
+  end
 end

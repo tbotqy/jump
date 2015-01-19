@@ -17,11 +17,11 @@ class User < ActiveRecord::Base
   end
 
   def get_oldest_active_tweet_id
-    Status.select(:status_id_str).where(:user_id => self.id).reorder('status_id_str ASC').limit(1)[0].status_id_str rescue "false"
+    Status.where(:user_id => self.id).maximum(:status_id_str_reversed)*-1 rescue "false"
   end
 
   def get_active_status_count
-    Status.where(:user_id => self.id).count
+    Status.where(:user_id => self.id,:deleted_flag => false).count
   end
 
   def self.create_account(auth)
@@ -75,7 +75,11 @@ class User < ActiveRecord::Base
   end
 
   def self.deactivate_account(user_id)
-    # just turn the flag off, not actually delete account from database
+    # just turn the flag off, not actually delete user's status from database
+    deleted_status_count = Status.where(:user_id => user_id).update_all(:deleted_flag => true)    
+    # update stats    
+    Stat.decrease('active_status_count',deleted_status_count)
+    # turn the flag off for users table
     self.find(user_id).update_attribute(:deleted_flag,true)
   end
 
@@ -95,4 +99,23 @@ class User < ActiveRecord::Base
   def self.get_gone_users
     self.where(:deleted_flag => true).order('updated_at DESC')
   end
+
+  def delete_gone_users
+    deleted_user_count = 0
+    
+    User.get_gone_users.each do |gone_user|
+      if gone_user.destroy 
+        deleted_user_count += 1
+      end
+    end
+    
+    if deleted_user_count == 0
+      puts "No user deleted"
+    else
+      puts "Deleted #{deleted_user_count} users"
+    end
+    
+    puts " on #{Time.now} .\n\n"
+  end
+  
 end
