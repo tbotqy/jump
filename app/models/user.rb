@@ -75,9 +75,8 @@ class User < ActiveRecord::Base
   end
   
   def self.sync_profile_image
-    puts "collecting the user ids with invalid profile image url..."
+    puts "Collecting the user ids with invalid profile image url..."
 
-    # collect the users with invalid prof-image
     dest_twitter_ids = []
     count = 0
     self.get_active_users.each do |user_db|
@@ -90,17 +89,16 @@ class User < ActiveRecord::Base
       end
       puts "Progress : #{count} invalid urls found." if count.modulo(100) == 0 && count > 0
     end
-    return dest_twitter_ids
+    
     Twitter.configure do |config|
       config.consumer_key = configatron.consumer_key
       config.consumer_secret = configatron.consumer_secret
     end
     twitter = Twitter::Client.new
     
-    puts "fetch the latest profile image url and update"
+    puts "Fetching the latest profile image url and update..."
     count = 0
     dest_twitter_ids.each_slice 100 do |ids|
-      #puts "Requesting #{ids.size} of users data via API..." 
       twitter.users(ids).each do |user_twitter|
         # update prof image url
         self.find_by_twitter_id(user_twitter.id).update_attributes(:profile_image_url_https => user_twitter.profile_image_url_https)
