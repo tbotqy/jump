@@ -1,4 +1,1 @@
-timeline-viewer-on-rails
-========================
-
-Replace its framework to RoR. origin : https://github.com/tbotaq/timeline-viewer
+timeline viewer 2.0

@@ -37,4 +37,11 @@ Tlviewer::Application.configure do
   config.logger = Logger.new(STDOUT)
   config.logger.level = Logger.const_get(ENV['LOG_LEVEL'] ? ENV['LOG_LEVEL'].upcase : 'INFO')
 
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = false # show alterts with JavaScript
+    Bullet.bullet_logger = true # export log to log/bullet.log
+    Bullet.console = true # show messages to console on web browser
+    Bullet.rails_logger = true # export log to rails log file
+  end
 end

@@ -818,11 +818,11 @@ footer .copyright{
 #wrap-import .loader{ 
   display: none;
   width: 24px;
-  margin: 0;
+  margin: 0 0 8px 10px;
   padding: 0;
-  position: absolute;
+  /*position: absolute;
   top: 153px;
-  left: 810px;
+  left: 810px;*/
 }
 
 /* --------------------------------------------------

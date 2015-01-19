@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 class AjaxController < ApplicationController
-
   before_filter :reject_non_ajax
   before_filter :check_login, :except => ['reject_non_ajax','get_dashbord','read_more','switch_term']
   layout false
@@ -46,9 +45,9 @@ class AjaxController < ApplicationController
     latest_tweet = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
     fresh_latest_created_at = Time.zone.parse(latest_tweet[0][:attrs][:created_at].to_s).to_i
     
-    existing_latest_status = Status.find(:first,:select => 'twitter_created_at',:order => 'twitter_created_at DESC')
-    if existing_latest_status
-      existing_latest_created_at = existing_latest_status.twitter_created_at.to_i
+    existing_latest_status = Status.showable.get_latest_status(1).owned_by_current_user(@@user_id)
+    if existing_latest_status.length > 0
+      existing_latest_created_at = existing_latest_status.pluck(:twitter_created_at)[0]
     else
       existing_latest_created_at = 0
     end
@@ -72,7 +71,7 @@ class AjaxController < ApplicationController
     do_update = false
     
     # fetch the list of user's friends
-    existing_friend_ids = Friend.get_list.owned_by_current_user(@@user_id).pluck(:following_twitter_id)
+    existing_friend_ids = Friend.get_friend_twitter_ids(@@user_id)
     fresh_friend_ids = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)
     
     # check if update is required by comparing 
@@ -129,9 +128,11 @@ class AjaxController < ApplicationController
         
     # check if user owns the status with given status_id
     if Status.where(:user_id => @@user_id,:id => status_id).exists?
-      
       # delete the status and turn the flag
       if Status.find(status_id).destroy
+        # update stats
+        Stat.decrease('active_status_count',1)
+        
         deleted = true
         owns = true
       end
@@ -216,6 +217,9 @@ class AjaxController < ApplicationController
       Status.save_pre_saved_status(@@user_id)
     end
 
+    # update stats
+    Stat.increase('active_status_count',saved_count)
+
     # prepare data to return
     ret = {}
     ret[:continue] = continue
@@ -238,11 +242,11 @@ class AjaxController < ApplicationController
     # fetch older statuses 
     case destination_action_type.to_s
     when 'tweets'
-      @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_current_user(@@user_id)
     when 'home_timeline'
-      @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_friend_of(@@user_id)
     when 'public_timeline'
-      @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_active_user
+      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num)
     end
 
     # check if any older status exists
@@ -261,7 +265,7 @@ class AjaxController < ApplicationController
 
     raise "action type is not specified" if !@action_type
 
-    @date_list = Status.get_date_list(@action_type,@@user_id)
+    @date_list = Status.showable.get_date_list(@action_type,@@user_id)
     
     @base_url = ""
     case @action_type
@@ -347,8 +351,12 @@ class AjaxController < ApplicationController
     else
       unless no_status_at_all
         # mark this user as initialized
-        User.find(@@user_id.to_i).update_attribute(:initialized_flag,true)
+        @@current_user.update_attribute(:initialized_flag,true)
+        # update statistics database
+        added_tweets_count = @@current_user.get_active_status_count
+        Stat.increase('active_status_count', added_tweets_count)
       end
+=begin
       # send notification dm
       create_twitter_client(configatron.access_token,configatron.access_token_secret) do |my_twitter|
         my_twitter.direct_message_create(configatron.admin_user_twitter_id, "@"+ @@current_user.screen_name.to_s + "has joined at " + Time.now)
@@ -356,6 +364,7 @@ class AjaxController < ApplicationController
       # send notification dm
       admin_twitter = create_twitter_client(configatron.access_token,configatron.access_token_secret)
       admin_twitter.direct_message_create(configatron.service_owner_twitter_id.to_i, "@"+ @@current_user.screen_name.to_s + " has joined at " + Time.now.strftime('%F %T')) rescue nil
+=end
     end
     
     render :json => ret
@@ -372,25 +381,34 @@ class AjaxController < ApplicationController
     case action_type
     when 'tweets'
       if date
-        @statuses = Status.get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
+        @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_current_user(@@user_id)
       else
-        @statuses = Status.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
+        @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
       end
-      @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_current_user(@@user_id).exists? if @statuses.present?
+      if @statuses.present?
+        older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_current_user(@@user_id)
+        @has_next = older_status.length > 0
+      end
     when 'home_timeline'
       if date
-        @statuses = Status.get_status_in_date(date,fetch_num).owned_by_friend_of(@@user_id)
+        @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_friend_of(@@user_id)
       else
-        @statuses = Status.get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
+        @statuses = Status.showable.use_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
       end
-      @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_friend_of(@@user_id).exists? if @statuses.present?
+      if @statuses.present?
+        older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_friend_of(@@user_id)
+        @has_next = older_status.length > 0
+      end
     when 'public_timeline'
         if date
-          @statuses = Status.get_status_in_date(date,fetch_num).owned_by_active_user
+          @statuses = Status.showable.get_status_in_date(date,fetch_num)
         else
-          @statuses = Status.get_latest_status(fetch_num).owned_by_active_user
+          @statuses = Status.showable..get_latest_status(fetch_num)
         end
-      @has_next = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str ).owned_by_active_user.exists? if @statuses.present? 
+      if @statuses.present?
+        older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
+        @has_next = older_status.length > 0
+      end
     end
     
     if @statuses.present?

@@ -16,13 +16,13 @@
       <meta name="robots" content="noindex,nofollow,nocache"/>
     <% end %>
     <%= favicon_link_tag %>
-    <meta name="description" content="あの日のタイムラインを眺められる、ちょっとしたアプリケーション"/>
-    <meta name="keywords" content="タイムライン,遡る,過去のタイムライン,過去のつぶやき,過去のツイート"/>
+    <meta name="description" content="クリックひとつであの日のつぶやきへ"/>
+    <meta name="keywords" content="ツイッター,昔のツイート,遡る,過去のツイート,昔のつぶやき,過去のつぶや"/>
     <meta property="og:locale" content="ja_JP">
     <meta property="fb:app_id" content="258025897640441" />
-    <meta property="og:site_name" content="Timdeline" />
+    <meta property="og:site_name" content="TwitJump" />
     <meta property="og:title" content="<%= title @title %>" />
-    <meta property="og:description" content="Timedline is a simple view system for those who want to have the access to their past timeline." />
+    <meta property="og:description" content="Click and jump to your passed days." />
     <meta property="og:url" content="<%= request.url %>" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="<%= request.url %>/favicon.ico" />
@@ -33,10 +33,10 @@
     <% if configatron.site_mode == "production" %>
       <% if request.smart_phone? %>
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
-	<link href="/assets/smart_phone/application.css?v=1.1" media="all" rel="stylesheet" type="text/css" />
+	<link href="/assets/smart_phone/application.css?v=1.2" media="all" rel="stylesheet" type="text/css" />
 	<script src="/assets/smart_phone/application.js?v=1.1" type="text/javascript"></script>
       <% else %>
-	<link href="/assets/application.css?v=3.2" media="all" rel="stylesheet" type="text/css" />
+	<link href="/assets/application.css?v=3.3" media="all" rel="stylesheet" type="text/css" />
 	<script src="/assets/application.js?v=2.5" type="text/javascript"></script>
       <% end %>
     <% else %>
@@ -57,7 +57,9 @@
 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 	
-	ga('create', 'UA-28886746-8', 'timedline.me');
+	ga('create', 'UA-28886746-8', 'auto', {'allowLinker': true}); 
+	ga('require', 'linker'); 
+	ga('linker:autoLink', ['timedline.me'] );
 	ga('send', 'pageview');
       </script>
     <% end %>
