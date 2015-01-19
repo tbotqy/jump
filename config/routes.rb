@@ -11,6 +11,7 @@ Tlviewer::Application.routes.draw do
   match "/logout" => "logs#logout"
   match "/admin/accounts" => "admin#accounts"
   match "/admin/statuses" => "admin#statuses"
+  match "/sorry" => "logs#sorry"
   root :to => 'users#index'
   match ':controller(/:action(/:id))(.:format)'
 end

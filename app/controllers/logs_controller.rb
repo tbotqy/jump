@@ -7,9 +7,9 @@ class LogsController < ApplicationController
     auth = request.env['omniauth.auth']
     
     # check whether user's twitter account is protected
-    #if auth.extra.raw_info.protected
-    #  render :file => "/shared/_we_are_sorry" and return
-    #end
+    if Rails.env.production? and auth.extra.raw_info.protected 
+      redirect_to :action => "sorry" and return
+    end
 
     # check if tokens are acquired correctly
     access_token = auth.credentials.token
@@ -27,7 +27,7 @@ class LogsController < ApplicationController
       # create new account
       User.create_account(auth)
     end
-
+    
     # log the user in
     session[:user_id] = User.select(:id).where("twitter_id = ? AND deleted_flag = false",auth.uid)[0].id
     
@@ -45,4 +45,8 @@ class LogsController < ApplicationController
     redirect_to root_url
   end
   
+  def sorry
+    @show_footer = true
+  end
+
 end
