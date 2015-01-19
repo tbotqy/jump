@@ -129,7 +129,6 @@ class UsersController < ApplicationController
       older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
       @has_next = older_status.length > 0;
     else
-      @show_footer = true
       @oldest_tweet_id = false
     end
   end
