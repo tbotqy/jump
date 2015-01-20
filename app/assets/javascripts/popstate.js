@@ -10,7 +10,7 @@ $(function(){
     window.setTimeout(function(){
       
       $(this).on("popstate",function(e){
-        console.log(e.originalEvent.state);
+        
         var white_list = ['tweets','home_timeline','public_timeline'];
         var path = location.pathname;
         
