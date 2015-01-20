@@ -242,13 +242,13 @@ footer .copyright{
 #container-footer .area-left{ 
   width: 835px;
   float: left;
-  padding: 10px 0 0 0;
+  padding: 25px 0 0 0;
 }
 
 #container-footer .area-right{ 
   width: 250px;
   float: right;
-  padding: 10px 0 0 0;
+  padding: 25px 0 0 0;
 }
 
 #container-footer .area-right .wrap-catch{ 
@@ -259,7 +259,7 @@ footer .copyright{
 }
 
 #container-footer .area-right .wrap-catch .description{
-  padding: 0 0 0 5px;
+  padding: 10px 0 0 5px;
   margin: 0px;
 }
 
