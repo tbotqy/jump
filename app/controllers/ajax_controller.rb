@@ -237,20 +237,21 @@ class AjaxController < ApplicationController
     @statuses = nil
     @has_next = false
    
-    fetch_num = 10 # fetches 10 statuses at one request
-
+    fetch_num = 10 # shows 10 statuses at one request
+    request_fetch_num = fetch_num +1 # requests +1 statuses to check if more statuses exist 
+    
     # fetch older statuses 
     case destination_action_type.to_s
     when 'tweets'
-      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).owned_by_current_user(@@user_id)
     when 'home_timeline'
-      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@@user_id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     when 'public_timeline'
-      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num)
+      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     end
 
     # check if any older status exists
-    if @statuses.count != fetch_num
+    if @statuses.count != request_fetch_num
       @has_next = false
     else
       @statuses.pop
