@@ -245,7 +245,6 @@ class AjaxController < ApplicationController
     when 'tweets'
       @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).owned_by_current_user(@@user_id)
     when 'home_timeline'
-      #@statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,fetch_num).owned_by_friend_of(@@user_id)
       @statuses = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@@user_id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     when 'public_timeline'
       @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
