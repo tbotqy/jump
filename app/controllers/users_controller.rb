@@ -87,7 +87,8 @@ class UsersController < ApplicationController
       @oldest_tweet_id = @statuses.last.status_id_str
       
       # check if there is more status to show
-      older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_friend_of(@@user_id)
+      #older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_friend_of(@@user_id)
+      older_status = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@@user_id).get_older_status_by_tweet_id( @oldest_tweet_id,1 )
       @has_next = older_status.length > 0
     else
       @oldest_tweet_id = false
