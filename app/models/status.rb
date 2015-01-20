@@ -8,6 +8,16 @@ class Status < ActiveRecord::Base
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
   
+=begin
+  def sync_profile_image_in_retweet
+    # collect retweets
+    dest_ids = []
+    Status.showable.where(:is_retweet => true).each do |rt|
+      uri = URI.parse( rt.rt_profile_image_url_https )
+      res = Net::HTTP.get_response( uri.host, uri.path )
+      if res.code != "200"
+        dest_ids.push
+=end      
   def delete_flagged_status
     # delete all the statuses where deleted_flag = true
     Status.where(:deleted_flag => true).destroy_all
