@@ -8,16 +8,60 @@ class Status < ActiveRecord::Base
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
   
-=begin
-  def sync_profile_image_in_retweet
+
+  def self.sync_profile_image_in_retweet_by(owner_screen_name)
     # collect retweets
-    dest_ids = []
-    Status.showable.where(:is_retweet => true).each do |rt|
-      uri = URI.parse( rt.rt_profile_image_url_https )
-      res = Net::HTTP.get_response( uri.host, uri.path )
-      if res.code != "200"
-        dest_ids.push
-=end      
+    count = 0
+    dest_status_id_strs = []
+    user_id = User.find_by_screen_name(owner_screen_name).id
+    Status.showable.where(:user_id => user_id).each do |status|
+      if status.is_retweet?
+        uri = URI.parse( status.rt_profile_image_url_https )
+        res = Net::HTTP.get_response( uri.host, uri.path )
+        if res.code != "200"
+          dest_status_id_strs.push(status.status_id_str)
+          count += 1
+          puts "Progress : Code = #{res.code}. #{count} statuses hit as invalid prof image" if count.modulo(100) == 0
+        end
+      end
+    end
+
+    puts "Completed checking. Then fetch and update database for #{count} statuses..."
+    count = 0
+    skipped_ids = []
+    twitter = Status.create_twitter
+    dest_status_id_strs.each do |dest_status_id_str|
+      begin
+        fresh_url = twitter.status(dest_status_id_str).retweet.user.profile_image_url_https 
+      rescue Twitter::Error::NotFound => error
+        skipped_ids.push(dest_status_id_str)
+        puts "Skipped with NotFoundError : sidstr = #{dest_status_id_str}."
+        next
+      rescue Twitter::Error::Forbidden => error
+        skipped_ids.push(dest_status_id_str)
+        puts "Skipped with ForbiddenError: sidstr = #{dest_status_id_str}."
+        next
+      rescue Twitter::Error::TooManyRequests => error
+        puts "Too many requests error occured. sleep for #{error.rate_limit.reset_in}..."
+        sleep error.rate_limit.reset_in
+        puts "Retrying..."
+        retry
+      rescue Twitter::Error => error
+        skipped_ids.push(dest_status_id_str)
+        puts "Skipped with some error: sidstr = #{dest_status_id_str}."
+        next
+      else
+        dest_status = Status.find_by_status_id_str_reversed(-1*dest_status_id_str.to_i)
+        dest_status.update_attributes(:rt_profile_image_url_https => fresh_url)
+        count += 1
+        puts "Progress: #{count} statuses has been updated." if count.modulo(50) == 0
+      end
+    end
+
+    puts "Complete: updated #{count} retweets / skipped ids are..."
+    skipped_ids
+  end
+
   def delete_flagged_status
     # delete all the statuses where deleted_flag = true
     Status.where(:deleted_flag => true).destroy_all
@@ -220,6 +264,15 @@ class Status < ActiveRecord::Base
     end
 
     ret
+  end
+
+  def self.create_twitter
+    # should move to helper
+    Twitter::configure do |config|
+      config.consumer_key = configatron.consumer_key
+      config.consumer_secret = configatron.consumer_secret
+    end
+    Twitter::Client.new
   end
 
   def self.use_index(index_name)
