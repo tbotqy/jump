@@ -59,7 +59,6 @@ class UsersController < ApplicationController
       # use size to prevent un-indexed query
       @has_next = older_status.length > 0 
     else
-      @show_footer = true
       @oldest_tweet_id = false
     end
   end
@@ -69,13 +68,7 @@ class UsersController < ApplicationController
     @title = "ホームタイムライン"
     @show_scrollbar = true
     @has_next = false
-    # check if user has any friend
-    unless User.find(@@user_id).has_friend?
-      @error_type = "no_friend_list"
-      return
-    end
-    
-    # check if date is specified
+     # check if date is specified
     specified_date = params[:date]
     
     @statuses = nil
@@ -97,7 +90,6 @@ class UsersController < ApplicationController
       older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_friend_of(@@user_id)
       @has_next = older_status.length > 0
     else
-      @show_footer = true
       @oldest_tweet_id = false
     end
   end
