@@ -59,7 +59,6 @@ class UsersController < ApplicationController
       # use size to prevent un-indexed query
       @has_next = older_status.length > 0 
     else
-      @show_footer = true
       @oldest_tweet_id = false
     end
   end
