@@ -403,7 +403,7 @@ class AjaxController < ApplicationController
         if date
           @statuses = Status.showable.get_status_in_date(date,fetch_num)
         else
-          @statuses = Status.showable..get_latest_status(fetch_num)
+          @statuses = Status.showable.get_latest_status(fetch_num)
         end
       if @statuses.present?
         older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
