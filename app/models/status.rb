@@ -32,7 +32,7 @@ class Status < ActiveRecord::Base
     #Status.showable.where(:user_id => user_id).each do |status|
     Status.showable.where(:is_retweet => true).order("id").limit(limit).each do |status|
       if status.is_retweet?
-        uri = URI.parse( status.rt_profile_image_url_https )
+        uri = URI.parse( URI.encode(status.rt_profile_image_url_https) ) rescue next
         res = Net::HTTP.get_response( uri.host, uri.path )
         if res.code != "200"
           dest_status_id_strs.push(status.status_id_str)
@@ -84,7 +84,7 @@ class Status < ActiveRecord::Base
     # collect retweets
     count = 0
     Status.showable.where(:is_retweet => true).each do |status|
-      uri = URI.parse( status.rt_profile_image_url_https )
+      uri = URI.parse( URI.encode(status.rt_profile_image_url_https) )
       res = Net::HTTP.get_response( uri.host, uri.path )
       if res.code != "200"
         count += 1
