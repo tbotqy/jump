@@ -10063,7 +10063,7 @@ function checkStatusUpdate(){
   
   var doUpdate = false;
   var updated_date = "";
-  var box_tweets =$("#wrap-setting").find(".tweets");
+  var box_tweets =$("#wrap-setting-lower").find(".tweets");
  
   $.ajax({
       
@@ -10084,6 +10084,7 @@ function checkStatusUpdate(){
 	box_tweets.find(".loader").fadeOut();
 	
 	box_tweets.find(".additional-num").fadeOut(function(){
+          
 	  $(this).addClass("alert alert-info").text("変更はありません");
 	}).fadeIn();
 	
@@ -10117,7 +10118,7 @@ function checkFriendUpdate(){
   var count;
   var updated;
   var updated_date;
-  var area_friends = $("#wrap-setting").find(".friends");
+  var area_friends = $("#wrap-setting-lower").find(".friends");
 
   $.ajax({
 
@@ -10269,7 +10270,7 @@ var updated_date = "";
 
 function updateStatus(){
   
-  var area_tweets = $("#wrap-setting").find(".tweets");
+  var area_tweets = $("#wrap-setting-lower").find(".tweets");
   var update_button = $("#update-statuses");
   
   $.ajax({
@@ -11118,59 +11119,54 @@ $(function(){
   /////////////////////////////
   
   if('pushState' in history){
-    
-    window.setTimeout(function(){
+ 
+    $(window).on("popstate",function(e){
       
-      $(this).on("popstate",function(e){
+      var white_list = ['tweets','home_timeline','public_timeline'];
+      var path = location.pathname;
+      
+      var actionTypeOk = false;
+      var slashCountOk = false;
+      
+      // check if requested action type is allowed to fire process on popstate
+      for(var i=0;i<white_list.length;i++){
         
-        var white_list = ['tweets','home_timeline','public_timeline'];
-        var path = location.pathname;
-        
-        var actionTypeOk = false;
-        var slashCountOk = false;
-        
-        // check if requested action type is allowed to fire process on popstate
-        for(var i=0;i<white_list.length;i++){
-          
-          if(countStr(path,white_list[i]) > 0){
-            actionTypeOk = true;
-            break;
-          }
-          
-        }
-
-        if( actionTypeOk ){
-          var date;
-          var isPublicTimeline = path.indexOf("public_timeline") != -1;
-          
-          // count the / in path
-          // change its threshold value if view is public timeline
-          var threshold;
-          if(isPublicTimeline){
-            threshold = 2;
-          }else{
-            threshold = 3;
-          }
-
-          if(countStr(path,"/") < threshold){
-            date = "notSpecified";
-          }else{
-            date = detectDate(path);
-          }
-          
-          var action_type = detectActionType(path);
-          
-          ajaxSwitchTerm(date,action_type,"pjax");
-          
-          // reset all the term selectors
-          $("#wrap-term-selectors").find("a.selected").removeClass("btn-primary selected");
+        if(countStr(path,white_list[i]) > 0){
+          actionTypeOk = true;
+          break;
         }
         
-      });
-    },2000);
-    
+      }
+      
+      if( actionTypeOk ){
+        var date;
+        var isPublicTimeline = path.indexOf("public_timeline") != -1;
+        
+        // count the / in path
+        // change its threshold value if view is public timeline
+        var threshold;
+        if(isPublicTimeline){
+          threshold = 2;
+        }else{
+          threshold = 3;
+        }
+        
+        if(countStr(path,"/") < threshold){
+          date = "notSpecified";
+        }else{
+          date = detectDate(path);
+        }
+        
+        var action_type = detectActionType(path);
+        
+        ajaxSwitchTerm(date,action_type,"pjax");
+        
+        // reset all the term selectors
+        $("#wrap-term-selectors").find("a.selected").removeClass("btn-primary selected");
+      }
+      
+    });
   }
-  
 });
 $(function(){
 
