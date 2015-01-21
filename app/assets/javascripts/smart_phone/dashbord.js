@@ -109,7 +109,7 @@ $(function(){
         // let the button say that process has been done
         $("#wrap-term-selectors").find("a").button('complete');
         
-        // record requested url in the histry
+        // record requested url in the history
         window.history.pushState(null,null,href);
         
       }

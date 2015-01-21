@@ -7,17 +7,7 @@ $(function(){
   
   if('pushState' in history){
  
-    var popped = ('state' in window.history), initialURL = location.href;   
     $(window).on("popstate",function(e){
- 
-      // Ignore inital popstate that some browsers fire on page load
-      var initialPop = !popped && location.href == initialURL;
-      popped = true;
-      
-      if ( initialPop ){
-        alert("initial");
-        return;
-      }
       
       var white_list = ['tweets','home_timeline','public_timeline'];
       var path = location.pathname;

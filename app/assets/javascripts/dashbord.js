@@ -7,7 +7,7 @@ $(function(){
   // mouseover action for year list in dashbord
   $(".list-years").find("li").mouseover(function(){
     var self = $(this);
-
+    
     // normalize all the buttons for years
     $(".list-years").find("a").removeClass("btn-primary selected");
  
@@ -52,7 +52,7 @@ $(function(){
   // click action to change the term of statuses to show
   $("#wrap-term-selectors").find("a").click(function(e){
     var self = $(this);
-
+   
     // prevent the page from reloading
     e.preventDefault();
 
@@ -110,7 +110,7 @@ $(function(){
         // let the button say that process has been done
         $("#wrap-term-selectors").find("a").button('complete');
         
-        // record requested url in the histry
+        // record requested url in the history
         window.history.pushState(null,null,href);
         
       }

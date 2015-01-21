@@ -10621,12 +10621,11 @@ function ajaxSwitchTerm(date,action_type,mode){
 
       // let the button say that process has been done
       $("#wrap-term-selectors").find("a").button('complete');
-	
       if(mode == "click"){
         // record requested url in the histry
         window.history.pushState(null,null,href);
       }
-    
+      
     }
   
   });
