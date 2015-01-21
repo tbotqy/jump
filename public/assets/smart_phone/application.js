@@ -10063,7 +10063,7 @@ function checkStatusUpdate(){
   
   var doUpdate = false;
   var updated_date = "";
-  var box_tweets =$("#wrap-setting").find(".tweets");
+  var box_tweets =$("#wrap-setting-lower").find(".tweets");
  
   $.ajax({
       
@@ -10084,6 +10084,7 @@ function checkStatusUpdate(){
 	box_tweets.find(".loader").fadeOut();
 	
 	box_tweets.find(".additional-num").fadeOut(function(){
+          
 	  $(this).addClass("alert alert-info").text("変更はありません");
 	}).fadeIn();
 	
@@ -10117,7 +10118,7 @@ function checkFriendUpdate(){
   var count;
   var updated;
   var updated_date;
-  var area_friends = $("#wrap-setting").find(".friends");
+  var area_friends = $("#wrap-setting-lower").find(".friends");
 
   $.ajax({
 
@@ -10269,7 +10270,7 @@ var updated_date = "";
 
 function updateStatus(){
   
-  var area_tweets = $("#wrap-setting").find(".tweets");
+  var area_tweets = $("#wrap-setting-lower").find(".tweets");
   var update_button = $("#update-statuses");
   
   $.ajax({
