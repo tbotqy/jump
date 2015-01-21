@@ -30,7 +30,7 @@ class Status < ActiveRecord::Base
     dest_status_id_strs = []
     #user_id = User.find_by_screen_name(owner_screen_name).id
     #Status.showable.where(:user_id => user_id).each do |status|
-    Status.showable.where(:is_retweet => true).order("id").limit(limit).each do |status|
+    Status.showable.where(:is_retweet => true).order("id DESC").limit(limit).each do |status|
       if status.is_retweet?
         uri = URI.parse( URI.encode(status.rt_profile_image_url_https) )
         res = Net::HTTP.get_response( uri.host, uri.path )
