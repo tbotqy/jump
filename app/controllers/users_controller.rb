@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
   
   def for_users
-    @title = "timedline.me - ご利用に際して"
+    @title = "ご利用に際して"
     @show_header = false
     @show_to_page_top = false
   end
@@ -33,11 +33,19 @@ class UsersController < ApplicationController
   def sent_tweets
 
     # shows the tweets tweeted by logged-in user
-    @title = "あなたのツイート"
+
+    # this line may be changed when the page is published to not-loggedin visitors
+    @timeline_owner = @@current_user
+
+    @title = "#{@timeline_owner.name}(@#{@timeline_owner.screen_name}) さんのツイート"
     @show_scrollbar = true
     @has_next = false
     # check if date is specified
     specified_date = params[:date]
+
+    if specified_date
+      @title = convert_hyphen_in_date_to_japanese(specified_date) + "の" + " "+@title 
+    end
     
     @statuses = nil
     fetch_num = 10
@@ -65,12 +73,20 @@ class UsersController < ApplicationController
 
   def home_timeline
     # shows the home timeline 
-    @title = "ホームタイムライン"
+
+    # this line may be changed when the page is published to not-loggedin visitors
+    @timeline_owner = @@current_user
+
+    @title = "#{@timeline_owner.name}(@#{@timeline_owner.screen_name}) さんのホームタイムライン"
     @show_scrollbar = true
     @has_next = false
      # check if date is specified
     specified_date = params[:date]
     
+    if specified_date
+      @title = convert_hyphen_in_date_to_japanese(specified_date) + "の" + " "+@title 
+    end
+
     @statuses = nil
     fetch_num = 10
 
@@ -102,6 +118,10 @@ class UsersController < ApplicationController
     # check if date is specified
     specified_date = params[:date]
     
+    if specified_date
+      @title = convert_hyphen_in_date_to_japanese(specified_date) + "の" + @title 
+    end
+
     @statuses = nil
     fetch_num = 10
 
