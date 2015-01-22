@@ -111,6 +111,9 @@ $(function(){
         
         // record requested url in the history
         window.history.pushState(null,null,href);
+
+        // update page title
+        updatePageTitleForTimeline(date,action_type);
         
       }
     });
