@@ -41,30 +41,26 @@ class UsersController < ApplicationController
     
     @statuses = nil
     fetch_num = 10
-    request_fetch_num = fetch_num + 1
-    # plus 1 to check if 'read more' should be shown in the view
+
     if specified_date
-      # fetch 10(+1) statuses in specified date
-      @statuses = Status.get_status_in_date(specified_date,request_fetch_num).owned_by_current_user(@@user_id)
+      # fetch statuses in specified date
+      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_current_user(@@user_id)
     else
-      # just fetch 10(+1) latest statuses
-      @statuses = Status.showable.get_latest_status(request_fetch_num).owned_by_current_user(@@user_id)
+      # just fetch latest statuses
+      @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
     end
     
     if @statuses.present?
       # get the oldest tweet's status_id_str
       @oldest_tweet_id = @statuses.last.status_id_str
       
-      # check if there is more status to show
-      if @statuses.count != request_fetch_num
-        @has_next = false
-      else
-        @statuses.pop
-        @has_next = true
-      end
+      # check if read-more button should be shown
+      older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_current_user(@@user_id)
+      @has_next = older_status.length > 0 
     else
       @oldest_tweet_id = false
     end
+
   end
 
   def home_timeline
@@ -77,27 +73,22 @@ class UsersController < ApplicationController
     
     @statuses = nil
     fetch_num = 10
-    request_fetch_num = fetch_num + 1
-    # plus 1 to check if 'read more' should be shown in the view
+
     if specified_date
-      # fetch 10(+1) statuses in specified date
-      @statuses = Status.showable.get_status_in_date(specified_date,request_fetch_num).owned_by_friend_of(@@user_id)
+      # fetch statuses in specified date
+      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@@user_id)
     else
-      # just fetch 10(+1) latest statuses
-      @statuses = Status.showable.force_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(request_fetch_num).owned_by_friend_of(@@user_id)
+      # just fetch latest statuses
+      @statuses = Status.showable.force_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
     end
-    
+
     if @statuses.present?
       # get the oldest tweet's status_id_str
       @oldest_tweet_id = @statuses.last.status_id_str
       
-      # check if there is more status to show
-      if @statuses.count != request_fetch_num
-        @has_next = false
-      else
-        @statuses.pop
-        @has_next = true
-      end
+      # check if read-more button should be shown
+      older_status = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@@user_id).get_older_status_by_tweet_id( @oldest_tweet_id,1 )
+      @has_next = older_status.length > 0
     else
       @oldest_tweet_id = false
     end
@@ -113,27 +104,22 @@ class UsersController < ApplicationController
     
     @statuses = nil
     fetch_num = 10
-    request_fetch_num = fetch_num + 1
-    # plus 1 to check if 'read more' should be shown in the view
+
     if specified_date
-      # fetch 10(+1) statuses in specified date
-      @statuses = Status.showable.get_status_in_date(specified_date,request_fetch_num)
+      # fetch statuses in specified date
+      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num)
     else
-      # just fetch 10(+1) latest statuses
-      @statuses = Status.showable.get_latest_status(request_fetch_num)
+      # just latest statuses
+      @statuses = Status.showable.get_latest_status(fetch_num)
     end
     
     if @statuses.present?
       # get the oldest tweet's status_id_str
       @oldest_tweet_id = @statuses.last.status_id_str
       
-      # check if there is more status to show
-      if @statuses.count != request_fetch_num
-        @has_next = false
-      else
-        @statuses.pop
-        @has_next = true
-      end
+      # check if read-more button should be shown
+      older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
+      @has_next = older_status.length > 0;
     else
       @oldest_tweet_id = false
     end
