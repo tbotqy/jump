@@ -47,8 +47,8 @@ function getTimelineOwnerName(){
 
 function convertDateToJapanese(dateWithHyphen){
   // convert given date to 年月日
-  if(!dateWithHyphen) return false;
-
+  if(!dateWithHyphen || dateWithHyphen == "notSpecified") return false;
+  
   var ret = "";
   dateWithHyphen.split(/-/).forEach(function(date,index){
     switch(index){
@@ -656,7 +656,7 @@ function ajaxSwitchTerm(date,action_type,mode){
    * @param action_type : the type of timeline
    * @param mode : the name of event which fired this function
    */
-
+  
   if(!date || !action_type || !action_type || !mode){
     alert("required params not supplied");
     return ;
