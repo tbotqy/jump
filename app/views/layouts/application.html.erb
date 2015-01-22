@@ -67,6 +67,10 @@
     <%= render "shared/global_header",{ :current_user => @current_user || false} if @show_header == true  %>
     <!-- #container-main -->
     <div id="container-main" class="<%= controller.action_name %>">
+      <% if @timeline_owner %>
+	<input type="hidden" name="timeline-owner-name" value="<%= @timeline_owner.name %>" />
+	<input type="hidden" name="timeline-owner-screen-name" value="<%= @timeline_owner.screen_name %>" />
+      <% end %>
       <div class="inner">
 	<%= yield %>
       </div>

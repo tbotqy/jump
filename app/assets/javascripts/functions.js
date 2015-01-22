@@ -1,3 +1,63 @@
+function updatePageTitleForTimeline(dateWithHyphen,actionType){
+  var title = "";
+  var baseTitle = "";
+  var dateInJapanese = convertDateToJapanese(dateWithHyphen);
+  var name  = getTimelineOwnerName();
+  var serviceName = "TwitJump";
+  switch(actionType){
+  case "tweets":
+    baseTitle = " " + name +" さんのツイート";
+    break;
+  case "home_timeline":
+    baseTitle = " " + name + " さんのホームタイムライン";
+    break;
+  case "public_timeline":
+    baseTitle = "パブリックタイムライン";
+    break;
+  }
+
+  // concatenate service name to base title
+  baseTitle += " - "+serviceName;
+  
+  if(!dateInJapanese){
+    title = baseTitle;
+  }else{
+    // concatenate date string to the head of baseTitle
+    title = dateInJapanese+"の"+baseTitle;
+  }
+  
+  // update page title
+  $("title").text(title);
+}
+
+function getTimelineOwnerName(){
+  // returns the string of name(@screen_name) 
+  var name = $(':hidden[name="timeline-owner-name"]').val() || "Hey!";
+  var screen_name = $(':hidden[name="timeline-owner-screen-name"]').val() || "Hoo!";
+  return name+"(@"+screen_name+")";
+}
+
+function convertDateToJapanese(dateWithHyphen){
+  // convert given date to 年月日
+  if(!dateWithHyphen) return false;
+
+  var ret = "";
+  dateWithHyphen.split(/-/).forEach(function(date,index){
+    switch(index){
+      case 0:
+      ret += date+"年";
+      break;
+      case 1:
+      ret += date+"月";
+      break;
+      case 2:
+      ret += date+"日";
+      break;
+    }
+  });
+  return ret;
+}
+
 function facebook(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -650,6 +710,9 @@ function ajaxSwitchTerm(date,action_type,mode){
         // record requested url in the histry
         window.history.pushState(null,null,href);
       }
+      
+      // update page title
+      updatePageTitleForTimeline(date,action_type);
       
     }
   

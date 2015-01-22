@@ -397,7 +397,6 @@ class AjaxController < ApplicationController
         @statuses = Status.showable.use_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
       end
       if @statuses.present?
-        #older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_friend_of(@@user_id)
         older_status = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@@user_id).get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
         @has_next = older_status.length > 0
       end
