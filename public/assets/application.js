@@ -10022,7 +10022,7 @@ function getTimelineOwnerName(){
 
 function convertDateToJapanese(dateWithHyphen){
   // convert given date to 年月日
-  if(!dateWithHyphen) return false;
+  if(!dateWithHyphen || dateWithHyphen == "notSpecified") return false;
 
   var ret = "";
   dateWithHyphen.split(/-/).forEach(function(date,index){
