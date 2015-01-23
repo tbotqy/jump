@@ -11176,8 +11176,9 @@ $(function(){
   /////////////////////////////
   
   if('pushState' in history){
-      
+       
     $(window).on("popstate",function(e){
+      alert("popped");
       
       var white_list = ['tweets','home_timeline','public_timeline'];
       var path = location.pathname;
@@ -11194,7 +11195,7 @@ $(function(){
         }
         
       }
-      
+
       if( actionTypeOk ){
         var date;
         var isPublicTimeline = path.indexOf("public_timeline") != -1;
