@@ -4,104 +4,66 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :entities, :dependent => :delete_all
   scope :showable , -> {where(:pre_saved => false,:deleted_flag => false)}
+  scope :retweet , -> {where(:is_retweet => true)}
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
-
-  def self.record_invalid_profile_image_retweet(step = 100)
-    puts "Checking if there is any progress..."
-    undone_record = Record.where(:done => false).order("id DESC").first
-    dest_statuses = nil
-    count_dest_status = 0
-    if undone_record
-      latest_status_id = Status.showable.where(:status_id_str_reversed => -1*undone_record.status_id_str).order("id DESC").first.id
-      dest_statuses = Status.showable.where("id < ?",latest_status_id).where(:is_retweet => true)
-      puts "Latest record found: record id = #{undone_record.id}, created at #{Time.at(undone_record.created_at)}"
-      sleep(3)
-    else
-      puts "No record saved yet."
-      dest_statuses = Status.showable.where(:is_retweet => true)
-    end
-    puts "Check if progress is correctly checked..."
-    puts "#{Status.showable.where(:is_retweet).count}(Retweets on statuses) = "
-    puts "#{.count}(Retweets on records(undone) + #{Record.where(:done => true)} + #{
-    count_invalid = 0
-    count_processed = 0
-    puts "Counting total num of destination statuses(unchecked retweets)..."
-    count_dest_status  = dest_statuses.count
-    puts "Starting loop for #{count_dest_status} of unchecked retweet statuses..."
-    sleep(3)
-    from = 0
-    progress_bar = ProressBar.create(:total => count_dest_status)
-    while( from < count_total_rts )
-      limit = "#{from},#{step}"
-      puts "----- Starting query with limit #{limit} -----"
-      dest_statuses..order("id DESC").limit(limit).each.with_index do |status,index|
-        uri = URI.parse( URI.encode(status.rt_profile_image_url_https) )
-        res = Net::HTTP.get_response( uri.host, uri.path )
-        if res.code != "200"
-          Record.create(:status_id_str => status.status_id_str,:done => false)
-          count_invalid += 1
-        end
-        count_processed += 1
-        puts "Progress at [#{Time.now}] : #{((count_processed.to_f/count_desy_status.to_f)*100).round(2)} % done. #{count_invalid} statuses were recorded as invalid prof image retweet." if count_processed.modulo(100) == 0
-        progress_bar.increment
-      end
-      from += step
-    end
-    puts "Complete at #{Time.now} : Recorded #{count_invalid} invalid retweets."
-  end
   
-  def self.sync_invalid_profile_image_in_record(from = nil,step = nil)
-    puts "Fetch fresh profile image url via API for each retweets in Record"
-    if !from && !srep
-      limit = nil
-    else
-      limit = "#{from},#{step}"
-    end
-    count_total =  Record.where(:done => false).count
+  def self.fix_invalid_profile_images_in_retweet(step = 100)
+    puts "Fetch fresh profile image url via API for each retweets in broken list"
+    unsolved_list = Status::Broken.unsolved.broken_profile_image
+    count_unsolved =  unsolved_list.count
+    count_processed = 0
     count_updated = 0
     count_skipped = 0
-    puts "Starting query with limit = #{limit}"
-    Record.where(:done => false).limit(limit).each.with_index do |record,index|
-      dest_status_id_str = record.status_id_str
-      begin
-        fresh_url = twitter.status(dest_status_id_str).retweet.user.profile_image_url_https 
-      rescue Twitter::Error::NotFound => error
-        Record.find_by_status_id_str(dest_status_id_str).update_attributes(:done=>true,:was_error=>true)
-        puts "Skipped with NotFoundError : sidstr = #{dest_status_id_str}."
-        count_skipped += 1
-        next
-      rescue Twitter::Error::Forbidden => error
-        skipped_ids.push(dest_status_id_str)
-        Record.find_by_status_id_str(dest_status_id_str).update_attributes(:done=>true,:was_error=>true)
-        puts "Skipped with ForbiddenError: sidstr = #{dest_status_id_str}."
-        count_skipped += 1
-        next
-      rescue Twitter::Error::TooManyRequests => error
-        puts "Too many requests error occured. Sleep for #{error.rate_limit.reset_in} at #{Time.now} ..."
-        puts "Progress: [#{Time.now}] #{((index.to_f/count_total.to_f)*100).round(2)} % of records done. #{count_updated} statuses has been updated."
-        sleep error.rate_limit.reset_in
-        puts "Retrying..."
-        retry
-      rescue Twitter::Error => error
-        Record.find_by_status_id_str(dest_status_id_str).update_attributes(:done=>true,:was_error=>true)
-        puts "Skipped with some error: sidstr = #{dest_status_id_str}."
-        count_skipped += 1
-        next
-      else
-        dest_status = Status.find_by_status_id_str_reversed(-1*dest_status_id_str.to_i)
-        dest_status.update_attributes(:rt_profile_image_url_https => fresh_url)
-        count += 1
-        Record.find_by_status_id_str(dest_status_id_str).update_attributes(:done=>true,:was_error=>false)
-        puts "Progress: [#{Time.now}] #{((index.to_f/count_total.to_f)*100).round(2)} % of records done. #{count_updated} statuses has been updated." if index.modulo(100) == 0
+    
+    twitter = self.create_twitter
+    progress_bar_whole = ProgressBar.create(:title => "Fetch and update invalid prof-image(whole)",:total => count_unsolved,:format => "%t |%B| %P[%],%a,%E(%c)")
+    from = 0
+    while( from < count_unsolved )
+      limit = "#{from},#{step}"
+      #puts "Starting query with limit = #{limit}"
+      unsolved_list.limit(limit).each.with_index do |unsolved_state,index|
+        dest_status_id_str = Status.find(unsolved_state.status_id).status_id_str
+        begin
+          fresh_url = twitter.status(dest_status_id_str).retweet.user.profile_image_url_https 
+        rescue Twitter::Error::NotFound => error
+          unsolved_state.update_state(true,"skipped with NotFoundError")
+          puts "Skipped with NotFoundError : status.id = #{unsolved_state.status_id}."
+          count_skipped += 1
+          next
+        rescue Twitter::Error::Forbidden => error
+          unsolved_state.update_state(true,"skipped with ForbiddenError")
+          puts "Skipped with ForbiddenError : status.id = #{unsolved_state.status_id}."
+          count_skipped += 1
+          next
+        rescue Twitter::Error::TooManyRequests => error
+          puts "Too many requests error occured. Sleep for #{error.rate_limit.reset_in} at #{Time.now} ..."
+          puts "Progress: [#{Time.now}] #{((count_processed.to_f/count_unsolved.to_f)*100).round(2)} % of records done. #{count_updated} statuses has been updated."
+          sleep error.rate_limit.reset_in
+          puts "Retrying..."
+          retry
+        rescue Twitter::Error => error
+          unsolved_state.update_state(true,"skipped with Error")
+          puts "Skipped with Error : status.id = #{unsolved_state.status_id}."
+          count_skipped += 1
+          next
+        else
+          dest_status = Status.find(unsolved_state.status_id)
+          dest_status.update_attributes(:rt_profile_image_url_https => fresh_url)
+          count_updated += 1
+          unsolved_state.update_state(true,"")
+        end
+        progress_bar.increase
+        count_processed += 1
       end
+      from += step
+      puts "Progress: [#{Time.now}] #{((count_processed.to_f/count_unsolved.to_f)*100).round(2)} % of records done. #{count_updated} statuses has been updated." if index.modulo(100) == 0
     end
-
     puts "Complete: updated #{count_updated} retweets / skipped (#{count_skipped}) are..."
     return count_updated
   end
-
+  
   def delete_flagged_status
     # delete all the statuses where deleted_flag = true
     Status.where(:deleted_flag => true).destroy_all
