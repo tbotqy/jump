@@ -115,7 +115,7 @@ $(function(){
         
         // update page title
         updatePageTitleForTimeline(date,action_type);
-      
+        
       }
     });
   });

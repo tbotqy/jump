@@ -6,9 +6,14 @@ $(function(){
   /////////////////////////////
   
   if('pushState' in history){
- 
+    var popped = ('state' in window.history && window.history.state !== null);
+    var initialURL = location.href;
+    
     $(window).on("popstate",function(e){
-      
+      var initialPop = !popped && location.href == initialURL;
+      popped = true;
+      if (initialPop) return;
+     
       var white_list = ['tweets','home_timeline','public_timeline'];
       var path = location.pathname;
       

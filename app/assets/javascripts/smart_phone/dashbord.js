@@ -52,13 +52,13 @@ $(function(){
   // click action to change the term of statuses to show
   $("#wrap-term-selectors").find("a").click(function(e){
     var self = $(this);
-
+   
     // prevent the page from reloading
     e.preventDefault();
-
+    
     // get href attr in clicked button
     var href = self.attr('href');
-    
+
     // acquire the date to fetch from clicked button
     var date = self.attr('data-date');
     var date_type = self.attr('data-date-type');
@@ -79,7 +79,7 @@ $(function(){
     // check the type of data currently being shown
     var path = location.pathname;
     var action_type = detectActionType(path);
-  
+    
     // fetch statuses 
     $.ajax({
       type: 'GET',
