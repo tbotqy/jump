@@ -51,8 +51,9 @@ class Status::Broken < ActiveRecord::Base
         end
         #progress_bar_limited.increment
         count_processed += 1
+        progress_bar_whole.increment
       end
-      progress_bar_whole.increment
+      
       #puts "Progress at [#{Time.now}] : #{((count_processed.to_f/count_unchecked_retweets.to_f)*100).round(2)} % done. #{count_invalid} statuses were recorded as invalid prof image retweet." if count_processed.modulo(100) == 0
       from += step
     end
@@ -60,7 +61,7 @@ class Status::Broken < ActiveRecord::Base
   end
 
   def update_state(solved_flag,state_string)
-    update_attributes(:solved => solved,:current_state => state_string)
+    update_attributes(:solved => solved_flag,:current_state => state_string)
   end
 
 end
