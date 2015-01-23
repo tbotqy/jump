@@ -715,9 +715,7 @@ function ajaxSwitchTerm(date,action_type,mode){
       
       // update page title
       updatePageTitleForTimeline(date,action_type);    
-      
     }
-  
   });
 }  
 
