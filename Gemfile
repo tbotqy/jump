@@ -23,6 +23,7 @@ group :development,:test do
   gem 'rspec'
   gem 'rspec-rails', '~> 2.0'
   gem 'bullet'
+  gem 'ruby-progressbar'
 end
 
 

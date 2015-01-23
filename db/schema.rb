@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150115060156) do
+ActiveRecord::Schema.define(:version => 20150123052910) do
 
   create_table "entities", :force => true do |t|
     t.integer "status_id",              :limit => 8, :null => false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20150115060156) do
     t.integer "created_at",                        :null => false
   end
 
-  add_index "friends", ["user_id"], :name => "user_id"
+  add_index "friends", ["user_id"], :name => "idx_u_on_friends"
 
   create_table "public_dates", :force => true do |t|
     t.string  "posted_date",     :limit => 10, :null => false
@@ -46,16 +46,24 @@ ActiveRecord::Schema.define(:version => 20150115060156) do
   add_index "public_dates", ["posted_unixtime"], :name => "posted_unixtime"
 
   create_table "records", :force => true do |t|
-    t.integer "status_id",   :limit => 8, :null => false
-    t.string  "status_text"
-    t.boolean "done",                     :null => false
-    t.integer "done_at"
+    t.boolean "done",                       :null => false
+    t.integer "status_id_str", :limit => 8
+    t.boolean "was_error"
+    t.integer "created_at"
   end
 
   create_table "stats", :force => true do |t|
     t.string  "type"
     t.integer "value",      :limit => 8
     t.integer "updated_at"
+  end
+
+  create_table "status_brokens", :force => true do |t|
+    t.integer "status_id"
+    t.string  "current_state"
+    t.boolean "solved"
+    t.integer "created_at",    :null => false
+    t.integer "updated_at",    :null => false
   end
 
   create_table "statuses", :force => true do |t|
@@ -85,6 +93,12 @@ ActiveRecord::Schema.define(:version => 20150115060156) do
     t.integer "twitter_created_at_reversed"
   end
 
+  add_index "statuses", ["status_id_str_reversed"], :name => "idx_sisr_on_statuses"
+  add_index "statuses", ["twitter_created_at_reversed", "status_id_str_reversed"], :name => "idx_tcar_sisr_on_statuses"
+  add_index "statuses", ["user_id", "twitter_created_at_reversed", "status_id_str_reversed"], :name => "idx_u_tcar_sisr_on_statuses"
+  add_index "statuses", ["user_id", "twitter_created_at_reversed"], :name => "idx_u_tcar_on_statuses"
+  add_index "statuses", ["user_id"], :name => "idx_u_on_statuses"
+
   create_table "users", :force => true do |t|
     t.integer "twitter_id",              :limit => 8,                    :null => false
     t.string  "name",                                                    :null => false
@@ -105,5 +119,7 @@ ActiveRecord::Schema.define(:version => 20150115060156) do
     t.integer "created_at",                                              :null => false
     t.integer "updated_at",                                              :null => false
   end
+
+  add_index "users", ["twitter_id"], :name => "idx_ti_on_users"
 
 end
