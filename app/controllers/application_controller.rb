@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
-
+  include Jpmobile::ViewSelector
+  
   protect_from_forgery
   # stop rejecting incompatible ua
-  # before_filter :reject_incompatible_ua, :set_vars, :apply_user_time_zone
   before_filter :set_vars, :apply_user_time_zone
-  include Jpmobile::ViewSelector
 
   # handlers for exceptions
   if Rails.env.production?
@@ -95,17 +94,11 @@ class ApplicationController < ActionController::Base
     session[:user_id] ? true : false
   end
 
-  def create_twitter_client(access_token = nil,access_token_secret = nil)
-    user = @current_user || User.find(session[:user_id])
+  def create_twitter_client
+    user =  @current_user
     Twitter.configure do |config|
-      config.consumer_key = configatron.consumer_key
-      config.consumer_secret = configatron.consumer_secret
-      config.oauth_token = access_token || user.token
-      config.oauth_token_secret = access_token_secret || user.token_secret
-      config.connection_options = Twitter::Default::CONNECTION_OPTIONS.merge(:request => { 
-          :open_timeout => 60,
-          :timeout => 60
-        })
+      config.oauth_token = user.token
+      config.oauth_token_secret = user.token_secret
     end
     Twitter::Client.new
   end
