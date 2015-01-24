@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150123052910) do
+ActiveRecord::Schema.define(:version => 20150124093808) do
 
   create_table "entities", :force => true do |t|
     t.integer "status_id",              :limit => 8, :null => false
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(:version => 20150123052910) do
 
   add_index "friends", ["user_id"], :name => "idx_u_on_friends"
 
+  create_table "profile_image_urls", :force => true do |t|
+    t.integer "twitter_id",  :limit => 8
+    t.string  "screen_name"
+    t.string  "url"
+    t.integer "created_at"
+    t.integer "updated_at"
+  end
+
   create_table "public_dates", :force => true do |t|
     t.string  "posted_date",     :limit => 10, :null => false
     t.integer "posted_unixtime",               :null => false
@@ -60,10 +68,10 @@ ActiveRecord::Schema.define(:version => 20150123052910) do
 
   create_table "status_brokens", :force => true do |t|
     t.integer "status_id"
-    t.string  "current_state"
-    t.boolean "solved"
-    t.integer "created_at",    :null => false
-    t.integer "updated_at",    :null => false
+    t.string  "state"
+    t.boolean "solved",     :default => false
+    t.integer "created_at",                    :null => false
+    t.integer "updated_at",                    :null => false
   end
 
   create_table "statuses", :force => true do |t|
