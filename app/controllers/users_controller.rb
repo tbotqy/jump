@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     if logged_in?
       redirect_to :action => "sent_tweets"
     else
-      @title = "あの日のつぶやきへジャンプ"
+      @title = "クリックひとつであの日のつぶやきへ"
       @show_header = false
       @show_to_page_top = false
       @show_footer = true
