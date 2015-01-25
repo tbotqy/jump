@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
     dest_twitter_ids = []
     count = 0
     self.get_active_users.each do |user_db|
-      uri = URI.parse( user_db.profile_image_url_https )
+      uri = URI.parse( URI.encode(user_db.profile_image_url_https) )
       res = Net::HTTP.get_response( uri.host, uri.path )
       if res.code != "200"
         # add the user's twitter id to array
@@ -90,10 +90,6 @@ class User < ActiveRecord::Base
       puts "Progress : #{count} invalid urls found." if count.modulo(100) == 0 && count > 0
     end
     
-    Twitter.configure do |config|
-      config.consumer_key = configatron.consumer_key
-      config.consumer_secret = configatron.consumer_secret
-    end
     twitter = Twitter::Client.new
     
     puts "Fetching the latest profile image url and update..."
