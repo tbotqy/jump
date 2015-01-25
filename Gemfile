@@ -13,6 +13,7 @@ gem 'jpmobile', '3.0.9'
 gem 'turnout'
 gem 'whenever', :require => false
 gem 'detect_timezone_rails'
+gem 'yaml_db'
 
 group :assets do
   gem 'therubyracer', :platforms => :ruby

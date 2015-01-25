@@ -163,6 +163,9 @@ GEM
     uniform_notifier (1.6.2)
     whenever (0.9.4)
       chronic (>= 0.6.3)
+    yaml_db (0.3.0)
+      rails (>= 3.0, < 4.3)
+      rake (>= 0.8.7)
     yamler (0.1.0)
     yui-compressor (0.12.0)
 
@@ -188,4 +191,5 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   whenever
+  yaml_db
   yui-compressor
