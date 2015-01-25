@@ -9,61 +9,6 @@ class Status < ActiveRecord::Base
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
   
-  def self.fix_invalid_profile_images_in_retweet(step = 100)
-    puts "Fetch fresh profile image url via API for each retweets in broken list"
-    unsolved_list = Status::Broken.unsolved.broken_profile_image
-    count_unsolved =  unsolved_list.count
-    count_processed = 0
-    count_updated = 0
-    count_skipped = 0
-    
-    twitter = self.create_twitter
-    progress_bar_whole = ProgressBar.create(:title => "Fetch and update invalid prof-image(whole)",:total => count_unsolved,:format => "%t |%B| %P[%],%a,%E(%c)")
-    from = 0
-    while( from < count_unsolved )
-      limit = "#{from},#{step}"
-      #puts "Starting query with limit = #{limit}"
-      unsolved_list.limit(limit).each.with_index do |unsolved_state,index|
-        dest_status_id_str = Status.find(unsolved_state.status_id).status_id_str
-        begin
-          fresh_url = twitter.status(dest_status_id_str).retweet.user.profile_image_url_https 
-        rescue Twitter::Error::NotFound => error
-          unsolved_state.update_state(true,"skipped with NotFoundError")
-          puts "Skipped with NotFoundError : status.id = #{unsolved_state.status_id}."
-          count_skipped += 1
-          next
-        rescue Twitter::Error::Forbidden => error
-          unsolved_state.update_state(true,"skipped with ForbiddenError")
-          puts "Skipped with ForbiddenError : status.id = #{unsolved_state.status_id}."
-          count_skipped += 1
-          next
-        rescue Twitter::Error::TooManyRequests => error
-          puts "Too many requests error occured. Sleep for #{error.rate_limit.reset_in} at #{Time.now} ..."
-          puts "Progress: [#{Time.now}] #{((count_processed.to_f/count_unsolved.to_f)*100).round(2)} % of records done. #{count_updated} statuses has been updated."
-          sleep error.rate_limit.reset_in
-          puts "Retrying..."
-          retry
-        rescue Twitter::Error => error
-          unsolved_state.update_state(true,"skipped with Error")
-          puts "Skipped with Error : status.id = #{unsolved_state.status_id}."
-          count_skipped += 1
-          next
-        else
-          dest_status = Status.find(unsolved_state.status_id)
-          dest_status.update_attributes(:rt_profile_image_url_https => fresh_url)
-          count_updated += 1
-          unsolved_state.update_state(true,"")
-        end
-        progress_bar.increase
-        count_processed += 1
-      end
-      from += step
-      puts "Progress: [#{Time.now}] #{((count_processed.to_f/count_unsolved.to_f)*100).round(2)} % of records done. #{count_updated} statuses has been updated." if index.modulo(100) == 0
-    end
-    puts "Complete: updated #{count_updated} retweets / skipped (#{count_skipped}) are..."
-    return count_updated
-  end
-  
   def delete_flagged_status
     # delete all the statuses where deleted_flag = true
     Status.where(:deleted_flag => true).destroy_all
@@ -266,15 +211,6 @@ class Status < ActiveRecord::Base
     end
 
     ret
-  end
-
-  def self.create_twitter
-    # should move to helper
-    Twitter::configure do |config|
-      config.consumer_key = configatron.consumer_key
-      config.consumer_secret = configatron.consumer_secret
-    end
-    Twitter::Client.new
   end
 
   def self.use_index(index_name)
