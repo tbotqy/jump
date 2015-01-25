@@ -38,9 +38,11 @@ ActiveRecord::Schema.define(:version => 20150124093808) do
   add_index "friends", ["user_id"], :name => "idx_u_on_friends"
 
   create_table "profile_image_urls", :force => true do |t|
-    t.integer "twitter_id",  :limit => 8
+    t.integer "twitter_id",        :limit => 8
     t.string  "screen_name"
     t.string  "url"
+    t.boolean "is_valid_url",                   :default => false
+    t.boolean "applied_to_status",              :default => false
     t.integer "created_at"
     t.integer "updated_at"
   end
