@@ -105,34 +105,6 @@ class User < ActiveRecord::Base
     puts "Complete syncing #{count} users' profile image url."  
   end
 
-  def self.delete_duplicated_users
-    puts "Deleting gone users..."
-    self.delete_gone_users
-
-    puts "collecting duplicated users.."
-    sleep(1)
-    duplicated_tids = []
-    User.get_active_users.each do |u|
-      count = self.where(:twitter_id => u.twitter_id).count
-      if count > 1
-        duplicated_tids.push(u.twitter_id)
-      end
-    end
-
-    puts "No duplicated users found." if duplicated_tids.size == 0
-    return
-
-    duplicated_tids.each do |tid|
-      self.where(:twitter_id => tid).update_all(:deleted_flag => true)
-    end
-    self.group(:twitter_id).each do |u|
-      u.update_attributes(:deleted_flag => false)
-    end
-
-    self.delete_gone_users
-    
-  end
-
   def self.deactivate_account(user_id)
     # just turn the flag off, not actually delete user's status from database
     deleted_status_count = Status.where(:user_id => user_id).update_all(:deleted_flag => true)    
@@ -159,22 +131,44 @@ class User < ActiveRecord::Base
     self.where(:deleted_flag => true).order('updated_at DESC')
   end
 
+  # maintenance methods --
+
   def self.delete_gone_users
     deleted_user_count = 0
-    
     self.get_gone_users.each do |gone_user|
       if gone_user.destroy 
         deleted_user_count += 1
       end
     end
-    
-    if deleted_user_count == 0
-      puts "No user deleted"
-    else
-      puts "Deleted #{deleted_user_count} users"
-    end
-    
-    puts " on #{Time.now} .\n\n"
+    deleted_user_count
   end
   
+  def self.delete_gone_and_duplicated_users
+    # delete already-flagged users before process
+    self.delete_gone_users
+    
+    # detect the duplicated user account
+    duplicated_tids = []
+    User.get_active_users.each do |u|
+      count = self.where(:twitter_id => u.twitter_id).count
+      if count > 1
+        duplicated_tids.push(u.twitter_id)
+      end
+    end
+
+    return 0 if duplicated_tids.size == 0
+    
+    # once flag all the duplicated users to deleted
+    duplicated_tids.each do |tid|
+      self.where(:twitter_id => tid).update_all(:deleted_flag => true)
+    end
+    # delete with group by used
+    self.group(:twitter_id).each do |u|
+      u.update_attributes(:deleted_flag => false)
+    end
+    
+    # delete flagged users and return the number of them
+    self.delete_gone_users
+    
+  end
 end
