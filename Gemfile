@@ -14,6 +14,7 @@ gem 'turnout'
 gem 'whenever', :require => false
 gem 'detect_timezone_rails'
 gem 'yaml_db'
+gem 'ruby-progressbar'
 
 group :assets do
   gem 'therubyracer', :platforms => :ruby
@@ -24,7 +25,6 @@ group :development,:test do
   gem 'rspec'
   gem 'rspec-rails', '~> 2.0'
   gem 'bullet'
-  gem 'ruby-progressbar'
 end
 
 

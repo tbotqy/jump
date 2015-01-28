@@ -9,18 +9,19 @@ class Status < ActiveRecord::Base
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
   
-  def delete_flagged_status
+  def self.delete_flagged_status
     # delete all the statuses where deleted_flag = true
     Status.where(:deleted_flag => true).destroy_all
   end
 
-  def flag_duplicated_status
+  def flag_and_delete_duplicated_status
     # turn the duplicated status's deleted_flag true
-    
-    # delete already-flagged statuses before this process
+
+    puts "Deleting already-flagged statuses before the process..."
     delete_flagged_status
     
-    puts "start flagging"
+    progress_bar = ProgressBar.create(:total => User.get_active_users.count,:format => "%t |%B| %P[%],%a,%E(%c/%C)")
+    progress_bar.log "start flagging..."
     User.get_active_users.each do |u|
       statuses  = Status.owned_by_current_user(u.id)
       # flag all the status's deleted flag true
@@ -28,11 +29,12 @@ class Status < ActiveRecord::Base
       statuses.group("status_id_str_reversed").each do |s|
         s.update_attributes(:deleted_flag => false)
       end
-      puts "flagged duplicated status of #{u.id}:#{u.screen_name}."
-      sleep(1)
+      progress_bar.log "Flagged duplicated status of #{u.id}:#{u.screen_name}."
+      progress_bar.increment
     end
-    puts "Finished for all active users."
-    true
+    progress_bar.log "Finished flagging for all active users."
+    
+    delete_flagged_status
   end
 
   def update_user_timestamp
