@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
   # stop rejecting incompatible ua
-  before_filter :set_vars, :apply_user_time_zone
+  before_filter :set_vars, :apply_user_time_zone, :reject_incompatible_ua
 
   # handlers for exceptions
   if Rails.env.production?
@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
   def is_available_ua?
     # reject msie whose version is not 9
     ua = request.env['HTTP_USER_AGENT'].to_s
+    @myua = ua
     if ua.include?("MSIE")
       # check its version
       return false unless ua.include?("9.0")
