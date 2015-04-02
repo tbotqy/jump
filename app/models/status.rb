@@ -14,9 +14,9 @@ class Status < ActiveRecord::Base
     Status.where(:deleted_flag => true).destroy_all
   end
 
-  def flag_and_delete_duplicated_status
-    # turn the duplicated status's deleted_flag true
-
+  def self.flag_and_delete_duplicated_status
+    # turn the duplicated statuses' deleted_flag TRUE using GROUP BY query
+    
     puts "Deleting already-flagged statuses before the process..."
     delete_flagged_status
     
