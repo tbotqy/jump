@@ -1,4 +1,4 @@
-*.rbc
+B65;100;1c*.rbc
 *.sassc
 .sass-cache
 capybara-*.html
@@ -24,3 +24,4 @@ wget-log
 /config/config.yml
 /config/unicorn.rb
 start_unicorn.sh
+apply_ga_filter.html
