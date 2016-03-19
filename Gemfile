@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+#gem 'rails', '3.2.13'
+gem 'rails'
+gem 'rake'
 gem 'mysql2'
 gem 'configatron', '~> 2.10.0'
 gem 'jquery-rails', '2.1.4'
