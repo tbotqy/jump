@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
-gem 'mysql2', '0.3.10'
+gem 'mysql2'
 gem 'configatron', '~> 2.10.0'
 gem 'jquery-rails', '2.1.4'
 gem 'twitter', '4.7.0'
