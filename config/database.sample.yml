@@ -1,23 +1,19 @@
+base: &base
+  adapter: mysql2
+  database: some_database
+  username: 
+  password: 
+  host: 
+  encoding: utf8
+
 development:
-  adapter: mysql2
+  <<: *base
   database: 
-  username: 
-  password: 
-  host: 
-  encoding: utf8
 
-test:
-  adapter: mysql2
+development:
+  <<: *base
   database: 
-  username: 
-  password: 
-  host: 
-  encoding: utf8
 
-production:
-  adapter: mysql2
+development:
+  <<: *base
   database: 
-  username: 
-  password: 
-  host: 
-  encoding: utf8
