@@ -1,0 +1,27 @@
+<!-- #wrap-list-days -->
+<div id="wrap-list-days">
+  <% @date_list.each do |year,months| %>
+    <% months.each do |month,days| %>
+      <ul class="list-days date-<%= year.'-'.month %> my-btn-group">
+	<% max = days.size %>
+    <?php foreach(days as day=>sum):?>
+    <% days.each_with_index do |(day,full_date),index %>
+    <%
+      class_name = ""
+      if max == 1
+	class_name = 'first last'
+	elsif index == 0
+      class_name = 'first'
+	elsif index == max
+      class_name = 'last'
+	else
+	class_name = 'mid'
+	end
+      %>    
+	<li data-date="date-<%= year.'-'.month.'-'.day %>"><a data-date-type="day" href="<%= @base_url %>/<%= year.'-'.month.'-'.day %>" data-date="<%= year.'-'.month.'-'.day %>" class="btn <%= class_name %>" data-complete-text="<%= day %>"><%= day %></a></li>
+    <% end %>
+    </ul>
+  <% end %>
+<% end %>
+</div>
+<!-- /#wrap-list-days -->
