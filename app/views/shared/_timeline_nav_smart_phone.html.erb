@@ -1,0 +1,10 @@
+<nav id="timeline-nav" data-current-action-name="<%= controller.action_name %>">
+  <a class="btn btn-default btn-sm public_timeline" href="/public_timeline"><i class="icon-globe margin"></i>みんな</a>
+  <% if logged_in? %>
+    <a class="btn btn-default btn-sm home_timeline" href="/your/home_timeline"><i class="icon-group margin"></i>友達</a>
+    <a class="btn btn-default btn-sm sent_tweets" href="/your/tweets"><i class="icon-user margin"></i>あなた</a>
+  <% else %>
+    <a class="btn btn-default btn-sm home_timeline" disabled="disabled" href="/your/home_timeline"><i class="icon-group margin"></i>友達</a>
+    <a class="btn btn-default btn-sm sent_tweets" disabled="disabled" href="/your/tweets"><i class="icon-user margin"></i>あなた</a>
+  <% end %>
+</nav>
