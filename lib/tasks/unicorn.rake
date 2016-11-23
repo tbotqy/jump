@@ -1,0 +1,2 @@
+namespace :unicorn do
+end
