@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-JumpDev::Application.config.secret_key_base = '260930ed7caabd36dd05acb7ce056aff60ab2a0208b653f057c52aaab10b14007e377b33d9fc32f4fce8753466ade71443f6f83b5ba9959318e35ce7882c93ba'
+Jump::Application.config.secret_key_base = '260930ed7caabd36dd05acb7ce056aff60ab2a0208b653f057c52aaab10b14007e377b33d9fc32f4fce8753466ade71443f6f83b5ba9959318e35ce7882c93ba'
