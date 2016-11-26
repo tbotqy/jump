@@ -35,6 +35,7 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
+gem 'jpmobile', '~> 4.0.0'
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
