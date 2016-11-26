@@ -4,8 +4,8 @@ namespace :unicorn do
   #
   desc "Start unicorn with dest enviroment specified"
   namespace :start do
-    task(:development){ sh "bundle exec unicorn_rails -c #{config} -E development -D" }
-    task(:production) { sh "bundle exec unicorn_rails -c #{config} -E production -D" }
+    task(:development){ sh "bundle exec unicorn_rails -c #{config_scriptt_path} -E development -D" }
+    task(:production) { sh "bundle exec unicorn_rails -c #{config_scriptt_path} -E production -D" }
   end
 
   desc "Stop unicorn"
@@ -28,7 +28,7 @@ namespace :unicorn do
   #
   # Helpers
   #
-  def config
+  def config_scriptt_path
     rails_root + "config/unicorn.rb"
   end
 
