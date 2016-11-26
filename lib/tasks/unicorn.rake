@@ -2,8 +2,8 @@ namespace :unicorn do
   #
   # Tasks
   #
+  desc "Start unicorn with dest enviroment specified"
   namespace :start do
-    desc "Start unicorn"
     task(:development){ sh "bundle exec unicorn_rails -c #{config} -E development -D" }
     task(:production) { sh "bundle exec unicorn_rails -c #{config} -E production -D" }
   end
