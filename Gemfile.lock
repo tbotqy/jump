@@ -34,6 +34,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.10.0)
+    configatron (4.5.0)
     erubis (2.7.0)
     execjs (2.7.0)
     hike (1.2.3)
@@ -107,6 +108,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  configatron
   jbuilder (~> 1.2)
   jpmobile (~> 4.0.0)
   jquery-rails
