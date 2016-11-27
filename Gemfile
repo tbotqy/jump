@@ -36,6 +36,9 @@ end
 gem 'unicorn'
 
 gem 'jpmobile', '~> 4.0.0'
+
+gem 'configatron'
+
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
