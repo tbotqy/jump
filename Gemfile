@@ -34,10 +34,9 @@ end
 
 # Use unicorn as the app server
 gem 'unicorn'
-
 gem 'jpmobile', '~> 4.0.0'
-
 gem 'configatron'
+gem 'detect_timezone_rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
