@@ -7,10 +7,13 @@ base: &base
   encoding: utf8
 
 development:
+  <<: *base
   database:
 
 test:
+  <<: *base
   database:
 
 production:
+  <<: *base
   database:
