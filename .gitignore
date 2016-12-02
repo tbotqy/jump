@@ -11,6 +11,7 @@ capybara-*.html
 /db/data.yaml
 /db/schema.rb
 /public/system/*
+/public/assets
 /coverage/
 /spec/tmp/*
 **.orig
