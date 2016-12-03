@@ -46,6 +46,8 @@ GEM
       execjs
     coffee-script-source (1.11.1)
     configatron (4.5.0)
+    detect_timezone_rails (0.0.5)
+      railties (>= 3.1)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.10)
@@ -167,6 +169,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   configatron
+  detect_timezone_rails
   jbuilder (~> 1.2)
   jpmobile (~> 4.0.0)
   jquery-rails
