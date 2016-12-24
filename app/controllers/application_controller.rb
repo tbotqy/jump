@@ -97,11 +97,12 @@ class ApplicationController < ActionController::Base
 
   def create_twitter_client
     user =  @current_user
-    Twitter.configure do |config|
-      config.oauth_token = user.token
+    Twitter::REST::Client.new do |config|
+      config.consumer_key       = configatron.consumer_key
+      config.consumer_secret    = configatron.consumer_secret
+      config.oauth_token        = user.token
       config.oauth_token_secret = user.token_secret
     end
-    Twitter::Client.new
   end
 
   def fetch_friend_list_by_twitter_id(twitter_id)
