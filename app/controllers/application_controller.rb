@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   include Jpmobile::ViewSelector
-  
+
   protect_from_forgery
   # stop rejecting incompatible ua
   before_filter :set_vars, :apply_user_time_zone, :reject_incompatible_ua
@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   if Rails.env.production?
     rescue_from Exception, :with => :render_500
   end
-  
+
   def render_404(exception = nil)
     @title = "ページが見つかりません"
     @show_footer = true
@@ -39,17 +39,17 @@ class ApplicationController < ActionController::Base
     end
     true
   end
-  
+
   def reject_incompatible_ua
 
     if request.xhr? then return true end
     if params[:action] == "browsers" then return true end
-    
+
     unless is_available_ua?
       redirect_to :controller => "users", :action => "browsers"
     end
   end
-  
+
   def set_vars
     @@current_user = get_current_user || nil
     @@user_id = @@current_user ? @@current_user.id : nil
@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_login
-    unless logged_in? 
+    unless logged_in?
       redirect_to root_url
     else
       return true
@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
       end
     end
   end
-  
+
   def get_current_user
     if logged_in?
       User.find(session[:user_id]) rescue redirect_to :controller => "logs", :action => "logout"
@@ -122,7 +122,7 @@ class ApplicationController < ActionController::Base
     ret = ""
     specified_date.split(/-/).each_with_index do |part,i|
       case i
-        when 0 
+        when 0
         ret += part + "年"
         when 1
         ret += part + "月"
