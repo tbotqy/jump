@@ -1162,7 +1162,7 @@ footer .copyright{
 
 .btn-auth:link,
 .btn-auth:visited{
-  background: #39D image-url(bg-btn-blue.png) repeat-x 0 0;
+  background: #39D url(/assets/bg-btn-blue.png) repeat-x 0 0;
   border: 1px solid #39D;
   color: #FFF;
   font-weight: 700;
