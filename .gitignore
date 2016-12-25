@@ -14,6 +14,7 @@ capybara-*.html
 /public/system/*
 /public/assets/*
 !/public/assets/bg-btn-blue.png
+!/public/assets/ajax-loader.gif
 /coverage/
 /spec/tmp/*
 **.orig
