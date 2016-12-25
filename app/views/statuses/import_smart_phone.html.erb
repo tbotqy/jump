@@ -11,7 +11,7 @@
       <button id="start-import" data-loading-text="保存中..." data-complete-text="取得完了" class="btn btn-success"><i class="icon-random icon-white"></i> 取り込み開始</button>
       <p class="msg" style="color:gray;font-size:70%;margin-top:10px">サーバーとデータのキャッチボールをします。<br/>安定した通信環境下で実行して下さい :-)</p>
       <div class="wrap-loader" style="width:26px;margin:10px auto;">
-	<img class="loader" src="/assets/ajax-loader.gif" />
+	<%= image_tag("ajax-loader.gif", class: "loader") %>
       </div>
       <% if @id_oldest != "false" %>
 	<div class="wrap-recover-msg">

@@ -61,14 +61,14 @@
 		<td class="centroid"><%= user.id %></td>
 		<td><%= user.screen_name %></td>
 		<td><%= Time.zone.at(user.updated_at).strftime('%F %T') %></td>
-		<td><button class="btn btn-danger delete-each" data-dest-id="<%= user.id %>"><i class="icon-trash"></i>削除</button> <img class="loader" src="/assets/ajax-loader.gif" /></td>
+		<td><button class="btn btn-danger delete-each" data-dest-id="<%= user.id %>"><i class="icon-trash"></i>削除</button><%= image_tag("ajax-loader.gif", class: "loader") %></td>
 	      </tr>
 	    <% end %>
 	  </tbody>
 	</table>
 	<div class="wrap-button">
 	  <button class="btn btn-danger" id="delete-selected"><i class="icon-trash"></i>Delete selected</button>
-	  <img class="loader" src="/assets/ajax-loader.gif" />
+	  <%= image_tag("ajax-loader.gif", class: "loader") %>
 	</div>
       </div>
       <!-- /.content -->

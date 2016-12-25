@@ -9,7 +9,7 @@
       <a href="https://twitter.com/<%= @current_user.screen_name %>" target="_blank">
 	<img width="30" src="/assets/twitter-bird-light-bgs.png"/>
 	@<%= @current_user.screen_name %></a>のツイートを
-      <button id="start-import" data-loading-text="保存中..." data-complete-text="取得完了" class="btn btn-success"><i class="icon-random icon-white"></i>取り込み開始</button><img class="loader" src="/assets/ajax-loader.gif" />
+      <button id="start-import" data-loading-text="保存中..." data-complete-text="取得完了" class="btn btn-success"><i class="icon-random icon-white"></i>取り込み開始</button><%= image_tag("ajax-loader.gif", class: "loader") %>
       <% if @id_oldest != "false" %>
 	<p id="recover-msg" class="alert alert-info">続きから取り込みます</p>
       <% end %>
