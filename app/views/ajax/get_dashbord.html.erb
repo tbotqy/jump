@@ -1,7 +1,7 @@
 <% if request.smart_phone? %>
-  <script src="/assets/smart_phone/dashbord.js"></script>
+  <%= javascript_include_tag("smart_phone/dashbord.js") %>
 <% else %>
-  <script src="/assets/dashbord.js"></script>
+  <%= javascript_include_tag("dashbord.js") %>
 <% end %>
 <!-- .inner -->
 <div class="inner">
