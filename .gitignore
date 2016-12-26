@@ -15,6 +15,7 @@ capybara-*.html
 /public/assets/*
 !/public/assets/bg-btn-blue.png
 !/public/assets/ajax-loader.gif
+!/public/assets/everything-spritev2
 /coverage/
 /spec/tmp/*
 **.orig
