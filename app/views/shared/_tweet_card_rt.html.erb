@@ -6,18 +6,18 @@
   <!-- .profile-image -->
   <div class="profile-image">
     <div class="viewport">
-      <a href="https://twitter.com/<%= status.rt_screen_name %>" target="_blank"><img src="<%= status.rt_profile_image_url_https %>" alt="<%= status.rt_screen_name %>" width="48" height="48"/></a>
+      <a href="https://twitter.com/<%= status.rt_screen_name %>" target="_blank"><%= image_tag(status.rt_profile_image_url_https, alt: status.rt_screen_name, width: 48, height: 48) %></a>
     </div>
   </div>
   <!-- /.profile-image -->
-  
+
   <!-- .status-content -->
   <div class="status-content">
-    <!-- .top -->      
+    <!-- .top -->
     <span class="top">
       <span class="logo">
-	<img src="/assets/twitter-bird-light-bgs.png" alt="Twitterブランド" />
-      </span>      
+        <%= image_tag("twitter-bird-light-bgs.png", alt: "Twitterブランド") %>
+      </span>
       <span class="name">
         <a href="https://twitter.com/<%= status.rt_screen_name %>" target="_blank"><%= status.rt_name %></a>
       </span>
