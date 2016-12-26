@@ -12,7 +12,7 @@
   <!-- .wrap-profile -->
   <div class="wrap-profile">
     <div class="area-profile-image">
-      <img class="profile-image-url-https" src="<%= @current_user.profile_image_url_https.to_s.gsub(/_normal/,'_reasonably_small') %>" width="70"/>
+      <%= image_tag(@current_user.profile_image_url_https.to_s.gsub(/_normal/,'_reasonably_small'), class: "profile-image-url-https", width: 70) %>
     </div>
     <div class="area-center">
       <div class="area-names">

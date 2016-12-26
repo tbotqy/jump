@@ -3,7 +3,7 @@
   <h1><a class="brand pull-left" href="/">TwitJump</a></h1>
   <% if logged_in? %>
     <a href="#" class="btn btn-xs drop-down pull-right">
-      <img class="profile-img" width="30" src="<%= current_user.profile_image_url_https %>" />
+      <%= image_tag(current_user.profile_image_url_https, class: "profile-img", width:30) %>
       <i class="icon-caret-down"></i>
     </a>
     <nav class="drop-down-nav">
