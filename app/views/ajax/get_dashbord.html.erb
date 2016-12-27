@@ -11,79 +11,80 @@
     <!-- #wrap-list-years -->
     <div id="wrap-list-years">
       <ul class="list-years my-btn-group">
-	<% max = @date_list.size %>
-	<% @date_list.each.with_index(1) do |(year,val), index| %>
-	<%
-	  class_name = ""
-	  if max == 1
-	  class_name = 'first last'
-	    elsif index == 1
-	  class_name = 'first'
-	  elsif index == max
-	    class_name = 'last'
-	  else
-	  class_name = 'mid'
-	    end
-	    %>
-	<li data-date="date-<%= year %>">
-	  <a class="btn btn-link <%= class_name %>" data-date-type="year" href="<%= @base_url %>/<%= year %>" data-date="<%= year %>" data-complete-text="<%= year %>"> <%= year %></a></li>
-<% end %>
-</ul>
-</div>
-<!-- /#wrap-list-years -->
+        <% max = @date_list.size %>
+        <% @date_list.each.with_index(1) do |(year,val), index| %>
+          <%
+          class_name = ""
+          if max == 1
+            class_name = 'first last'
+          elsif index == 1
+            class_name = 'first'
+          elsif index == max
+            class_name = 'last'
+          else
+            class_name = 'mid'
+          end
+          %>
+        <li data-date="date-<%= year %>">
+          <a class="btn btn-link <%= class_name %>" data-date-type="year" href="<%= @base_url %>/<%= year %>" data-date="<%= year %>" data-complete-text="<%= year %>"> <%= year %></a>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <!-- /#wrap-list-years -->
 
-<!-- #wrap-list-months -->
-<div id="wrap-list-months">
-  <% @date_list.each do |year,months| %>
-  <ul class="list-months date-<%= year %> my-btn-group">
-    <% max = months.size %>
-    <% months.each.with_index(1) do |(month,val),index| %>
-    <%
-      class_name = ""
-      if max == 1
-	class_name = 'first last'
-	elsif index == 1
-      class_name = 'first'
-	elsif index == max
-      class_name = 'last'
-	else
-	class_name = 'mid'
-	end
-      %>
-    <li data-date="date-<%= year+'-'+month %>"><a data-date-type="month" href="<%= @base_url %>/<%= year+'-'+month %>" data-date="<%= year+'-'+month %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= month %>"><%= month %></a></li>
-    <% end %>
-  </ul>
-  <% end %>
-</div>
-<!-- /#wrap-list-months -->
+    <!-- #wrap-list-months -->
+    <div id="wrap-list-months">
+      <% @date_list.each do |year,months| %>
+      <ul class="list-months date-<%= year %> my-btn-group">
+        <% max = months.size %>
+        <% months.each.with_index(1) do |(month,val),index| %>
+          <%
+          class_name = ""
+          if max == 1
+            class_name = 'first last'
+          elsif index == 1
+            class_name = 'first'
+          elsif index == max
+            class_name = 'last'
+          else
+            class_name = 'mid'
+          end
+          %>
+        <li data-date="date-<%= year+'-'+month %>"><a data-date-type="month" href="<%= @base_url %>/<%= year+'-'+month %>" data-date="<%= year+'-'+month %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= month %>"><%= month %></a></li>
+        <% end %>
+      </ul>
+      <% end %>
+    </div>
+      <!-- /#wrap-list-months -->
 
-<!-- #wrap-list-days -->
-<div id="wrap-list-days">
-  <% @date_list.each do |year,months| %>
-    <% months.each do |month,days| %>
-      <ul class="list-days date-<%= year+'-'+month %> my-btn-group">
-	<% max = days.size %>
-	<% days.each.with_index(1) do |(day,full_date),index| %>
-	<%
-	  class_name = ""
-	  if max == 1
-	  class_name = 'first last'
-	    elsif index == 1
-	  class_name = 'first'
-	  elsif index == max
-	    class_name = 'last'
-	  else
-	  class_name = 'mid'
-	    end
-	    %>
-	<li data-date="date-<%= year+'-'+month+'-'+day %>"><a data-date-type="day" href="<%= @base_url %>/<%= year+'-'+month+'-'+day %>" data-date="<%= year+'-'+month+'-'+day %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= day %>"><%= day %></a></li>
-    <% end %>
-    </ul>
-  <% end %>
-<% end %>
-</div>
-<!-- /#wrap-list-days -->
-</div>
-<!-- /#wrap-term-selectors -->
+    <!-- #wrap-list-days -->
+    <div id="wrap-list-days">
+      <% @date_list.each do |year,months| %>
+        <% months.each do |month,days| %>
+          <ul class="list-days date-<%= year+'-'+month %> my-btn-group">
+            <% max = days.size %>
+            <% days.each.with_index(1) do |(day,full_date),index| %>
+              <%
+              class_name = ""
+              if max == 1
+                class_name = 'first last'
+              elsif index == 1
+                class_name = 'first'
+              elsif index == max
+                class_name = 'last'
+              else
+                class_name = 'mid'
+              end
+              %>
+              <li data-date="date-<%= year+'-'+month+'-'+day %>"><a data-date-type="day" href="<%= @base_url %>/<%= year+'-'+month+'-'+day %>" data-date="<%= year+'-'+month+'-'+day %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= day %>"><%= day %></a></li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+    </div>
+    <!-- /#wrap-list-days -->
+  </div>
+  <!-- /#wrap-term-selectors -->
 </div>
 <!-- /.inner -->

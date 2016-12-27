@@ -1,72 +1,72 @@
 <!-- .wrap-each-status -->
 <div class="wrap-each-status"
-     <% if logged_in? && status.user.twitter_id == current_user.twitter_id %>
-       data-status-id="<%= status.id %>"
-     <% end %>>
-  <!-- .profile-image -->
-  <div class="profile-image">
-    <div class="viewport">
-      <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank"><%= image_tag(status.user.profile_image_url_https, alt: status.user.screen_name, width: 48, height: 48) %></a>
+<% if logged_in? && status.user.twitter_id == current_user.twitter_id %>
+data-status-id="<%= status.id %>"
+<% end %>>
+<!-- .profile-image -->
+<div class="profile-image">
+  <div class="viewport">
+    <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank"><%= image_tag(status.user.profile_image_url_https, alt: status.user.screen_name, width: 48, height: 48) %></a>
+  </div>
+</div>
+<!-- /.profile-image -->
+
+<!-- .status-content -->
+<div class="status-content">
+  <!-- .top -->
+  <span class="top">
+    <span class="logo">
+      <%= image_tag("twitter-bird-light-bgs.png", alt: "Twitterブランド") %>
+    </span>
+    <div class="wrap-names">
+      <span class="name">
+        <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank"><%= status.user.name %></a>
+      </span>
+      <br/>
+      <span class="screen-name">
+        <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank">@<%= status.user.screen_name %></a>
+      </span>
     </div>
-  </div>
-  <!-- /.profile-image -->
-
-  <!-- .status-content -->
-  <div class="status-content">
-    <!-- .top -->
-    <span class="top">
-      <span class="logo">
-        <%= image_tag("twitter-bird-light-bgs.png", alt: "Twitterブランド") %>
+    <span class="date">
+      <a href="https://twitter.com/<%= status.user.screen_name %>/status/<%= status.status_id_str %>" target="_blank">
+        <%= calc_relative_timestamp status.twitter_created_at %>
+      </a>
+    </span>
+  </span>
+  <!-- /.top -->
+  <span class="text">
+    <%== linkify_tweet_body status.text,status.entities %>
+  </span>
+  <!-- .bottom -->
+  <span class="bottom">
+    <!-- .pull-left -->
+    <div class="pull-left">
+      <span class="specific-date">
+        <%= calc_tweet_posted_time status.twitter_created_at, true ,true %>
       </span>
-      <div class="wrap-names">
-	<span class="name">
-          <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank"><%= status.user.name %></a>
-	</span>
-	<br/>
-	<span class="screen-name">
-          <a href="https://twitter.com/<%= status.user.screen_name %>" target="_blank">@<%= status.user.screen_name %></a>
-	</span>
-      </div>
-      <span class="date">
-        <a href="https://twitter.com/<%= status.user.screen_name %>/status/<%= status.status_id_str %>" target="_blank">
-	  <%= calc_relative_timestamp status.twitter_created_at %>
-	</a>
+      <span class="source">
+        <%== status.source %>から
       </span>
-    </span>
-    <!-- /.top -->
-    <span class="text">
-      <%== linkify_tweet_body status.text,status.entities %>
-    </span>
-    <!-- .bottom -->
-    <span class="bottom">
-      <!-- .pull-left -->
-      <div class="pull-left">
-	<span class="specific-date">
-	  <%= calc_tweet_posted_time status.twitter_created_at, true ,true %>
-	</span>
-	<span class="source">
-	  <%== status.source %>から
-	</span>
-	<span class="link-official">
-	  <a href="https://twitter.com/<%= status.user.screen_name %>/status/<%= status.status_id_str %>" target="_blank">詳細</a>
-	</span>
-	<!-- .area-intents -->
-	<div class="area-intents">
-	  <a class="intent intent-reply" href="https://twitter.com/intent/tweet?in_reply_to=<%= status.status_id_str %>">&nbsp</a>
-	  <a class="intent intent-retweet" href="https://twitter.com/intent/retweet?tweet_id=<%= status.status_id_str %>">&nbsp</a>
-	  <a class="intent intent-favorite" href="https://twitter.com/intent/favorite?tweet_id=<%= status.status_id_str %>">&nbsp</a>
-	</div>
-	<!-- /.area-intents -->
+      <span class="link-official">
+        <a href="https://twitter.com/<%= status.user.screen_name %>/status/<%= status.status_id_str %>" target="_blank">詳細</a>
+      </span>
+      <!-- .area-intents -->
+      <div class="area-intents">
+        <a class="intent intent-reply" href="https://twitter.com/intent/tweet?in_reply_to=<%= status.status_id_str %>">&nbsp</a>
+        <a class="intent intent-retweet" href="https://twitter.com/intent/retweet?tweet_id=<%= status.status_id_str %>">&nbsp</a>
+        <a class="intent intent-favorite" href="https://twitter.com/intent/favorite?tweet_id=<%= status.status_id_str %>">&nbsp</a>
       </div>
-      <!-- /.pull-left -->
+      <!-- /.area-intents -->
+    </div>
+    <!-- /.pull-left -->
 
-      <% if logged_in? && status.user.twitter_id == current_user.twitter_id %>
-	<span class="link-delete" data-status-id="<%= status.id %>">
-	  <a href="#"> <i class="icon-trash"></i> </a>
-	</span>
-      <% end %>
+    <% if logged_in? && status.user.twitter_id == current_user.twitter_id %>
+    <span class="link-delete" data-status-id="<%= status.id %>">
+      <a href="#"> <i class="icon-trash"></i> </a>
     </span>
-    <!-- /.bottom -->
-  </div>
-  <!-- /.status-content -->
+    <% end %>
+  </span>
+  <!-- /.bottom -->
+</div>
+<!-- /.status-content -->
 </div><!-- /.wrap-each-status -->
