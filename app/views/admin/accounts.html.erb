@@ -6,76 +6,76 @@
     <li><a href="/admin/statuses">ツイート数の確認</a></li>
   </ul>
   <% if @active_users.present? %>
-    <!-- .area-active-users -->
-    <div class="area-active-users">
-      <h1><a class="toggler" data-dest-content-type="active-users" href="#">アクティブユーザー一覧 (<%= @active_users.count %>人)</a></h1>
-      <!-- .content -->
-      <div class="content">
-	<table class="table table-bordered table-condensed table-active-users">
-	  <thead>
-	    <tr>
-	      <th class="centroid">id</th>
-	      <th>screen name</th>
-	      <th>created</th>
-	      <th>updated</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <% @active_users.each do |user| %>
-    	      <tr>
-		<td class="centroid"><%= user.id %></td>
-		<td><%= user.screen_name %></td>
-		<td><%= Time.zone.at(user.created_at).strftime('%F %T') %></td>
-		<td><%= Time.zone.at(user.updated_at).strftime('%F %T') %></td>
-	      </tr>
-	    <% end %>
-	  </tbody>
-	</table>
-      </div>
-      <!-- .content -->
+  <!-- .area-active-users -->
+  <div class="area-active-users">
+    <h1><a class="toggler" data-dest-content-type="active-users" href="#">アクティブユーザー一覧 (<%= @active_users.count %>人)</a></h1>
+    <!-- .content -->
+    <div class="content">
+      <table class="table table-bordered table-condensed table-active-users">
+        <thead>
+          <tr>
+            <th class="centroid">id</th>
+            <th>screen name</th>
+            <th>created</th>
+            <th>updated</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @active_users.each do |user| %>
+          <tr>
+            <td class="centroid"><%= user.id %></td>
+            <td><%= user.screen_name %></td>
+            <td><%= Time.zone.at(user.created_at).strftime('%F %T') %></td>
+            <td><%= Time.zone.at(user.updated_at).strftime('%F %T') %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-    <!-- /.area-active-users -->
+    <!-- .content -->
+  </div>
+  <!-- /.area-active-users -->
   <% end %>
   <!-- .area-gone-users -->
   <div class="area-gone-users">
     <h1><a class="toggler" data-dest-content-type="gone-users" href="#">アカウントのクリーンアップ</a></h1>
     <% if @gone_users.present? %>
-      <!-- .content -->
-      <div class="content">
-	<table class="table table-bordered table-condensed table-gone-users">
-	  <thead>
-	    <tr>
-	      <th></th>
-	      <th class="centroid">id</th>
-	      <th>screen name</th>
-	      <th>updated</th>
-	      <th></th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <% @gone_users.each do |user| %>
-	      <tr data-dest-id="<%= user.id %>">
-		<td class="chk">
-		  <button class="btn" data-toggle="button" data-dest-id="<%= user.id %>"><i class="icon-ok"></i></button>
-		</td>
-		<td class="centroid"><%= user.id %></td>
-		<td><%= user.screen_name %></td>
-		<td><%= Time.zone.at(user.updated_at).strftime('%F %T') %></td>
-		<td><button class="btn btn-danger delete-each" data-dest-id="<%= user.id %>"><i class="icon-trash"></i>削除</button><%= image_tag("ajax-loader.gif", class: "loader") %></td>
-	      </tr>
-	    <% end %>
-	  </tbody>
-	</table>
-	<div class="wrap-button">
-	  <button class="btn btn-danger" id="delete-selected"><i class="icon-trash"></i>Delete selected</button>
-	  <%= image_tag("ajax-loader.gif", class: "loader") %>
-	</div>
+    <!-- .content -->
+    <div class="content">
+      <table class="table table-bordered table-condensed table-gone-users">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="centroid">id</th>
+            <th>screen name</th>
+            <th>updated</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @gone_users.each do |user| %>
+          <tr data-dest-id="<%= user.id %>">
+            <td class="chk">
+              <button class="btn" data-toggle="button" data-dest-id="<%= user.id %>"><i class="icon-ok"></i></button>
+            </td>
+            <td class="centroid"><%= user.id %></td>
+            <td><%= user.screen_name %></td>
+            <td><%= Time.zone.at(user.updated_at).strftime('%F %T') %></td>
+            <td><button class="btn btn-danger delete-each" data-dest-id="<%= user.id %>"><i class="icon-trash"></i>削除</button><%= image_tag("ajax-loader.gif", class: "loader") %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="wrap-button">
+        <button class="btn btn-danger" id="delete-selected"><i class="icon-trash"></i>Delete selected</button>
+        <%= image_tag("ajax-loader.gif", class: "loader") %>
       </div>
-      <!-- /.content -->
+    </div>
+    <!-- /.content -->
     <% else %>
-      <div class="alert alert-info">
-	クリーンアップするアカウントはありません。
-      </div>
+    <div class="alert alert-info">
+      クリーンアップするアカウントはありません。
+    </div>
     <% end %>
   </div>
   <!-- /.area-gone-users -->
