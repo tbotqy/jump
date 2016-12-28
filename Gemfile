@@ -16,6 +16,7 @@ gem 'omniauth-twitter', github: 'arunagw/omniauth-twitter'
 gem 'twitter-text'
 gem 'turnout'
 gem 'rake', '~> 11.3.0'
+gem 'activerecord-mysql-awesome'
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
