@@ -29,5 +29,13 @@ FactoryGirl.define do
     trait(:with_no_friend) do
     end
 
+    trait(:with_initial_import_completed) do
+      initialized_flag 1
+    end
+
+    trait(:with_initial_import_incompleted) do
+      initialized_flag 0
+    end
+
   end
 end
