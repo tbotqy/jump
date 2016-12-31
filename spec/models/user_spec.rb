@@ -42,4 +42,23 @@ describe User do
     end
   end
 
+  describe "#has_any_status?" do
+    subject{User.first.has_any_status?}
+    context "user has any status" do
+      before do
+        FactoryGirl.create(:user, :with_status)
+      end
+      it "returns true" do
+        is_expected.to eq true
+      end
+    end
+    context "user has no status" do
+      before do
+        FactoryGirl.create(:user, :with_no_status)
+      end
+      it "returns false" do
+        is_expected.to eq false
+      end
+    end
+  end
 end
