@@ -37,5 +37,14 @@ FactoryGirl.define do
       initialized_flag 0
     end
 
+    trait(:with_status) do
+      after(:create) do |u|
+        FactoryGirl.create(:status, user_id: u.id)
+      end
+    end
+
+    trait(:with_no_status) do
+    end
+
   end
 end
