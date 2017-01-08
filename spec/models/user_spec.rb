@@ -1,4 +1,9 @@
 require 'rails_helper'
+require 'lib'
+
+RSpec.configure do |c|
+  c.include Lib
+end
 
 describe User do
 
@@ -68,6 +73,12 @@ describe User do
 
   describe "#get_active_status_count" do
     pending "Will be replaced with other method."
+  end
+
+  describe "create_account" do
+    it "increases the total numer of records in users table by 1" do
+      expect{User.create_account(auth_hash)}.to change{User.count}.by(1)
+    end
   end
 
 end
