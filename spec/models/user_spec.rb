@@ -61,4 +61,13 @@ describe User do
       end
     end
   end
+
+  describe "#get_oldest_active_tweet_id" do
+    pending "Will be replaced with other method."
+  end
+
+  describe "#get_active_status_count" do
+    pending "Will be replaced with other method."
+  end
+
 end
