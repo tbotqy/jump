@@ -1,6 +1,6 @@
 module Lib
 
-  # create an OmniAuth::AuthHash
+  # create the Struct which behaves like OmniAuth::AuthHash
   def auth_hash
     auth_hash_struct   = Struct.new(:credentials, :extra)
     credentials_struct = Struct.new(:token, :secret)
