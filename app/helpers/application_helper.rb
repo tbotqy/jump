@@ -4,13 +4,11 @@ module ApplicationHelper
     session[:user_id] ? true : false
   end
 
-  def title(given_title = nil)
-    base_title = configatron.site_name
-    if given_title.nil?
-      base_title
-    else
-      given_title + " - " + base_title
-    end
+  def title_text
+    site_name = configatron.site_name
+
+    return content_for(:title) + " - " + site_name if content_for(:title)
+    site_name
   end
 
   def calc_tweet_posted_time(dest_unixtime, force_full_format = false, show_minute = false)
