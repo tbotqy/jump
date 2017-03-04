@@ -81,4 +81,13 @@ describe User do
     end
   end
 
+  describe "update_account" do
+    it "updates a record with given auth_hash" do
+      
+    end
+    it "doesn't inscrease the total number of records in users table" do
+
+    end
+  end
+
 end

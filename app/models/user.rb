@@ -50,7 +50,6 @@ class User < ActiveRecord::Base
   end
 
   def self.update_account(auth)
-    return false unless auth.instance_of?(OmniAuth::AuthHash)
 
     dest_user = self.find_by_twitter_id(auth.uid)
 
