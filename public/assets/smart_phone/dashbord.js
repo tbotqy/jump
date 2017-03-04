@@ -1,1 +1,0 @@
-/home/takuya/twitjump.me/app/assets/javascripts/smart_phone/dashbord.js

@@ -1,4 +1,5 @@
-B65;100;1c*.rbc
+Gemfile.lock
+*.rbc
 *.sassc
 .sass-cache
 capybara-*.html
@@ -9,7 +10,12 @@ capybara-*.html
 /tmp/*
 /db/*.sqlite3
 /db/data.yaml
+/db/schema.rb
 /public/system/*
+/public/assets/*
+!/public/assets/bg-btn-blue.png
+!/public/assets/ajax-loader.gif
+!/public/assets/everything-spritev2.png
 /coverage/
 /spec/tmp/*
 **.orig
@@ -25,3 +31,4 @@ wget-log
 /config/unicorn.rb
 start_unicorn.sh
 apply_ga_filter.html
+secret.yml

@@ -12,12 +12,12 @@
   <!-- .wrap-profile -->
   <div class="wrap-profile">
     <div class="area-profile-image">
-      <img class="profile-image-url-https" src="<%= @current_user.profile_image_url_https.to_s.gsub(/_normal/,'_reasonably_small') %>" width="70"/>
+      <%= image_tag(@current_user.profile_image_url_https.to_s.gsub(/_normal/,'_reasonably_small'), class: "profile-image-url-https", width: 70) %>
     </div>
     <div class="area-center">
       <div class="area-names">
-	<p class="name"><%= @current_user.name %></p>
-	<p>@<span class="screen-name"><%= @current_user.screen_name %></span></p>
+        <p class="name"><%= @current_user.name %></p>
+        <p>@<span class="screen-name"><%= @current_user.screen_name %></span></p>
       </div>
       <div class="area-updated">
         <p>最終更新 : <span class="updated-date"><%= @profile_updated_at %></span></p>
@@ -26,13 +26,13 @@
     <!-- /.area-center -->
     <div class="area-button">
       <div class="area-result">
-	<span class="alert"></span>
+        <span class="alert"></span>
       </div>
       <button id="update-profile" class="btn btn-success" data-loading-text="読み込み中"><i class="icon-refresh"></i>更新</button>
     </div>
   </div>
   <!-- /.wrap-profile -->
-  
+
   <div class="tweets">
     <span class="head">ツイート</span>
     <div class="count margin">
@@ -46,7 +46,7 @@
       <button id="update-statuses" class="btn btn-success" data-loading-text="読み込み中"><i class="icon-refresh icon-white"></i>更新</button>
     </div>
   </div>
-  
+
   <div class="friends">
     <span class="head">フォローリスト</span>
     <div class="count margin">
@@ -60,7 +60,7 @@
       <button id="update-friends" class="btn btn-success" data-loading-text="読み込み中"><i class="icon-refresh icon-white"></i>更新</button>
     </div>
   </div>
-  
+
   <div class="wrap-delete-button">
     <a class="btn btn-danger" href="/users/delete_account"><i class="icon-trash icon-white"></i>アカウントを削除する</a>
   </div>

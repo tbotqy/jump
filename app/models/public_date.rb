@@ -1,5 +1,5 @@
 class PublicDate < ActiveRecord::Base
-  
+
   def self.add_record(unixtime_created_at)
     unless self.date_exists?(unixtime_created_at)
       self.create(

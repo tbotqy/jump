@@ -18,20 +18,20 @@ body{
   font-size: 100%;
   font-family: Helvetica,"メイリオ", sans-serif;
   color: #7a6e7e;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); 
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
   overflow-x: hidden;
 }
 
 /* --------------------------------------------------
    elements
 -------------------------------------------------- */
-.ad.timeline{ 
+.ad.timeline{
   width: 100%;
   float: left;
   margin: 10px 0;
 }
 
-.cake-sql-log tr{ 
+.cake-sql-log tr{
   border: solid 1px gray;
   font-size: 80%;
 }
@@ -41,7 +41,7 @@ body{
   background: #e8e0cf;
 }
 
-ul{ 
+ul{
   list-style: none;
   margin-left: 0;
 }
@@ -50,76 +50,76 @@ ul{
   background: #DFF0D8;
 }
 
-.cake-sql-log caption{ 
+.cake-sql-log caption{
   background: #D9EDF7;
 }
 
-i{ 
+i{
   margin: 0 5px 0 0;
 }
 
 .brand,
-.version{ 
+.version{
   font-family: 'Emblema One', cursive;
 }
 
 .wrap-catch .description,
-footer .copyright{ 
+footer .copyright{
   font-family: 'Questrial', Helvetica,"メイリオ", sans-serif;
 }
 
-.adsense.footer{ 
+.adsense.footer{
   width: 728px;
   margin: 0 auto;
 }
 
-.wrap-timeline-right-ads{ 
+.wrap-timeline-right-ads{
   float: right;
   width: 400px;
 }
 
-.adsense-timeline-right{ 
+.adsense-timeline-right{
   float: right;
   width: 400px;
   text-align: center;
 }
 
-.admax-timeline-right { 
+.admax-timeline-right {
   float: right;
   width: 400px;
   margin-top: 10px;
   text-align: center;
 }
 
-.amazon-timeline-right { 
+.amazon-timeline-right {
   float: right;
   width: 400px;
   margin: 10px 0;
   text-align: center;
 }
 
-.adsense-timeline-upper{ 
+.adsense-timeline-upper{
   float: left;
   width: 100%;
   margin: 0 0 3px 0;
   text-align: center;
 }
 
-.adsense-timeline-lower{ 
+.adsense-timeline-lower{
   float: left;
   width: 100%;
   margin: 10px 0 100px 0;
   text-align: center;
 }
 
-.btn{ 
+.btn{
   font-size: 13px;
   padding: 4px 10px 4px;
 }
 
-.caramel{ 
+.caramel{
   border-top: solid 1px #fefefe;
-  border-bottom: solid 1px #d7d7d7;  
+  border-bottom: solid 1px #d7d7d7;
   background: #f2eee6;
 }
 
@@ -127,33 +127,33 @@ footer .copyright{
    nav
 -------------------------------------------------- */
 
-#container-header{ 
+#container-header{
   float: left;
   width: 100%;
   height: 40px;
   text-shadow: none;
 }
 
-#container-header .brand{ 
+#container-header .brand{
   padding: 7px 20px 10px 20px;
   color: #777;
 }
 
-#container-header .brand:hover{ 
+#container-header .brand:hover{
   color: #555;
 }
 
-#container-header .navbar .container{ 
+#container-header .navbar .container{
   width: 1085px;
 }
 
-#container-header .navbar-inner{ 
+#container-header .navbar-inner{
   background-color: #F2EEE6;
 }
 
 
 #container-header .link-timeline,
-#container-header .link-logout{ 
+#container-header .link-logout{
   line-height: 20px;
 }
 
@@ -161,26 +161,26 @@ footer .copyright{
   font-size: 14px;
 }
 
-#container-header #link-timeline .disabled a{ 
+#container-header #link-timeline .disabled a{
   color: #bbb;
 }
 
-#container-header #link-twitter-profile .twitter-profile a{ 
+#container-header #link-twitter-profile .twitter-profile a{
   color: gray;
 }
 
-#container-header .twitter-profile img{ 
+#container-header .twitter-profile img{
   border-radius: 2px;
   float:left;
 }
 
-#container-header .twitter-profile a{ 
+#container-header .twitter-profile a{
   float: left;
   margin:0;
   padding-left: 0;
 }
 
-#container-header #link-auth .btn-auth { 
+#container-header #link-auth .btn-auth {
   height: 10px;
   font-size: 14px;
   text-decoration: none;
@@ -195,13 +195,13 @@ footer .copyright{
    main
 -------------------------------------------------- */
 
-#container-main{ 
+#container-main{
   float: left;
   width: 100%;
   margin: 10px auto;
 }
 
-#container-main .inner{ 
+#container-main .inner{
   width: 1085px;
   margin: 0 auto;
 }
@@ -226,32 +226,32 @@ footer .copyright{
   color: #7a6e7e;
 }
 
-#container-footer .inner{ 
+#container-footer .inner{
   width: 1085px;
   margin: 0 auto;
 }
 
-#container-footer .area-upper{ 
+#container-footer .area-upper{
   width: 100%;
   float: left;
   padding: 10px 0;
-  border-bottom: solid 1px #d7d7d7;  
+  border-bottom: solid 1px #d7d7d7;
 }
 
 
-#container-footer .area-left{ 
+#container-footer .area-left{
   width: 835px;
   float: left;
   padding: 25px 0 0 0;
 }
 
-#container-footer .area-right{ 
+#container-footer .area-right{
   width: 250px;
   float: right;
   padding: 25px 0 0 0;
 }
 
-#container-footer .area-right .wrap-catch{ 
+#container-footer .area-right .wrap-catch{
   float: left;
   width: 100%;
   text-align: left;
@@ -263,7 +263,7 @@ footer .copyright{
   margin: 0px;
 }
 
-#container-footer .area-right .brand{ 
+#container-footer .area-right .brand{
   font-size: 30px;
   font-weight: bold;
   height: 30px;
@@ -271,35 +271,35 @@ footer .copyright{
   margin: 0;
 }
 
-#container-footer footer{ 
+#container-footer footer{
   width: 100%;
   float: left;
   margin: 0 0 10px 0;
   border-top: solid 1px #fefefe;
 }
 
-#container-footer footer .container{ 
+#container-footer footer .container{
   float: left;
   width: 100%;
   margin: 10px 0 0 0;
 }
 
-#container-footer footer .container .copyright{ 
+#container-footer footer .container .copyright{
   float: left;
   width: 125px;
 }
 
-#container-footer footer .wrap-social-plugins{ 
+#container-footer footer .wrap-social-plugins{
   float: left;
   width: 855px;
 }
 
-#container-footer footer .wrap-social-plugins div{ 
+#container-footer footer .wrap-social-plugins div{
   float: left;
   margin: 0 0 0 10px;
 }
 
-#container-footer footer .wrap-social-plugins .wrap-fb{ 
+#container-footer footer .wrap-social-plugins .wrap-fb{
   margin: 0 10px;
 }
 
@@ -307,32 +307,32 @@ footer .copyright{
    scroller toward top
 -------------------------------------------------- */
 
-.error-inner.error404{ 
+.error-inner.error404{
   width: 70%;
   margin: 200px auto 0 auto;
 }
 
-.error-inner.error404 .wrap{ 
+.error-inner.error404 .wrap{
   width: 100%;
   float: left;
   text-align: center;
 }
 
-.error-inner.error404 .alert.not-found{ 
+.error-inner.error404 .alert.not-found{
   width: 500px;
   height: 30px;
   margin: 0 auto 10px auto;
   padding: 0;
 }
 
-.error-inner.error404 .alert.not-found p{ 
+.error-inner.error404 .alert.not-found p{
   width: 100%;
   height: 100%;
   line-height: 30px;
   margin:0;
 }
 
-.error-inner.error404 .alert.not-found h3{ 
+.error-inner.error404 .alert.not-found h3{
   float: left;
   width: 100%;
   margin: 0 auto;
@@ -343,7 +343,7 @@ footer .copyright{
    scroller toward top
 -------------------------------------------------- */
 
-.to-page-top{ 
+.to-page-top{
   width: 94px;
   height: 35px;
   background: black;
@@ -353,7 +353,7 @@ footer .copyright{
   font-size: 11px;
 }
 
-.to-page-top a{ 
+.to-page-top a{
   float: left;
   width: 100%;
   line-height: 34px;
@@ -366,44 +366,44 @@ footer .copyright{
 /* --------------------------------------------------
    under construction
 -------------------------------------------------- */
-.box.under-construction{ 
+.box.under-construction{
   width: 100%;
   margin: 200px 0 0 0;
   float:left;
 }
 
-.box.under-construction .alert{ 
+.box.under-construction .alert{
   width: 100%;
   float: left;
   margin:0;
   padding:15px 0 10px 0;
 }
 
-.box.under-construction h2{ 
+.box.under-construction h2{
   text-align:center;
 }
 /* --------------------------------------------------
    browser
 -------------------------------------------------- */
-.box.browser{ 
+.box.browser{
   width: 100%;
   margin: 0;
   float:left;
 }
 
-.box.browser header{ 
+.box.browser header{
   width: 100%;
   text-align: center;
   margin: 150px 0 0 0;
 }
 
-.box.browser header .brand{ 
+.box.browser header .brand{
   width: 100%;
   font-size: 30px;
   float: left;
 }
 
-.box.browser header .version{ 
+.box.browser header .version{
   font-size: 20px;
   position: relative;
   top: -24px;
@@ -412,47 +412,47 @@ footer .copyright{
   opacity:0.7;
 }
 
-.box.browser header .catch{ 
+.box.browser header .catch{
   float: left;
   width: 100%;
   margin: -15px 0 0 0;
 }
 
-.box.browser .lower{ 
+.box.browser .lower{
   width: 80%;
   margin: 0 auto;
 }
 
-.box.browser .alert{ 
+.box.browser .alert{
   width: 100%;
   float: left;
   margin: 20px 0 0 0;
   padding:15px 0 10px 0;
 }
 
-.box.browser h2{ 
+.box.browser h2{
   text-align:center;
   font-size: 99%;
 }
 
-.box.browser .browsers{ 
+.box.browser .browsers{
   width: 100%;
   float: left;
   margin: 10px 0 0 0;
 }
 
-.box.browser .browsers ul li{ 
+.box.browser .browsers ul li{
   width: 33%;
   float:left;
   text-align: center;
 }
 
-.box.browser .browsers ul li img{ 
+.box.browser .browsers ul li img{
   width: 64px;
   margin: 5px auto;
 }
 
-.box.browser .browsers ul li span.link{ 
+.box.browser .browsers ul li span.link{
   width: 100%;
   float: left;
   margin: 5px 0 0 0;
@@ -461,21 +461,21 @@ footer .copyright{
 /* --------------------------------------------------
    admin
 -------------------------------------------------- */
-#wrap-admin{ 
+#wrap-admin{
   width: 1085px;
   margin: 20px auto;
 }
 #wrap-admin .loader{
   margin: 0 0 0 10px;
   display: none;
-} 
+}
 
-#wrap-admin h1{ 
+#wrap-admin h1{
   font-size: 130%;
   border-bottom: solid 1px gray;
 }
 
-#wrap-admin table{ 
+#wrap-admin table{
   margin: 20px 0;
   border-top: solid 1px #FEFEFE;
   border-bottom: solid 1px #D7D7D7;
@@ -487,28 +487,28 @@ footer .copyright{
   line-height: 37px;
 }
 
-#wrap-admin table .centroid{ 
+#wrap-admin table .centroid{
   text-align: center;
  }
 
-#wrap-admin table td.chk { 
+#wrap-admin table td.chk {
   width: 50px;
 }
 
-#wrap-admin table td.chk button{ 
+#wrap-admin table td.chk button{
   width: 100%;
 }
 
-#wrap-admin table td.chk button{ 
+#wrap-admin table td.chk button{
   margin: 0;
 }
-#wrap-admin .wrap-button{ 
+#wrap-admin .wrap-button{
   border-top: solid 1px #d7d7d7;
   padding: 10px 0;
   text-align: right;
 }
 
-#wrap-admin .wrap-button button{ 
+#wrap-admin .wrap-button button{
   width: 160px;
 }
 
@@ -516,19 +516,19 @@ footer .copyright{
    dashbord
 -------------------------------------------------- */
 
-#wrap-dashbord{ 
+#wrap-dashbord{
   float: left;
   width: 1085px;
   height: 123px;
   font-family: 'Questrial', sans-serif;
 }
 
-#wrap-dashbord .space{ 
+#wrap-dashbord .space{
   width: 100%;
   height: 10px;
 }
 
-#wrap-dashbord .inner{ 
+#wrap-dashbord .inner{
   height: 123px;
   position: fixed;
   top: 40px;
@@ -543,24 +543,24 @@ footer .copyright{
   width: 100%;
 }
 
-#wrap-list-years{ 
+#wrap-list-years{
   float: left;
   width: 100%;
 }
 
-#wrap-list-months{ 
+#wrap-list-months{
   float: left;
   width: 100%;
 }
 
-#wrap-list-days{ 
+#wrap-list-days{
   float: left;
   width: 100%;
 }
 
 .list-years,
 .list-months,
-.list-days{ 
+.list-days{
   float: left;
   width: 100%;
 }
@@ -569,7 +569,7 @@ footer .copyright{
   display: none ;
 }
 
-.list-days{ 
+.list-days{
   display: none;
 }
 
@@ -579,13 +579,13 @@ footer .copyright{
   float: left;
 }
 
-.my-btn-group .btn{ 
+.my-btn-group .btn{
   margin: 0;
   float: left;
   border-radius: 0;
 }
 
-.my-btn-group .btn.first{ 
+.my-btn-group .btn.first{
   margin-left: 0;
   -webkit-border-top-left-radius: 4px;
   -moz-border-radius-topleft: 4px;
@@ -597,7 +597,7 @@ footer .copyright{
 
 }
 
-.my-btn-group .btn.mid{ 
+.my-btn-group .btn.mid{
   border-left: none;
 }
 
@@ -609,18 +609,18 @@ footer .copyright{
   -webkit-border-bottom-right-radius: 4px;
   -moz-border-radius-bottomright: 4px;
   border-bottom-right-radius: 4px;
-  
+
   border-left: none;
 }
 
 .list-years li a,
 .list-months li a,
-.list-days li a{ 
+.list-days li a{
   float: left;
 }
 
 .list-months li a,
-.list-days li a{ 
+.list-days li a{
   width: 13px;
 }
 
@@ -628,13 +628,13 @@ footer .copyright{
    each-status
 -------------------------------------------------- */
 
-.wrap-each-status{ 
+.wrap-each-status{
   float: left;
   clear: both;
   width: 100%;
   font-size: 13px;
   border-top: solid 1px #fefefe;
-  border-bottom: solid 1px #d7d7d7;  
+  border-bottom: solid 1px #d7d7d7;
   background: #f2eee6;
 }
 
@@ -649,7 +649,7 @@ footer .copyright{
   color: #999;
 }
 
-.wrap-each-status .text a{ 
+.wrap-each-status .text a{
   color: #CD8500;
 }
 
@@ -661,7 +661,7 @@ footer .copyright{
   background: #e8e0cf;
 }
 
-.wrap-each-status .profile-image{ 
+.wrap-each-status .profile-image{
   float: left;
   width: 58px;
   height: 58px;
@@ -677,7 +677,7 @@ footer .copyright{
   overflow: hidden;
 }
 
-.wrap-each-status .status-content{ 
+.wrap-each-status .status-content{
   float: left;
   width: 462px;
   padding: 10px 10px 10px 0;
@@ -686,21 +686,21 @@ footer .copyright{
   cursor: pointer;
 }
 
-.wrap-each-status .status-content .top .logo{ 
+.wrap-each-status .status-content .top .logo{
   float: left;
   margin: 0 3px 0 0;
 }
 
-.wrap-each-status .status-content .top .logo img{ 
+.wrap-each-status .status-content .top .logo img{
   width: 18px;
   margin: -3px 0 0 0;
 }
 
-.wrap-each-status .status-content .top .date{ 
+.wrap-each-status .status-content .top .date{
   float: right;
 }
 
-.wrap-each-status .status-content .text{ 
+.wrap-each-status .status-content .text{
   float: left;
   width: 100%;
   padding: 10px 10px 10px 0;
@@ -717,7 +717,7 @@ footer .copyright{
   margin:0;
 }
 
-.wrap-each-status .status-content .retweet-info p{ 
+.wrap-each-status .status-content .retweet-info p{
   margin: 0;
 }
 
@@ -731,7 +731,7 @@ footer .copyright{
   margin: -5px 5px 0 0;
 }
 
-.wrap-each-status .status-content .top{ 
+.wrap-each-status .status-content .top{
   float: left;
   width: 100%;
 }
@@ -744,14 +744,14 @@ footer .copyright{
   display: none;
 }
 
-.wrap-each-status .status-content .bottom span{ 
+.wrap-each-status .status-content .bottom span{
   float: left;
 }
 
-.wrap-each-status .status-content .bottom .source{ 
+.wrap-each-status .status-content .bottom .source{
   margin: 0 0 0 5px;
 }
-.wrap-each-status .status-content .bottom .link-official{ 
+.wrap-each-status .status-content .bottom .link-official{
   margin: 0 0 0 10px;
 }
 
@@ -760,7 +760,7 @@ footer .copyright{
   margin: 0 0 0 5px;
 }
 
-.wrap-each-status .status-content .bottom .area-intents .intent{ 
+.wrap-each-status .status-content .bottom .area-intents .intent{
   width: 16px !important;
   height: 16px;
   float: left;
@@ -773,19 +773,19 @@ footer .copyright{
 .wrap-each-status .status-content .bottom .area-intents .intent-reply{
   background-position: 0 0;
 }
-.wrap-each-status .status-content .bottom .area-intents .intent-reply:hover{ 
+.wrap-each-status .status-content .bottom .area-intents .intent-reply:hover{
   background-position: -16px 0;
 }
-.wrap-each-status .status-content .bottom .area-intents .intent-retweet{ 
+.wrap-each-status .status-content .bottom .area-intents .intent-retweet{
   background-position: -80px 0;
 }
-.wrap-each-status .status-content .bottom .area-intents .intent-retweet:hover{ 
+.wrap-each-status .status-content .bottom .area-intents .intent-retweet:hover{
   background-position: -96px 0;
 }
-.wrap-each-status .status-content .bottom .area-intents .intent-favorite{ 
+.wrap-each-status .status-content .bottom .area-intents .intent-favorite{
   background-position: -32px 0;
 }
-.wrap-each-status .status-content .bottom .area-intents .intent-favorite:hover{ 
+.wrap-each-status .status-content .bottom .area-intents .intent-favorite:hover{
   background-position: -48px 0;
 }
 
@@ -796,12 +796,12 @@ footer .copyright{
    read-more
 -------------------------------------------------- */
 
-#wrap-read-more{ 
+#wrap-read-more{
   float: left;
   width: 100%;
 }
 
-#read-more{ 
+#read-more{
   width: 100%;
   height: 50px;
 }
@@ -810,12 +810,12 @@ footer .copyright{
    statuses.import
 -------------------------------------------------- */
 
-#wrap-import{ 
+#wrap-import{
   float: left;
   width: 100%;
 }
 
-#wrap-import .loader{ 
+#wrap-import .loader{
   display: none;
   width: 24px;
   margin: 0 0 8px 10px;
@@ -828,7 +828,7 @@ footer .copyright{
 /* --------------------------------------------------
    upper area
 -------------------------------------------------- */
-#wrap-import .wrap-upper{ 
+#wrap-import .wrap-upper{
   width: 100%;
   float: left;
 }
@@ -840,7 +840,7 @@ footer .copyright{
   margin: 20px 0 0 0;
 }
 
-#wrap-import .wrap-upper h4{ 
+#wrap-import .wrap-upper h4{
   float: left;
   width: 100%;
   height: 40px;
@@ -849,15 +849,15 @@ footer .copyright{
   margin: 40px 0 0 0;
 }
 
-#wrap-import .wrap-upper h4 a{ 
+#wrap-import .wrap-upper h4 a{
   margin: 0 5px 0 0;
 }
 
-#wrap-import .wrap-upper .btn{ 
+#wrap-import .wrap-upper .btn{
   margin: -5px 0 0 5px;
 }
 
-#wrap-import .wrap-upper #recover-msg{ 
+#wrap-import .wrap-upper #recover-msg{
   width: 200px;
   margin: 10px auto 0 auto;
   padding: 0;
@@ -867,25 +867,25 @@ footer .copyright{
    lower area
 -------------------------------------------------- */
 
-#wrap-import .wrap-lower{ 
+#wrap-import .wrap-lower{
   width: 100%;
   float: left;
 }
 
-#wrap-import .wrap-importing-status{ 
+#wrap-import .wrap-importing-status{
   width: 500px;
   margin: 40px auto 0 auto;
 }
 
-#wrap-import .wrap-tweet{ 
+#wrap-import .wrap-tweet{
   float: left;
   width: 500px;
   margin: 0 auto;
   color: #49360D;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);  
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-#wrap-import .wrap-tweet .inner{ 
+#wrap-import .wrap-tweet .inner{
   width: 400px;
   padding:10px;
   color: #111;
@@ -894,7 +894,7 @@ footer .copyright{
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
 /*
-  background: linear-gradient(to bottom, #d5cea6 0%, #b7ad70 100%); 
+  background: linear-gradient(to bottom, #d5cea6 0%, #b7ad70 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, #b7ad70), color-stop(0.00, #d5cea6));
   background: -webkit-linear-gradient(top, #d5cea6 0%, #b7ad70 100%);
   background: -moz-linear-gradient(top, #d5cea6 0%, #b7ad70 100%);
@@ -906,18 +906,18 @@ footer .copyright{
   opacity: 0.9;
 }
 
-#wrap-import .wrap-tweet .inner .body{ 
+#wrap-import .wrap-tweet .inner .body{
   margin: 0 0 5px 5px;
 }
 
-#wrap-import .wrap-tweet .inner .date{ 
+#wrap-import .wrap-tweet .inner .date{
   text-align: right;
   font-size: 80%;
   margin: 0 0 -5px 0;
   color: gray;
 }
 
-.triangle{ 
+.triangle{
   position: relative;
   width: 0;
   height: 0;
@@ -929,13 +929,13 @@ footer .copyright{
   opacity: 0.8;
 }
 
-#wrap-import .wrap-profile-image{ 
+#wrap-import .wrap-profile-image{
   width: 10%;
   float: left;
   margin: 0 0 0 20px;
 }
 
-#wrap-import .profile-image{ 
+#wrap-import .profile-image{
   float: left;
 }
 
@@ -948,21 +948,21 @@ footer .copyright{
   overflow: hidden;
 }
 
-#wrap-import .wrap-progress-bar{ 
+#wrap-import .wrap-progress-bar{
   width: 100%;
   float: left;
   margin: 0 auto;
   text-align: right;
 }
 
-#wrap-import .wrap-progress-bar .total{ 
+#wrap-import .wrap-progress-bar .total{
   width: 70%;
   height: 10px;
   line-height: 30px;
   margin: 0 auto;
 }
 
-#wrap-import .wrap-progress-bar .alert{ 
+#wrap-import .wrap-progress-bar .alert{
   display:none;
   width: 300px;
   height: 18px;
@@ -979,11 +979,11 @@ footer .copyright{
   margin: 0 auto;
 }
 
-#wrap-import .bar{ 
+#wrap-import .bar{
   line-height: 30px;
 }
 
-#wrap-import .wrap-lower .alert{ 
+#wrap-import .wrap-lower .alert{
   font-size: 80%;
   text-align: center;
   padding: 10px 0 0 0;
@@ -994,29 +994,29 @@ footer .copyright{
 /* --------------------------------------------------
    statuses.sum
 -------------------------------------------------- */
-#container-main.sum header{ 
+#container-main.sum header{
   margin: 10px 0 0 0;
   width: 100%;
   float: left;
 }
 
-#container-main.sum h1{ 
+#container-main.sum h1{
   font-size: 20px;
   width: 80%;
   float:left;
 }
 
-#container-main.sum header nav{ 
+#container-main.sum header nav{
   margin: 3px 0 0 0;
 }
 
-#container-main.sum hr{ 
+#container-main.sum hr{
   float: left;
   width: 100%;
   margin: 10px 0;
 }
 
-#container-main #container-graph{ 
+#container-main #container-graph{
   margin: 30px 0 0 0;
   width: 100%;
   height: 5
@@ -1028,7 +1028,7 @@ footer .copyright{
    users.login
 -------------------------------------------------- */
 
-#container-main.login{ 
+#container-main.login{
   height: 400px;
 }
 
@@ -1038,15 +1038,15 @@ footer .copyright{
   margin: 170px auto 0 auto;
 }
 
-#wrap-login .icon-share{ 
+#wrap-login .icon-share{
   margin: 0;
 }
 
-#wrap-login h3{ 
+#wrap-login h3{
   margin: 5px 0;
 }
 
-#wrap-login .description{ 
+#wrap-login .description{
   height: 60px;
   padding: 5px 0 0 0;
   margin: 0 0 5px 0;
@@ -1058,7 +1058,7 @@ footer .copyright{
   top: 12px;
 }
 
-#wrap-login .upper{ 
+#wrap-login .upper{
   float: left;
   width: 100%;
   margin: 0 auto;
@@ -1068,17 +1068,17 @@ footer .copyright{
   border-top-right-radius: 10px;
 }
 
-#wrap-login header .brand{ 
+#wrap-login header .brand{
   width: 100%;
   margin: 0 auto;
 }
 
-#wrap-login header .brand .name{ 
+#wrap-login header .brand .name{
   font-size: 40px;
   letter-spacing: -1px;
 }
 
-#wrap-login header .brand .version{ 
+#wrap-login header .brand .version{
   font-size: 20px;
   color: #CD8500;
   opacity:0.7;
@@ -1094,14 +1094,14 @@ footer .copyright{
   border-bottom-right-radius: 10px;
 }
 
-#wrap-login .inner{ 
+#wrap-login .inner{
   width: 100%;
   float: left;
   margin: 15px 0;
 }
 
 #wrap-login .lower .left,
-#wrap-login .lower .right{ 
+#wrap-login .lower .right{
   float: left;
   width: 49%;
 }
@@ -1110,31 +1110,31 @@ footer .copyright{
   border-right: solid 1px #fefefe;
 }
 
-#wrap-login .wrap-btn-public .link{  
+#wrap-login .wrap-btn-public .link{
   font-size: 90%;
 }
 
-#wrap-login .lower .right{ 
-  border-left: solid 1px #d7d7d7;  
+#wrap-login .lower .right{
+  border-left: solid 1px #d7d7d7;
 }
 
-#wrap-login .lower .right .link{ 
+#wrap-login .lower .right .link{
   position: relative;
   top: 3px;
 }
 
-#wrap-login .remark{ 
+#wrap-login .remark{
   float: left;
   width: 100%;
   text-align: center;
   color: gray;
 }
 
-#wrap-login .remark a{ 
+#wrap-login .remark a{
   color:#4169e1;
 }
 
-#wrap-login .lower .info{ 
+#wrap-login .lower .info{
   padding: 4px 6px;
   font-size: 90%;
   position: relative;
@@ -1162,7 +1162,7 @@ footer .copyright{
 
 .btn-auth:link,
 .btn-auth:visited{
-  background: #39D url(../assets/bg-btn-blue.png) repeat-x 0 0;
+  background: #39D url(/assets/bg-btn-blue.png) repeat-x 0 0;
   border: 1px solid #39D;
   color: #FFF;
   font-weight: 700;
@@ -1187,53 +1187,53 @@ footer .copyright{
   border:none;
 }
 
-#modal-how-data-are-treated .modal-body{ 
+#modal-how-data-are-treated .modal-body{
   font-size: 80%;
 }
 
-#modal-how-data-are-treated .modal-body p i{ 
+#modal-how-data-are-treated .modal-body p i{
   float: left;
 }
 
 /* --------------------------------------------------
    users.we_are_sorry
 -------------------------------------------------- */
-#container-main .sorry .alert{ 
+#container-main .sorry .alert{
   position: relative;
   top: 200px;
 }
 
 #container-main .sorry  .alert > p,
-#container-main .sorry  .alert > h4{ 
+#container-main .sorry  .alert > h4{
   font-size: 80%;
   text-align: center;
 }
 
-#container-main .sorry  .alert > h4{ 
+#container-main .sorry  .alert > h4{
   margin: 10px 0;
-} 
+}
 
 /* --------------------------------------------------
    users.sent_tweets
 -------------------------------------------------- */
-#wrap-timeline-lower{ 
+#wrap-timeline-lower{
   width: 100%;
   float: left;
   min-height: 700px;
 }
 
-#wrap-main{ 
+#wrap-main{
   float: left;
   width: 550px
 }
 
-#wrap-timeline{ 
+#wrap-timeline{
   float: left;
   width: 100%;
   font-family: 'PT Sans', sans-serif;
 }
 
-#wrap-timeline .cover{ 
+#wrap-timeline .cover{
   width: 100%;
   position: relative;
   top: 0;
@@ -1243,7 +1243,7 @@ footer .copyright{
   color: white;
 }
 
-#wrap-timeline .cover span{ 
+#wrap-timeline .cover span{
   width: 100%;
   text-align: center;
   position: absolute;
@@ -1254,7 +1254,7 @@ footer .copyright{
   font-family: 'Questrial', sans-serif;
 }
 
-#wrap-timeline .alert{ 
+#wrap-timeline .alert{
   float: left;
   width: 548px;
   height: 40px;
@@ -1262,7 +1262,7 @@ footer .copyright{
   padding: 0;
 }
 
-#wrap-timeline .alert p{ 
+#wrap-timeline .alert p{
   margin: 0;
   padding: 0;
   text-align: center;
@@ -1273,45 +1273,45 @@ footer .copyright{
 /* --------------------------------------------------
    users.home_timeline
 -------------------------------------------------- */
-#wrap-main.home_timeline.error{ 
+#wrap-main.home_timeline.error{
   width: 100%;
   margin: 0 auto;
 }
 
-#wrap-main .error-inner{ 
+#wrap-main .error-inner{
   width: 70%;
   margin: 200px auto 0 auto;
 }
 
-#wrap-main .error-inner .wrap{ 
+#wrap-main .error-inner .wrap{
   width: 100%;
   float: left;
   text-align: center;
 }
 
-#wrap-main .error-inner .alert.not-found{ 
+#wrap-main .error-inner .alert.not-found{
   width: 500px;
   height: 30px;
   margin: 0 auto 10px auto;
   padding: 0;
 }
 
-#wrap-main .error-inner .alert.not-found p{ 
+#wrap-main .error-inner .alert.not-found p{
   width: 100%;
   height: 100%;
   line-height: 30px;
   margin:0;
 }
 
-#wrap-main .error-inner .wrap.area-intent{ 
+#wrap-main .error-inner .wrap.area-intent{
   margin: 10px 0 0 0;
 }
 
-#wrap-main .error-inner .wrap.area-intent .intent{ 
+#wrap-main .error-inner .wrap.area-intent .intent{
   margin: 0 0 0 50px;
 }
 
-#wrap-main .error-inner .alert.invite-friends{ 
+#wrap-main .error-inner .alert.invite-friends{
   width: 500px;
   text-align: left;
   margin: 10px auto 10px auto;
@@ -1319,16 +1319,16 @@ footer .copyright{
   padding: 10px;
 }
 
-#wrap-main .error-inner .alert.invite-friends p{ 
+#wrap-main .error-inner .alert.invite-friends p{
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
-#wrap-main .error-inner .alert.invite-friends a{ 
+#wrap-main .error-inner .alert.invite-friends a{
   text-decoration: underline;
 }
-#wrap-main .error-inner .alert.invite-friends .close{ 
+#wrap-main .error-inner .alert.invite-friends .close{
   position: relative;
   top: -5px;
   right: -2px;
@@ -1337,23 +1337,23 @@ footer .copyright{
    users.setting
 -------------------------------------------------- */
 
-#wrap-setting{ 
+#wrap-setting{
   width:1085px;
   margin: 20px auto;
 }
 
-#wrap-setting h1{ 
+#wrap-setting h1{
   text-align: left;
   width: 100%;
   float: left;
   border-bottom: solid 1px #eee;
 }
 
-#wrap-setting h1 span{ 
+#wrap-setting h1 span{
   font-size: 70%;
 }
 
-#wrap-setting .wrap-profile{ 
+#wrap-setting .wrap-profile{
   width: 100%;
   float: left;
   margin: 20px 0 10px 0;
@@ -1365,52 +1365,52 @@ footer .copyright{
 
 }
 
-#wrap-setting .wrap-profile .area-profile-image{ 
+#wrap-setting .wrap-profile .area-profile-image{
   float: left;
   width: 80px;
   height: 80px;
   padding: 10px;
 }
 
-#wrap-setting .wrap-profile .area-profile-image img{ 
+#wrap-setting .wrap-profile .area-profile-image img{
   border-radius: 2px;
 }
 
-#wrap-setting .wrap-profile .area-center{ 
+#wrap-setting .wrap-profile .area-center{
   width: 835px;
   float: left;
 }
 
-#wrap-setting .wrap-profile .area-names{ 
+#wrap-setting .wrap-profile .area-names{
   float: left;
   width: 730px;
   margin-top:15px;
-  
+
 }
 
-#wrap-setting .wrap-profile .area-names p{ 
+#wrap-setting .wrap-profile .area-names p{
   padding-left: 10px;
   font-size: 150%;
 }
 
-#wrap-setting .wrap-profile .area-updated{ 
+#wrap-setting .wrap-profile .area-updated{
   float: left;
-  width: 210px;  
+  width: 210px;
 }
 
-#wrap-setting .wrap-profile .area-updated p{ 
+#wrap-setting .wrap-profile .area-updated p{
   font-size: 80%;
   padding-left: 10px;
   color: #696969;
-} 
+}
 
-#wrap-setting .wrap-profile .area-result{ 
+#wrap-setting .wrap-profile .area-result{
   float: left;
   width: 520px;
   margin: -1px 0 0 0;
 }
 
-#wrap-setting .wrap-profile .area-result .alert{ 
+#wrap-setting .wrap-profile .area-result .alert{
   text-align: center;
   padding: 10px;
   display: none;
@@ -1422,7 +1422,7 @@ footer .copyright{
   margin-top: 35px;
   margin-left: 2px;
   width: 148px;
-} 
+}
 
 #wrap-setting .wrap-profile .area-button button{
   float: left;
@@ -1439,26 +1439,26 @@ footer .copyright{
   margin: 2px 0 0 10px;
 }
 
-#wrap-setting .table{ 
+#wrap-setting .table{
   margin: 10px 0 20px 0;
   float: left;
   border-top: solid 1px #fefefe;
-  border-bottom: solid 1px #d7d7d7;  
+  border-bottom: solid 1px #d7d7d7;
   background: #f2eee6;
   color: #49360D;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);  
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-#wrap-setting .table td{ 
+#wrap-setting .table td{
   line-height: 30px;
   padding-left: 10px;
 }
 
-  
 
-#wrap-setting .table tbody{ 
+
+#wrap-setting .table tbody{
   border-top: solid 1px #fefefe;
-  border-bottom: solid 1px #d7d7d7;  
+  border-bottom: solid 1px #d7d7d7;
 }
 
 #wrap-setting .total-num{
@@ -1481,55 +1481,55 @@ footer .copyright{
   display:none;
 }
 
-#wrap-setting tbody .count{ 
+#wrap-setting tbody .count{
   width: 210px;
 }
 
-#wrap-setting tbody .button{ 
+#wrap-setting tbody .button{
   width: 200px;
 }
 
-#wrap-setting tbody button{ 
+#wrap-setting tbody button{
   float: left;
   margin: 0 0 0 60px;
 }
 
-#wrap-setting tbody .loader{ 
+#wrap-setting tbody .loader{
   float: left;
   margin: 2px 0 0 10px;
 }
 
-#wrap-setting .wrap-delete-button{ 
+#wrap-setting .wrap-delete-button{
   border-top: solid 1px #eee;
   float: left;
   width: 100%;
 }
 
-#wrap-setting .wrap-delete-button button{ 
+#wrap-setting .wrap-delete-button button{
   float: right;
   margin: 8px 0 0 0;
 }
 
-#modal-delete-account .modal-body h4{ 
+#modal-delete-account .modal-body h4{
   margin: 0 0 10px 0;
 }
 
-#modal-delete-account .modal-body p{ 
+#modal-delete-account .modal-body p{
   padding: 0 0 2px 5px;
   font-size: 80%;
 }
 
-#modal-delete-account .wrap-status{ 
+#modal-delete-account .wrap-status{
   height: 20px;
   margin: 0 0 10px 0;
   font-size: 80%;
 }
 
-#modal-delete-account .status{ 
+#modal-delete-account .status{
   height: 14px;
 }
 
-#modal-delete-account .status .loader{ 
+#modal-delete-account .status .loader{
   float: right;
   width: 24px;
   height: 24px;
