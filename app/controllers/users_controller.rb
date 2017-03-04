@@ -5,18 +5,14 @@ class UsersController < ApplicationController
   before_filter :check_tweet_import, :except => ["index","for_users","browsers","public_timeline"]
 
   def index
-    # check if user is logged in
-    if logged_in?
-      redirect_to :action => "sent_tweets"
-    else
-      @title = "クリックひとつで、過去のあの日のツイートへ"
-      @show_header = false
-      @show_to_page_top = false
-      @show_footer = true
-      @show_scrollbar = true
-      @total_user_num = User.get_active_user_count
-      @total_status_num = Status.get_active_status_count
-    end
+    return redirect_to(action: :sent_tweets) if logged_in?
+    @title = "クリックひとつで、過去のあの日のツイートへ"
+    @show_header = false
+    @show_to_page_top = false
+    @show_footer = true
+    @show_scrollbar = true
+    @total_user_num = User.get_active_user_count
+    @total_status_num = Status.get_active_status_count
   end
 
   def for_users
