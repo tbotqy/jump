@@ -1,18 +1,18 @@
 <!-- #container-header -->
 <div id="container-header">
   <header>
-    
+
     <div class="navbar navbar-fixed-top">
       <nav>
         <!-- .navbar-inner -->
         <div class="navbar-inner">
-          
+
           <!-- .container -->
           <div class="container">
             <a  class="brand" href="/">TwitJump</a>
             <% if logged_in? %>
             <% if current_user.initialized_flag %>
-            
+
             <!-- .nav .pull-left -->
             <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
               <li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
@@ -21,22 +21,22 @@
             </ul>
             <!-- /.nav .pull-left -->
             <% end %>
-            
+
             <!-- .nav .pull-right -->
             <ul id="link-twitter-profile" class="nav pull-right">
-              
+
               <li class="twitter-profile">
                 <a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
-                  <img width="20" src="<%= current_user.profile_image_url_https %>" />
+                  <%= image_tag(current_user.profile_image_url_https, width:20) %>
                 </a>
                 <a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
                   @<%= current_user.screen_name %>
                 </a>
               </li>
-              
+
               <li class="dropbown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-caret-down"></i></a>
-                
+
                 <!-- .dropdown-menu -->
                 <ul class="dropdown-menu">
                   <% if current_user.initialized_flag %>
@@ -50,9 +50,9 @@
                   </li>
                 </ul>
                 <!-- /.dropdown-menu -->
-              
+
               </li>
-            
+
             </ul>
             <!-- /.nav .pull-right -->
 

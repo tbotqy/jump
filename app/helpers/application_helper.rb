@@ -19,14 +19,14 @@ module ApplicationHelper
 
     format = current_year > dest_year || force_full_format ? '%Y年%-m月%-d日' : '%-m月%-d日'
     format += " %-H:%M" if show_minute
-    
+
     Time.zone.at(dest_unixtime).strftime( format )
   end
 
   def calc_relative_timestamp(dest_unixtime)
     # calculate how long has it passed since dest_unixtime
-    # and returns timestamp for tweet in appropriate format, that is same with twitter 
-    
+    # and returns timestamp for tweet in appropriate format, that is same with twitter
+
     current_time = Time.now.to_i
     diff = current_time - dest_unixtime
 
@@ -48,7 +48,7 @@ module ApplicationHelper
 
   def linkify_tweet_body(tweet_body,entities_from_api)
     return tweet_body if entities_from_api.empty?
-   
+
     # linkify urls obeying Twitter display requirements
     entities_from_api.each do |entity|
       if entity.url

@@ -8,7 +8,7 @@ class Status < ActiveRecord::Base
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   after_save :update_user_timestamp
-  
+
   def self.delete_flagged_status
     # delete all the statuses where deleted_flag = true
     Status.where(:deleted_flag => true).destroy_all
@@ -16,10 +16,10 @@ class Status < ActiveRecord::Base
 
   def self.flag_and_delete_duplicated_status
     # turn the duplicated statuses' deleted_flag TRUE using GROUP BY query
-    
+
     puts "Deleting already-flagged statuses before the process..."
     delete_flagged_status
-    
+
     progress_bar = ProgressBar.create(:total => User.get_active_users.count,:format => "%t |%B| %P[%],%a,%E(%c/%C)")
     progress_bar.log "start flagging..."
     User.get_active_users.each do |u|
@@ -33,7 +33,7 @@ class Status < ActiveRecord::Base
       progress_bar.increment
     end
     progress_bar.log "Finished flagging for all active users."
-    
+
     delete_flagged_status
   end
 
@@ -58,10 +58,10 @@ class Status < ActiveRecord::Base
 
   def self.save_single_status(user_id,tweet)
     new_record = Status.create( self.create_hash_to_save(user_id,tweet) )
-      
+
     # also save the entity belongs to the tweet
     Entity.save_entities(new_record.id.to_i,tweet)
-    
+
     # save status's created_at values
     PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
   end
@@ -72,10 +72,10 @@ class Status < ActiveRecord::Base
   end
 
   def self.seriarize_unixtime_list(unixtime_list)
-   
+
     # create 3D hash
     ret = Hash.new { |hash,key| hash[key] = Hash.new { |hash,key| hash[key] = {} } }
-    
+
     unixtime_list.each do |t|
       t = t.abs
       y = Time.zone.at(t).year.to_s
@@ -98,7 +98,7 @@ class Status < ActiveRecord::Base
       PublicDate.get_list.pluck(:posted_unixtime)
     end
   end
-  
+
   # get methods for retrieving timeline
 
   def self.get_latest_status(limit = 10)
@@ -107,7 +107,7 @@ class Status < ActiveRecord::Base
 
   def self.get_status_in_date(date = "YYYY(/MM(/DD))",limit = 10)
     # search the statuses tweeted in given date
-    
+
     # calculate the beginning and ending time of given date in unixtime
     date = calc_from_and_to_of(date)
     self.includes(:user,:entities).where(:twitter_created_at_reversed => -1*date[:to]..-1*date[:from]).limit(limit).order_for_timeline
@@ -144,7 +144,7 @@ class Status < ActiveRecord::Base
   def self.create_hash_to_save(user_id,tweet)
     ret = {}
     tweet = tweet[:attrs]
-    
+
     ret[:user_id] = user_id
     ret[:twitter_id] = tweet[:user][:id_str]
     ret[:status_id_str] = tweet[:id_str]
@@ -166,7 +166,7 @@ class Status < ActiveRecord::Base
     # check if this is the rewteeted status
     if tweet[:retweeted_status]
       rt = tweet[:retweeted_status]
-    
+
       ret[:is_retweet] = true
       ret[:rt_name] = rt[:user][:name]
       ret[:rt_screen_name] = rt[:user][:screen_name]
@@ -193,11 +193,11 @@ class Status < ActiveRecord::Base
 
     # detect the type of given date
     parts = date.to_s.split(/-/)
-    
+
     year = parts[0].to_i
     month = parts[1].to_i
     day = parts[2].to_i
-    
+
     ret = {}
     offset_rational =  Rational( Time.zone.utc_offset/3600,24)
     case parts.size

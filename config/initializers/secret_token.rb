@@ -1,7 +1,12 @@
 # Be sure to restart your server when you modify this file.
 
-# Your secret key for verifying the integrity of signed cookies.
+# Your secret key is used for verifying the integrity of signed cookies.
 # If you change this key, all old signed cookies will become invalid!
+
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Tlviewer::Application.config.secret_token = '847dfd7a1f069b2c5868fb5ab34f9eff0dda5148a3bf67890884e365efde0a1e8040c1192f1601ddffdaa90e3ca79519c600ddc63e6d00156b64387b1005a352'
+# You can use `rake secret` to generate a secure secret key.
+
+# Make sure your secret_key_base is kept private
+# if you're sharing your code publicly.
+Jump::Application.config.secret_key_base = '260930ed7caabd36dd05acb7ce056aff60ab2a0208b653f057c52aaab10b14007e377b33d9fc32f4fce8753466ade71443f6f83b5ba9959318e35ce7882c93ba'

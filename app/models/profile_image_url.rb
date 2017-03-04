@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 class ProfileImageUrl < ActiveRecord::Base
-  attr_accessible :created_at, :screen_name, :twitter_id, :updated_at, :url, :is_valid_url, :applied_to_status
   scope :unapplied ,-> {where(:applied_to_status => false)}
   scope :valid_url,-> {where(:is_valid_url => true)}
   def self.sync_record_with_status_broken
-    # fetch and save screen_name marked as unsolved the invalid url 
+    # fetch and save screen_name marked as unsolved the invalid url
     progress_bar = ProgressBar.create(:total => Status::Broken.unsolved.count,:format => "%t |%B| %P[%],%a,%E(%c/%C)")
     Status::Broken.unsolved.each do |broken_status|
       # fetch screen_name from Status and save
@@ -28,7 +27,7 @@ class ProfileImageUrl < ActiveRecord::Base
     twitter = Twitter::Client.new
     puts "Fetching the records to fill..."
     records_to_fill = self.where(:is_valid_url => false)
-    
+
     progress_bar = ProgressBar.create(:total => records_to_fill.count,:format => "%t |%B| %P[%],%a,%E(%c/%C)")
     records_to_fill.select(:screen_name).pluck(:screen_name).each_slice 100 do |dest_screen_names|
       # fetch fresh user data via API and update url
@@ -71,7 +70,7 @@ class ProfileImageUrl < ActiveRecord::Base
     end
     puts "Done."
   end
-  
+
   def self._apply_fresh_url_to_statuses
     self.unapplied.each do |unapplied_record|
       case unapplied_record.is_retweet

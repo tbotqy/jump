@@ -1,10 +1,10 @@
 $(function(){
-      
+
   // check user agent
   var userAgent = getUserAgent();
   var uaWhiteList = ['chrome','safari','firefox'];
   var isValidUA = false;
- 
+
   // check user's timezone
   if (!$.cookie('timezone')){
     $.cookie('timezone', $("html").get_timezone(), {expires: 1});
@@ -23,53 +23,53 @@ $(function(){
   // code for global header //
   ////////////////////////////
   if( $("#link-timeline").size() > 0 ){
-      
+
     // detect current page type and add active class to the button
     var elmLinkList = $("#link-timeline");
     var currentActionName = elmLinkList.data("current-action-name");
     elmLinkList.find("."+currentActionName).addClass("active");
-  
+
     // make link active on it is clicked
     elmLinkList.on("click","li",function(e){
       if( $(this).hasClass("disabled") ){
         e.preventDefault();
       }else{
         elmLinkList.find("li").removeClass("active");
-        $(this).addClass("active");          
+        $(this).addClass("active");
       }
     });
 
   }
-  
+
   //////////////////////////
   // code for each status //
   //////////////////////////
-  
+
   // click action to hide and show the bottom line in each status
-  
+
   $("#wrap-timeline-lower").on("click",".status-content",function(e){
-    
+
     // do process only if clicked element is not <a>
     var clicked = $(e.target);
     if(!clicked.is('a') && !clicked.is('i')){
-      
-      $(this).find(".bottom").slideToggle('fast');
-      
-    }
-    
-  });
 
+      $(this).find(".bottom").slideToggle('fast');
+
+    }
+
+  });
+  
   // click action to fire a delete ajax action
   $("#wrap-timeline-lower").on("click",".status-content .link-delete a",function(e){
-    
+
     e.preventDefault();
-    
+
     if(confirm('ツイートを削除します。よろしいですか？')){
 
       var status_id_to_delete = $(this).parent().data('status-id');
-      
+
       $.ajax({
-        
+
         url: "/ajax/delete_status",
         type: "post",
         data:{"status_id_to_delete":status_id_to_delete},
@@ -79,35 +79,35 @@ $(function(){
 
           // checks if the status trying to deleted is owned by logging user
           if(responce.owns){
-            
+
             // checks id delete process was correctly done
             if(responce.deleted){
-                
+
               $("div[data-status-id="+status_id_to_delete+"]").fadeOut();
             }else{
-              
+
               alert("ごめんなさい。削除に失敗しました。画面をリロードしてもう一度お試しください。");
-            
+
             }
-          
+
           }else{
             // the status trying to be deleted is not owned by logging user
             alert("不正な操作です。");
           }
 
         },
-        
+
         error: function(){
           // internal error
           alert("エラーが発生しました。");
         }
       });
     }
-  });          
-  
+  });
+
   // click action for read more button
   $("#wrap-timeline-lower").on("click","#read-more",function(e){
-    
+
     var self = $(this);
 
     e.preventDefault();
@@ -131,8 +131,8 @@ $(function(){
         // remove the element representing last status's timestamp
         elmOldestTweetId.remove();
         $("#wrap-read-more").remove();
-        
-        // insert loaded html code 
+
+        // insert loaded html code
         $(".wrap-one-result:last").after(responce);
       },
       error: function(responce){
@@ -145,42 +145,42 @@ $(function(){
   });
 
   var wrap_progress_bar = $(".wrap-progress-bar");
-  var import_button = $("#start-import");  
+  var import_button = $("#start-import");
 
   //click event activated when start button is clicked
   import_button.click(function(){
-    
+
     // change the button statement
     import_button.button('loading');
-    
+
     // show the loader icon
     showLoader("#wrap-import");
-    
+
     /// show the progress bar
     wrap_progress_bar.fadeIn(function(){
 
       // show the area displaying the status body currently saving
       $("#status").fadeIn();
-    
+
     });
-      
+
     //initialize data to post
     var data_to_post = {};
-      
+
     // check if id_str_oldest is specified
     var specified_id_str_oldest = $("input[name=id-oldest]").val();
     if( specified_id_str_oldest != "false"){
       data_to_post.id_str_oldest = specified_id_str_oldest;
       $("#recover-msg").fadeOut();
     }else{
-      data_to_post.id_str_oldest = "";        
+      data_to_post.id_str_oldest = "";
     }
-    
-    // post ajax request 
+
+    // post ajax request
     getStatuses(data_to_post);
-    
+
   });
-  
+
   ////////////////////////////////////
   // code for /users/home_timeline  //
   ////////////////////////////////////
@@ -200,15 +200,15 @@ $(function(){
   ////////////////////////////////////
 
   /**
-   * the process to update profile
-   */
+  * the process to update profile
+  */
 
   $("#update-profile").click(function(){
     var self = $(this);
     // change the button's statement
     self.button('loading');
 
-    // show the loading icon 
+    // show the loading icon
     self.after("<img class=\"loader\" src=\"/assets/ajax-loader.gif\" />");
     $(".wrap-profile").find(".loader").fadeIn();
 
@@ -217,15 +217,15 @@ $(function(){
   });
 
   /**
-   *    * the process to update tweets
-   *    */
+  *    * the process to update tweets
+  *    */
 
   $("#update-statuses").click(function(){
     var self = $(this);
     // change the button's statement
     self.button('loading');
 
-    // show the loading icon 
+    // show the loading icon
     self.after("<img class=\"loader\" src=\"/assets/ajax-loader.gif\" />");
     $(".tweets").find(".loader").fadeIn();
 
@@ -234,8 +234,8 @@ $(function(){
   });
 
   /**
-   *    * the process to update friend list
-   *    */
+  *    * the process to update friend list
+  *    */
 
   $("#update-friends").click(function(){
     var self = $(this);
@@ -248,15 +248,15 @@ $(function(){
     $(".friends").find(".loader").fadeIn();
 
     checkFriendUpdate();
-    
+
   });
-  
+
   /**
-   *    * the process for account deletion
-   *    */
+  *    * the process for account deletion
+  *    */
 
   var deleted = "";
- 
+
   // click event to delete account
   $("#delete-account").click(function(){
     var elmModalDeleteAccount = $("#modal-delete-account");
@@ -265,39 +265,39 @@ $(function(){
     elmModalDeleteAccount.find(".modal-footer .cancel-delete").addClass("disabled");
 
     $(this).button('loading');
-    
+
     elmModalDeleteAccount
-      .find(".status")
-      .fadeOut(function(){
-      $(this).html("処理中...<img src=\"/assets/ajax-loader.gif\" class=\"loader\" />"); 
-      })
-      .fadeIn();
-    
+    .find(".status")
+    .fadeOut(function(){
+      $(this).html("処理中...<img src=\"/assets/ajax-loader.gif\" class=\"loader\" />");
+    })
+    .fadeIn();
+
     $.ajax({
-      
+
       url: '/ajax/deactivate_account',
       type: 'post',
       dataType: 'json',
-      
+
       success: function(res){
-      deleted = res.deleted;
-      showDeleteCompleteMessage(res.deleted);
+        deleted = res.deleted;
+        showDeleteCompleteMessage(res.deleted);
       },
 
       error: function(){
-      showDeleteErrorMessage();
+        showDeleteErrorMessage();
       },
-      
-      complete: function(){
-      if(deleted){
 
-        setTimeout(
+      complete: function(){
+        if(deleted){
+
+          setTimeout(
             function(){
-                  redirect();
-                }, 3000
+              redirect();
+            }, 3000
           );
-        
-      }else{
+
+        }else{
           alert("処理がうまくいきませんでした。");
         }
       }
@@ -319,9 +319,9 @@ $(function(){
       elmToPageTop.fadeOut();
     }
   });
-  
+
   $(".to-page-top").find("a").click (function(e) {
     scrollToPageTop(e);
   });
-  
+
 });
