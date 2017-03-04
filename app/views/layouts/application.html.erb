@@ -5,7 +5,7 @@
   <html lang="ja">
 <% end %>
   <head>
-    <title><%= title @title %></title>
+    <title><%= title_text %></title>
     <meta charset="UTF-8"/>
     <% if request.smart_phone? %>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,7 @@
     <meta property="og:locale" content="ja_JP">
     <meta property="fb:app_id" content="258025897640441" />
     <meta property="og:site_name" content="TwitJump" />
-    <meta property="og:title" content="<%= title @title %>" />
+    <meta property="og:title" content="<%= title_text %>" />
     <meta property="og:description" content="Click and jump to your passed days." />
     <meta property="og:url" content="<%= request.url %>" />
     <meta property="og:type" content="website" />
