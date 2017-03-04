@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   def index
     return redirect_to(action: :sent_tweets) if logged_in?
-    @title = "クリックひとつで、過去のあの日のツイートへ"
+
     @show_header = false
     @show_to_page_top = false
     @show_footer = true
