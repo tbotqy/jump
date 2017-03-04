@@ -25,8 +25,6 @@ class User < ActiveRecord::Base
   end
 
   def self.create_account(auth)
-    return false unless auth.instance_of?(OmniAuth::AuthHash)
-
     info = auth.extra.raw_info
     user = User.new(
       :twitter_id => info.id,
@@ -48,12 +46,10 @@ class User < ActiveRecord::Base
       :created_at => Time.zone.now.to_i,
       :updated_at => Time.zone.now.to_i
       )
-
     user.save
   end
 
   def self.update_account(auth)
-    return false unless auth.instance_of?(OmniAuth::AuthHash)
 
     dest_user = self.find_by_twitter_id(auth.uid)
 
