@@ -81,7 +81,7 @@ describe User do
     end
   end
 
-  describe "update_account" do
+  describe "update_account!" do
     it "updates a record with given auth_hash" do
 
     end

@@ -22,7 +22,7 @@ class LogsController < ApplicationController
     # check if user already exists
     if User.active_twitter_id_exists?(auth.uid)
       # update account with auth
-      User.update_account(auth)
+      User.update_account!(auth)
     else
       # create new account
       User.create_account!(auth)
