@@ -4,29 +4,28 @@ class User < ActiveRecord::Base
   has_many :friends, :dependent => :delete_all
 
   class << self
-    def create_account(auth)
+    def create_account!(auth)
       info = auth.extra.raw_info
-      user = User.new(
-      :twitter_id => info.id,
-      :name => info.name,
-      :screen_name => info.screen_name,
-      :profile_image_url_https => info.profile_image_url_https,
-      :time_zone => info.time_zone,
-      :utc_offset => info.utc_offset,
-      :twitter_created_at => Time.zone.parse(info.created_at).to_i,
-      :lang => info.lang,
-      :token => auth.credentials.token,
-      :token_secret => auth.credentials.secret,
-      :token_updated_at => false,
-      :statuses_updated_at => false,
-      :friends_updated_at => false,
-      :closed_only => false,
-      :initialized_flag => false,
-      :deleted_flag => false,
-      :created_at => Time.zone.now.to_i,
-      :updated_at => Time.zone.now.to_i
-      )
-      user.save
+      create!(
+        :twitter_id => info.id,
+        :name => info.name,
+        :screen_name => info.screen_name,
+        :profile_image_url_https => info.profile_image_url_https,
+        :time_zone => info.time_zone,
+        :utc_offset => info.utc_offset,
+        :twitter_created_at => Time.zone.parse(info.created_at).to_i,
+        :lang => info.lang,
+        :token => auth.credentials.token,
+        :token_secret => auth.credentials.secret,
+        :token_updated_at => false,
+        :statuses_updated_at => false,
+        :friends_updated_at => false,
+        :closed_only => false,
+        :initialized_flag => false,
+        :deleted_flag => false,
+        :created_at => Time.zone.now.to_i,
+        :updated_at => Time.zone.now.to_i
+        )
     end
 
     def update_account(auth)
