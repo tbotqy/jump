@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
         )
     end
 
-    def update_account(auth)
+    def update_account!(auth)
       dest_user = find_by_twitter_id(auth.uid)
 
       info = auth.extra.raw_info
