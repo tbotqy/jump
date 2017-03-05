@@ -75,15 +75,15 @@ describe User do
     pending "Will be replaced with other method."
   end
 
-  describe "create_account" do
+  describe "create_account!" do
     it "increases the total numer of records in users table by 1" do
-      expect{User.create_account(auth_hash)}.to change{User.count}.by(1)
+      expect{User.create_account!(auth_hash)}.to change{User.count}.by(1)
     end
   end
 
   describe "update_account" do
     it "updates a record with given auth_hash" do
-      
+
     end
     it "doesn't inscrease the total number of records in users table" do
 

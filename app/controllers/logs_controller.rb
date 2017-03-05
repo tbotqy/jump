@@ -25,7 +25,7 @@ class LogsController < ApplicationController
       User.update_account(auth)
     else
       # create new account
-      User.create_account(auth)
+      User.create_account!(auth)
     end
 
     # log the user in
