@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     return redirect_to(action: :sent_tweets) if logged_in?
-aq
+
     @total_user_num   = User.active.count
     @total_status_num = Stat.active_status_count
 
@@ -16,13 +16,11 @@ aq
   end
 
   def for_users
-    @title = "ご利用に際して"
     @show_header = false
     @show_to_page_top = false
   end
 
   def browsers
-    @title = "対応ブラウザについて"
     @show_footer = true
   end
 
