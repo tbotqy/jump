@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
-
-  before_filter :check_login, :except => ["index","for_users","browsers","public_timeline"]
-  before_filter :check_tweet_import, :except => ["index","for_users","browsers","public_timeline"]
+  before_filter :check_login,        only: %w|sent_tweets home_timeline setting delete_account|
+  before_filter :check_tweet_import, only: %w|sent_tweets home_timeline setting delete_account|
 
   def index
     return redirect_to(action: :sent_tweets) if logged_in?
