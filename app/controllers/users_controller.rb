@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @show_to_page_top = false
     @show_footer = true
     @show_scrollbar = true
-    @total_user_num = User.get_active_user_count
+    @total_user_num = User.active.count
     @total_status_num = Status.get_active_status_count
   end
 
