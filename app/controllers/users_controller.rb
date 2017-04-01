@@ -5,14 +5,14 @@ class UsersController < ApplicationController
 
   def index
     return redirect_to(action: :sent_tweets) if logged_in?
-
-    @total_user_num = User.active.count
+aq
+    @total_user_num   = User.active.count
     @total_status_num = Stat.active_status_count
 
-    @show_header = false
+    @show_header      = false
     @show_to_page_top = false
-    @show_footer = true
-    @show_scrollbar = true
+    @show_footer      = true
+    @show_scrollbar   = true
   end
 
   def for_users
