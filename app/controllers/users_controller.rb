@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @show_footer = true
     @show_scrollbar = true
     @total_user_num = User.active.count
-    @total_status_num = Status.get_active_status_count
+    @total_status_num = Stat.active_status_count
   end
 
   def for_users
