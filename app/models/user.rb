@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :statuses, dependent: :destroy
   has_many :friends, dependent: :delete_all
 
+  scope :active, lambda{where(deleted_flag: false)}
+
   class << self
     def create_account!(auth)
       info = auth.extra.raw_info
@@ -95,10 +97,6 @@ class User < ActiveRecord::Base
 
     def get_active_users
       where(deleted_flag: false).order('created_at DESC')
-    end
-
-    def get_active_user_count
-      select(:id).where(deleted_flag: false).count
     end
 
     def get_gone_users
