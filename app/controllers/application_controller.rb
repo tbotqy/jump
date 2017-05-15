@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   include Jpmobile::ViewSelector
+  include SessionModule
 
   protect_from_forgery
+
   # stop rejecting incompatible ua
-  before_filter :set_vars, :apply_user_time_zone, :reject_incompatible_ua
+  before_filter :fetch_current_user!, :set_vars, :apply_user_time_zone, :reject_incompatible_ua
 
   # handlers for exceptions
   if Rails.env.production?
@@ -51,19 +53,17 @@ class ApplicationController < ActionController::Base
   end
 
   def set_vars
-    @@current_user = get_current_user || nil
-    @@user_id = @@current_user ? @@current_user.id : nil
+    @@user_id = @current_user ? @current_user.id : nil
 
     @show_header = true
     @show_to_page_top = !request.smart_phone?
     @show_footer = request.smart_phone?
     @show_scrollbar = false
-    @current_user = @@current_user
   end
 
   def apply_user_time_zone
-    if @@current_user
-      Time.zone = @@current_user.time_zone
+    if @current_user
+      Time.zone = @current_user.time_zone
     else
       Time.zone = cookies[:timezone] || 'UTC'
     end
