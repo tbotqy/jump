@@ -46,10 +46,10 @@ class UsersController < ApplicationController
 
     if specified_date
       # fetch statuses in specified date
-      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_current_user(@current_user.id)
     else
       # just fetch latest statuses
-      @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@@user_id)
+      @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@current_user.id)
     end
 
     if @statuses.present?
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
       @oldest_tweet_id = @statuses.last.status_id_str
 
       # check if read-more button should be shown
-      older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_current_user(@@user_id)
+      older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_current_user(@current_user.id)
       @has_next = older_status.length > 0
     else
       @oldest_tweet_id = false
@@ -86,10 +86,10 @@ class UsersController < ApplicationController
 
     if specified_date
       # fetch statuses in specified date
-      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_friend_of(@current_user.id)
     else
       # just fetch latest statuses
-      @statuses = Status.showable.force_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@@user_id)
+      @statuses = Status.showable.force_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@current_user.id)
     end
 
     if @statuses.present?
@@ -97,7 +97,7 @@ class UsersController < ApplicationController
       @oldest_tweet_id = @statuses.last.status_id_str
 
       # check if read-more button should be shown
-      older_status = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@@user_id).get_older_status_by_tweet_id( @oldest_tweet_id,1 )
+      older_status = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id( @oldest_tweet_id,1 )
       @has_next = older_status.length > 0
     else
       @oldest_tweet_id = false
