@@ -12,8 +12,8 @@ class AjaxController < ApplicationController
     ret = {}
 
     values_to_check = ['name','screen_name','profile_image_url_https','time_zone','utc_offset','lang']
-    fresh_data = create_twitter_client.user(@@current_user.twitter_id)
-    existing_data = @@current_user.attributes
+    fresh_data = create_twitter_client.user(@current_user.twitter_id)
+    existing_data = @current_user.attributes
 
     updated = false
     updated_value = {}
@@ -22,7 +22,7 @@ class AjaxController < ApplicationController
       new_data = fresh_data[value_name]
       if new_data != existing_data[value_name]
         # udpate db with fresh data
-        @@current_user.update_attribute(value_name,new_data)
+        @current_user.update_attribute(value_name,new_data)
         updated = true
         updated_value[value_name] = new_data
       end
@@ -30,7 +30,7 @@ class AjaxController < ApplicationController
 
     ret[:updated] = updated
     ret[:updated_value] = updated_value
-    ret[:updated_date] = Time.zone.at(@@current_user.updated_at.to_i).strftime('%F %T')
+    ret[:updated_date] = Time.zone.at(@current_user.updated_at.to_i).strftime('%F %T')
 
     render :json => ret
   end
@@ -42,7 +42,7 @@ class AjaxController < ApplicationController
     api_params = {:user_id => @@user_id, :count => 1, :include_rts => true}
 
     # check if new status exists by comparing posted time
-    latest_tweet = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
+    latest_tweet = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
     fresh_latest_created_at = Time.zone.parse(latest_tweet[0][:attrs][:created_at].to_s).to_i
 
     existing_latest_status = Status.showable.get_latest_status(1).owned_by_current_user(@@user_id)
@@ -72,7 +72,7 @@ class AjaxController < ApplicationController
 
     # fetch the list of user's friends
     existing_friend_ids = Friend.get_friend_twitter_ids(@@user_id)
-    fresh_friend_ids = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)
+    fresh_friend_ids = fetch_friend_list_by_twitter_id(@current_user.twitter_id)
 
     # check if update is required by comparing
     do_update = existing_friend_ids.sort! != fresh_friend_ids.sort!
@@ -81,13 +81,13 @@ class AjaxController < ApplicationController
       Friend.update_list(@@user_id,fresh_friend_ids)
     else
       # just update timestamp
-      @@current_user.update_attribute(:friends_updated_at,Time.now.to_i)
+      @current_user.update_attribute(:friends_updated_at,Time.now.to_i)
     end
 
     ret = {
       :updated => do_update,
-      :friends_count => @@current_user.friends.count,
-      :updated_date => Time.zone.at(@@current_user.friends_updated_at).strftime('%F %T')
+      :friends_count => @current_user.friends.count,
+      :updated_date => Time.zone.at(@current_user.friends_updated_at).strftime('%F %T')
     }
 
     render :json => ret
@@ -161,7 +161,7 @@ class AjaxController < ApplicationController
       # set params to acquire 101 statuses that are older than the status with max_id
       api_params[:count] = 101
       api_params[:max_id] = max_id
-      statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
+      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
 
       # remove the newest status from result because it has been already saved in previous ajax call
       if statuses.size > 0
@@ -172,8 +172,8 @@ class AjaxController < ApplicationController
 
       # acqurie 100 tweets
       api_params[:count] = 100
-      user_twitter = create_twitter_client.user(@@current_user.twitter_id)
-      statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
+      user_twitter = create_twitter_client.user(@current_user.twitter_id)
+      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
     end
 
     if statuses.present?
@@ -225,7 +225,7 @@ class AjaxController < ApplicationController
     ret[:continue] = continue
     ret[:saved_count] = saved_count.to_i
     ret[:oldest_id_str] = oldest_id_str
-    ret[:updated_date] = Time.zone.at(@@current_user.updated_at.to_i).strftime('%F %T')
+    ret[:updated_date] = Time.zone.at(@current_user.updated_at.to_i).strftime('%F %T')
 
     render :json => ret
   end
@@ -300,7 +300,7 @@ class AjaxController < ApplicationController
       api_params[:count] = 101
       api_params[:max_id] = max_id
 
-      statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
+      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
 
       # remove the newest status from result because it has been already saved in previous ajax call
       if statuses.size > 0
@@ -309,9 +309,9 @@ class AjaxController < ApplicationController
     else
       # acqurie 100 tweets
       api_params[:count] = 100
-      statuses = create_twitter_client.user_timeline(@@current_user.screen_name.to_s, api_params)
+      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
       # retrieve following list and save them as user's friend
-      friends = fetch_friend_list_by_twitter_id(@@current_user.twitter_id)
+      friends = fetch_friend_list_by_twitter_id(@current_user.twitter_id)
       Friend.save_friends(@@user_id.to_i,friends)
 
       if !statuses
@@ -352,19 +352,19 @@ class AjaxController < ApplicationController
     else
       unless no_status_at_all
         # mark this user as initialized
-        @@current_user.update_attribute(:initialized_flag,true)
+        @current_user.update_attribute(:initialized_flag,true)
         # update statistics database
-        added_tweets_count = @@current_user.get_active_status_count
+        added_tweets_count = @current_user.get_active_status_count
         Stat.increase('active_status_count', added_tweets_count)
       end
 =begin
       # send notification dm
       create_twitter_client(configatron.access_token,configatron.access_token_secret) do |my_twitter|
-        my_twitter.direct_message_create(configatron.admin_user_twitter_id, "@"+ @@current_user.screen_name.to_s + "has joined at " + Time.now)
+        my_twitter.direct_message_create(configatron.admin_user_twitter_id, "@"+ @current_user.screen_name.to_s + "has joined at " + Time.now)
       end
       # send notification dm
       admin_twitter = create_twitter_client(configatron.access_token,configatron.access_token_secret)
-      admin_twitter.direct_message_create(configatron.service_owner_twitter_id.to_i, "@"+ @@current_user.screen_name.to_s + " has joined at " + Time.now.strftime('%F %T')) rescue nil
+      admin_twitter.direct_message_create(configatron.service_owner_twitter_id.to_i, "@"+ @current_user.screen_name.to_s + " has joined at " + Time.now.strftime('%F %T')) rescue nil
 =end
     end
 
