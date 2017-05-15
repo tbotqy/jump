@@ -50,37 +50,6 @@ class User < ActiveRecord::Base
         })
     end
 
-    def sync_profile_image
-      puts "Collecting the user ids with invalid profile image url..."
-
-      dest_twitter_ids = []
-      count = 0
-      get_active_users.each do |user_db|
-        uri = URI.parse( URI.encode(user_db.profile_image_url_https) )
-        res = Net::HTTP.get_response( uri.host, uri.path )
-        if res.code != "200"
-          # add the user's twitter id to array
-          dest_twitter_ids.push(user_db.twitter_id)
-          count += 1
-        end
-        puts "Progress : #{count} invalid urls found." if count.modulo(100) == 0 && count > 0
-      end
-
-      twitter = Twitter::Client.new
-
-      puts "Fetching the latest profile image url and update..."
-      count = 0
-      dest_twitter_ids.each_slice 100 do |ids|
-        twitter.users(ids).each do |user_twitter|
-          # update prof image url
-          find_by_twitter_id(user_twitter.id).update_attributes(profile_image_url_https: user_twitter.profile_image_url_https)
-          count += 1
-        end
-      end
-
-      puts "Complete syncing #{count} users' profile image url."
-    end
-
     def deactivate_account(user_id)
       # just turn the flag off, not actually delete user's status from database
       deleted_status_count = Status.where(user_id: user_id).update_all(deleted_flag: true)
