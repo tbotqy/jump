@@ -53,8 +53,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_vars
-    @@user_id = @current_user ? @current_user.id : nil
-
     @show_header = true
     @show_to_page_top = !request.smart_phone?
     @show_footer = request.smart_phone?

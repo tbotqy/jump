@@ -9,7 +9,7 @@ class StatusesController < ApplicationController
     @title = "データの取り込み"
     @show_header = true
     # redirect initialized user
-    if User.find(@@user_id).has_imported?
+    if @current_user.has_imported?
       redirect_to "/your/tweets" and return
     end
 
