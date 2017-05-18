@@ -31,18 +31,18 @@ class Stat < ActiveRecord::Base
 
     def sync_active_status_count
       # sync the value of active status count with the count on status table
-      count_on_statuses = Status.where(:deleted_flag => false).count
-      get_dest_record("active_status_count").update_attributes(:value => count_on_statuses)
+      count_on_statuses = Status.where(deleted_flag: false).count
+      get_dest_record("active_status_count").update_attributes(value: count_on_statuses)
     end
   end
 
   def add_value(number_to_add)
     # add given number to current record
-    update_attributes(:value => (self.value + number_to_add))
+    update_attributes(value: (self.value + number_to_add))
   end
 
   def subtract_value(number_to_subtract)
     # subtruct given number from current record
-    update_attributes(:value => (self.value - number_to_subtract))
+    update_attributes(value: (self.value - number_to_subtract))
   end
 end
