@@ -16,11 +16,11 @@ class Status < ActiveRecord::Base
 
   class << self
     def delete_pre_saved_status(user_id)
-      destroy_all(:user_id => user_id, :pre_saved => true)
+      destroy_all(user_id: user_id, pre_saved: true)
     end
 
     def save_pre_saved_status(user_id)
-      where(:user_id => user_id, :pre_saved => true).update_all(:pre_saved => false)
+      where(user_id: user_id, pre_saved: true).update_all(pre_saved: false)
     end
 
     def save_statuses(user_id,tweets)
@@ -83,7 +83,7 @@ class Status < ActiveRecord::Base
 
       # calculate the beginning and ending time of given date in unixtime
       date = calc_from_and_to_of(date)
-      includes(:user,:entities).where(:twitter_created_at_reversed => -1*date[:to]..-1*date[:from]).limit(limit).order_for_timeline
+      includes(:user,:entities).where(twitter_created_at_reversed: -1*date[:to]..-1*date[:from]).limit(limit).order_for_timeline
     end
 
     def get_older_status_by_tweet_id(threshold_tweet_id,limit = 10)
@@ -98,7 +98,7 @@ class Status < ActiveRecord::Base
 
     def owned_by_current_user(user_id)
       # used for users#sent_tweets
-      where(:user_id => user_id)
+      where(user_id: user_id)
     end
 
     def owned_by_friend_of(user_id)
