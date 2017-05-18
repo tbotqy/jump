@@ -10,26 +10,32 @@ class Stat < ActiveRecord::Base
       # returns the value of given type
       select(:value).find_by_type(dest_type_name).value
     end
-  end
 
-  def self.increase(dest_type_name,number_to_add)
-    # increase the number of destinated data value
-    dest_record = self.get_dest_record(dest_type_name)
+    def increase(dest_type_name,number_to_add)
+      # increase the number of destinated data value
+      dest_record = get_dest_record(dest_type_name)
 
-    # add given number
-    dest_record.add_value(number_to_add)
-  end
+      # add given number
+      dest_record.add_value(number_to_add)
+    end
 
-  def self.decrease(dest_type_name,number_to_subtract)
-    # decrease the value of destinated record with given number
-    dest_record = self.get_dest_record(dest_type_name)
+    def decrease(dest_type_name,number_to_subtract)
+      # decrease the value of destinated record with given number
+      dest_record = get_dest_record(dest_type_name)
 
-    # substruct given number from the value in destinated record
-    dest_record.subtract_value(number_to_subtract)
-  end
+      # substruct given number from the value in destinated record
+      dest_record.subtract_value(number_to_subtract)
+    end
 
-  def self.get_dest_record(dest_type_name)
-    find_by_type(dest_type_name)
+    def get_dest_record(dest_type_name)
+      find_by_type(dest_type_name)
+    end
+
+    def sync_active_status_count
+      # sync the value of active status count with the count on status table
+      count_on_statuses = Status.where(:deleted_flag => false).count
+      get_dest_record("active_status_count").update_attributes(:value => count_on_statuses)
+    end
   end
 
   def add_value(number_to_add)
@@ -41,12 +47,4 @@ class Stat < ActiveRecord::Base
     # subtruct given number from current record
     update_attributes(:value => (self.value - number_to_subtract))
   end
-
-  def self.sync_active_status_count
-    # sync the value of active status count with the count on status table
-    count_on_statuses = Status.where(:deleted_flag => false).count
-    self.get_dest_record("active_status_count").update_attributes(:value => count_on_statuses)
-  end
-
-
 end
