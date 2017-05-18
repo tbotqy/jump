@@ -14,19 +14,19 @@ class Friend < ActiveRecord::Base
 
     def get_friend_twitter_ids(user_id)
       # returns the array of friends' twitter id
-      select(:following_twitter_id).where(:user_id => user_id).pluck(:following_twitter_id)
+      select(:following_twitter_id).where(user_id: user_id).pluck(:following_twitter_id)
     end
 
 
-    def save_friends(user_id,friend_ids)
+    def save_friends(user_id, friend_ids)
       created_at = Time.now.to_i
 
       friend_ids.each do |fid|
         create(
-          :user_id => user_id,
-          :following_twitter_id => fid,
-          :created_at => created_at
-          )
+          user_id: user_id,
+          following_twitter_id: fid,
+          created_at: created_at
+        )
       end
 
       # update the time stamp in User model
@@ -34,16 +34,16 @@ class Friend < ActiveRecord::Base
         if u.nil?
           put "not found"
         else
-          u.update_attribute(:friends_updated_at,created_at)
+          u.update_attribute(:friends_updated_at, created_at)
         end
       end
     end
 
-    def update_list(user_id,friend_ids)
+    def update_list(user_id, friend_ids)
       # delete user's friend list
-      destroy_all(:user_id => user_id)
+      destroy_all(user_id: user_id)
       # insert new friend list
-      save_friends(user_id,friend_ids)
+      save_friends(user_id, friend_ids)
     end
   end
 end
