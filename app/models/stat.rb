@@ -14,7 +14,6 @@ class Stat < ActiveRecord::Base
     def increase(dest_type_name,number_to_add)
       # increase the number of destinated data value
       dest_record = get_dest_record(dest_type_name)
-
       # add given number
       dest_record.add_value(number_to_add)
     end
@@ -22,7 +21,6 @@ class Stat < ActiveRecord::Base
     def decrease(dest_type_name,number_to_subtract)
       # decrease the value of destinated record with given number
       dest_record = get_dest_record(dest_type_name)
-
       # substruct given number from the value in destinated record
       dest_record.subtract_value(number_to_subtract)
     end
