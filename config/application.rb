@@ -32,6 +32,6 @@ module Jump
     config.assets.version = '1.0'
     # add fonts dir for font awesome
     config.assets.paths << Rails.root.join("app","assets","fonts")
-
+    config.generators.template_engine = :slim
   end
 end
