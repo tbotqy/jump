@@ -1,0 +1,35 @@
+= content_for(:title){"対応ブラウザについて"}
+.box.browser
+  header
+    h1.brand
+      | TwitJump
+    span.version
+      | beta
+    p.catch
+      | クリック一つであの日のつぶやきへ
+  .lower
+    .alert.alert-success
+      h2
+        | ご不便をお掛けして申し訳ありませんが、TwitJumpは今お使いのブラウザに対応しておりません。
+        br
+        | 恐れ入りますが、下記いずれかのブラウザに変えてアクセスして頂けますよう、お願い申し上げます。
+    .browsers
+      ul
+        li
+          a[href="//www.google.co.jp/chrome/" target="_blank"]
+            = image_tag("chrome.png", width: 64, alt: "chrome")
+          span.link
+            a[href="//www.google.co.jp/chrome/" target="_blank"]
+              | Chrome
+        li
+          a[href="//www.mozilla.jp/firefox/" target="_blank"]
+            = image_tag("firefox.png", width: 64, alt: "firefox")
+          span.link
+            a[href="//www.mozilla.jp/firefox/" target="_blank"]
+              | Firefox
+        li
+          a[href="//windows.microsoft.com/ja-jp/internet-explorer/download-ie" target="_blank"]
+            = image_tag("ie.png", width: 64, alt: "ie")
+          span.link
+            a[href="//windows.microsoft.com/ja-jp/internet-explorer/download-ie" target="_blank"]
+              | Internet Explorer 9以上

@@ -1,0 +1,70 @@
+#wrap-setting-upper
+  h3
+    i.icon-hdd
+    span
+      | データ管理
+.ad.no-margin
+  = render "shared/adsense/sp/settings/upper"
+#wrap-setting-lower
+  .wrap-profile
+    .area-profile-image
+      = image_tag(@current_user.profile_image_url_https.to_s.gsub(/_normal/,'_reasonably_small'), class: "profile-image-url-https", width: 70)
+    .area-center
+      .area-names
+        p.name
+          = @current_user.name
+        p
+          | @
+          span.screen-name
+            = @current_user.screen_name
+      .area-updated
+        p
+          | 最終更新 : 
+          span.updated-date
+            = @profile_updated_at
+    .area-button
+      .area-result
+        span.alert
+      button#update-profile.btn.btn-success[data-loading-text="読み込み中"]
+        i.icon-refresh
+        | 更新
+  .tweets
+    span.head
+      | ツイート
+    .count.margin
+      |  件数 : 
+      span.total-num
+        = @count_statuses
+      | 件 
+    .last-update.margin
+      |  最終更新 : 
+      span.date
+        = @status_updated_at
+    .button.margin
+      span.additional-num
+      button#update-statuses.btn.btn-success[data-loading-text="読み込み中"]
+        i.icon-refresh.icon-white
+        | 更新
+  .friends
+    span.head
+      | フォローリスト
+    .count.margin
+      |  件数 : 
+      span.total-num
+        = @count_friends
+      | 件 
+    .last-update.margin
+      |  最終更新 : 
+      span.date
+        = @friend_updated_at
+    .button.margin
+      span.additional-num
+      button#update-friends.btn.btn-success[data-loading-text="読み込み中"]
+        i.icon-refresh.icon-white
+        | 更新
+  .wrap-delete-button
+    a.btn.btn-danger[href="/users/delete_account"]
+      i.icon-trash.icon-white
+      | アカウントを削除する
+.ad
+  = render "shared/adsense/sp/settings/bottom"

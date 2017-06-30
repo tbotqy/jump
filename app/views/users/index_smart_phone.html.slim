@@ -1,0 +1,39 @@
+= content_for(:title){"クリックひとつで、過去のあの日のツイートへ"}
+.wrap-login
+  .area-head
+    header
+      h1.brand
+        a[href="/"]
+          | TwitJump
+      h2
+        | あの日のつぶやきへジャンプ
+  .area-main
+    article
+      h4
+        | あなたのあの日のつぶやきを
+      p
+        | あなた や あなたがフォローしている人たちのつぶやきを、日付を指定して見ることができます
+      span.read-me
+        a.link[href="/for_users"]
+          | ※ご利用に際して
+      p.wrap-btn
+        a.btn.btn-info[href="/auth/twitter"]
+          | ツイッターでサインイン
+    article
+      h4
+        | みんなのあの日のつぶやきも
+      p
+        span.brand
+          | TwitJump
+        | に登録している人たちのつぶやきも、日付を指定して見ることができます
+      p
+        | ( 
+        = number_with_delimiter(@total_user_num,:delimiter=>",")
+        | 人 / 
+        = number_with_delimiter(@total_status_num,:delimiter=>",")
+        | ツイート )
+      p.wrap-btn
+        a.btn.btn-primary[href="/public_timeline"]
+          | パブリックタイムラインを見てみる
+  .area-ad
+    = render "shared/adsense/sp/login/bottom"

@@ -1,0 +1,89 @@
+#wrap-admin
+  header
+    h1
+      | メニュー
+  ul.nav.nav-pills
+    li
+      a[href="/admin/accounts"]
+        | ユーザーアカウント管理
+    li
+      a[href="/admin/statuses"]
+        | ツイート数の確認
+  - if @active_users.present?
+    .area-active-users
+      h1
+        a.toggler[data-dest-content-type="active-users" href="#"]
+          | アクティブユーザー一覧 (
+          = @active_users.count
+          | 人)
+      .content
+        table.table.table-bordered.table-condensed.table-active-users
+          thead
+            tr
+              th.centroid
+                | id
+              th
+                | screen name
+              th
+                | created
+              th
+                | updated
+          tbody
+            - @active_users.each do |user|
+              tr
+                td.centroid
+                  = user.id
+                td
+                  = user.screen_name
+                td
+                  = Time.zone.at(user.created_at).strftime('%F %T')
+                td
+                  = Time.zone.at(user.updated_at).strftime('%F %T')
+  .area-gone-users
+    h1
+      a.toggler[data-dest-content-type="gone-users" href="#"]
+        | アカウントのクリーンアップ
+    - if @gone_users.present?
+      .content
+        table.table.table-bordered.table-condensed.table-gone-users
+          thead
+            tr
+              th
+              th.centroid
+                | id
+              th
+                | screen name
+              th
+                | updated
+              th
+          tbody
+            - @gone_users.each do |user|
+              |  <tr data-dest-id="
+              = user.id
+              | "> 
+              td.chk
+                |  <button class="btn" data-toggle="button" data-dest-id="
+                = user.id
+                | ">
+                i.icon-ok
+              td.centroid
+                = user.id
+              td
+                = user.screen_name
+              td
+                = Time.zone.at(user.updated_at).strftime('%F %T')
+              td
+                | <button class="btn btn-danger delete-each" data-dest-id="
+                = user.id
+                | ">
+                i.icon-trash
+                | 削除
+                = image_tag("ajax-loader.gif", class: "loader")
+        .wrap-button
+          button#delete-selected.btn.btn-danger
+            i.icon-trash
+            | Delete selected
+          = image_tag("ajax-loader.gif", class: "loader")
+    - else
+      .alert.alert-info
+        |  クリーンアップするアカウントはありません。 

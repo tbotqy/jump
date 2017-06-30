@@ -1,0 +1,45 @@
+#wrap-import
+  .wrap-upper
+    h2
+      | タイムラインを取り込む
+    h4
+      |  <a href="https://twitter.com/
+      = @current_user.screen_name
+      | " target="_blank"> 
+      = image_tag("twitter-bird-light-bgs.png", width: 30)
+      |  @
+      = @current_user.screen_name
+      | のツイートを 
+      button#start-import.btn.btn-success[data-loading-text="保存中..." data-complete-text="取得完了"]
+        i.icon-random.icon-white
+        | 取り込み開始
+      = image_tag("ajax-loader.gif", class: "loader")
+      - if @id_oldest != "false"
+        p#recover-msg.alert.alert-info
+          | 続きから取り込みます
+    |  <input type="hidden" name="id-oldest" value="
+    = @id_oldest
+    | " /> <input type="hidden" name="count-so-far" value="
+    = @count_so_far
+    | " /> 
+  .wrap-progress-bar[style="display:none;"]
+    |  <input type="hidden" id="statuses-count" value="
+    = @statuses_count
+    | " /> 
+    .progress.progress-striped.progress-primary.active
+      .bar[style="width: 0%;height: 30px;"]
+    p.total
+  .wrap-lower
+    .wrap-importing-status[style="display:none;"]
+      .wrap-tweet
+        .inner
+          p.body
+          p.date
+        .triangle
+      .wrap-profile-image
+        .profile-image
+          .viewport
+            |  <a href="https://twitter.com/
+            = @current_user.screen_name
+            | ">
+            = image_tag(@current_user.profile_image_url_https, alt: @current_user.screen_name)
