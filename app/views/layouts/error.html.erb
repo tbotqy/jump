@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title><%= title @title %></title>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="あの日のタイムラインを眺められる、ちょっとしたアプリケーション"/>
+    <meta name="keywords" content="タイムライン,過去のタイムライン,過去のつぶやき,過去のツイート"/>
+    <meta property="og:locale" content="ja_JP">
+    <meta property="fb:app_id" content="258025897640441" />
+    <meta property="og:site_name" content="Timdeline" />
+    <meta property="og:title" content="<%= title @title %>" />
+    <meta property="og:description" content="Timedline is a simple view system for those who want to have the access to their past timeline." />
+    <meta property="og:url" content="<%= request.url %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="<%= request.url %>/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Contrail+One|Fugaz+One|Emblema+One|Questrial|PT+Sans' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= csrf_meta_tags %>
+    <% if configatron.site_mode == "production" %>
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-28886746-8']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    <% end %>
+  </head>
+  <body>
+    <div id="fb-root"></div>
+    <%= render "shared/global_header",{ :current_user => @current_user || false} %>
+    <!-- #container-main -->
+    <div id="container-main" class="<%= controller.action_name %>">
+      <div class="inner">
+        <%= yield %>
+      </div>
+    </div>
+    <!-- /#container-main -->
+    <%= render "shared/to_page_top" %>
+    <% if @show_footer %>
+      <%= render "shared/footer" %>
+    <% end %>
+  </body>
+</html>

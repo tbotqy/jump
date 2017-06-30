@@ -1,0 +1,50 @@
+<!-- #container-footer -->
+<div id="container-footer">
+
+  <!-- .wrap-social-plugins -->
+  <div class="wrap-social-plugins">
+    <div class="wrap-twitter-follow">
+      <a href="https://twitter.com/twit_jump" class="twitter-follow-button" data-show-count="false" data-lang="ja">@twit_jumpさんをフォロー</a>
+    </div>
+
+    <!-- .upper -->
+    <div class="upper">
+      <div class="wrap-fb pull-left">
+  <div class="fb-like" data-href="http://<%= request.host %>" data-send="false" data-show-faces="false" data-layout="button_count"></div>
+      </div>
+      <div class="wrap-twitter-tweet pull-left">
+      <%= render "shared/twitter_share_button" %>
+      </div>
+    </div>
+    <!-- /.upper -->
+
+    <!-- .lower -->
+    <div class="lower">
+      <div class="wrap-hatena pull-left">
+  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><%= image_tag("http://b.st-hatena.com/images/entry-button/button-only.gif", alt: "このエントリーをはてなブックマークに追加", width: 20, height: 20, style: "border: none;") %></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </div>
+      <div class=" wrap-gplus pull-left">
+  <div class="g-plusone" data-size="medium"></div>
+  <script type="text/javascript">
+    window.___gcfg = {lang: 'ja'};
+
+    (function() {
+  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+      </div>
+      <div class="wrap-to-page-top pull-right">
+  <%= render "shared/to_page_top" %>
+      </div>
+    </div>
+    <!-- /.lower -->
+
+  </div>
+  <!-- /.wrap-social-plugins -->
+
+  <p class="copyright"><a class="brand" href="http://<%= request.host %>">TwitJump</a> © <%= Time.now.year %></p>
+
+</div>
+<!-- /#container-footer-->

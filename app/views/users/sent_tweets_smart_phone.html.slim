@@ -1,9 +1,0 @@
-= render "shared/timeline_nav_smart_phone"
-= render "shared/dashbord"
-.ad
-  = render "shared/adsense/sp/user_timeline/above_timeline"
-#wrap-timeline-lower
-  #wrap-main
-    = render "shared/timeline", {:statuses => @statuses, :has_next => @has_next, :current_user => @current_user, :oldest_tweet_id => @oldest_tweet_id}
-.ad
-  = render "shared/adsense/sp/user_timeline/under_timeline"
