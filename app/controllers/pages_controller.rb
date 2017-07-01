@@ -3,6 +3,8 @@ class PagesController < ApplicationController
   end
 
   def browsers
-    @show_footer = true
+  end
+
+  def sorry
   end
 end

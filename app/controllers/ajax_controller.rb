@@ -418,7 +418,6 @@ class AjaxController < ApplicationController
       # get the oldest tweet's posted timestamp
       @oldest_tweet_id = @statuses.last.status_id_str
     else
-      @show_footer = true
       @oldest_tweet_id = false
     end
 

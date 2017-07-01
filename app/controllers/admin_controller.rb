@@ -19,7 +19,6 @@ class AdminController < ApplicationController
   def accounts
     @active_users = User.get_active_users
     @gone_users = User.get_gone_users
-    @show_footer = false
     @show_scrollbar = true
   end
 

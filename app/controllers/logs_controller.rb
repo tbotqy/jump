@@ -44,9 +44,4 @@ class LogsController < ApplicationController
     reset_session
     redirect_to root_url
   end
-
-  def sorry
-    @show_footer = true
-  end
-
 end
