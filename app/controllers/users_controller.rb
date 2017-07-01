@@ -9,7 +9,6 @@ class UsersController < ApplicationController
     @total_user_num   = User.active.count
     @total_status_num = Stat.active_status_count
 
-    @show_footer      = true
     @show_scrollbar   = true
   end
 
@@ -142,7 +141,6 @@ class UsersController < ApplicationController
     end
     @profile_updated_at = Time.zone.at(@current_user.updated_at).strftime('%F %T')
     @show_scrollbar = true
-    @show_footer = true
   end
 
   def delete_account
