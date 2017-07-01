@@ -9,7 +9,6 @@ class UsersController < ApplicationController
     @total_user_num   = User.active.count
     @total_status_num = Stat.active_status_count
 
-    @show_to_page_top = false
     @show_footer      = true
     @show_scrollbar   = true
   end
