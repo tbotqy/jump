@@ -1,6 +1,6 @@
 Jump::Application.routes.draw do
-  get "/browsers" => "users#browsers"
-  get "/for_users" => "users#for_users"
+  get "/for_users", to: "pages#for_users"
+  get "/browsers", to: "pages#browsers"
   get "/auth/twitter/callback" => "logs#login"
   get "/auth/failure" => "logs#logout"
   get "/statuses/import" => "statuses#import"

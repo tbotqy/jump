@@ -15,15 +15,6 @@ class UsersController < ApplicationController
     @show_scrollbar   = true
   end
 
-  def for_users
-    @show_header = false
-    @show_to_page_top = false
-  end
-
-  def browsers
-    @show_footer = true
-  end
-
   def sent_tweets
 
     # shows the tweets tweeted by logged-in user
