@@ -53,7 +53,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_vars
-    @show_header = true
     @show_to_page_top = !request.smart_phone?
     @show_footer = request.smart_phone?
     @show_scrollbar = false

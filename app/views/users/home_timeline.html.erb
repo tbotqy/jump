@@ -1,3 +1,6 @@
+<% content_for :global_header do %>
+  <%= render "shared/global_header",{ :current_user => @current_user} %>
+<% end %>
 <%= render "shared/dashbord" %>
 <%= render "shared/adsense/pc/home_timeline/above_timeline" %>
 <!-- #wrap-timeline-lower -->

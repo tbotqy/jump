@@ -1,3 +1,6 @@
+<% content_for :global_header do %>
+  <%= render "shared/global_header",{ :current_user => @current_user} %>
+<% end %>
 <!-- #wrap-main -->
 <div id="wrap-admin">
   <header><h1>メニュー</h1></header>
