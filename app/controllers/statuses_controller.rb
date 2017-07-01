@@ -7,7 +7,6 @@ class StatusesController < ApplicationController
     # show the screen for operating import method
 
     @title = "データの取り込み"
-    @show_header = true
     # redirect initialized user
     if @current_user.has_imported?
       redirect_to "/your/tweets" and return

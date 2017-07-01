@@ -1,3 +1,6 @@
+<% content_for :global_header do %>
+  <%= render "shared/global_header",{ :current_user => @current_user} %>
+<% end %>
 <!-- #wrap-setting -->
 <div id="wrap-setting">
   <h1><i class="icon-hdd"></i><span>データ管理</span></h1>
