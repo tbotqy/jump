@@ -66,8 +66,6 @@
       </div>
     </div>
     <!-- /#container-main -->
-    <% if @show_footer %>
-      <%= render "shared/footer" %>
-    <% end %>
+    <%= yield :footer %>
   </body>
 </html>
