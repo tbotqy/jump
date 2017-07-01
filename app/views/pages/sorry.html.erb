@@ -1,3 +1,6 @@
+<% content_for :global_header do %>
+  <%= render "shared/global_header",{ :current_user => @current_user} %>
+<% end %>
 <div class="sorry">
 
   <div class="alert alert-info">

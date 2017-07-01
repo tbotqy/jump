@@ -15,7 +15,6 @@ class ApplicationController < ActionController::Base
 
   def render_404(exception = nil)
     @title = "ページが見つかりません"
-    @show_footer = true
     if exception
       logger.info "Rendering 404 with exception: #{exception.message}"
     end
@@ -24,7 +23,6 @@ class ApplicationController < ActionController::Base
 
   def render_500(exception = nil)
     @title = "サーバーエラー"
-    @show_footer = true
     if exception
       logger.info "Rendering 500 with exception: #{exception.message}"
     end
@@ -53,7 +51,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_vars
-    @show_footer = request.smart_phone?
     @show_scrollbar = false
   end
 
