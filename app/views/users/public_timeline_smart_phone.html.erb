@@ -1,3 +1,6 @@
+<% content_for :global_header do %>
+  <%= render "shared/global_header",{ :current_user => @current_user || false} %>
+<% end %>
 <%= render "shared/timeline_nav_smart_phone" %>
 <%= render "shared/dashbord" %>
 <div class="ad">
