@@ -13,13 +13,11 @@ class AdminController < ApplicationController
   end
 
   def index
-    @show_scrollbar = true
   end
 
   def accounts
     @active_users = User.get_active_users
     @gone_users = User.get_gone_users
-    @show_scrollbar = true
   end
 
   def statuses
