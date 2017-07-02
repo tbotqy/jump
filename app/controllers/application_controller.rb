@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   # stop rejecting incompatible ua
-  before_filter :fetch_current_user!, :set_vars, :apply_user_time_zone, :reject_incompatible_ua
+  before_filter :fetch_current_user!, :apply_user_time_zone, :reject_incompatible_ua
 
   # handlers for exceptions
   if Rails.env.production?
@@ -15,7 +15,6 @@ class ApplicationController < ActionController::Base
 
   def render_404(exception = nil)
     @title = "ページが見つかりません"
-    @show_footer = true
     if exception
       logger.info "Rendering 404 with exception: #{exception.message}"
     end
@@ -24,7 +23,6 @@ class ApplicationController < ActionController::Base
 
   def render_500(exception = nil)
     @title = "サーバーエラー"
-    @show_footer = true
     if exception
       logger.info "Rendering 500 with exception: #{exception.message}"
     end
@@ -50,13 +48,6 @@ class ApplicationController < ActionController::Base
     unless is_available_ua?
       redirect_to :controller => "users", :action => "browsers"
     end
-  end
-
-  def set_vars
-    @show_header = true
-    @show_to_page_top = !request.smart_phone?
-    @show_footer = request.smart_phone?
-    @show_scrollbar = false
   end
 
   def apply_user_time_zone

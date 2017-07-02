@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<% if @show_scrollbar %>
-  <html lang="ja" class="show-scrollbar">
-<% else %>
-  <html lang="ja">
-<% end %>
+<html lang="ja">
   <head>
     <title><%= title_text %></title>
     <meta charset="UTF-8"/>
@@ -54,7 +50,7 @@
   </head>
   <body>
     <div id="fb-root"></div>
-    <%= render "shared/global_header",{ :current_user => @current_user || false} if @show_header == true  %>
+    <%= yield :global_header %>
     <!-- #container-main -->
     <div id="container-main" class="<%= controller.action_name %>">
       <% if @timeline_owner %>
@@ -66,8 +62,6 @@
       </div>
     </div>
     <!-- /#container-main -->
-    <% if @show_footer %>
-      <%= render "shared/footer" %>
-    <% end %>
+    <%= yield :footer %>
   </body>
 </html>
