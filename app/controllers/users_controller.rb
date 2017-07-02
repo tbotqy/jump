@@ -8,8 +8,6 @@ class UsersController < ApplicationController
 
     @total_user_num   = User.active.count
     @total_status_num = Stat.active_status_count
-
-    @show_scrollbar   = true
   end
 
   def sent_tweets
@@ -20,7 +18,6 @@ class UsersController < ApplicationController
     @timeline_owner = @current_user
 
     @title = "#{@timeline_owner.name}(@#{@timeline_owner.screen_name}) さんのツイート"
-    @show_scrollbar = true
     @has_next = false
     # check if date is specified
     specified_date = params[:date]
@@ -60,7 +57,6 @@ class UsersController < ApplicationController
     @timeline_owner = @current_user
 
     @title = "#{@timeline_owner.name}(@#{@timeline_owner.screen_name}) さんのホームタイムライン"
-    @show_scrollbar = true
     @has_next = false
      # check if date is specified
     specified_date = params[:date]
@@ -95,7 +91,6 @@ class UsersController < ApplicationController
   def public_timeline
     # shows the public timeline
     @title = "パブリックタイムライン"
-    @show_scrollbar = true
     @has_next = false
     # check if date is specified
     specified_date = params[:date]
@@ -140,7 +135,6 @@ class UsersController < ApplicationController
       @friend_updated_at = Time.zone.at(@friend_updated_at).strftime('%F %T')
     end
     @profile_updated_at = Time.zone.at(@current_user.updated_at).strftime('%F %T')
-    @show_scrollbar = true
   end
 
   def delete_account
