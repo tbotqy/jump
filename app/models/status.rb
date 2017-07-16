@@ -108,7 +108,7 @@ class Status < ActiveRecord::Base
     end
 
     def get_active_status_count
-      Stat.get_value_of("active_status_count")
+      DataSummary.get_value_of("active_status_count")
     end
 
     # utils

@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
       # just turn the flag off, not actually delete user's status from database
       deleted_status_count = Status.where(user_id: user_id).update_all(deleted_flag: true)
       # update stats
-      Stat.decrease('active_status_count', deleted_status_count)
+      DataSummary.decrease('active_status_count', deleted_status_count)
       # turn the flag off for users table
       find(user_id).update_attribute(:deleted_flag, true)
     end
