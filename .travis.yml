@@ -13,3 +13,8 @@ script:
 install: bundle install --deployment
 cache:
   directories: vendor/bundle
+after_failure:
+  - "mysql -e 'show databases;'"
+  - "cat ./config/database.yml"
+  - "echo $RAILS_ENV"
+  - "bundle exec rake --version"
