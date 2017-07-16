@@ -3,3 +3,6 @@ rvm:
   - 2.3.1
 script:
   - rspec
+install: bundle install --deployment
+cache:
+  directories: vendor/bundle
