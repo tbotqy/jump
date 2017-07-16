@@ -1,4 +1,3 @@
-Gemfile.lock
 *.rbc
 *.sassc
 .sass-cache
@@ -10,7 +9,6 @@ capybara-*.html
 /tmp/*
 /db/*.sqlite3
 /db/data.yaml
-/db/schema.rb
 /public/system/*
 /public/assets/*
 !/public/assets/bg-btn-blue.png
