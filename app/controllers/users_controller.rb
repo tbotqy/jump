@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     return redirect_to(action: :sent_tweets) if logged_in?
 
     @total_user_num   = User.active.count
-    @total_status_num = Stat.active_status_count
+    @total_status_num = DataSummary.active_status_count
   end
 
   def sent_tweets
