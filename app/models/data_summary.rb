@@ -1,4 +1,4 @@
-class Stat < ActiveRecord::Base
+class DataSummary < ActiveRecord::Base
   self.inheritance_column = :_type_disabled
 
   class << self
