@@ -131,7 +131,7 @@ class AjaxController < ApplicationController
       # delete the status and turn the flag
       if Status.find(status_id).destroy
         # update stats
-        Stat.decrease('active_status_count',1)
+        DataSummary.decrease('active_status_count',1)
 
         deleted = true
         owns = true
@@ -218,7 +218,7 @@ class AjaxController < ApplicationController
     end
 
     # update stats
-    Stat.increase('active_status_count',saved_count)
+    DataSummary.increase('active_status_count',saved_count)
 
     # prepare data to return
     ret = {}
@@ -355,7 +355,7 @@ class AjaxController < ApplicationController
         @current_user.update_attribute(:initialized_flag,true)
         # update statistics database
         added_tweets_count = @current_user.get_active_status_count
-        Stat.increase('active_status_count', added_tweets_count)
+        DataSummary.increase('active_status_count', added_tweets_count)
       end
 =begin
       # send notification dm
