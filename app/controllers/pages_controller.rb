@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-  def index
+  def service_top
     return redirect_to(action: :sent_tweets) if logged_in?
 
     @total_user_num   = User.active.count
