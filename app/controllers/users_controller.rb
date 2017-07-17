@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
-  before_filter :check_login,        except: :index
-  before_filter :check_tweet_import, except: :index
-
-  def index
-    return redirect_to(action: :sent_tweets) if logged_in?
-
-    @total_user_num   = User.active.count
-    @total_status_num = DataSummary.active_status_count
-  end
+  before_filter :check_login
+  before_filter :check_tweet_import
 
   def setting
     @title = "データ管理"
