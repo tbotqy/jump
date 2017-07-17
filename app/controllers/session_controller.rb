@@ -1,15 +1,9 @@
 class SessionController < ApplicationController
+  before_filter :reject_protected_user!, only: :login
 
   def login
+
     # called when user was redirected back to our service from twitter.com
-
-    # read acquired access tokens
-    auth = request.env['omniauth.auth']
-
-    # check whether user's twitter account is protected
-    if Rails.env.production? and auth.extra.raw_info.protected
-      redirect_to :action => "sorry" and return
-    end
 
     # check if tokens are acquired correctly
     access_token = auth.credentials.token
@@ -43,5 +37,19 @@ class SessionController < ApplicationController
   def logout
     reset_session
     redirect_to root_url
+  end
+
+  private
+
+  # check whether user's twitter account is protected
+  def reject_protected_user!
+    return unless Rails.env.production?
+    return unless auth.extra.raw_info.protected
+    redirect_to controller: :pages, action: :sorry
+  end
+
+  # read acquired access tokens
+  def auth
+    @auth ||= request.env['omniauth.auth']
   end
 end
