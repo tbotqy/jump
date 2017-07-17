@@ -8,5 +8,4 @@ class UsersController < ApplicationController
 
   def delete_account
   end
-
 end
