@@ -35,7 +35,7 @@ class LogsController < ApplicationController
     unless User.find(session[:user_id]).has_imported?
       redirect_to :controller => "statuses", :action => "import"
     else
-      redirect_to root_url
+      redirect_to controller: :statuses, action: :sent_tweets
     end
 
   end
