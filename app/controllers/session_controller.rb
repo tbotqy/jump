@@ -1,4 +1,4 @@
-class LogsController < ApplicationController
+class SessionController < ApplicationController
 
   def login
     # called when user was redirected back to our service from twitter.com
