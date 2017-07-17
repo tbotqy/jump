@@ -1,10 +1,8 @@
 class SessionController < ApplicationController
   before_filter :reject_protected_user!, only: :login
 
+  # called when user was redirected back to our service from twitter.com
   def login
-
-    # called when user was redirected back to our service from twitter.com
-
     # check if tokens are acquired correctly
     access_token = auth.credentials.token
     access_token_secret = auth.credentials.secret
