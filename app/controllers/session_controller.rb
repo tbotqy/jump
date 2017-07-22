@@ -12,7 +12,7 @@ class SessionController < ApplicationController
   end
 
   def logout
-    reset_session
+    logout!
     redirect_to root_url
   end
 
