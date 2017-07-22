@@ -5,17 +5,10 @@ class SessionController < ApplicationController
   # called when user was redirected back to our service from twitter.com
   def login
     User.register_or_update!(auth)
-
-    # log the user in
-    session[:user_id] = User.select(:id).where("twitter_id = ? AND deleted_flag = false",auth.uid)[0].id
-
-    # check if user has imported own tweets
-    unless User.find(session[:user_id]).has_imported?
-      redirect_to :controller => "statuses", :action => "import"
-    else
-      redirect_to controller: :statuses, action: :sent_tweets
-    end
-
+    user = User.find_active_with_auth(auth)
+    login!(user)
+    return redirect_to controller: :statuses, action: :sent_tweets if user.has_imported?
+    redirect_to controller: :statuses, action: :import
   end
 
   def logout

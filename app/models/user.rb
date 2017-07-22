@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
       user.save!
     end
 
+    def find_active_with_auth(auth)
+      find_by(twitter_id: auth.uid, deleted_flag: false)
+    end
+
     def deactivate_account(user_id)
       # just turn the flag off, not actually delete user's status from database
       deleted_status_count = Status.where(user_id: user_id).update_all(deleted_flag: true)
