@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716112528) do
+ActiveRecord::Schema.define(version: 20170722072427) do
 
   create_table "data_summaries", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string  "type"
@@ -120,10 +120,10 @@ ActiveRecord::Schema.define(version: 20170716112528) do
     t.string  "lang",                                              null: false
     t.string  "token",                                             null: false
     t.string  "token_secret",                                      null: false
-    t.boolean "initialized_flag",                                  null: false
-    t.integer "token_updated_at",                                  null: false
-    t.integer "statuses_updated_at",                               null: false
-    t.integer "friends_updated_at",                                null: false
+    t.boolean "initialized_flag",                  default: false, null: false
+    t.integer "token_updated_at"
+    t.integer "statuses_updated_at"
+    t.integer "friends_updated_at"
     t.boolean "closed_only",                       default: false
     t.boolean "deleted_flag",                      default: false, null: false
     t.integer "created_at",                                        null: false
