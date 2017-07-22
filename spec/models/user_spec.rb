@@ -75,19 +75,16 @@ describe User do
     pending "Will be replaced with other method."
   end
 
-  describe "create_account!" do
-    it "increases the total numer of records in users table by 1" do
-      expect{User.create_account!(auth_hash)}.to change{User.count}.by(1)
+  describe "register_or_update!" do
+    context "if given auth points the user not yet registered" do
+      it "increases the total numer of records in users table by 1" do
+        expect{User.register_or_update!(auth_hash)}.to change{User.count}.by(1)
+      end
+    end
+    context "if given auth points the user already registered" do
+      xit "doesn't increase the total numer of records in users" do
+        expect{User.register_or_update!(auth_hash)}.not_to change{User.count}
+      end
     end
   end
-
-  describe "update_account!" do
-    it "updates a record with given auth_hash" do
-
-    end
-    it "doesn't inscrease the total number of records in users table" do
-
-    end
-  end
-
 end

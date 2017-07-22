@@ -6,48 +6,10 @@ class User < ActiveRecord::Base
   scope :active, lambda{where(deleted_flag: false)}
 
   class << self
-    def create_account!(auth)
-      info = auth.extra.raw_info
-      create!(
-        twitter_id: info.id,
-        name: info.name,
-        screen_name: info.screen_name,
-        profile_image_url_https: info.profile_image_url_https,
-        time_zone: info.time_zone,
-        utc_offset: info.utc_offset,
-        twitter_created_at: Time.zone.parse(info.created_at).to_i,
-        lang: info.lang,
-        token: auth.credentials.token,
-        token_secret: auth.credentials.secret,
-        token_updated_at: false,
-        statuses_updated_at: false,
-        friends_updated_at: false,
-        closed_only: false,
-        initialized_flag: false,
-        deleted_flag: false,
-        created_at: Time.zone.now.to_i,
-        updated_at: Time.zone.now.to_i
-        )
-    end
-
-    def update_account!(auth)
-      dest_user = find_by_twitter_id(auth.uid)
-
-      info = auth.extra.raw_info
-      dest_user.update_attributes({
-        twitter_id: info.id,
-        name: info.name,
-        screen_name: info.screen_name,
-        profile_image_url_https: info.profile_image_url_https,
-        time_zone: info.time_zone,
-        utc_offset: info.utc_offset,
-        twitter_created_at: Time.zone.parse(info.created_at).to_i,
-        lang: info.lang,
-        token: auth.credentials.token,
-        token_secret: auth.credentials.secret,
-        token_updated_at: true,
-        updated_at: Time.zone.now.to_i
-        })
+    def register_or_update!(auth)
+      user = find_or_initialize_by(twitter_id: auth.uid, deleted_flag: false)
+      user.assign(auth)
+      user.save!
     end
 
     def deactivate_account(user_id)
@@ -134,5 +96,21 @@ class User < ActiveRecord::Base
 
   def get_active_status_count
     Status.where(user_id: self.id, deleted_flag: false).count
+  end
+
+  def assign(auth)
+    info = auth.extra.raw_info
+    self.assign_attributes(
+      twitter_id: info.id,
+      name: info.name,
+      screen_name: info.screen_name,
+      profile_image_url_https: info.profile_image_url_https,
+      time_zone: info.time_zone,
+      utc_offset: info.utc_offset,
+      twitter_created_at: Time.zone.parse(info.created_at).to_i,
+      lang: info.lang,
+      token: auth.credentials.token,
+      token_secret: auth.credentials.secret,
+    )
   end
 end
