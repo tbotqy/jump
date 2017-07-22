@@ -1,16 +1,9 @@
 class SessionController < ApplicationController
-  before_filter :reject_protected_user!, only: :login
+  before_filter :reject_protected_user!,       only: :login
+  before_filter :check_if_tokens_are_present!, only: :login
 
   # called when user was redirected back to our service from twitter.com
   def login
-    # check if tokens are acquired correctly
-    access_token = auth.credentials.token
-    access_token_secret = auth.credentials.secret
-
-    if !access_token
-      abort("failed in acquiring access token")
-    end
-
     # check if user already exists
     if User.active_twitter_id_exists?(auth.uid)
       # update account with auth
@@ -44,6 +37,12 @@ class SessionController < ApplicationController
     return unless Rails.env.production?
     return unless auth.extra.raw_info.protected
     redirect_to controller: :pages, action: :sorry
+  end
+
+  # check if tokens are acquired correctly
+  def check_if_tokens_are_present!
+    return if [auth.credentials.token, auth.credentials.secret].all?
+    raise "failed in acquiring access token"
   end
 
   # read acquired access tokens
