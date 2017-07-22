@@ -25,7 +25,7 @@ module UsersViewObject
 
     def friends_updated_at
       friends_updated_at = user.friends_updated_at
-      return "---" if friends_updated_at.zero? # TODO : default NULLにする
+      return "---" if friends_updated_at.blank?
       Time.zone.at(friends_updated_at).strftime('%F %T')
     end
 
