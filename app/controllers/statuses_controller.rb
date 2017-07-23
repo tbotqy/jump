@@ -6,11 +6,8 @@ class StatusesController < ApplicationController
 
   # show the screen for operating import
   def import
-
     # redirect initialized user
-    if @current_user.has_imported?
-      redirect_to "/your/tweets" and return
-    end
+    return redirect_to action: :sent_tweets if @current_user.has_imported?
 
     # check if user has any status
     @id_oldest = "false";
