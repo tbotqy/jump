@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class StatusesController < ApplicationController
 
   before_filter :check_login,        except: :public_timeline
