@@ -4,8 +4,8 @@ class StatusesController < ApplicationController
   before_filter :check_login,        except: :public_timeline
   before_filter :check_tweet_import, except: [:import, :public_timeline]
 
+  # show the screen for operating import
   def import
-    # show the screen for operating import method
 
     # redirect initialized user
     if @current_user.has_imported?
