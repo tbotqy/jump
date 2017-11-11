@@ -129,7 +129,7 @@ class UsersController < ApplicationController
     @status_updated_at = Time.zone.at(@current_user.statuses_updated_at).strftime('%F %T')
 
     @friend_updated_at = @current_user.friends_updated_at
-    if @friend_updated_at == 0
+    if @friend_updated_at.nil?
       @friend_updated_at = "---"
     else
       @friend_updated_at = Time.zone.at(@friend_updated_at).strftime('%F %T')
