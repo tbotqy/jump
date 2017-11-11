@@ -13,6 +13,10 @@ capybara-*.html
 /public/assets/*
 !/public/assets/*.png
 !/public/assets/*.gif
+!/public/assets/*.eot
+!/public/assets/*.svg
+!/public/assets/*.ttf
+!/public/assets/*.woff
 /coverage/
 /spec/tmp/*
 **.orig
