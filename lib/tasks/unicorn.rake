@@ -37,11 +37,8 @@ namespace :unicorn do
   end
 
   def unicorn_pid
-    # TODO : stop requiring
-    require "yaml"
-    configs = YAML.load_file(rails_root + "config/unicorn/enviroments.yml")[Rails.env]
     begin
-      File.read(configs["pid_path"]).to_i
+      File.read("#{rails_root}/tmp/unicorn.pid").to_i
     rescue Errno::ENOENT
       raise "Unicorn doesn't seem to be running"
     end

@@ -1,13 +1,10 @@
-require "yaml"
 RAILS_ROOT = "#{File.dirname(__FILE__)}/.." unless defined?(RAILS_ROOT)
-RAILS_ENV  = ENV['RAILS_ENV'] || 'development'
-CONFIG     = YAML.load_file(RAILS_ROOT + "/config/unicorn/enviroments.yml")[RAILS_ENV]
 
-worker_processes CONFIG["worker_num"]
+worker_processes 3
 preload_app true
 timeout     60
-listen      CONFIG["socket_path"], :backlog => 1024
-pid         CONFIG["pid_path"]
+listen      "#{RAILS_ROOT}/tmp/unicorn.sock", :backlog => 1024
+pid         "#{RAILS_ROOT}/tmp/unicorn.pid"
 stdout_path "#{RAILS_ROOT}/log/unicorn_std.log"
 stderr_path "#{RAILS_ROOT}/log/unicorn_error.log"
 
