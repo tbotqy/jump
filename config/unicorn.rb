@@ -9,7 +9,7 @@ timeout     60
 listen      CONFIG["socket_path"], :backlog => 1024
 pid         CONFIG["pid_path"]
 stdout_path "#{RAILS_ROOT}/log/unicorn_std.log"
-stderr_path "#{RAILS_ROOT}/log/uunicorn_error.log"
+stderr_path "#{RAILS_ROOT}/log/unicorn_error.log"
 
 before_fork do |server, worker|
   ActiveRecord::Base.connection.disconnect! if defined?(ActiveRecord::Base)
