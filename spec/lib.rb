@@ -2,7 +2,7 @@ module Lib
 
   # create the Struct which behaves like OmniAuth::AuthHash
   def auth_hash
-    auth_hash_struct   = Struct.new(:credentials, :extra)
+    auth_hash_struct   = Struct.new(:uid, :credentials, :extra)
     credentials_struct = Struct.new(:token, :secret)
     extra_struct       = Struct.new(:raw_info)
     raw_info_struct    = Struct.new(:id, :name, :screen_name, :profile_image_url_https, :time_zone, :utc_offset, :created_at, :lang)
@@ -18,6 +18,6 @@ module Lib
       "ja"
     )
 
-    auth_hash_struct.new(credentials_struct.new("test_token", "test_secret"), extra_struct.new(raw_info))
+    auth_hash_struct.new(raw_info.id, credentials_struct.new("test_token", "test_secret"), extra_struct.new(raw_info))
   end
 end
