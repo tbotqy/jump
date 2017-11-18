@@ -1,3 +1,4 @@
+<% content_for(:title){"データ管理"} %>
 <% content_for :global_header do %>
   <%= render "shared/global_header",{ :current_user => @current_user} %>
 <% end %>
@@ -18,15 +19,15 @@
   <!-- .wrap-profile -->
   <div class="wrap-profile">
     <div class="area-profile-image">
-      <%= image_tag(@current_user.profile_image_url_https.to_s.gsub(/_normal/,'_reasonably_small'), class: "profile-image-url-https", width: 70) %>
+      <%= image_tag(@view_object.profile_image_url, class: "profile-image-url-https", width: 70) %>
     </div>
     <div class="area-center">
       <div class="area-names">
-        <p class="name"><%= @current_user.name %></p>
-        <p>@<span class="screen-name"><%= @current_user.screen_name %></span></p>
+        <p class="name"><%= @view_object.user_name %></p>
+        <p>@<span class="screen-name"><%= @view_object.user_screen_name %></span></p>
       </div>
       <div class="area-updated">
-        <p>最終更新 : <span class="updated-date"><%= @profile_updated_at %></span></p>
+        <p>最終更新 : <span class="updated-date"><%= @view_object.profile_updated_at %></span></p>
       </div>
     </div>
     <!-- /.area-center -->
@@ -42,10 +43,10 @@
   <div class="tweets">
     <span class="head">ツイート</span>
     <div class="count margin">
-      件数 : <span class="total-num"><%= @count_statuses %></span>件
+      件数 : <span class="total-num"><%= @view_object.total_status_count %></span>件
     </div>
     <div class="last-update margin">
-      最終更新 : <span class="date"><%= @status_updated_at %></span>
+      最終更新 : <span class="date"><%= @view_object.statuses_updated_at %></span>
     </div>
     <div class="button margin">
       <span class="additional-num"></span>
@@ -56,10 +57,10 @@
   <div class="friends">
     <span class="head">フォローリスト</span>
     <div class="count margin">
-      件数 : <span class="total-num"><%= @count_friends %></span>件
+      件数 : <span class="total-num"><%= @view_object.friends_count %></span>件
     </div>
     <div class="last-update margin">
-      最終更新 : <span class="date"><%= @friend_updated_at %></span>
+      最終更新 : <span class="date"><%= @view_object.friends_updated_at %></span>
     </div>
     <div class="button margin">
       <span class="additional-num"></span>
