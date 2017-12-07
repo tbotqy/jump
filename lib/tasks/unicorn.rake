@@ -4,8 +4,8 @@ namespace :unicorn do
   #
   desc "Start unicorn with dest enviroment specified"
   namespace :start do
-    task(:development){ sh "bundle exec unicorn_rails -c #{config_scriptt_path} -E development -D" }
-    task(:production) { sh "bundle exec unicorn_rails -c #{config_scriptt_path} -E production -D" }
+    task(:development){ sh "bundle exec unicorn_rails -c #{config_script_path} -E development -D" }
+    task(:production) { sh "bundle exec unicorn_rails -c #{config_script_path} -E production -D" }
   end
 
   desc "Stop unicorn"
@@ -28,7 +28,7 @@ namespace :unicorn do
   #
   # Helpers
   #
-  def config_scriptt_path
+  def config_script_path
     rails_root + "config/unicorn.rb"
   end
 
@@ -37,11 +37,8 @@ namespace :unicorn do
   end
 
   def unicorn_pid
-    # TODO : stop requiring
-    require "yaml"
-    configs = YAML.load_file(rails_root + "config/unicorn/enviroments.yml")[Rails.env]
     begin
-      File.read(configs["pid_path"]).to_i
+      File.read("#{rails_root}/tmp/unicorn.pid").to_i
     rescue Errno::ENOENT
       raise "Unicorn doesn't seem to be running"
     end

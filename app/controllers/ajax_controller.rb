@@ -19,8 +19,8 @@ class AjaxController < ApplicationController
     updated_value = {}
     # check for each value
     values_to_check.each do |value_name|
-      new_data = fresh_data[value_name]
-      if new_data != existing_data[value_name]
+      new_data = fresh_data[value_name].to_s
+      if new_data != existing_data[value_name].to_s
         # udpate db with fresh data
         @current_user.update_attribute(value_name,new_data)
         updated = true
