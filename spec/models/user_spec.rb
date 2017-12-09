@@ -11,7 +11,7 @@ describe User do
     subject{User.first.has_friend?}
     context "user has some friend" do
       before do
-        FactoryGirl.create(:user, :with_friend)
+        FactoryBot.create(:user, :with_friend)
       end
       it "returns true" do
         is_expected.to eq true
@@ -19,7 +19,7 @@ describe User do
     end
     context "user has no friend" do
       before do
-        FactoryGirl.create(:user, :with_no_friend)
+        FactoryBot.create(:user, :with_no_friend)
       end
       it "returns false" do
         is_expected.to eq false
@@ -31,7 +31,7 @@ describe User do
     subject{User.first.has_imported?}
     context "user has completed initial status import" do
       before do
-        FactoryGirl.create(:user, :with_initial_import_completed)
+        FactoryBot.create(:user, :with_initial_import_completed)
       end
       it "returns true" do
         is_expected.to eq true
@@ -39,7 +39,7 @@ describe User do
     end
     context "user hasn't completed initial staus import" do
       before do
-        FactoryGirl.create(:user, :with_initial_import_incompleted)
+        FactoryBot.create(:user, :with_initial_import_incompleted)
       end
       it "returns false" do
         is_expected.to eq false
@@ -51,7 +51,7 @@ describe User do
     subject{User.first.has_any_status?}
     context "user has any status" do
       before do
-        FactoryGirl.create(:user, :with_status)
+        FactoryBot.create(:user, :with_status)
       end
       it "returns true" do
         is_expected.to eq true
@@ -59,7 +59,7 @@ describe User do
     end
     context "user has no status" do
       before do
-        FactoryGirl.create(:user, :with_no_status)
+        FactoryBot.create(:user, :with_no_status)
       end
       it "returns false" do
         is_expected.to eq false
