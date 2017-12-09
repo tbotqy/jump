@@ -5,7 +5,7 @@ class Entity < ActiveRecord::Base
 
       # save given entities with its status_id linked
 
-      entities = status[:attrs][:entities]
+      entities = status.attrs[:entities]
 
       # save entities
       entities.each do |entity_type,entity_bodies|
