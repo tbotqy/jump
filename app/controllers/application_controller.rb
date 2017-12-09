@@ -89,8 +89,8 @@ class ApplicationController < ActionController::Base
     Twitter::REST::Client.new do |config|
       config.consumer_key       = configatron.consumer_key
       config.consumer_secret    = configatron.consumer_secret
-      config.oauth_token        = user.token
-      config.oauth_token_secret = user.token_secret
+      config.access_token        = user.token
+      config.access_token_secret = user.token_secret
     end
   end
 
