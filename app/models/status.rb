@@ -36,7 +36,7 @@ class Status < ActiveRecord::Base
       Entity.save_entities(new_record.id.to_i,tweet)
 
       # save status's created_at values
-      PublicDate.add_record(Time.parse(tweet[:attrs][:created_at]).to_i)
+      PublicDate.add_record(Time.parse(tweet.attrs[:created_at]).to_i)
     end
 
     def get_date_list(type_of_timeline,user_id = nil)
@@ -117,7 +117,7 @@ class Status < ActiveRecord::Base
 
     def create_hash_to_save(user_id,tweet)
       ret = {}
-      tweet = tweet[:attrs]
+      tweet = tweet.attrs
 
       ret[:user_id] = user_id
       ret[:twitter_id] = tweet[:user][:id_str]
