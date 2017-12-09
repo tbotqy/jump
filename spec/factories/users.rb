@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
 
     twitter_id 123456789
@@ -22,7 +22,7 @@ FactoryGirl.define do
 
     trait(:with_friend) do
       after(:create) do |u|
-        FactoryGirl.create(:friend, user_id: u.id)
+        FactoryBot.create(:friend, user_id: u.id)
       end
     end
 
@@ -39,7 +39,7 @@ FactoryGirl.define do
 
     trait(:with_status) do
       after(:create) do |u|
-        FactoryGirl.create(:status, user_id: u.id)
+        FactoryBot.create(:status, user_id: u.id)
       end
     end
 
