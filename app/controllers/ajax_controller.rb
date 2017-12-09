@@ -250,6 +250,8 @@ class AjaxController < ApplicationController
       @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     end
 
+    @statuses = @statuses.to_a
+
     # check if any older status exists
     if @statuses.count != request_fetch_num
       @has_next = false
