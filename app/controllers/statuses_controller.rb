@@ -29,37 +29,11 @@ class StatusesController < ApplicationController
     # this line may be changed when the page is published to not-loggedin visitors
     @timeline_owner = @current_user
 
-    @title = "#{@timeline_owner.name}(@#{@timeline_owner.screen_name}) さんのツイート"
-    @has_next = false
-    # check if date is specified
-    specified_date = params[:date]
-
-    if specified_date
-      @title = convert_hyphen_in_date_to_japanese(specified_date) + "の" + " "+@title
-    end
-
-    @statuses = nil
-    fetch_num = 10
-
-    if specified_date
-      # fetch statuses in specified date
-      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num).owned_by_current_user(@current_user.id)
-    else
-      # just fetch latest statuses
-      @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@current_user.id)
-    end
-
-    if @statuses.present?
-      # get the oldest tweet's status_id_str
-      @oldest_tweet_id = @statuses.last.status_id_str
-
-      # check if read-more button should be shown
-      older_status = Status.showable.get_older_status_by_tweet_id( @oldest_tweet_id,1 ).owned_by_current_user(@current_user.id)
-      @has_next = older_status.length > 0
-    else
-      @oldest_tweet_id = false
-    end
-
+    timeline = Timeline::UserTimeline.new(params, @timeline_owner)
+    @title           = timeline.title
+    @has_next        = timeline.has_next?
+    @statuses        = timeline.source_statuses
+    @oldest_tweet_id = timeline.oldest_tweet_id
   end
 
   def home_timeline
