@@ -23,7 +23,6 @@ class StatusesController < ApplicationController
   end
 
   def sent_tweets
-
     # shows the tweets tweeted by logged-in user
 
     # this line may be changed when the page is published to not-loggedin visitors
