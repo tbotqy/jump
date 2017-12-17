@@ -107,6 +107,7 @@ class ApplicationController < ActionController::Base
     ret
   end
 
+  # TODO : remove when timeline class is built up
   def convert_hyphen_in_date_to_japanese(specified_date)
     # convert each "-" in specified_date to 年月日
     ret = ""
