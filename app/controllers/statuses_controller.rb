@@ -101,37 +101,12 @@ class StatusesController < ApplicationController
   end
 
   def public_timeline
-    # shows the public timeline
-    @title = "パブリックタイムライン"
-    @has_next = false
-    # check if date is specified
-    specified_date = params[:date]
-
-    if specified_date
-      @title = convert_hyphen_in_date_to_japanese(specified_date) + "の" + @title
-    end
-
-    @statuses = nil
-    fetch_num = 10
-
-    if specified_date
-      # fetch statuses in specified date
-      @statuses = Status.showable.get_status_in_date(specified_date,fetch_num)
-    else
-      # just latest statuses
-      @statuses = Status.showable.get_latest_status(fetch_num)
-    end
-
-    if @statuses.present?
-      # get the oldest tweet's status_id_str
-      @oldest_tweet_id = @statuses.last.status_id_str
-
-      # check if read-more button should be shown
-      older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
-      @has_next = older_status.length > 0;
-    else
-      @oldest_tweet_id = false
-    end
+    # TODO : reduce the number of instance vars
+    timeline         = Timeline::PublicTimeline.new(params)
+    @title           = timeline.title
+    @has_next        = timeline.has_next?
+    @statuses        = timeline.source_statuses
+    @oldest_tweet_id = timeline.oldest_tweet_id
   end
 
 end
