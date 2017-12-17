@@ -19,8 +19,8 @@ class AjaxController < ApplicationController
     updated_value = {}
     # check for each value
     values_to_check.each do |value_name|
-      new_data = fresh_data[value_name]
-      if new_data != existing_data[value_name]
+      new_data = fresh_data[value_name].to_s
+      if new_data != existing_data[value_name].to_s
         # udpate db with fresh data
         @current_user.update_attribute(value_name,new_data)
         updated = true
@@ -249,6 +249,8 @@ class AjaxController < ApplicationController
     when 'public_timeline'
       @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     end
+
+    @statuses = @statuses.to_a
 
     # check if any older status exists
     if @statuses.count != request_fetch_num

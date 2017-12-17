@@ -4,7 +4,9 @@ base: &base
   username:
   password:
   host:
-  encoding: utf8
+  charset: utf8mb4
+  collation: utf8mb4_bin
+  encoding: utf8mb4
 
 development:
   <<: *base

@@ -11,9 +11,12 @@ capybara-*.html
 /db/data.yaml
 /public/system/*
 /public/assets/*
-!/public/assets/bg-btn-blue.png
-!/public/assets/ajax-loader.gif
-!/public/assets/everything-spritev2.png
+!/public/assets/*.png
+!/public/assets/*.gif
+!/public/assets/*.eot
+!/public/assets/*.svg
+!/public/assets/*.ttf
+!/public/assets/*.woff
 /coverage/
 /spec/tmp/*
 **.orig
@@ -26,7 +29,7 @@ pickle-email-*.html
 wget-log
 /config/database.yml
 /config/config.yml
-/config/unicorn.rb
+/config/secrets.yml
 start_unicorn.sh
 apply_ga_filter.html
 secret.yml

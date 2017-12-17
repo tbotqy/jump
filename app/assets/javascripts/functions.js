@@ -385,12 +385,12 @@ function updateStatus(){
 	total_count += responce.saved_count;
 
 	var final_total = 0;
-	var current_num = parseInt($(".tweets").find(".count .total-num").text());
+	var current_num = parseInt(num_without_delimiter($(".tweets").find(".count .total-num").text()));
 
 	final_total = current_num + parseInt(total_count);
 
 	area_tweets.find(".total-num").fadeOut(function(){
-	  $(this).text(final_total).fadeIn();
+	  $(this).text(num_with_delimiter(final_total)).fadeIn();
 	});
 
 	area_tweets.find(".additional-num").fadeOut(function(){
@@ -822,4 +822,12 @@ function detectActionType(path){
     return path.substr(secondSlash+1,lengthActionType-1);
   }
 
+}
+
+function num_with_delimiter(num){
+  return String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+}
+
+function num_without_delimiter(num){
+  return String(num).split(",").join("");
 }
