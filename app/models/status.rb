@@ -7,6 +7,8 @@ class Status < ActiveRecord::Base
   scope :retweet , -> {where(:is_retweet => true)}
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
+  scope :use_index , ->(index_name) {from("#{table_name} USE INDEX(#{index_name})")}
+  scope :force_index , ->(index_name) {from("#{table_name} FORCE INDEX(#{index_name})")}
   after_save :update_user_timestamp
 
   def update_user_timestamp
@@ -186,14 +188,6 @@ class Status < ActiveRecord::Base
       end
 
       ret
-    end
-
-    def use_index(index_name)
-      from("#{table_name} USE INDEX(#{index_name})")
-    end
-
-    def force_index(index_name)
-      from("#{table_name} FORCE INDEX(#{index_name})")
     end
   end
 end
