@@ -22,13 +22,6 @@ module Timeline
       end
     end
 
-    def has_next?
-      # TODO : rename to has_older_status?
-      # NOTE : may be deleted if how we paginate is changed
-      return false if source_statuses.blank?
-      older_status.exists?
-    end
-
     private
 
     def older_status
