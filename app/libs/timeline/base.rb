@@ -3,8 +3,9 @@ module Timeline
     PER_PAGE = 10
     private_constant :PER_PAGE
 
-    def initialize(params)
+    def initialize(params, timeline_owner = nil)
       @date_string = params[:date]
+      @timeline_owner = timeline_owner
     end
 
     def titile
