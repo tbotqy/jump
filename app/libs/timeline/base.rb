@@ -17,7 +17,10 @@ module Timeline
     end
 
     def has_next?
-      raise "code me"
+      # TODO : rename to has_older_status?
+      # NOTE : may be deleted if how we paginate is changed
+      return false if source_statuses.blank?
+      older_status.exists?
     end
 
     def oldest_tweet_id
