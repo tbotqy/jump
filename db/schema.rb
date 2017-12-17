@@ -13,13 +13,13 @@
 
 ActiveRecord::Schema.define(version: 20170722072427) do
 
-  create_table "data_summaries", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "data_summaries", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type"
     t.integer "value",      limit: 8
     t.integer "updated_at"
   end
 
-  create_table "entities", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "entities", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "status_id",              limit: 8, null: false
     t.integer "status_id_str",          limit: 8, null: false
     t.string  "url"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20170722072427) do
 
   add_index "entities", ["status_id"], name: "status_id", using: :btree
 
-  create_table "friends", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "friends", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "user_id",              limit: 8, null: false
     t.integer "following_twitter_id", limit: 8, null: false
     t.integer "created_at",                     null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20170722072427) do
 
   add_index "friends", ["user_id"], name: "idx_u_on_friends", using: :btree
 
-  create_table "profile_image_urls", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "profile_image_urls", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "twitter_id",        limit: 8
     t.string  "screen_name"
     t.string  "url"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20170722072427) do
     t.integer "updated_at"
   end
 
-  create_table "public_dates", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "public_dates", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "posted_date",     limit: 10, null: false
     t.integer "posted_unixtime",            null: false
   end
@@ -61,14 +61,14 @@ ActiveRecord::Schema.define(version: 20170722072427) do
   add_index "public_dates", ["posted_date"], name: "posted_date", unique: true, using: :btree
   add_index "public_dates", ["posted_unixtime"], name: "posted_unixtime", using: :btree
 
-  create_table "records", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "records", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.boolean "done",                    null: false
     t.integer "status_id_str", limit: 8
     t.boolean "was_error"
     t.integer "created_at"
   end
 
-  create_table "status_brokens", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "status_brokens", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "status_id"
     t.string  "state"
     t.boolean "solved",     default: false
@@ -76,24 +76,24 @@ ActiveRecord::Schema.define(version: 20170722072427) do
     t.integer "updated_at",                 null: false
   end
 
-  create_table "statuses", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "statuses", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "user_id",                     limit: 8,                 null: false
     t.integer "twitter_id",                  limit: 8,                 null: false
     t.integer "status_id_str",               limit: 8,                 null: false
     t.integer "in_reply_to_status_id_str",   limit: 8
     t.integer "in_reply_to_user_id_str",     limit: 8
-    t.string  "in_reply_to_screen_name",                                            collation: "utf8_unicode_ci"
-    t.string  "place_full_name",                                                    collation: "utf8_unicode_ci"
+    t.string  "in_reply_to_screen_name"
+    t.string  "place_full_name"
     t.integer "retweet_count"
     t.integer "twitter_created_at",                                    null: false
-    t.string  "source",                                                null: false, collation: "utf8_unicode_ci"
-    t.string  "text",                                                  null: false, collation: "utf8_unicode_ci"
+    t.string  "source",                                                null: false
+    t.string  "text",                                                  null: false
     t.boolean "is_retweet",                            default: false, null: false
-    t.string  "rt_name",                                                            collation: "utf8_unicode_ci"
-    t.string  "rt_screen_name",                                                     collation: "utf8_unicode_ci"
-    t.string  "rt_profile_image_url_https",                                         collation: "utf8_unicode_ci"
-    t.string  "rt_text",                                                            collation: "utf8_unicode_ci"
-    t.string  "rt_source",                                                          collation: "utf8_unicode_ci"
+    t.string  "rt_name"
+    t.string  "rt_screen_name"
+    t.string  "rt_profile_image_url_https"
+    t.string  "rt_text"
+    t.string  "rt_source"
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive",                                    null: false
     t.boolean "pre_saved",                                             null: false
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20170722072427) do
   add_index "statuses", ["user_id", "twitter_created_at_reversed"], name: "idx_u_tcar_on_statuses", using: :btree
   add_index "statuses", ["user_id"], name: "idx_u_on_statuses", using: :btree
 
-  create_table "users", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "users", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "twitter_id",              limit: 8,                 null: false
     t.string  "name",                                              null: false
     t.string  "screen_name",                                       null: false
