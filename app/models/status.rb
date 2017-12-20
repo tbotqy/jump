@@ -11,8 +11,7 @@ class Status < ActiveRecord::Base
   after_save :update_user_timestamp
 
   def update_user_timestamp
-    user_id = self.user_id
-    User.find(user_id).update_attribute(:statuses_updated_at,Time.now.to_i)
+    user.update_attribute(:statuses_updated_at, Time.now.to_i)
   end
 
   class << self
