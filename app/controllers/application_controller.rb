@@ -106,22 +106,4 @@ class ApplicationController < ActionController::Base
     end
     ret
   end
-
-  def convert_hyphen_in_date_to_japanese(specified_date)
-    # convert each "-" in specified_date to 年月日
-    ret = ""
-    specified_date.split(/-/).each_with_index do |part,i|
-      case i
-        when 0
-        ret += part + "年"
-        when 1
-        ret += part + "月"
-        when 2
-        ret += part + "日"
-        else
-        ret += part
-      end
-    end
-    ret
-  end
 end
