@@ -25,14 +25,18 @@ class Status < ActiveRecord::Base
 
     def save_statuses!(user_id, tweets)
       tweets.each do |tweet|
-        status          = new_by_tweet(tweet)
-        status.user_id  = user_id
-        status.entities = Entity.bulk_new_by_tweet(tweet)
-        status.save!
-
-        # save status's created_at values
-        PublicDate.add_record(tweet.created_at.to_i)
+        save_status!(user_id, tweet)
       end
+    end
+
+    def save_status!(user_id, tweet)
+      status          = new_by_tweet(tweet)
+      status.user_id  = user_id
+      status.entities = Entity.bulk_new_by_tweet(tweet)
+      status.save!
+
+      # save status's created_at values
+      PublicDate.add_record(tweet.created_at.to_i)
     end
 
     def new_by_tweet(tweet)
@@ -54,17 +58,6 @@ class Status < ActiveRecord::Base
         deleted_flag: false,
         created_at: Time.now.to_i
       )
-    end
-
-
-    def save_single_status(user_id,tweet)
-      new_record = Status.create( create_hash_to_save(user_id,tweet) )
-
-      # also save the entity belongs to the tweet
-      Entity.save_entities(new_record.id.to_i,tweet)
-
-      # save status's created_at values
-      PublicDate.add_record(Time.parse(tweet.attrs[:created_at]).to_i)
     end
 
     def get_date_list(type_of_timeline,user_id = nil)
