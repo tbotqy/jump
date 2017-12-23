@@ -23,11 +23,39 @@ class Status < ActiveRecord::Base
       where(user_id: user_id, pre_saved: true).update_all(pre_saved: false)
     end
 
-    def save_statuses(user_id,tweets)
+    def save_statuses(user_id, tweets)
       tweets.each do |tweet|
-        save_single_status(user_id,tweet)
+        status          = new_by_tweet(tweet)
+        status.user_id  = user_id
+        status.entities = Entity.bulk_new_by_tweet(tweet)
+        status.save!
+
+        # save status's created_at values
+        PublicDate.add_record(tweet.created_at.to_i)
       end
     end
+
+    def new_by_tweet(tweet)
+      new(
+        twitter_id: tweet.user.attrs[:id_str],
+        status_id_str: tweet.attrs[:id_str],
+        status_id_str_reversed: -1 * tweet.attrs[:id_str].to_i,
+        in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
+        in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
+        in_reply_to_screen_name: tweet.in_reply_to_screen_name,
+        place_full_name: tweet.place.try!(:full_name),
+        retweet_count: tweet.retweet_count,
+        twitter_created_at: Time.parse(tweet.created_at.to_s).to_i,
+        twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
+        source: tweet.source,
+        text: tweet.text,
+        possibly_sensitive: tweet.possibly_sensitive? || false,
+        pre_saved: true,
+        deleted_flag: false,
+        created_at: Time.now.to_i
+      )
+    end
+
 
     def save_single_status(user_id,tweet)
       new_record = Status.create( create_hash_to_save(user_id,tweet) )
