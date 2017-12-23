@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170722072427) do
+ActiveRecord::Schema.define(version: 20171223141403) do
 
   create_table "data_summaries", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20170722072427) do
 
   create_table "entities", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "status_id",              limit: 8, null: false
-    t.integer "status_id_str",          limit: 8, null: false
     t.string  "url"
     t.string  "display_url"
     t.string  "hashtag"
