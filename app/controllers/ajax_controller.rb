@@ -204,7 +204,7 @@ class AjaxController < ApplicationController
 
       else
         # just save all the tweets
-        Status.save_statuses(@current_user.id,statuses)
+        Status.save_statuses!(@current_user.id,statuses)
         saved_count = statuses.size
       end
 
@@ -327,7 +327,7 @@ class AjaxController < ApplicationController
       # clean the pre saved statuses up
       Status.delete_pre_saved_status(@current_user.id.to_i)
       # save statuses with pre_saved_flags set to true
-      Status.save_statuses(@current_user.id.to_i,statuses)
+      Status.save_statuses!(@current_user.id.to_i,statuses)
       # turn all the statuses' pre_saved_flag false
       Status.save_pre_saved_status(@current_user.id.to_i)
       continue = true

@@ -23,7 +23,7 @@ class Status < ActiveRecord::Base
       where(user_id: user_id, pre_saved: true).update_all(pre_saved: false)
     end
 
-    def save_statuses(user_id, tweets)
+    def save_statuses!(user_id, tweets)
       tweets.each do |tweet|
         status          = new_by_tweet(tweet)
         status.user_id  = user_id
