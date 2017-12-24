@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171223141403) do
+ActiveRecord::Schema.define(version: 20171224122928) do
 
   create_table "data_summaries", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type"
@@ -42,16 +42,6 @@ ActiveRecord::Schema.define(version: 20171223141403) do
 
   add_index "friends", ["user_id"], name: "idx_u_on_friends", using: :btree
 
-  create_table "profile_image_urls", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.integer "twitter_id",        limit: 8
-    t.string  "screen_name"
-    t.string  "url"
-    t.boolean "is_valid_url",                default: false
-    t.boolean "applied_to_status",           default: false
-    t.integer "created_at"
-    t.integer "updated_at"
-  end
-
   create_table "public_dates", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "posted_date",     limit: 10, null: false
     t.integer "posted_unixtime",            null: false
@@ -59,21 +49,6 @@ ActiveRecord::Schema.define(version: 20171223141403) do
 
   add_index "public_dates", ["posted_date"], name: "posted_date", unique: true, using: :btree
   add_index "public_dates", ["posted_unixtime"], name: "posted_unixtime", using: :btree
-
-  create_table "records", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.boolean "done",                    null: false
-    t.integer "status_id_str", limit: 8
-    t.boolean "was_error"
-    t.integer "created_at"
-  end
-
-  create_table "status_brokens", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.integer "status_id"
-    t.string  "state"
-    t.boolean "solved",     default: false
-    t.integer "created_at",                 null: false
-    t.integer "updated_at",                 null: false
-  end
 
   create_table "statuses", force: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "user_id",                     limit: 8,                 null: false
