@@ -12,17 +12,16 @@ class Entity < ActiveRecord::Base
         # check if 'type' has its node (hashtags,urls, and so on)
         if entity_bodies.size > 0
           entity_bodies.each do |entity_body|
-            Entity.create( create_hash_to_save(status_id, status, entity_body, entity_type) )
+            Entity.create( create_hash_to_save(status_id, entity_body, entity_type) )
           end
         end
       end
     end
 
-    def create_hash_to_save(status_id, status, entity_body, entity_type)
+    def create_hash_to_save(status_id, entity_body, entity_type)
 
       ret = {
         status_id: status_id,
-        status_id_str: status[:attrs][:id_str],
         indice_f: entity_body[:indices][0],
         indice_l: entity_body[:indices][1],
         entity_type: entity_type,
