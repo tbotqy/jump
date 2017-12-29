@@ -194,7 +194,7 @@ class AjaxController < ApplicationController
         # only save the tweets that have not been saved yet
         statuses.each do |tweet|
           if Time.parse(tweet.created_at.to_s).to_i > existing_latest_unixtime.to_i
-            Status.save_status!(@current_user.id,tweet)
+            Status.save_statuses!(@current_user.id,tweet)
             saved_count += 1
           else
             # stop saving

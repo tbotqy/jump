@@ -20,19 +20,15 @@ class Status < ActiveRecord::Base
     end
 
     def save_statuses!(user_id, tweets)
-      tweets.each do |tweet|
-        save_status!(user_id, tweet)
+      Array.wrap(tweets).each do |tweet|
+        status          = new_by_tweet(tweet)
+        status.user_id  = user_id
+        status.entities = Entity.bulk_new_by_tweet(tweet)
+        status.save!
+
+        # save status's created_at values
+        PublicDate.add_record(tweet.created_at.to_i)
       end
-    end
-
-    def save_status!(user_id, tweet)
-      status          = new_by_tweet(tweet)
-      status.user_id  = user_id
-      status.entities = Entity.bulk_new_by_tweet(tweet)
-      status.save!
-
-      # save status's created_at values
-      PublicDate.add_record(tweet.created_at.to_i)
     end
 
     def new_by_tweet(tweet)
