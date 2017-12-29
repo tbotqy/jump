@@ -148,52 +148,6 @@ class Status < ActiveRecord::Base
 
     private
 
-    def create_hash_to_save(user_id,tweet)
-      ret = {}
-      tweet = tweet.attrs
-
-      ret[:user_id] = user_id
-      ret[:twitter_id] = tweet[:user][:id_str]
-      ret[:status_id_str] = tweet[:id_str]
-      ret[:status_id_str_reversed] = -1 * ret[:status_id_str].to_i
-      ret[:in_reply_to_status_id_str] = tweet[:in_reply_to_status_id_str]
-      ret[:in_reply_to_user_id_str] = tweet[:in_reply_to_user_id_str]
-      ret[:in_reply_to_screen_name] = tweet[:in_reply_to_screen_name]
-      ret[:place_full_name] = tweet[:place].nil? ? nil : tweet[:place][:full_name]
-      ret[:retweet_count] = tweet[:retweet_count]
-      ret[:twitter_created_at] = Time.parse(tweet[:created_at].to_s).to_i
-      ret[:twitter_created_at_reversed] = -1*ret[:twitter_created_at]
-      ret[:source] = tweet[:source]
-      ret[:text] = tweet[:text]
-      ret[:possibly_sensitive] = tweet[:possibly_sensitive] || false
-      ret[:pre_saved] = true
-      ret[:deleted_flag] = false
-      ret[:created_at] = Time.now.to_i
-
-      # check if this is the rewteeted status
-      if tweet[:retweeted_status]
-        rt = tweet[:retweeted_status]
-
-        ret[:is_retweet] = true
-        ret[:rt_name] = rt[:user][:name]
-        ret[:rt_screen_name] = rt[:user][:screen_name]
-        ret[:rt_profile_image_url_https] = rt[:user][:profile_image_url_https]
-        ret[:rt_text] = rt[:text]
-        ret[:rt_source] = rt[:source]
-        ret[:rt_created_at] = Time.parse(rt[:created_at]).to_i
-      else
-        ret[:is_retweet] = false
-        ret[:rt_name] = nil
-        ret[:rt_screen_name] = nil
-        ret[:rt_profile_image_url_https] = nil
-        ret[:rt_text] = nil
-        ret[:rt_source] = nil
-        ret[:rt_created_at] = nil
-      end
-
-      ret
-    end
-
     def calc_from_and_to_of(date)
     # calculate the start/end date of given date in unixtime
 
