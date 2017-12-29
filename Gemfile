@@ -18,9 +18,11 @@ gem 'turnout'
 gem 'rake', '~> 11.3.0'
 gem 'activerecord-mysql-awesome'
 gem 'slim-rails'
+group :development do
+  gem 'web-console', '~> 2.0'
+end
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
-  gem 'web-console', '~> 2.0'
 end
