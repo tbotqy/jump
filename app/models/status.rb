@@ -1,9 +1,9 @@
 class Status < ActiveRecord::Base
 
   belongs_to :user
-  has_many :entities, :dependent => :delete_all
-  scope :showable , -> {where(:pre_saved => false,:deleted_flag => false)}
-  scope :retweet , -> {where(:is_retweet => true)}
+  has_many :entities, dependent: :delete_all
+  scope :showable , -> {where(pre_saved: false, deleted_flag: false)}
+  scope :retweet , -> {where(is_retweet: true)}
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   scope :use_index , ->(index_name) {from("#{table_name} USE INDEX(#{index_name})")}
