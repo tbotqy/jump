@@ -1,20 +1,14 @@
-# -*- coding: utf-8 -*-
 class Status < ActiveRecord::Base
 
   belongs_to :user
-  has_many :entities, :dependent => :delete_all
-  scope :showable , -> {where(:pre_saved => false,:deleted_flag => false)}
-  scope :retweet , -> {where(:is_retweet => true)}
+  has_many :entities, dependent: :delete_all
+  scope :showable , -> {where(pre_saved: false, deleted_flag: false)}
+  scope :retweet , -> {where(is_retweet: true)}
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   scope :use_index , ->(index_name) {from("#{table_name} USE INDEX(#{index_name})")}
   scope :force_index , ->(index_name) {from("#{table_name} FORCE INDEX(#{index_name})")}
   after_save :update_user_timestamp
-
-  def update_user_timestamp
-    user_id = self.user_id
-    User.find(user_id).update_attribute(:statuses_updated_at,Time.now.to_i)
-  end
 
   class << self
     def delete_pre_saved_status(user_id)
@@ -25,20 +19,39 @@ class Status < ActiveRecord::Base
       where(user_id: user_id, pre_saved: true).update_all(pre_saved: false)
     end
 
-    def save_statuses(user_id,tweets)
-      tweets.each do |tweet|
-        save_single_status(user_id,tweet)
+    def save_statuses!(user_id, tweets)
+      Array.wrap(tweets).each do |tweet|
+        status          = new_by_tweet(tweet)
+        status.user_id  = user_id
+        status.entities = Entity.bulk_new_by_tweet(tweet)
+        status.save!
+
+        # save status's created_at values
+        PublicDate.add_record(tweet.created_at.to_i)
       end
     end
 
-    def save_single_status(user_id,tweet)
-      new_record = Status.create( create_hash_to_save(user_id,tweet) )
-
-      # also save the entity belongs to the tweet
-      Entity.save_entities(new_record.id.to_i,tweet)
-
-      # save status's created_at values
-      PublicDate.add_record(Time.parse(tweet.attrs[:created_at]).to_i)
+    def new_by_tweet(tweet)
+      ret = new(
+        twitter_id: tweet.user.attrs[:id_str],
+        status_id_str: tweet.attrs[:id_str],
+        status_id_str_reversed: -1 * tweet.attrs[:id_str].to_i,
+        in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
+        in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
+        in_reply_to_screen_name: tweet.in_reply_to_screen_name,
+        place_full_name: tweet.place.try!(:full_name),
+        retweet_count: tweet.retweet_count,
+        twitter_created_at: Time.parse(tweet.created_at.to_s).to_i,
+        twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
+        source: tweet.source,
+        text: tweet.text,
+        possibly_sensitive: tweet.possibly_sensitive? || false,
+        pre_saved: true,
+        deleted_flag: false,
+        created_at: Time.now.to_i
+      )
+      ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
+      ret
     end
 
     def get_date_list(type_of_timeline,user_id = nil)
@@ -117,52 +130,6 @@ class Status < ActiveRecord::Base
 
     private
 
-    def create_hash_to_save(user_id,tweet)
-      ret = {}
-      tweet = tweet.attrs
-
-      ret[:user_id] = user_id
-      ret[:twitter_id] = tweet[:user][:id_str]
-      ret[:status_id_str] = tweet[:id_str]
-      ret[:status_id_str_reversed] = -1 * ret[:status_id_str].to_i
-      ret[:in_reply_to_status_id_str] = tweet[:in_reply_to_status_id_str]
-      ret[:in_reply_to_user_id_str] = tweet[:in_reply_to_user_id_str]
-      ret[:in_reply_to_screen_name] = tweet[:in_reply_to_screen_name]
-      ret[:place_full_name] = tweet[:place].nil? ? nil : tweet[:place][:full_name]
-      ret[:retweet_count] = tweet[:retweet_count]
-      ret[:twitter_created_at] = Time.parse(tweet[:created_at].to_s).to_i
-      ret[:twitter_created_at_reversed] = -1*ret[:twitter_created_at]
-      ret[:source] = tweet[:source]
-      ret[:text] = tweet[:text]
-      ret[:possibly_sensitive] = tweet[:possibly_sensitive] || false
-      ret[:pre_saved] = true
-      ret[:deleted_flag] = false
-      ret[:created_at] = Time.now.to_i
-
-      # check if this is the rewteeted status
-      if tweet[:retweeted_status]
-        rt = tweet[:retweeted_status]
-
-        ret[:is_retweet] = true
-        ret[:rt_name] = rt[:user][:name]
-        ret[:rt_screen_name] = rt[:user][:screen_name]
-        ret[:rt_profile_image_url_https] = rt[:user][:profile_image_url_https]
-        ret[:rt_text] = rt[:text]
-        ret[:rt_source] = rt[:source]
-        ret[:rt_created_at] = Time.parse(rt[:created_at]).to_i
-      else
-        ret[:is_retweet] = false
-        ret[:rt_name] = nil
-        ret[:rt_screen_name] = nil
-        ret[:rt_profile_image_url_https] = nil
-        ret[:rt_text] = nil
-        ret[:rt_source] = nil
-        ret[:rt_created_at] = nil
-      end
-
-      ret
-    end
-
     def calc_from_and_to_of(date)
     # calculate the start/end date of given date in unixtime
 
@@ -189,5 +156,19 @@ class Status < ActiveRecord::Base
 
       ret
     end
+  end
+
+  def update_user_timestamp
+    user.update_attribute(:statuses_updated_at, Time.now.to_i)
+  end
+
+  def assign_retweeted_status(retweeted_status)
+    self.is_retweet  = true
+    self.rt_name = retweeted_status.user.name
+    self.rt_screen_name = retweeted_status.user.screen_name
+    self.rt_profile_image_url_https = retweeted_status.user.profile_image_url_https.to_s
+    self.rt_text = retweeted_status.text
+    self.rt_source = retweeted_status.source
+    self.rt_created_at = retweeted_status.created_at.to_i
   end
 end
