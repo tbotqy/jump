@@ -10,20 +10,6 @@ class Status < ActiveRecord::Base
   scope :force_index , ->(index_name) {from("#{table_name} FORCE INDEX(#{index_name})")}
   after_save :update_user_timestamp
 
-  def update_user_timestamp
-    user.update_attribute(:statuses_updated_at, Time.now.to_i)
-  end
-
-  def assign_retweeted_status(retweeted_status)
-    self.is_retweet  = true
-    self.rt_name = retweeted_status.user.name
-    self.rt_screen_name = retweeted_status.user.screen_name
-    self.rt_profile_image_url_https = retweeted_status.user.profile_image_url_https.to_s
-    self.rt_text = retweeted_status.text
-    self.rt_source = retweeted_status.source
-    self.rt_created_at = retweeted_status.created_at.to_i
-  end
-
   class << self
     def delete_pre_saved_status(user_id)
       destroy_all(user_id: user_id, pre_saved: true)
@@ -174,5 +160,19 @@ class Status < ActiveRecord::Base
 
       ret
     end
+  end
+
+  def update_user_timestamp
+    user.update_attribute(:statuses_updated_at, Time.now.to_i)
+  end
+
+  def assign_retweeted_status(retweeted_status)
+    self.is_retweet  = true
+    self.rt_name = retweeted_status.user.name
+    self.rt_screen_name = retweeted_status.user.screen_name
+    self.rt_profile_image_url_https = retweeted_status.user.profile_image_url_https.to_s
+    self.rt_text = retweeted_status.text
+    self.rt_source = retweeted_status.source
+    self.rt_created_at = retweeted_status.created_at.to_i
   end
 end
