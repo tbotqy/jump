@@ -116,7 +116,7 @@ GEM
     minitest (5.10.3)
     multi_json (1.12.2)
     multipart-post (2.0.0)
-    mysql2 (0.3.21)
+    mysql2 (0.4.10)
     naught (1.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
@@ -251,7 +251,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jpmobile (~> 4.1.0)
   jquery-rails
-  mysql2 (~> 0.3.0)
+  mysql2 (~> 0.4.0)
   omniauth
   omniauth-twitter!
   rails (~> 4.2.0)
