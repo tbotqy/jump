@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-gem 'rails', '4.1.16'
-gem 'mysql2', '~> 0.3.0'
+gem 'rails', '~> 4.2.0'
+gem 'mysql2', '~> 0.4.0'
 gem 'unicorn'
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
@@ -18,6 +18,9 @@ gem 'turnout'
 gem 'rake', '~> 11.3.0'
 gem 'activerecord-mysql-awesome'
 gem 'slim-rails'
+group :development do
+  gem 'web-console', '~> 2.0'
+end
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails'
