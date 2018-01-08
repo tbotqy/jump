@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :status do
 
-    twitter_id 123456789
     status_id_str 111111111111111111
     in_reply_to_status_id_str nil
     in_reply_to_user_id_str nil
