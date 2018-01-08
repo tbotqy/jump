@@ -33,7 +33,6 @@ class Status < ActiveRecord::Base
 
     def new_by_tweet(tweet)
       ret = new(
-        twitter_id: tweet.user.attrs[:id_str],
         status_id_str: tweet.attrs[:id_str],
         status_id_str_reversed: -1 * tweet.attrs[:id_str].to_i,
         in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
