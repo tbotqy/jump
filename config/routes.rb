@@ -18,7 +18,5 @@ Jump::Application.routes.draw do
   get '/admin/accounts', to: 'admin#accounts'
   get '/admin/statuses', to: 'admin#statuses'
 
-  post ':controller(/:action(/:id))(.:format)'
-  get  ':controller(/:action(/:id))(.:format)'
   get  '*path', to: 'application#render_404'
 end
