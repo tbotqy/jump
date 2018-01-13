@@ -15,6 +15,18 @@ Jump::Application.routes.draw do
   get '/your/home_timeline/(:date)', to: 'statuses#home_timeline'
   get '/public_timeline/(:date)',    to: 'statuses#public_timeline'
 
+  post '/ajax/check_profile_update', to: 'ajax#check_profile_update'
+  post '/ajax/check_status_update',  to: 'ajax#check_status_update'
+  post '/ajax/check_friend_update',  to: 'ajax#check_friend_update'
+  post '/ajax/deactivate_account',   to: 'ajax#deactivate_account'
+  post '/ajax/delete_account',       to: 'ajax#delete_account'
+  post '/ajax/delete_status',        to: 'ajax#delete_status'
+  post '/ajax/update_status',        to: 'ajax#update_status'
+  post '/ajax/read_more',            to: 'ajax#read_more'
+  get  '/ajax/get_dashbord',         to: 'ajax#get_dashbord'
+  post '/ajax/acquire_statuses',     to: 'ajax#acquire_statuses'
+  get  '/ajax/switch_term',          to: 'ajax#switch_term'
+
   get '/admin/accounts', to: 'admin#accounts'
   get '/admin/statuses', to: 'admin#statuses'
 
