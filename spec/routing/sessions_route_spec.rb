@@ -1,5 +1,5 @@
 require 'rails_helper'
-describe "routings to sessions"do
+describe "routings to sessions" do
 
   describe "get /auth/twitter/callback" do
     it do

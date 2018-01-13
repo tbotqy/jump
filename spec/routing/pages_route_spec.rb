@@ -1,5 +1,5 @@
 require 'rails_helper'
-describe "routings to static pages"do
+describe "routings to static pages" do
 
   describe "get /" do
     it do
