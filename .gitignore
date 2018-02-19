@@ -10,13 +10,6 @@ capybara-*.html
 /db/*.sqlite3
 /db/data.yaml
 /public/system/*
-/public/assets/*
-!/public/assets/*.png
-!/public/assets/*.gif
-!/public/assets/*.eot
-!/public/assets/*.svg
-!/public/assets/*.ttf
-!/public/assets/*.woff
 /coverage/
 /spec/tmp/*
 **.orig
