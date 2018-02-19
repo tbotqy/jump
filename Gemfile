@@ -18,6 +18,7 @@ gem 'turnout'
 gem 'rake', '12.0.0'
 gem 'activerecord-mysql-awesome'
 gem 'slim-rails'
+gem 'therubyracer', platforms: :ruby
 group :development do
   gem 'web-console', '~> 2.0'
 end
