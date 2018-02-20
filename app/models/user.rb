@@ -26,10 +26,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def has_friend?
-    Friend.exists?(user_id: self.id)
-  end
-
   def has_imported?
     # check if user has imported own tweets
     self.initialized_flag
