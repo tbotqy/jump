@@ -28,12 +28,6 @@ class DataSummary < ActiveRecord::Base
     def get_dest_record(dest_type_name)
       find_by_type(dest_type_name)
     end
-
-    def sync_active_status_count
-      # sync the value of active status count with the count on status table
-      count_on_statuses = Status.where(deleted_flag: false).count
-      get_dest_record("active_status_count").update_attributes(value: count_on_statuses)
-    end
   end
 
   def add_value(number_to_add)
