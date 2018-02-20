@@ -9,6 +9,7 @@ class PublicDate < ActiveRecord::Base
       end
     end
 
+    # FIXME : make this private
     def date_exists?(unixtime_created_at)
       date = convert_time_to_date(unixtime_created_at)
       where(posted_date: date).exists?
