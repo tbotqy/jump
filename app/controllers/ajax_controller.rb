@@ -359,15 +359,6 @@ class AjaxController < ApplicationController
         added_tweets_count = @current_user.get_active_status_count
         DataSummary.increase('active_status_count', added_tweets_count)
       end
-=begin
-      # send notification dm
-      create_twitter_client(configatron.access_token,configatron.access_token_secret) do |my_twitter|
-        my_twitter.direct_message_create(configatron.admin_user_twitter_id, "@"+ @current_user.screen_name.to_s + "has joined at " + Time.now)
-      end
-      # send notification dm
-      admin_twitter = create_twitter_client(configatron.access_token,configatron.access_token_secret)
-      admin_twitter.direct_message_create(configatron.service_owner_twitter_id.to_i, "@"+ @current_user.screen_name.to_s + " has joined at " + Time.now.strftime('%F %T')) rescue nil
-=end
     end
 
     render :json => ret

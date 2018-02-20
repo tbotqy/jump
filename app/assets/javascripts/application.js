@@ -19,5 +19,4 @@
 //= require common
 //= require get_dashbord
 //= require popstate
-//= require admin
 //= requrie dashbord

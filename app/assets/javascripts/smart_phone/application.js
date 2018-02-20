@@ -19,5 +19,4 @@
 //= require smart_phone/common
 //= require smart_phone/get_dashbord
 //= require smart_phone/popstate
-//= require smart_phone/admin
 //= requrie smart_phone/dashbord
