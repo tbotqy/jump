@@ -6,7 +6,6 @@ production:
     consumer_secret:
     access_token:
     access_token_secret:
-    admin_users :
     service_owner_twitter_id :
 
 development:
@@ -17,7 +16,6 @@ development:
     consumer_secret:
     access_token:
     access_token_secret:
-    admin_users :
     service_owner_twitter_id :
 
 test:
@@ -28,5 +26,4 @@ test:
     consumer_secret:
     access_token:
     access_token_secret:
-    admin_users :
     service_owner_twitter_id :
