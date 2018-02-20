@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :statuses, dependent: :destroy
   has_many :friends, dependent: :delete_all
 
+  # FIXME : this is referenced only at one point
+  # consider to delete this scope and replace with some private method
   scope :active, lambda{where(deleted_flag: false)}
 
   class << self
@@ -24,65 +26,6 @@ class User < ActiveRecord::Base
       # turn the flag off for users table
       find(user_id).update_attribute(:deleted_flag, true)
     end
-
-    def active_twitter_id_exists?(twitter_id)
-      # check if user exists by searching given twitter id
-      where(twitter_id: twitter_id).where(deleted_flag: false).exists?
-    end
-
-    def get_active_users
-      where(deleted_flag: false).order('created_at DESC')
-    end
-
-    def get_gone_users
-      where(deleted_flag: true).order('updated_at DESC')
-    end
-
-    # maintenance methods --
-
-    def delete_gone_users
-      deleted_user_count = 0
-      get_gone_users.each do |gone_user|
-        if gone_user.destroy
-          deleted_user_count += 1
-        end
-      end
-      deleted_user_count
-    end
-
-    def delete_gone_and_duplicated_users
-      # delete already-flagged users before process
-      delete_gone_users
-
-      # detect the duplicated user account
-      duplicated_tids = []
-      User.get_active_users.each do |u|
-        count = where(twitter_id: u.twitter_id).count
-        if count > 1
-          duplicated_tids.push(u.twitter_id)
-        end
-      end
-
-      return 0 if duplicated_tids.size == 0
-
-      # once flag all the duplicated users to deleted
-      duplicated_tids.each do |tid|
-        where(twitter_id: tid).update_all(deleted_flag: true)
-      end
-      # delete with group by used
-      group(:twitter_id).each do |u|
-        u.update_attributes(deleted_flag: false)
-      end
-
-      # delete flagged users and return the number of them
-      delete_gone_users
-
-    end
-
-  end
-
-  def has_friend?
-    Friend.exists?(user_id: self.id)
   end
 
   def has_imported?
@@ -95,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def get_oldest_active_tweet_id
-    Status.where(user_id: self.id).maximum(:status_id_str_reversed)*-1 rescue "false"
+    Status.where(user_id: self.id).maximum(:status_id_str_reversed)*-1 rescue "false" # FIXME
   end
 
   def get_active_status_count

@@ -21,8 +21,3 @@
 
 set :output, {:error => 'log/cron/error.log', :standard => 'log/cron/standard.log'}
 set :environment, :production
-
-# maintenance for User model
-every 1.day, :at => '2:00 am' do
-  runner "Tasks::DbUpdater.delete_gone_users"
-end
