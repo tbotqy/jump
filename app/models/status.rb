@@ -35,6 +35,7 @@ class Status < ActiveRecord::Base
       end
     end
 
+    # MEMO : You might not have to keep this method public.
     def new_by_tweet(tweet)
       ret = new(
         status_id_str: tweet.attrs[:id_str],
