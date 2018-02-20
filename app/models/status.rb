@@ -79,6 +79,7 @@ class Status < ActiveRecord::Base
       ret
     end
 
+    # FIXME : make this private
     def get_twitter_created_at_list(type_of_timeline,user_id = nil)
       case type_of_timeline
       when 'sent_tweets'
