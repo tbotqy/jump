@@ -27,8 +27,5 @@ Jump::Application.routes.draw do
   post '/ajax/acquire_statuses',     to: 'ajax#acquire_statuses'
   get  '/ajax/switch_term',          to: 'ajax#switch_term'
 
-  get '/admin/accounts', to: 'admin#accounts'
-  get '/admin/statuses', to: 'admin#statuses'
-
   get  '*path', to: 'application#render_404'
 end
