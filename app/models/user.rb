@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_many :statuses, dependent: :destroy
   has_many :friends, dependent: :delete_all
 
+  # FIXME : this is referenced only at one point
+  # consider to delete this scope and replace with some private method
   scope :active, lambda{where(deleted_flag: false)}
 
   class << self
