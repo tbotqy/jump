@@ -19,6 +19,7 @@ class PublicDate < ActiveRecord::Base
       select(:posted_unixtime).order('posted_unixtime DESC')
     end
 
+    # FIXME : make this private
     def convert_time_to_date(unixtime_created_at)
       Time.zone.at(unixtime_created_at).strftime('%Y/%-m/%-d')
     end
