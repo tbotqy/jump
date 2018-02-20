@@ -3,7 +3,11 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :showable , -> {where(pre_saved: false, deleted_flag: false)}
+
+  # FIXME : this scope 'retweet' is only used in this class itself.
+  # consider to delete this scope and replace with some private method.
   scope :retweet , -> {where(is_retweet: true)}
+
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   scope :use_index , ->(index_name) {from("#{table_name} USE INDEX(#{index_name})")}
@@ -31,6 +35,7 @@ class Status < ActiveRecord::Base
       end
     end
 
+    # MEMO : You might not have to keep this method public.
     def new_by_tweet(tweet)
       ret = new(
         status_id_str: tweet.attrs[:id_str],
@@ -74,6 +79,7 @@ class Status < ActiveRecord::Base
       ret
     end
 
+    # FIXME : make this private
     def get_twitter_created_at_list(type_of_timeline,user_id = nil)
       case type_of_timeline
       when 'sent_tweets'
