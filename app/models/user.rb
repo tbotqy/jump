@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def get_oldest_active_tweet_id
-    Status.where(user_id: self.id).maximum(:status_id_str_reversed)*-1 rescue "false"
+    Status.where(user_id: self.id).maximum(:status_id_str_reversed)*-1 rescue "false" # FIXME
   end
 
   def get_active_status_count
