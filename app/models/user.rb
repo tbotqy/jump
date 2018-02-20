@@ -24,22 +24,6 @@ class User < ActiveRecord::Base
       # turn the flag off for users table
       find(user_id).update_attribute(:deleted_flag, true)
     end
-
-    def get_gone_users
-      where(deleted_flag: true).order('updated_at DESC')
-    end
-
-    # maintenance methods --
-
-    def delete_gone_users
-      deleted_user_count = 0
-      get_gone_users.each do |gone_user|
-        if gone_user.destroy
-          deleted_user_count += 1
-        end
-      end
-      deleted_user_count
-    end
   end
 
   def has_friend?
