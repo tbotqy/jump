@@ -34,6 +34,7 @@
       <%= stylesheet_link_tag "application", :media => "all" %>
       <%= javascript_include_tag "application" %>
     <% end %>
+    <%= yield :javascript_include_tags %>
     <%= csrf_meta_tags %>
     <% if configatron.site_mode == "production" %>
       <script>
