@@ -1,3 +1,7 @@
+<% content_for :javascript_include_tags do %>
+  <%= javascript_include_tag "modules/tweet_card" %>
+  <%= javascript_include_tag "statuses/public_timeline" %>
+<% end %>
 <% content_for :global_header do %>
   <%= render "shared/global_header",{ :current_user => @current_user || false} %>
 <% end %>
