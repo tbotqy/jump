@@ -15,8 +15,3 @@
 //= require detect_timezone
 //= require jquery.detect_timezone
 //= require jquery.cookie
-//= require functions
-//= require common
-//= require get_dashbord
-//= require popstate
-//= requrie dashbord
