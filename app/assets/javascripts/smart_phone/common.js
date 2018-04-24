@@ -189,20 +189,6 @@ $(function(){
   });
 
   ////////////////////////////////////
-  // code for /users/home_timeline  //
-  ////////////////////////////////////
-  var elmErrorInner = $(".error-inner");
-  elmErrorInner.find(".description").click(function(e){
-    e.preventDefault();
-    elmErrorInner.find(".invite-friends").fadeIn();
-  });
-
-  elmErrorInner.find(".invite-friends .close").click(function(e){
-    e.preventDefault();
-    elmErrorInner.find(".invite-friends").fadeOut();
-  });
-
-  ////////////////////////////////////
   // code for /users/setting        //
   ////////////////////////////////////
 
