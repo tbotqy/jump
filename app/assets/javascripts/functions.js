@@ -635,18 +635,6 @@ function ajaxSwitchDashbord(actionType){
 
 }
 
-function getDashbordType(){
-
-  var ret = $("#wrap-dashbord").data('type');
-
-  if(!ret){
-    return false;
-  }
-
-  return ret;
-
-}
-
 function ajaxSwitchTerm(date,action_type,mode){
 
   /**
