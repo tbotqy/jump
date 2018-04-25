@@ -19,7 +19,7 @@ var ReadMore = {
         dataType:"html",
         data:{
           "oldest_tweet_id":oldestTweetId,
-          "destination_action_type":detectActionType(location.pathname)
+          "destination_action_type":SharedFunctions.detectActionType(location.pathname)
         },
         url: '/ajax/read_more',
         success: function(responce){

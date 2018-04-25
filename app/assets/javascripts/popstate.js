@@ -44,7 +44,7 @@ $(function(){
           date = detectDate(path);
         }
 
-        var action_type = detectActionType(path);
+        var action_type = SharedFunctions.detectActionType(path);
 
         ajaxSwitchTerm(date,action_type,"pjax");
 

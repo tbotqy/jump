@@ -131,7 +131,8 @@ var Dashbord = {
 
           // check the type of data currently being shown
           var path = location.pathname;
-          var action_type = detectActionType(path);
+
+          var action_type = SharedFunctions.detectActionType(path);
 
           // fetch statuses
           $.ajax({
