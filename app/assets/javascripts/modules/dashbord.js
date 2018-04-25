@@ -13,7 +13,7 @@ var Dashbord = {
     // show the loading icon
     elmWholeWrapper.html("<img src=\"/assets/ajax-loader.gif\" alt=\"読込中\" />");
 
-    var actionType = getDashbordType();
+    var actionType = this.getDashbordType();
 
     var sendData = {
       action_type:actionType
@@ -47,7 +47,13 @@ var Dashbord = {
     this.ClickEvent.fetchStatuses();
     this.ClickEvent.controlButtonState();
   },
-
+  getDashbordType: function(){
+    var ret = $("#wrap-dashbord").data('type');
+    if(!ret){
+      return false;
+    }
+    return ret;
+  },
   MouseoverEvent: {
     onYearSelectors: function(){
       // mouseover action for year list in dashbord
