@@ -15,3 +15,4 @@
 //= require detect_timezone
 //= require jquery.detect_timezone
 //= require jquery.cookie
+//= require shared_functions
