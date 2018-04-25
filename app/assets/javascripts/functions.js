@@ -90,20 +90,6 @@ function getCsrfToken(){
   return $("meta[name=csrf-token]").attr("content");
 }
 
-function scrollToPageTop(e){
-
-  if(e){
-    e.preventDefault();
-  }
-
-  $("html, body").animate(
-    {scrollTop:0},
-    {easing:"swing",duration:500}
-  );
-
-  return false;
-}
-
 function scrollDownToDestination(e,distance){
 
   e.preventDefault();
@@ -687,7 +673,7 @@ function ajaxSwitchTerm(date,action_type,mode){
     complete: function(){
 
       // scroll to top
-      scrollToPageTop();
+      SharedFunctions.scrollToPageTop();
 
       // show the loaded html
       $("#wrap-main").fadeIn('fast');

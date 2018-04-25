@@ -153,7 +153,7 @@ var Dashbord = {
             },
             complete: function(){
               // scroll to top
-              scrollToPageTop(e);
+              SharedFunctions.scrollToPageTop(e);
               // show the loaded html
               $("#wrap-main").fadeIn('fast');
               // let the button say that process has been done

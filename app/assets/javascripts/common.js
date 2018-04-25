@@ -182,7 +182,7 @@ $(function(){
   });
 
   $(".to-page-top").find("a").click (function(e) {
-    scrollToPageTop(e);
+    SharedFunctions.scrollToPageTop(e);
   });
 
 });
