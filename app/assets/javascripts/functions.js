@@ -6,10 +6,6 @@ function facebook(d, s, id) {
   fjs.parentNode.insertBefore(js, fjs);
 }
 
-function getCsrfToken(){
-  return $("meta[name=csrf-token]").attr("content");
-}
-
 function showLoader(parentName){
   var type = typeof(parentName);
 

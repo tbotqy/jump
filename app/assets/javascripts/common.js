@@ -10,7 +10,7 @@ $(function(){
   },3000);
 
   $.ajaxSetup({
-    data:{"authenticity_token":getCsrfToken()}
+    data:{"authenticity_token": $("meta[name=csrf-token]").attr("content")}
   });
 
   var wrap_progress_bar = $(".wrap-progress-bar");
