@@ -16,3 +16,4 @@
 //= require jquery.detect_timezone
 //= require jquery.cookie
 //= require shared_functions
+//= require common
