@@ -41,5 +41,14 @@ var SharedFunctions = {
       {easing:"swing",duration:500}
     );
     return false;
+  },
+  hideLoader: function(parentName){
+    var type = typeof(parentName);
+
+    if(type == "string"){
+      $(parentName).find(".loader").fadeOut();
+    }else if(type == "object"){
+      parentName.find(".loader").fadeOut();
+    }
   }
 };
