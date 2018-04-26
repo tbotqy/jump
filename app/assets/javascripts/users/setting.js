@@ -139,7 +139,7 @@ $(function(){
           $(this).text(updated_date);
         }).fadeIn();
 
-        hideLoader(".wrap-profile");
+        SharedFunctions.hideLoader(".wrap-profile");
 
         var complete_text = updated ? "更新完了" : "処理終了";
 
@@ -155,7 +155,7 @@ $(function(){
         wrap_profile.find(".area-result .alert").addClass("alert-danger").text("もう一度お試しください").fadeIn();
 
         $("#update-profile").text("エラー");
-        hideLoader(".wrap-profile");
+        SharedFunctions.hideLoader(".wrap-profile");
       }
     });
   }
@@ -259,7 +259,7 @@ $(function(){
 
       complete: function(){
         // hide the loading icon
-        hideLoader(".friends");
+        SharedFunctions.hideLoader(".friends");
       }
     });
   }
@@ -281,16 +281,6 @@ $(function(){
 
   function showDeleteErrorMessage(){
     return showCompleteMessage(false);
-  }
-
-  function hideLoader(parentName){
-    var type = typeof(parentName);
-
-    if(type == "string"){
-      $(parentName).find(".loader").fadeOut();
-    }else if(type == "object"){
-      parentName.find(".loader").fadeOut();
-    }
   }
 
   var total_count = 0;

@@ -21,43 +21,6 @@ $(function(){
     fjs.parentNode.insertBefore(js, fjs);
   }
 
-  var wrap_progress_bar = $(".wrap-progress-bar");
-  var import_button = $("#start-import");
-
-  //click event activated when start button is clicked
-  import_button.click(function(){
-
-    // change the button statement
-    import_button.button('loading');
-
-    // show the loader icon
-    showLoader("#wrap-import");
-
-    /// show the progress bar
-    wrap_progress_bar.fadeIn(function(){
-
-      // show the area displaying the status body currently saving
-      $("#status").fadeIn();
-
-    });
-
-    //initialize data to post
-    var data_to_post = {};
-
-    // check if id_str_oldest is specified
-    var specified_id_str_oldest = $("input[name=id-oldest]").val();
-    if( specified_id_str_oldest != "false"){
-      data_to_post.id_str_oldest = specified_id_str_oldest;
-      $("#recover-msg").fadeOut();
-    }else{
-      data_to_post.id_str_oldest = "";
-    }
-
-    // post ajax request
-    getStatuses(data_to_post);
-
-  });
-
   ///////////////////////////////////////////////
   // code for the button to scroll to page top //
   ///////////////////////////////////////////////
