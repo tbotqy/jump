@@ -13,6 +13,14 @@ $(function(){
     data:{"authenticity_token": $("meta[name=csrf-token]").attr("content")}
   });
 
+  function facebook(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1&appId=258025897640441";
+    fjs.parentNode.insertBefore(js, fjs);
+  }
+
   var wrap_progress_bar = $(".wrap-progress-bar");
   var import_button = $("#start-import");
 
