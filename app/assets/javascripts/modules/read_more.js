@@ -34,9 +34,21 @@ var ReadMore = {
           alert("読み込みに失敗しました。");
         },
         complete: function(){
-          scrollDownToDestination(e,distance);
+          ReadMore.scrollDownToDestination(e,distance);
         }
       });
     });
+  },
+  scrollDownToDestination: function(e,distance){
+    e.preventDefault();
+
+    distance -= 160;
+
+    $("html, body").animate(
+      {scrollTop: distance},
+      {easing:"swing",duration:500}
+    );
+
+    return false;
   }
 };

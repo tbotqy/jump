@@ -30,20 +30,6 @@ function getCsrfToken(){
   return $("meta[name=csrf-token]").attr("content");
 }
 
-function scrollDownToDestination(e,distance){
-
-  e.preventDefault();
-
-  distance -= 160;
-
-  $("html, body").animate(
-    {scrollTop: distance},
-    {easing:"swing",duration:500}
-  );
-
-  return false;
-}
-
 function showLoader(parentName){
   var type = typeof(parentName);
 
