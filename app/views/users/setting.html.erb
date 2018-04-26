@@ -1,4 +1,7 @@
 <% content_for(:title){"データ管理"} %>
+<% content_for :javascript_include_tags do %>
+  <%= javascript_include_tag "users/setting" %>
+<% end %>
 <% content_for :global_header do %>
   <%= render "shared/global_header",{ :current_user => @current_user} %>
 <% end %>
