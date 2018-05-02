@@ -4,39 +4,6 @@ function redirect(){
 
 }
 
-function ajaxSwitchDashbord(actionType){
-
-  /**
-   * switches dashbord according to given actionType
-   * @param actionType should represent from which kind of timeline the dashbord is created
-   */
-
-  var wrap_dashbord = $("#wrap-dashbord");
-  var wrap_term_selectors = $("#wrap-term-selectors");
-
-  $.ajax({
-
-    url: "/ajax/switch_dashbord",
-    type: "post",
-    dataType: "html",
-    data:{"action_type":actionType},
-
-    success: function(res){
-      // insert new html code
-      wrap_term_selectors.html(res);
-
-      // rewrite the data attribute in parent div
-      wrap_dashbord.attr('data-type',actionType);
-    },
-
-    error: function(){
-      alert("ページの読み込みがうまくいきませんでした。リロードしてみて下さい。");
-    }
-
-  });
-
-}
-
 function ajaxSwitchTerm(date,action_type,mode){
 
   /**
