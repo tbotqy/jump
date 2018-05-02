@@ -1,4 +1,4 @@
-$(function(){
+var Popstate = {
   if( $("#wrap-dashbord").size() == 0 ) return;
 
   /////////////////////////////
@@ -54,4 +54,4 @@ $(function(){
 
     });
   }
-});
+};
