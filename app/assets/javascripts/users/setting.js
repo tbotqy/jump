@@ -76,7 +76,7 @@ $(function(){
         if(deleted){
           setTimeout(
             function(){
-              redirect();
+              location.href = "/logout";
             }, 3000
           );
         }else{
