@@ -1,12 +1,12 @@
 var Popstate = {
-  if( $("#wrap-dashbord").size() == 0 ) return;
+  bindEvent: function(){
+    if(!this.isBindable){
+      return;
+    }
+    this.bindToWindow();
+  },
 
-  /////////////////////////////
-  // code for popstate event //
-  /////////////////////////////
-
-  if('pushState' in history){
-
+  bindToWindow: function(){
     $(window).on("popstate",function(e){
 
       var white_list = ['tweets','home_timeline','public_timeline'];
@@ -17,12 +17,10 @@ var Popstate = {
 
       // check if requested action type is allowed to fire process on popstate
       for(var i=0;i<white_list.length;i++){
-
         if(countStr(path,white_list[i]) > 0){
           actionTypeOk = true;
           break;
         }
-
       }
 
       if( actionTypeOk ){
@@ -45,13 +43,15 @@ var Popstate = {
         }
 
         var action_type = SharedFunctions.detectActionType(path);
-
         ajaxSwitchTerm(date,action_type,"pjax");
 
         // reset all the term selectors
         $("#wrap-term-selectors").find("a.selected").removeClass("btn-primary selected");
       }
-
     });
+  },
+
+  isBindable: function(){
+    'pushState' in history;
   }
 };
