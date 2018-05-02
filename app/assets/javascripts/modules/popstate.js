@@ -1,13 +1,30 @@
 var Popstate = {
+  handleWithSp: false,
+
   bindEvent: function(){
     if(!this.isBindable){
       return;
     }
+
+    if(this.handleWithSp){
+      alert("SP");
+      this.hasPopped = ('state' in window.history && window.history.state !== null);
+      this.initialURL = location.href;
+    }
+
     this.bindToWindow();
   },
 
   bindToWindow: function(){
     $(window).on("popstate",function(e){
+      if(this.handleWithSp){
+        var isInitialPop = !this.hasPopped && location.href == initialURL;
+        this.hasPopped = true;
+        if(isInitialPop){
+          return;
+        }
+        alert("SP");
+      }
 
       var white_list = ['tweets','home_timeline','public_timeline'];
       var path = location.pathname;
