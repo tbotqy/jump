@@ -1,4 +1,6 @@
 var ReadMore = {
+  handleWithSp: false,
+
   bindClickEvents: function(){
     // click action for read more button
     $("#wrap-timeline-lower").on("click","#read-more",function(e){
@@ -34,7 +36,7 @@ var ReadMore = {
           alert("読み込みに失敗しました。");
         },
         complete: function(){
-          ReadMore.scrollDownToDestination(e,distance);
+          if(!ReadMore.handleWithSp) ReadMore.scrollDownToDestination(e,distance);
         }
       });
     });
