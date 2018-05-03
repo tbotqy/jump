@@ -6,5 +6,6 @@ $(function(){
   Dashbord.handleWithSp = true;
   Dashbord.fetchDashbord();
   TweetCard.bindClickEvents();
+  ReadMore.handleWithSp = true;
   ReadMore.bindClickEvents();
 });
