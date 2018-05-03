@@ -1,6 +1,7 @@
 $(function(){
   Popstate.handleWithSp = true;
   Popstate.bindEvent();
+  TimelineNav.bindClickEvent();
   GlobalHeader.bindClickEventForDropdown();
   Dashbord.handleWithSp = true;
   Dashbord.fetchDashbord();
