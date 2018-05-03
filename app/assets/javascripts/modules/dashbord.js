@@ -1,4 +1,6 @@
 var Dashbord = {
+  handleWithSp: false,
+
   fetchDashbord: function(){
     /**
      * acquires html code for dashbord and insert it to the html
@@ -153,7 +155,7 @@ var Dashbord = {
             },
             complete: function(){
               // scroll to top
-              SharedFunctions.scrollToPageTop(e);
+              if(!this.handleWithSp) SharedFunctions.scrollToPageTop(e);
               // show the loaded html
               $("#wrap-main").fadeIn('fast');
               // let the button say that process has been done
