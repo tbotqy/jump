@@ -50,5 +50,22 @@ var SharedFunctions = {
     }else if(type == "object"){
       parentName.find(".loader").fadeOut();
     }
+  },
+  redirectToLogout: function(){
+    location.href = "/logout";
+  },
+  showDeleteCompleteMessage: function(flag){
+    var message = "";
+    var area_status = $("#modal-delete-account").find(".status");
+
+    if(flag){
+      message = "アカウント削除が完了しました。自動的にログアウトします。";
+    }else{
+      message = "すみません！処理が完了しませんでした。画面をリロードしてもう一度お試しください。";
+    }
+
+    area_status.fadeOut(function(){
+      $(this).text(message);
+    }).fadeIn();
   }
 };
