@@ -54,11 +54,11 @@ var SharedFunctions = {
   redirectToLogout: function(){
     location.href = "/logout";
   },
-  showDeleteCompleteMessage: function(flag){
+  showDeleteCompleteMessage: function(hasBeenSucceeded){
     var message = "";
     var area_status = $("#modal-delete-account").find(".status");
 
-    if(flag){
+    if(hasBeenSucceeded){
       message = "アカウント削除が完了しました。自動的にログアウトします。";
     }else{
       message = "すみません！処理が完了しませんでした。画面をリロードしてもう一度お試しください。";
