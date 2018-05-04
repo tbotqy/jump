@@ -24,7 +24,7 @@ $(function(){
       },
 
       error: function(){
-        showDeleteErrorMessage();
+        alert("処理が完了しませんでした。");
       },
 
       complete: function(){

@@ -28,7 +28,7 @@ $(function(){
       },
 
       error: function(){
-        showDeleteErrorMessage();
+        alert("処理が完了しませんでした。");
       },
 
       complete: function(){
@@ -39,7 +39,7 @@ $(function(){
             }, 3000
           );
         }else{
-          alert("処理がうまくいきませんでした。");
+          alert("処理が完了しませんでした。");
         }
       }
     });
