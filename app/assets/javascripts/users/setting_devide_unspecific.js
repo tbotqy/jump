@@ -217,10 +217,6 @@ $(function(){
     });
   }
 
-  function showDeleteErrorMessage(){
-    return showCompleteMessage(false);
-  }
-
   var total_count = 0;
   var oldest_id_str = "";
   var continue_process = "";
