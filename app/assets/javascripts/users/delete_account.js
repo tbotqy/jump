@@ -20,7 +20,7 @@ $(function(){
 
       success: function(res){
         deleted = res.deleted;
-        SharedFunctions.showDeleteCompleteMessage(res.deleted);
+        SharedFunctions.showDeleteCompleteMessage(res.deleted, false);
       },
 
       error: function(){

@@ -54,18 +54,34 @@ var SharedFunctions = {
   redirectToLogout: function(){
     location.href = "/logout";
   },
-  showDeleteCompleteMessage: function(hasBeenSucceeded){
+  showDeleteCompleteMessage: function(hasBeenSucceeded, isForPC){
     var message = "";
-    var area_status = $("#modal-delete-account").find(".status");
+    if(isForPC){
+      var area_status = $("#modal-delete-account").find(".status");
+    }else{
+      var area_status = $("#wrap-delete-account").find(".status");
+    }
 
     if(hasBeenSucceeded){
-      message = "アカウント削除が完了しました。自動的にログアウトします。";
+      if(isForPC){
+        message = "アカウント削除が完了しました。自動的にログアウトします。";
+      }else{
+        message = "アカウント削除が完了しました。<br/>自動的にログアウトします。";
+      }
     }else{
-      message = "すみません！処理が完了しませんでした。画面をリロードしてもう一度お試しください。";
+      if(isForPC){
+        message = "すみません！処理が完了しませんでした。画面をリロードしてもう一度お試しください。";
+      }else{
+        message = "すみません！処理が完了しませんでした。<br/>画面をリロードしてもう一度お試しください。";
+      }
     }
 
     area_status.fadeOut(function(){
-      $(this).text(message);
+      if(isForPC){
+        $(this).text(message);
+      }else{
+        $(this).html(message);
+      }
     }).fadeIn();
   }
 };
