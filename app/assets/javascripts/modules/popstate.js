@@ -7,7 +7,6 @@ var Popstate = {
     }
 
     if(this.handleWithSp){
-      alert("SP");
       this.hasPopped = ('state' in window.history && window.history.state !== null);
       this.initialURL = location.href;
     }
@@ -23,7 +22,6 @@ var Popstate = {
         if(isInitialPop){
           return;
         }
-        alert("SP");
       }
 
       var white_list = ['tweets','home_timeline','public_timeline'];
