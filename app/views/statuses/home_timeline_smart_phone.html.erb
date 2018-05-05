@@ -1,3 +1,7 @@
+<% content_for :javascript_include_tags do %>
+  <%= javascript_include_tag "modules/popstate", "modules/page_title", "modules/global_header", "modules/timeline_nav", "modules/dashbord", "modules/tweet_card", "modules/read_more" %>
+  <%= javascript_include_tag "statuses/home_timeline_sp" %>
+<% end %>
 <% content_for :footer do %>
   <%= render "shared/footer" %>
 <% end %>
