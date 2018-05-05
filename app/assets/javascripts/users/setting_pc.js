@@ -1,4 +1,8 @@
 $(function(){
+  AjaxStatus.bindClickEvent();
+  AjaxFriend.bindClickEvent();
+  AjaxProfile.bindClickEvent();
+
   var deleted = "";
   // click event to delete account
   $("#delete-account").click(function(){
