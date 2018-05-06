@@ -1,5 +1,6 @@
 <% content_for(:title){"データの取り込み"} %>
 <% content_for :javascript_include_tags do %>
+  <%= javascript_include_tag "modules/import" %>
   <%= javascript_include_tag "statuses/import" %>
 <% end %>
 <% content_for :global_header do %>
