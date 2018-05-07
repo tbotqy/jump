@@ -15,6 +15,8 @@ capybara-*.html
 !/public/assets/ajax-loader.gif
 !/public/assets/awesome-webfont.eot
 !/public/assets/fontawesome-webfont.eot
+!/public/assets/fontawesome-webfont.woff
+!/public/assets/fontawesome-webfont.ttf
 !/public/assets/everything-spritev2.png
 /coverage/
 /spec/tmp/*
