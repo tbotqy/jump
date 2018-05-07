@@ -1,3 +1,7 @@
+<% content_for :javascript_include_tags do %>
+  <%= javascript_include_tag "modules/global_header", "modules/import" %>
+  <%= javascript_include_tag "statuses/import_sp" %>
+<% end %>
 <% content_for :global_header do %>
   <%= render "shared/global_header",{ :current_user => @current_user} %>
 <% end %>

@@ -1248,28 +1248,6 @@ footer .copyright{
   margin: 0 0 0 50px;
 }
 
-#wrap-main .error-inner .alert.invite-friends{
-  width: 500px;
-  text-align: left;
-  margin: 10px auto 10px auto;
-  font-size: 75%;
-  padding: 10px;
-}
-
-#wrap-main .error-inner .alert.invite-friends p{
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-#wrap-main .error-inner .alert.invite-friends a{
-  text-decoration: underline;
-}
-#wrap-main .error-inner .alert.invite-friends .close{
-  position: relative;
-  top: -5px;
-  right: -2px;
-}
 /* --------------------------------------------------
    users.setting
 -------------------------------------------------- */

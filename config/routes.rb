@@ -9,6 +9,7 @@ Jump::Application.routes.draw do
   get '/logout',                to: 'session#logout'
 
   get '/your/data', to: 'users#setting'
+  get '/users/delete_account', to: 'users#delete_account'
 
   get '/statuses/import',            to: 'statuses#import'
   get '/your/tweets/(:date)',        to: 'statuses#sent_tweets'
