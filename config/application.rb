@@ -33,5 +33,7 @@ module Jump
     # add fonts dir for font awesome
     config.assets.paths << Rails.root.join("app","assets","fonts")
     config.generators.template_engine = :slim
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
