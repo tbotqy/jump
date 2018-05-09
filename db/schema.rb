@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107162028) do
+ActiveRecord::Schema.define(version: 20180508080210) do
 
   create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type",       limit: 255
@@ -81,6 +81,15 @@ ActiveRecord::Schema.define(version: 20180107162028) do
   add_index "statuses", ["user_id", "twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_u_tcar_sisr_on_statuses", using: :btree
   add_index "statuses", ["user_id", "twitter_created_at_reversed"], name: "idx_u_tcar_on_statuses", using: :btree
   add_index "statuses", ["user_id"], name: "idx_u_on_statuses", using: :btree
+
+  create_table "tweet_import_job_progresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+    t.string   "job_id",      limit: 36,                 null: false
+    t.integer  "count",       limit: 4,  default: 0,     null: false
+    t.boolean  "finished",               default: false, null: false
+    t.integer  "operator_id", limit: 4,                  null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "twitter_id",              limit: 8,                   null: false
