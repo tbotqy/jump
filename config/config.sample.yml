@@ -7,6 +7,7 @@ production:
     access_token:
     access_token_secret:
     service_owner_twitter_id :
+    sidekiq_dashbord_user_id:
 
 development:
     site_name: SITE_NAME
@@ -17,6 +18,7 @@ development:
     access_token:
     access_token_secret:
     service_owner_twitter_id :
+    sidekiq_dashbord_user_id:
 
 test:
     site_name: SITE_NAME
@@ -27,3 +29,4 @@ test:
     access_token:
     access_token_secret:
     service_owner_twitter_id :
+    sidekiq_dashbord_user_id:

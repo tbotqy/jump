@@ -35,5 +35,6 @@ module Jump
     config.generators.template_engine = :slim
 
     config.active_job.queue_adapter = :sidekiq
+    config.autoload_paths += %W(#{config.root}/config/constraints)
   end
 end

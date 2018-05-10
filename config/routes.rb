@@ -1,4 +1,9 @@
 Jump::Application.routes.draw do
+  constraints SidekiqDashbordConstraint.new do
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   root to: 'pages#service_top'
   get '/for_users', to: 'pages#for_users'
   get '/browsers',  to: 'pages#browsers'
