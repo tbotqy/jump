@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def has_any_status?
-    Status.unscoped.where(user_id: self.id).present?
+    statuses.exists?
   end
 
   def get_oldest_active_tweet_id
