@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508080210) do
+ActiveRecord::Schema.define(version: 20180510185124) do
 
   create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type",       limit: 255
@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 20180508080210) do
     t.string  "rt_source",                   limit: 255
     t.integer "rt_created_at",               limit: 4
     t.boolean "possibly_sensitive",                                      null: false
-    t.boolean "pre_saved",                                               null: false
     t.integer "created_at",                  limit: 4,                   null: false
     t.integer "deleted_flag",                limit: 1,   default: 0,     null: false
     t.integer "status_id_str_reversed",      limit: 8

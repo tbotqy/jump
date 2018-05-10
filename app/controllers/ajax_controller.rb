@@ -168,8 +168,6 @@ class AjaxController < ApplicationController
         statuses.shift
       end
     else
-      Status.delete_pre_saved_status(@current_user.id.to_i)
-
       # acqurie 100 tweets
       api_params[:count] = 100
       user_twitter = create_twitter_client.user(@current_user.twitter_id)
@@ -210,11 +208,6 @@ class AjaxController < ApplicationController
 
     else
       continue = false
-    end
-
-    if !continue
-      # make pre-saved statuses saved
-      Status.save_pre_saved_status(@current_user.id)
     end
 
     # update stats
@@ -324,12 +317,7 @@ class AjaxController < ApplicationController
     # save
     saved_count = statuses.size
     if saved_count > 0
-      # clean the pre saved statuses up
-      Status.delete_pre_saved_status(@current_user.id.to_i)
-      # save statuses with pre_saved_flags set to true
       Status.save_statuses!(@current_user.id.to_i,statuses)
-      # turn all the statuses' pre_saved_flag false
-      Status.save_pre_saved_status(@current_user.id.to_i)
       continue = true
     else
       continue = false

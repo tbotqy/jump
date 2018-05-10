@@ -2,7 +2,7 @@ class Status < ActiveRecord::Base
 
   belongs_to :user
   has_many :entities, dependent: :delete_all
-  scope :showable , -> {where(pre_saved: false, deleted_flag: false)}
+  scope :showable , -> {where(deleted_flag: false)}
 
   # FIXME : this scope 'retweet' is only used in this class itself.
   # consider to delete this scope and replace with some private method.
@@ -15,14 +15,6 @@ class Status < ActiveRecord::Base
   after_save :update_user_timestamp
 
   class << self
-    def delete_pre_saved_status(user_id)
-      destroy_all(user_id: user_id, pre_saved: true)
-    end
-
-    def save_pre_saved_status(user_id)
-      where(user_id: user_id, pre_saved: true).update_all(pre_saved: false)
-    end
-
     def save_statuses!(user_id, tweets)
       Array.wrap(tweets).each do |tweet|
         status          = new_by_tweet(tweet)
@@ -50,7 +42,6 @@ class Status < ActiveRecord::Base
         source: tweet.source,
         text: tweet.text,
         possibly_sensitive: tweet.possibly_sensitive? || false,
-        pre_saved: true,
         deleted_flag: false,
         created_at: Time.now.to_i
       )
