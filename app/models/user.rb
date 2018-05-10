@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def status_newest_in_tweeted_time
+    statuses.newest_in_tweeted_time
+  end
+
   def has_imported?
     # check if user has imported own tweets
     self.initialized_flag

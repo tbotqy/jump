@@ -15,6 +15,10 @@ class Status < ActiveRecord::Base
   after_save :update_user_timestamp
 
   class << self
+    def newest_in_tweeted_time
+      order(twitter_created_at_reversed: :asc).first
+    end
+
     def save_statuses!(user_id, tweets)
       Array.wrap(tweets).each do |tweet|
         status          = new_by_tweet(tweet)
