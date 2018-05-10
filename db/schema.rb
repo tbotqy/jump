@@ -83,12 +83,12 @@ ActiveRecord::Schema.define(version: 20180508080210) do
   add_index "statuses", ["user_id"], name: "idx_u_on_statuses", using: :btree
 
   create_table "tweet_import_job_progresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.string   "job_id",      limit: 36,                 null: false
-    t.integer  "count",       limit: 4,  default: 0,     null: false
-    t.boolean  "finished",               default: false, null: false
-    t.integer  "operator_id", limit: 4,                  null: false
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.string   "job_id",     limit: 36,                 null: false
+    t.integer  "user_id",    limit: 4,                  null: false
+    t.integer  "count",      limit: 4,  default: 0,     null: false
+    t.boolean  "finished",              default: false, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
