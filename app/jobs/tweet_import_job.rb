@@ -3,13 +3,13 @@ class TweetImportJob < ActiveJob::Base
 
   def perform(user_id:)
     @user_id = user_id
-    determin_smallest_tweet_id_to_fetch!
+    determine_smallest_tweet_id_to_fetch!
     process!
   end
 
   private
 
-  def determin_smallest_tweet_id_to_fetch!
+  def determine_smallest_tweet_id_to_fetch!
     # MEMO : this method is intended to be called under these conditions
     # - only once
     # - before #process! is called
@@ -49,7 +49,7 @@ class TweetImportJob < ActiveJob::Base
   end
 
   def job_progress
-    @job_progrss ||= TweetImportJobProgress.new(job_id: job_id, user_id: @user_id)
+    @job_progress ||= TweetImportJobProgress.new(job_id: job_id, user_id: @user_id)
   end
 
   def user
