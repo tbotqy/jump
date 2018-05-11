@@ -275,81 +275,8 @@ class AjaxController < ApplicationController
   end
 
   def acquire_statuses
-    # calls twitter api to retrieve user's twitter statuses and returns json
-
-    # initialize values
-    no_status_at_all = false
-    continue = false
-    statuses = nil
-
-    redirect_to :status => :method_not_allowed  unless request.post?
-
-    # set basic params to retrieve tweets via api
-    api_params = { :include_rts => true, :include_entities => true }
-
-    # this is the oldest tweet's id of the statuses that have imported so far
-    max_id = params[:id_str_oldest].presence || false
-
-    if max_id
-      # set params to acquire 101 statuses that are older than the status with max_id
-      api_params[:count] = 101
-      api_params[:max_id] = max_id
-
-      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
-
-      # remove the newest status from result because it has been already saved in previous ajax call
-      if statuses.size > 0
-        statuses.shift
-      end
-    else
-      # acqurie 100 tweets
-      api_params[:count] = 100
-      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
-      # retrieve following list and save them as user's friend
-      friends = fetch_friend_list_by_twitter_id(@current_user.twitter_id)
-      Friend.save_friends(@current_user.id.to_i,friends)
-
-      if !statuses
-        no_status_at_all = true
-      end
-    end
-
-    # save
-    saved_count = statuses.size
-    if saved_count > 0
-      Status.save_statuses!(@current_user.id.to_i,statuses)
-      continue = true
-    else
-      continue = false
-    end
-
-    # prepare data to return
-    ret = {}
-
-    ret[:continue] = continue
-    ret[:saved_count] = saved_count
-    ret[:no_status_at_all] = no_status_at_all
-
-    if continue
-      # show the user one of his tweets
-      last_status = statuses.pop
-      text = last_status[:attrs][:text]
-      id_str_oldest = last_status[:attrs][:id_str]
-      created_at = Time.parse(last_status[:attrs][:created_at]).strftime("%Y年%m月%d日 - %H:%M")
-
-      ret[:id_str_oldest] = id_str_oldest
-      ret[:status] = {:date =>created_at,:text=>text}
-    else
-      unless no_status_at_all
-        # mark this user as initialized
-        @current_user.update_attribute(:initialized_flag,true)
-        # update statistics database
-        added_tweets_count = @current_user.get_active_status_count
-        DataSummary.increase('active_status_count', added_tweets_count)
-      end
-    end
-
-    render :json => ret
+    TweetImportJob.perform_later(user_id: @current_user.id)
+    FriendImportJob.perform_later(user_id: @current_user.id)
   end
 
   def switch_term
