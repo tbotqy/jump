@@ -274,7 +274,7 @@ class AjaxController < ApplicationController
     end
   end
 
-  def acquire_statuses
+  def make_initial_import
     TweetImportJob.perform_later(user_id: @current_user.id)
     FriendImportJob.perform_later(user_id: @current_user.id)
   end
