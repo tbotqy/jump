@@ -34,6 +34,7 @@ class TweetImportJob < ActiveJob::Base
       largest_tweet_id_to_fetch = tweets.last.id - 1
     end
     close_progress!
+    update_summary
   end
 
   def save_tweets!(tweets)
@@ -46,6 +47,10 @@ class TweetImportJob < ActiveJob::Base
 
   def close_progress!
     job_progress.mark_as_finished!
+  end
+
+  def update_summary
+    DataSummary.increase('active_status_count', job_progress.count)
   end
 
   def job_progress
