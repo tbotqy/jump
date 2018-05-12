@@ -15,42 +15,33 @@ var Import = {
   bindClickEvent: function(){
     var wrap_progress_bar = $(".wrap-progress-bar");
     var import_button = $("#start-import");
-
     //click event activated when start button is clicked
     import_button.click(function(){
-
       import_button.button('loading');
-
       Import.showLoader("#wrap-import");
-
       /// show the progress bar
       wrap_progress_bar.fadeIn(function(){
         // show the area displaying the status body currently saving
         $("#status").fadeIn();
       });
-
       Import.startImport();
       Import.checkImportProgress();
     });
   },
-
   showLoader: function(parentName){
     var type = typeof(parentName);
-
     if(type == "string"){
       $(parentName).find(".loader").fadeIn();
     }else if(type == "object"){
       parentName.find(".loader").fadeIn();
     }
   },
-
   startImport: function(){
     $.ajax({
       url: "/ajax/make_initial_import",
       type: "POST"
     });
   },
-
   checkImportProgress: function(){
     $.ajax({
       url: "/ajax/check_import_progress",
@@ -60,22 +51,17 @@ var Import = {
         if(!response.job_started){
           return Import.checkImportProgressWithInterval();
         }
-
         Import.updateCount(response.count);
         Import.updateProgressBar(response.count);
         Import.updateTweetTextAndDate(response.tweet_text, response.tweet_date);
-
         if(response.finished){
           $(".wrap-progress-bar").find(".bar").html("complete!");
-
           var import_button = $("#start-import");
           import_button.addClass('disabled');
           import_button.text(response.count + "件取得しました");
-
           // stop animation
           $(".progress").removeClass("active");
           SharedFunctions.hideLoader("#wrap-import");
-
           setTimeout(function(){
             location.href = "/your/tweets";
           }, 2000);
