@@ -1,4 +1,4 @@
 $(function(){
   GlobalHeader.bindClickEventForDropdown();
-  Import.bindClickEvent();
+  Import.bindClickEventOrCheckProgress();
 });
