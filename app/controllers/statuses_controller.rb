@@ -6,20 +6,10 @@ class StatusesController < ApplicationController
   # show the screen for operating import
   def import
     # redirect initialized user
-    return redirect_to action: :sent_tweets if @current_user.has_imported?
+    return redirect_to action: :sent_tweets if @current_user.finished_initial_import?
 
-    # check if user has any status
-    @id_oldest = "false";
-    @count_so_far = "false";
-    if @current_user.has_any_status?
-      # this means that importing was stopped on its way
-      @id_oldest = @current_user.get_oldest_active_tweet_id
-      @count_so_far = @current_user.get_active_status_count
-    end
-
-    # get the total number of tweets user has on twitter
-    user_twitter = create_twitter_client.user(@current_user.twitter_id)
-    @statuses_count = user_twitter.attrs[:statuses_count]
+    @working_job_exists = @current_user.has_working_job?
+    @expected_total_import_count = TwitterServiceClient::UserTweet.maximum_fetchable_tweet_count(user_id: @current_user.id)
   end
 
   def sent_tweets

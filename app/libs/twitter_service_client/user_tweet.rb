@@ -8,6 +8,12 @@ module TwitterServiceClient
         client.get_user_timeline!
       end
 
+      def maximum_fetchable_tweet_count(user_id:)
+        total_tweet_count = TwitterRestClient.by_user_id(user_id).user.tweets_count
+        return MAXIMUM_FETCHABLE_TWEET_COUNT if total_tweet_count >= MAXIMUM_FETCHABLE_TWEET_COUNT
+        total_tweet_count
+      end
+
       # debug method
       def fetch_latest_tweets!(user_id)
         new(user_id).get_user_timeline!
@@ -15,7 +21,8 @@ module TwitterServiceClient
     end
 
     MAX_TWEETS_COUNT_PER_GET = 200
-    private_constant :MAX_TWEETS_COUNT_PER_GET
+    MAXIMUM_FETCHABLE_TWEET_COUNT = 3200
+    private_constant :MAX_TWEETS_COUNT_PER_GET, :MAXIMUM_FETCHABLE_TWEET_COUNT
 
     def initialize(user_id)
       @user_id = user_id

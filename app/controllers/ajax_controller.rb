@@ -277,6 +277,11 @@ class AjaxController < ApplicationController
   def make_initial_import
     TweetImportJob.perform_later(user_id: @current_user.id)
     FriendImportJob.perform_later(user_id: @current_user.id)
+    head :accepted
+  end
+
+  def check_import_progress
+    render json: AjaxViewObject::CheckImportProgress.new(user_id: @current_user.id).as_hash
   end
 
   def switch_term

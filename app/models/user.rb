@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   has_many :statuses, dependent: :destroy
   has_many :friends, dependent: :delete_all
+  has_many :tweet_import_job_progresses, dependent: :delete_all
 
   # FIXME : this is referenced only at one point
   # consider to delete this scope and replace with some private method
@@ -32,6 +33,10 @@ class User < ActiveRecord::Base
     statuses.newest_in_tweeted_time
   end
 
+  def last_status
+    statuses&.last
+  end
+
   def has_imported?
     # check if user has imported own tweets
     self.initialized_flag
@@ -39,6 +44,14 @@ class User < ActiveRecord::Base
 
   def has_any_status?
     statuses.exists?
+  end
+
+  def finished_initial_import?
+    tweet_import_job_progresses.finished.exists?
+  end
+
+  def has_working_job?
+    tweet_import_job_progresses.unfinished.exists?
   end
 
   def get_oldest_active_tweet_id
