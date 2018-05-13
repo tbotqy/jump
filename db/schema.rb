@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180510185124) do
+ActiveRecord::Schema.define(version: 20180513054318) do
 
   create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type",       limit: 255
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20180510185124) do
     t.string  "lang",                    limit: 255,                 null: false
     t.string  "token",                   limit: 255,                 null: false
     t.string  "token_secret",            limit: 255,                 null: false
-    t.boolean "initialized_flag",                    default: false, null: false
+    t.boolean "finished_initial_import",             default: false, null: false
     t.integer "token_updated_at",        limit: 4
     t.integer "statuses_updated_at",     limit: 4
     t.integer "friends_updated_at",      limit: 4
