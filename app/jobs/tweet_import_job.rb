@@ -35,6 +35,7 @@ class TweetImportJob < ActiveJob::Base
     end
     close_progress!
     update_summary
+    user.finish_initial_import!
   end
 
   def save_tweets!(tweets)

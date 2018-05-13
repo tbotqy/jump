@@ -37,17 +37,13 @@ class User < ActiveRecord::Base
     statuses&.last
   end
 
-  def has_imported?
-    # check if user has imported own tweets
-    self.initialized_flag
-  end
-
   def has_any_status?
     statuses.exists?
   end
 
-  def finished_initial_import?
-    tweet_import_job_progresses.finished.exists?
+  def finish_initial_import!
+    self.finished_initial_import = true
+    save!
   end
 
   def has_working_job?
