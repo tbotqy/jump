@@ -11,7 +11,7 @@
           <div class="container">
             <a  class="brand" href="/">TwitJump</a>
             <% if logged_in? %>
-            <% if current_user.initialized_flag %>
+            <% if current_user.finished_initial_import? %>
 
             <!-- .nav .pull-left -->
             <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
@@ -39,7 +39,7 @@
 
                 <!-- .dropdown-menu -->
                 <ul class="dropdown-menu">
-                  <% if current_user.initialized_flag %>
+                  <% if current_user.finished_initial_import? %>
                   <li>
                     <a class="link-config" href="/your/data"><i class="icon-hdd"></i>データ管理</a>
                   </li>

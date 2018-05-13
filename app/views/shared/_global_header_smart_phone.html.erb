@@ -7,7 +7,7 @@
       <i class="icon-caret-down"></i>
     </a>
     <nav class="drop-down-nav">
-      <% if current_user.initialized_flag %>
+      <% if current_user.finished_initial_import? %>
   <% if controller.action_name == "setting" %>
     <a class="btn btn-default btn-sm" href="/your/tweets"><i class="icon-comment"></i>タイムライン</a>
   <% else %>
