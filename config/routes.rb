@@ -31,6 +31,7 @@ Jump::Application.routes.draw do
   post '/ajax/read_more',            to: 'ajax#read_more'
   get  '/ajax/get_dashbord',         to: 'ajax#get_dashbord'
   post '/ajax/make_initial_import',  to: 'ajax#make_initial_import'
+  post '/ajax/start_tweet_import',   to: 'ajax#start_tweet_import'
   post '/ajax/check_import_progress',to: 'ajax#check_import_progress'
   get  '/ajax/switch_term',          to: 'ajax#switch_term'
 
