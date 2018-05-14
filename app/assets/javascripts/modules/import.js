@@ -80,7 +80,7 @@ var Import = {
     });
   },
   updateCount: function(count){
-    var delimitedCount = Import.numberWithDelimiter(count);
+    var delimitedCount = SharedFunctions.numberWithDelimiter(count);
     $(".wrap-progress-bar").find(".total").find(".num").text(delimitedCount);
   },
   updateProgressBar: function(count){
@@ -100,8 +100,5 @@ var Import = {
     setTimeout(function(){
       Import.checkImportProgress();
     }, 2000);
-  },
-  numberWithDelimiter: function(number){
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 };
