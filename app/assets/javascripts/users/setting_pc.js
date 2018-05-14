@@ -1,5 +1,5 @@
 $(function(){
-  AjaxStatus.bindClickEvent();
+  AjaxStatus.bindClickEventOrCheckProgress();
   AjaxFriend.bindClickEvent();
   AjaxProfile.bindClickEvent();
 

@@ -83,5 +83,8 @@ var SharedFunctions = {
         $(this).html(message);
       }
     }).fadeIn();
+  },
+  numberWithDelimiter: function(number){
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 };

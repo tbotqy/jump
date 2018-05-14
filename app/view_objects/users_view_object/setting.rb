@@ -33,6 +33,10 @@ module UsersViewObject
       Time.zone.at(user.statuses_updated_at).strftime('%F %T')
     end
 
+    def status_import_is_working?
+      user.has_working_job?
+    end
+
     private
 
     attr_reader :user # for delegate

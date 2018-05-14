@@ -1354,6 +1354,8 @@ footer .copyright{
   margin: 2px 0 0 10px;
 }
 
+
+
 #wrap-setting .table{
   margin: 10px 0 20px 0;
   float: left;
@@ -1410,6 +1412,7 @@ footer .copyright{
 }
 
 #wrap-setting tbody .loader{
+  display: none;
   float: left;
   margin: 2px 0 0 10px;
 }

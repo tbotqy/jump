@@ -1,3 +1,3 @@
 $(function(){
-  Import.bindClickEvent();
+  Import.bindClickEventOrCheckProgress();
 });

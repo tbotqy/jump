@@ -1,7 +1,10 @@
 $(function(){
   GlobalHeader.bindClickEventForDropdown();
 
-  var modules = [AjaxStatus, AjaxFriend, AjaxProfile];
+  AjaxStatus.handleWithSp = true;
+  AjaxStatus.bindClickEventOrCheckProgress();
+
+  var modules = [AjaxFriend, AjaxProfile];
   modules.forEach(function(module){
     module.handleWithSp = true;
     module.bindClickEvent();

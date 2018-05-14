@@ -1,158 +1,104 @@
 var Import = {
+  bindClickEventOrCheckProgress: function(){
+    if($('#working-job-exists').val() === 'true'){
+      $("#start-import").button('loading');
+      Import.showLoader("#wrap-import");
+      $(".wrap-progress-bar").fadeIn(function(){
+        // show the area displaying the status body currently saving
+        $("#status").fadeIn();
+      });
+      Import.checkImportProgress();
+    }else{
+      Import.bindClickEvent();
+    }
+  },
   bindClickEvent: function(){
     var wrap_progress_bar = $(".wrap-progress-bar");
     var import_button = $("#start-import");
-
     //click event activated when start button is clicked
     import_button.click(function(){
-
       import_button.button('loading');
-
       Import.showLoader("#wrap-import");
-
       /// show the progress bar
       wrap_progress_bar.fadeIn(function(){
         // show the area displaying the status body currently saving
         $("#status").fadeIn();
       });
-
-      var data_to_post = {};
-
-      // check if id_str_oldest is specified
-      var specified_id_str_oldest = $("input[name=id-oldest]").val();
-      if( specified_id_str_oldest != "false"){
-        data_to_post.id_str_oldest = specified_id_str_oldest;
-        $("#recover-msg").fadeOut();
-      }else{
-        data_to_post.id_str_oldest = "";
-      }
-
-      // post ajax request
-      Import.getStatuses(data_to_post);
+      Import.startImport();
+      Import.checkImportProgress();
     });
   },
-
   showLoader: function(parentName){
     var type = typeof(parentName);
-
     if(type == "string"){
       $(parentName).find(".loader").fadeIn();
     }else if(type == "object"){
       parentName.find(".loader").fadeIn();
     }
   },
-
-  totalImportedCount: 0,
-  getStatuses: function(params){
-    /**
-     * throw request to acquire all the statuses recursively
-     */
-    var wrap_progress_bar = $(".wrap-progress-bar");
-    var wrap_tweet = $(".wrap-tweet");
-    var import_button = $("#start-import");
-    var noStatusAtAll = "";
-    var data_to_post = params;
-    var progress;
-
-    var count_so_far = $("input[name=count-so-far]").val();
-    if( count_so_far != "false" ){
-      Import.totalImportedCount = parseInt( count_so_far );
-      $("input[name=count-so-far]").val("false");
-    }
-
+  startImport: function(){
     $.ajax({
-      url: "/ajax/acquire_statuses",
+      url: "/ajax/make_initial_import",
+      type: "POST"
+    });
+  },
+  checkImportProgress: function(){
+    $.ajax({
+      url: "/ajax/check_import_progress",
       type: "POST",
       dataType:"json",
-      data: data_to_post,
-
-      success: function(ret){
-        Import.totalImportedCount += ret.saved_count;
-        noStatusAtAll = ret.noStatusAtAll;
-
-        if(ret.continue){
-          $(".wrap-importing-status").fadeOut(function(){
-            //show the result
-            wrap_progress_bar.find(".total").html(Import.totalImportedCount+"件");
-            wrap_tweet.find(".body").html(ret.status.text);
-            wrap_tweet.find(".date").html(ret.status.date);
-          });
-
-          //throw new request
-          data_to_post.id_str_oldest = ret.id_str_oldest;
-          progress = Import.getPersentage(Import.totalImportedCount);
-          Import.getStatuses(data_to_post);
-        }else{
-          if(Import.totalImportedCount == 0){
-
-            import_button.text("...?");
-
-            wrap_progress_bar.find(".progress").fadeOut(function(){
-              wrap_progress_bar.append("<div class=\"alert alert-info\"><p>取得できるツイートが無いようです</p></div>");
-              wrap_progress_bar.find(".alert").fadeIn();
-            });
-
-          }else{
-
-            wrap_progress_bar.find(".bar").html("complete!");
-
-            progress = 100;
-
-            //show the result
-            import_button.addClass('disabled');
-            import_button.text(Import.totalImportedCount + "件取得しました");
-
-            // stop animation
-            $(".progress").removeClass("active");
-
-            SharedFunctions.hideLoader("#wrap-import");
-          }
+      success: function(response){
+        if(!response.job_started){
+          return Import.checkImportProgressWithInterval();
         }
-      },
-      error: function(){
-        //show the error message
-        $(".progress").removeClass("active");
-        SharedFunctions.hideLoader("#wrap-import");
-
-        $(".wrap-progress-bar").fadeOut(function(){
-          $(".wrap-lower").html("<div class=\"alert alert-warning\"><p>サーバーが混み合っているようです。<br/>すみませんが、しばらくしてからもう一度お試しください。</p></div>");
-          $("#start-import").text("...oops");
-        });
-      },
-      complete: function(){
-        if(noStatusAtAll){
+        Import.updateCount(response.count);
+        Import.updateProgressBar(response.count);
+        Import.updateTweetTextAndDate(response.tweet_text, response.tweet_date);
+        if(response.finished){
+          $(".wrap-progress-bar").find(".bar").html("complete!");
+          var import_button = $("#start-import");
+          import_button.addClass('disabled');
+          import_button.text(response.count + "件取得しました");
+          // stop animation
+          $(".progress").removeClass("active");
           SharedFunctions.hideLoader("#wrap-import");
-        }else{
-          // animate progress bar
-          Import.setProgress(progress);
-
-          $(".wrap-importing-status").fadeIn();
-        }
-
-        if(progress == 100){
-          // when done, redirect after 2 seconds
           setTimeout(function(){
             location.href = "/your/tweets";
           }, 2000);
+        }else{
+          Import.checkImportProgressWithInterval();
         }
+      },
+      error: function(){
+        $(".progress").removeClass("active");
+        SharedFunctions.hideLoader("#wrap-import");
+        $(".wrap-progress-bar").fadeOut(function(){
+          $(".wrap-lower").html("<div class=\"alert alert-warning\"><p>サーバーが混み合っているようです。<br/>しばらくしてからもう一度お試しください。</p></div>");
+          $("#start-import").text("...oops");
+        });
       }
     });
   },
-
-  getPersentage: function(fetched_status_count){
-    fetched_status_count = parseInt(fetched_status_count);
-    var total = parseInt($("#statuses-count").val());
-
-    var ret = "";
-    if(fetched_status_count > 3200){
-      ret = (fetched_status_count / 3200) * 100;
-    }else{
-      ret = (fetched_status_count / total) * 100;
-    }
-    return parseInt(ret);
+  updateCount: function(count){
+    var delimitedCount = SharedFunctions.numberWithDelimiter(count);
+    $(".wrap-progress-bar").find(".total").find(".num").text(delimitedCount);
   },
-
-  setProgress: function(persentage){
-    $(".progress").find(".bar").css("width",persentage+"%");
+  updateProgressBar: function(count){
+    var expectedTotalImportCount = parseInt($("#expected-total-import-count").val());
+    var progress = (count / expectedTotalImportCount) * 100;
+    $(".progress").find(".bar").css("width", progress + "%");
+  },
+  updateTweetTextAndDate: function(text, date){
+    var wrap_importing_status = $(".wrap-importing-status")
+    wrap_importing_status.fadeOut(function(){
+      $(".wrap-tweet").find(".body").html(text);
+      $(".wrap-tweet").find(".date").html(date);
+    });
+    wrap_importing_status.fadeIn();
+  },
+  checkImportProgressWithInterval: function(){
+    setTimeout(function(){
+      Import.checkImportProgress();
+    }, 2000);
   }
 };

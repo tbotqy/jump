@@ -18,7 +18,6 @@ FactoryBot.define do
     rt_source nil
     rt_created_at nil
     possibly_sensitive 0
-    pre_saved 0
     created_at 1345305654
     deleted_flag 0
     status_id_str_reversed -111111111111111111

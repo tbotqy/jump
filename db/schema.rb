@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107162028) do
+ActiveRecord::Schema.define(version: 20180513054318) do
 
   create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type",       limit: 255
@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 20180107162028) do
     t.string  "rt_source",                   limit: 255
     t.integer "rt_created_at",               limit: 4
     t.boolean "possibly_sensitive",                                      null: false
-    t.boolean "pre_saved",                                               null: false
     t.integer "created_at",                  limit: 4,                   null: false
     t.integer "deleted_flag",                limit: 1,   default: 0,     null: false
     t.integer "status_id_str_reversed",      limit: 8
@@ -82,6 +81,15 @@ ActiveRecord::Schema.define(version: 20180107162028) do
   add_index "statuses", ["user_id", "twitter_created_at_reversed"], name: "idx_u_tcar_on_statuses", using: :btree
   add_index "statuses", ["user_id"], name: "idx_u_on_statuses", using: :btree
 
+  create_table "tweet_import_job_progresses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+    t.string   "job_id",     limit: 36,                 null: false
+    t.integer  "user_id",    limit: 4,                  null: false
+    t.integer  "count",      limit: 4,  default: 0,     null: false
+    t.boolean  "finished",              default: false, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "twitter_id",              limit: 8,                   null: false
     t.string  "name",                    limit: 255,                 null: false
@@ -93,7 +101,7 @@ ActiveRecord::Schema.define(version: 20180107162028) do
     t.string  "lang",                    limit: 255,                 null: false
     t.string  "token",                   limit: 255,                 null: false
     t.string  "token_secret",            limit: 255,                 null: false
-    t.boolean "initialized_flag",                    default: false, null: false
+    t.boolean "finished_initial_import",             default: false, null: false
     t.integer "token_updated_at",        limit: 4
     t.integer "statuses_updated_at",     limit: 4
     t.integer "friends_updated_at",      limit: 4

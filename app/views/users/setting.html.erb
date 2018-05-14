@@ -11,6 +11,7 @@
 <% end %>
 <!-- #wrap-setting -->
 <div id="wrap-setting">
+  <%= hidden_field_tag 'status-import-is-working', @view_object.status_import_is_working? %>
   <h1><i class="icon-hdd"></i><span>データ管理</span></h1>
   <!-- .wrap-profile -->
   <div class="wrap-profile">
@@ -56,6 +57,7 @@
     <td class="last-update"><span class="date"><%= @view_object.statuses_updated_at %></span></td>
     <td class="button">
       <button id="update-statuses" class="btn btn-success" data-loading-text="読み込み中"><i class="icon-refresh icon-white"></i>更新</button>
+      <%= image_tag("ajax-loader.gif", class: "loader") %>
     </td>
   </tr>
   <tr class="friends">

@@ -1,4 +1,9 @@
 Jump::Application.routes.draw do
+  constraints SidekiqDashbordConstraint.new do
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   root to: 'pages#service_top'
   get '/for_users', to: 'pages#for_users'
   get '/browsers',  to: 'pages#browsers'
@@ -25,7 +30,9 @@ Jump::Application.routes.draw do
   post '/ajax/update_status',        to: 'ajax#update_status'
   post '/ajax/read_more',            to: 'ajax#read_more'
   get  '/ajax/get_dashbord',         to: 'ajax#get_dashbord'
-  post '/ajax/acquire_statuses',     to: 'ajax#acquire_statuses'
+  post '/ajax/make_initial_import',  to: 'ajax#make_initial_import'
+  post '/ajax/start_tweet_import',   to: 'ajax#start_tweet_import'
+  post '/ajax/check_import_progress',to: 'ajax#check_import_progress'
   get  '/ajax/switch_term',          to: 'ajax#switch_term'
 
   get  '*path', to: 'application#render_404'

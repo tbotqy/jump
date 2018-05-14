@@ -18,6 +18,7 @@ capybara-*.html
 !/public/assets/fontawesome-webfont.woff
 !/public/assets/fontawesome-webfont.ttf
 !/public/assets/everything-spritev2.png
+!/public/assets/sidekiq/*
 /coverage/
 /spec/tmp/*
 **.orig
