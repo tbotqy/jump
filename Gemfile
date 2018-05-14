@@ -21,6 +21,7 @@ gem 'slim-rails'
 gem 'therubyracer', platforms: :ruby
 gem 'sidekiq'
 gem 'sinatra', require: false
+gem 'redis-namespace'
 
 group :development do
   gem 'web-console', '~> 2.0'
