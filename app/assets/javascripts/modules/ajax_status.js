@@ -1,153 +1,101 @@
 var AjaxStatus = {
   handleWithSp: false,
-
+  bindClickEventOrCheckProgress: function(){
+    if($("#status-import-is-working").val() === 'true'){
+      AjaxStatus.showLoader();
+      AjaxStatus.changeButtonState("loading");
+      AjaxStatus.checkImportProgress();
+    }else{
+      AjaxStatus.bindClickEvent();
+    }
+  },
   bindClickEvent: function(){
     $("#update-statuses").click(function(){
-      var self = $(this);
-      // change the button's statement
-      self.button('loading');
-
-      // show the loading icon
-      self.after("<img class=\"loader\" src=\"/assets/ajax-loader.gif\" />");
-      $(".tweets").find(".loader").fadeIn();
-
-      AjaxStatus.checkStatusUpdate();
-
+      AjaxStatus.showLoader();
+      AjaxStatus.changeButtonState("loading");
+      AjaxStatus.startImport();
+      AjaxStatus.checkImportProgressWithInterval();
     });
   },
-
-  checkStatusUpdate: function(){
-    /**
-     * check if there is any tweets not yet to have imported
-     */
-
-    var doUpdate = false;
-    var updated_date = "";
-    var box_tweets = AjaxStatus.TweetsWrappter();
-
+  startImport: function(){
     $.ajax({
-      url:"/ajax/check_status_update",
-      type:"post",
+      url: "/ajax/start_tweet_import",
+      type: "POST"
+    });
+  },
+  checkImportProgress: function(){
+    $.ajax({
+      url: "/ajax/check_import_progress",
+      type: "POST",
       dataType:"json",
-
-      success: function(responce){
-        if(responce.do_update){
-          AjaxStatus.updateStatus();
+      success: function(response){
+        if(!response.job_started){
+          return AjaxStatus.checkImportProgressWithInterval();
+        }
+        if(response.finished){
+          AjaxStatus.updateImportedStatusCountOnFinish(response.count);
+          AjaxStatus.changeButtonState("finished");
+          AjaxStatus.hideLoader();
         }else{
-          // change the view statements
-          $("#update-statuses").text("処理終了");
-
-          box_tweets.find(".loader").fadeOut();
-
-          box_tweets.find(".additional-num").fadeOut(function(){
-            $(this).addClass("alert alert-info").text("変更はありません");
-          }).fadeIn();
-
-          box_tweets.find(".last-update .date").fadeOut(function(){
-            $(this).text(responce.checked_at);
-          }).fadeIn();
+          AjaxStatus.updateImportedStatusCount(response.count);
+          AjaxStatus.checkImportProgressWithInterval();
         }
       },
       error: function(){
-        box_tweets.find(".additional-num").fadeOut(function(){
-          $(this).addClass("alert alert-danger").text("もう一度お試しください");
+        AjaxStatus.TweetsWrapper().find(".additional-num").fadeOut(function(){
+          $(this).addClass("alert alert-danger").text("後程お試し下さい");
         }).fadeIn();
-
-        // change the view statements
-        $("#update-statuses").text("エラー");
-
-        box_tweets.find(".loader").fadeOut();
+        AjaxStatus.changeButtonState("error");
+        AjaxStatus.hideLoader();
       }
     });
   },
-
-  totalCount: 0,
-  oldestIdStr: "",
-  continueProcess: "",
-  updatedDate: "",
-
-  updateStatus: function(){
-    var area_tweets = AjaxStatus.TweetsWrappter();
-    var update_button = $("#update-statuses");
-
-    $.ajax({
-      url:"/ajax/update_status",
-      type:"post",
-      dataType:"json",
-      data:{"oldest_id_str": AjaxStatus.oldestIdStr},
-
-      success: function(responce){
-        AjaxStatus.continueProcess = responce.continue;
-        AjaxStatus.updatedDate = responce.updated_date;
-
-        if(AjaxStatus.continueProcess){
-          console.log("t");
-          AjaxStatus.totalCount += responce.saved_count;
-          AjaxStatus.oldestIdStr = responce.oldest_id_str;
-
-          // show the total number of statuses that have been imported so far
-          area_tweets.find(".additional-num").fadeOut(function(){
-            $(this).text("+ "+total_count);
-          }).fadeIn();
-
-          AjaxStatus.updateStatus();
-        }else{
-          var final_total = 0;
-          var current_num = parseInt(AjaxStatus.numWithoutDelimiter($(".tweets").find(".count .total-num").text()));
-
-          final_total = current_num + parseInt(AjaxStatus.totalCount);
-          console.log(AjaxStatus.totalCount);
-
-          area_tweets.find(".total-num").fadeOut(function(){
-            $(this).text(AjaxStatus.numWithDelimiter(final_total)).fadeIn();
-          });
-
-          area_tweets.find(".additional-num").fadeOut(function(){
-            $(this).addClass("alert alert-success").text(AjaxStatus.totalCount+"件追加");
-          }).fadeIn();
-
-          area_tweets.find(".last-update .date").fadeOut(function(){
-            $(this).text(AjaxStatus.updatedDate);
-
-          }).fadeIn();
-
-          // change the button statement
-          update_button.text("更新完了");
-        }
-      },
-      error: function(){
-        area_tweets.find(".additional-num").fadeOut(function(){
-          $(this).addClass("alert alert-danger").text("もう一度お試しください");
-        }).fadeIn();
-
-        // change the button statement
-        update_button.text("エラー");
-
-        // hide the loader
-        $(".loader").fadeOut();
-      },
-      complete: function(){
-        if(!AjaxStatus.continueProcess){
-          // hide the loader
-          $(".loader").fadeOut();
-        }
-      }
-    });
+  updateImportedStatusCount: function(count){
+    AjaxStatus.TweetsWrapper().find(".additional-num").fadeOut(function(){
+      $(this).text("+ " + SharedFunctions.numberWithDelimiter(count));
+    }).fadeIn();
   },
-
-  TweetsWrappter: function(){
+  updateImportedStatusCountOnFinish: function(count){
+    var text = ""
+    if(count === 0){
+      text = "追加なし"
+    }else{
+      text = SharedFunctions.numberWithDelimiter(count) + "件追加";
+    }
+    AjaxStatus.TweetsWrapper().find(".additional-num").fadeOut(function(){
+      $(this).addClass("alert alert-success").text(text);
+    }).fadeIn();
+  },
+  checkImportProgressWithInterval: function(){
+    setTimeout(function(){
+      AjaxStatus.checkImportProgress();
+    }, 3000);
+  },
+  changeButtonState: function(state){
+    var button = $("#update-statuses");
+    switch (state){
+      case "loading":
+        button.button("loading");
+        break;
+      case "error":
+        button.text("エラー");
+        break;
+      case "finished":
+        button.text("更新完了");
+        break;
+    }
+  },
+  showLoader: function(){
+    AjaxStatus.TweetsWrapper().find(".loader").fadeIn();
+  },
+  hideLoader: function(){
+    AjaxStatus.TweetsWrapper().find(".loader").fadeOut();
+  },
+  TweetsWrapper: function(){
     if(AjaxStatus.handleWithSp){
       return $("#wrap-setting-lower").find(".tweets");
     }else{
       return $("#wrap-setting").find(".tweets");
     }
-  },
-
-  numWithDelimiter: function(num){
-    return String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-  },
-
-  numWithoutDelimiter: function(num){
-    return String(num).split(",").join("");
   }
 };
