@@ -14,7 +14,6 @@ gem 'omniauth-twitter', github: 'arunagw/omniauth-twitter'
 gem 'twitter-text'
 gem 'turnout'
 gem 'rake', '12.0.0'
-gem 'activerecord-mysql-awesome'
 gem 'slim-rails'
 gem 'therubyracer', platforms: :ruby
 gem 'sidekiq'
