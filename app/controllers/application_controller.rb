@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_500(exception = nil)
+    ExceptionNotifier.notify_exception(exception, env: request.env)
     @title = "サーバーエラー"
     if exception
       logger.info "Rendering 500 with exception: #{exception.message}"
