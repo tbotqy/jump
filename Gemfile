@@ -19,9 +19,11 @@ gem 'sinatra', require: false
 gem 'redis-namespace'
 gem 'exception_notification'
 gem 'slack-notifier'
+gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development do
   gem 'web-console', '~> 2.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
 end
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'
