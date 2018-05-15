@@ -262,7 +262,6 @@ DEPENDENCIES
   omniauth
   omniauth-twitter!
   rails (~> 5.0.0)
-  rake
   redis-namespace
   rspec-rails (~> 3.5)
   sidekiq
