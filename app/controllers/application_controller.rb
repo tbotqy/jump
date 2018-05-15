@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   # stop rejecting incompatible ua
-  before_filter :fetch_current_user!, :apply_user_time_zone, :reject_incompatible_ua
+  before_action :fetch_current_user!, :apply_user_time_zone, :reject_incompatible_ua
 
   # handlers for exceptions
   if Rails.env.production?

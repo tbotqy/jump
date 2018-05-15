@@ -1,6 +1,6 @@
 class SessionController < ApplicationController
-  before_filter :reject_protected_user!,       only: :login
-  before_filter :check_if_tokens_are_present!, only: :login
+  before_action :reject_protected_user!,       only: :login
+  before_action :check_if_tokens_are_present!, only: :login
 
   # called when user was redirected back to our service from twitter.com
   def login
