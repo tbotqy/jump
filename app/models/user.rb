@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   has_many :statuses, dependent: :destroy
   has_many :friends, dependent: :delete_all

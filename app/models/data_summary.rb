@@ -1,4 +1,4 @@
-class DataSummary < ActiveRecord::Base
+class DataSummary < ApplicationRecord
   self.inheritance_column = :_type_disabled
 
   class << self

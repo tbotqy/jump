@@ -1,4 +1,4 @@
-class Friend < ActiveRecord::Base
+class Friend < ApplicationRecord
   belongs_to :user
 
   class << self

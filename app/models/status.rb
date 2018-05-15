@@ -1,4 +1,4 @@
-class Status < ActiveRecord::Base
+class Status < ApplicationRecord
 
   belongs_to :user
   has_many :entities, dependent: :delete_all
