@@ -22,6 +22,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'redis-namespace'
+gem 'exception_notification'
+gem 'slack-notifier'
 
 group :development do
   gem 'web-console', '~> 2.0'
