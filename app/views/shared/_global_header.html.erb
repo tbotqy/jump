@@ -41,7 +41,9 @@
                   <ul class="dropdown-menu">
                     <% if current_user.finished_initial_import? %>
                       <li>
-                        <a class="link-config" href="/your/data"><i class="icon-hdd"></i>データ管理</a>
+                        <%= link_to users_setting_path, class: "link-config" do %>
+                          <i class="icon-hdd"></i>データ管理
+                        <% end %>
                       </li>
                       <li class="divider"></li>
                     <% end %>

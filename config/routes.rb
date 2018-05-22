@@ -13,7 +13,7 @@ Jump::Application.routes.draw do
   get '/auth/failure',          to: 'session#logout'
   get '/logout',                to: 'session#logout'
 
-  get '/your/data', to: 'users#setting'
+  get '/users/setting', to: 'users#setting'
   get '/users/delete_account', to: 'users#delete_account'
 
   get '/statuses/import',            to: 'statuses#import'
