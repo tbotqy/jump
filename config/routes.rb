@@ -17,7 +17,7 @@ Jump::Application.routes.draw do
   get '/users/delete_account', to: 'users#delete_account'
 
   get '/statuses/import',            to: 'statuses#import'
-  get '/user_timeline/(:date)',      to: 'statuses#sent_tweets'
+  get '/user_timeline/(:date)',      to: 'statuses#user_timeline'
   get '/your/home_timeline/(:date)', to: 'statuses#home_timeline'
   get '/public_timeline/(:date)',    to: 'statuses#public_timeline'
 
