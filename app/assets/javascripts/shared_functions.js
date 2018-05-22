@@ -16,6 +16,11 @@ var SharedFunctions = {
         return "public_timeline";
     }
 
+    // check if current action type is user_timeline
+    if(path.indexOf("user_timeline") != -1){
+      return "user_timeline";
+  }
+
     var secondSlash = path.indexOf("/",firstSlash+1);
 
     if(secondSlash == -1){
