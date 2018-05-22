@@ -3,25 +3,14 @@ var SharedFunctions = {
     /**
      * detect and get the action_type from given path
      */
-
-    // action type exists next to the second slash
-    var firstSlash = path.indexOf("/");
-
-    if(firstSlash == -1){
-      return false;
-    }
-
-    // check if current action type is public_timeline
     if(path.indexOf("public_timeline") != -1){
         return "public_timeline";
     }
 
-    // check if current action type is user_timeline
     if(path.indexOf("user_timeline") != -1){
       return "user_timeline";
     }
 
-    // check if current action type is home_timeline
     if(path.indexOf("home_timeline") != -1){
       return "home_timeline";
     }
