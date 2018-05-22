@@ -18,7 +18,7 @@ Jump::Application.routes.draw do
 
   get '/statuses/import',            to: 'statuses#import'
   get '/user_timeline/(:date)',      to: 'statuses#user_timeline'
-  get '/your/home_timeline/(:date)', to: 'statuses#home_timeline'
+  get '/home_timeline/(:date)',      to: 'statuses#home_timeline'
   get '/public_timeline/(:date)',    to: 'statuses#public_timeline'
 
   post '/ajax/check_profile_update', to: 'ajax#check_profile_update'

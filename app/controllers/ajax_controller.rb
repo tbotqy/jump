@@ -270,7 +270,7 @@ class AjaxController < ApplicationController
     when 'user_timeline'
       @base_url = "/user_timeline"
     when 'home_timeline'
-      @base_url = "/your/home_timeline"
+      @base_url = "/home_timeline"
     end
   end
 
