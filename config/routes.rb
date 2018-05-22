@@ -13,12 +13,12 @@ Jump::Application.routes.draw do
   get '/auth/failure',          to: 'session#logout'
   get '/logout',                to: 'session#logout'
 
-  get '/your/data', to: 'users#setting'
+  get '/users/setting', to: 'users#setting'
   get '/users/delete_account', to: 'users#delete_account'
 
   get '/statuses/import',            to: 'statuses#import'
-  get '/your/tweets/(:date)',        to: 'statuses#sent_tweets'
-  get '/your/home_timeline/(:date)', to: 'statuses#home_timeline'
+  get '/user_timeline/(:date)',      to: 'statuses#user_timeline'
+  get '/home_timeline/(:date)',      to: 'statuses#home_timeline'
   get '/public_timeline/(:date)',    to: 'statuses#public_timeline'
 
   post '/ajax/check_profile_update', to: 'ajax#check_profile_update'

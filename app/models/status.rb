@@ -77,7 +77,7 @@ class Status < ApplicationRecord
     # FIXME : make this private
     def get_twitter_created_at_list(type_of_timeline,user_id = nil)
       case type_of_timeline
-      when 'sent_tweets'
+      when 'user_timeline'
         select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at_reversed)
       when 'home_timeline'
         select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_friend_of(user_id).order_for_date_list.pluck(:twitter_created_at_reversed)
@@ -112,7 +112,7 @@ class Status < ApplicationRecord
     # methods to define whose tweets to be searched
 
     def owned_by_current_user(user_id)
-      # used for users#sent_tweets
+      # used for users#user_timeline
       where(user_id: user_id)
     end
 

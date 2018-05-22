@@ -6,7 +6,7 @@ var PageTitle = {
     var name  = this.getTimelineOwnerName();
     var serviceName = "TwitJump";
     switch(actionType){
-    case "tweets":
+    case "user_timeline":
       baseTitle = " " + name +" さんのツイート";
       break;
     case "home_timeline":

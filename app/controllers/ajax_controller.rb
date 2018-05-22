@@ -235,7 +235,7 @@ class AjaxController < ApplicationController
 
     # fetch older statuses
     case destination_action_type.to_s
-    when 'tweets'
+    when 'user_timeline'
       @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).owned_by_current_user(@current_user.id)
     when 'home_timeline'
       @statuses = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
@@ -267,10 +267,10 @@ class AjaxController < ApplicationController
     case @action_type
     when 'public_timeline'
       @base_url = "/public_timeline"
-    when 'sent_tweets'
-      @base_url = "/your/tweets"
+    when 'user_timeline'
+      @base_url = "/user_timeline"
     when 'home_timeline'
-      @base_url = "/your/home_timeline"
+      @base_url = "/home_timeline"
     end
   end
 
@@ -298,7 +298,7 @@ class AjaxController < ApplicationController
 
     fetch_num = 10
     case action_type
-    when 'tweets'
+    when 'user_timeline'
       if date
         @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_current_user(@current_user.id)
       else
