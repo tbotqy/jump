@@ -1,7 +1,7 @@
 $(function(){
   Popstate.bindEvent();
   GlobalHeader.controlButtonState();
-  Dashbord.fetchDashbord();
+  TermSelector.fetchTermSelector();
   TweetCard.bindClickEvents();
   ReadMore.bindClickEvents();
 });

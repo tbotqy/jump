@@ -6,8 +6,8 @@ $(function(){
 
   GlobalHeader.bindClickEventForDropdown();
 
-  Dashbord.handleWithSp = true;
-  Dashbord.fetchDashbord();
+  TermSelector.handleWithSp = true;
+  TermSelector.fetchTermSelector();
 
   TweetCard.bindClickEvents();
 

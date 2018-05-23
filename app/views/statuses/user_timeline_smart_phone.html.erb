@@ -1,5 +1,5 @@
 <% content_for :javascript_include_tags do %>
-  <%= javascript_include_tag "modules/popstate", "modules/page_title", "modules/global_header", "modules/timeline_nav", "modules/dashbord", "modules/tweet_card", "modules/read_more" %>
+  <%= javascript_include_tag "modules/popstate", "modules/page_title", "modules/global_header", "modules/timeline_nav", "modules/term_selector", "modules/tweet_card", "modules/read_more" %>
   <%= javascript_include_tag "statuses/user_timeline_sp" %>
 <% end %>
 <% content_for :global_header do %>
@@ -9,7 +9,7 @@
   <%= render "shared/footer" %>
 <% end %>
 <%= render "shared/timeline_nav_smart_phone" %>
-<%= render "shared/dashbord" %>
+<%= render "shared/term_selector" %>
 <div class="ad">
   <%= render "shared/adsense/sp/user_timeline/above_timeline" %>
 </div>

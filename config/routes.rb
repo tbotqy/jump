@@ -29,7 +29,7 @@ Jump::Application.routes.draw do
   post '/ajax/delete_status',        to: 'ajax#delete_status'
   post '/ajax/update_status',        to: 'ajax#update_status'
   post '/ajax/read_more',            to: 'ajax#read_more'
-  get  '/ajax/get_dashbord',         to: 'ajax#get_dashbord'
+  get  '/ajax/term_selector',        to: 'ajax#term_selector'
   post '/ajax/make_initial_import',  to: 'ajax#make_initial_import'
   post '/ajax/start_tweet_import',   to: 'ajax#start_tweet_import'
   post '/ajax/check_import_progress',to: 'ajax#check_import_progress'

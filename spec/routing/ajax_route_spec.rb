@@ -8,7 +8,7 @@ describe "routings to ajax" do
   it{ expect(post: "/ajax/delete_status"      ).to  route_to("ajax#delete_status") }
   it{ expect(post: "/ajax/update_status"      ).to  route_to("ajax#update_status") }
   it{ expect(post: "/ajax/read_more"          ).to  route_to("ajax#read_more") }
-  it{ expect(get:  "/ajax/get_dashbord"       ).to  route_to("ajax#get_dashbord") }
+  it{ expect(get:  "/ajax/term_selector"      ).to  route_to("ajax#term_selector") }
   it{ expect(post: "/ajax/make_initial_import").to  route_to("ajax#make_initial_import") }
   it{ expect(post: "/ajax/start_tweet_import").to   route_to("ajax#start_tweet_import") }
   it{ expect(post: "/ajax/check_import_progress").to route_to("ajax#check_import_progress") }
