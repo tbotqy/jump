@@ -1,7 +1,7 @@
-var Dashbord = {
+var TermSelector = {
   handleWithSp: false,
 
-  fetchDashbord: function(){
+  fetchTermSelector: function(){
     /**
      * acquires html code for term selector and insert it to the html
      */
@@ -15,7 +15,7 @@ var Dashbord = {
     // show the loading icon
     elmWholeWrapper.html("<img src=\"/assets/ajax-loader.gif\" alt=\"読込中\" />");
 
-    var actionType = this.getDashbordType();
+    var actionType = this.getTermSelectorType();
 
     var sendData = {
       action_type:actionType
@@ -39,7 +39,7 @@ var Dashbord = {
       error:function(){
       },
       complete: function(){
-        Dashbord.bindEvents();
+        TermSelector.bindEvents();
       }
     });
   },
@@ -49,7 +49,7 @@ var Dashbord = {
     this.ClickEvent.fetchStatuses();
     this.ClickEvent.controlButtonState();
   },
-  getDashbordType: function(){
+  getTermSelectorType: function(){
     var ret = $("#wrap-term-selector").data('type');
     if(!ret){
       return false;
