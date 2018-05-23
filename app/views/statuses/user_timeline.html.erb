@@ -1,11 +1,11 @@
 <% content_for :javascript_include_tags do %>
-  <%= javascript_include_tag "modules/popstate", "modules/page_title", "modules/global_header", "modules/dashbord", "modules/tweet_card", "modules/read_more" %>
+  <%= javascript_include_tag "modules/popstate", "modules/page_title", "modules/global_header", "modules/term_selector", "modules/tweet_card", "modules/read_more" %>
   <%= javascript_include_tag "statuses/user_timeline" %>
 <% end %>
 <% content_for :global_header do %>
   <%= render "shared/global_header",{ :current_user => @current_user} %>
 <% end %>
-<%= render "shared/dashbord" %>
+<%= render "shared/term_selector" %>
 <%= render "shared/adsense/pc/user_timeline/above_timeline" %>
 <!-- #wrap-timeline-lower -->
 <div id="wrap-timeline-lower">
