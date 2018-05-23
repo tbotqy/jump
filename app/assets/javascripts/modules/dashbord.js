@@ -11,7 +11,7 @@ var Dashbord = {
     // check if dashbord already exists
     if( $("#wrap-term-selectors").size() > 0 ) return;
 
-    var elmWholeWrapper = $("#wrap-dashbord");
+    var elmWholeWrapper = $("#wrap-term-selector");
     // show the loading icon
     elmWholeWrapper.html("<img src=\"/assets/ajax-loader.gif\" alt=\"読込中\" />");
 
@@ -50,7 +50,7 @@ var Dashbord = {
     this.ClickEvent.controlButtonState();
   },
   getDashbordType: function(){
-    var ret = $("#wrap-dashbord").data('type');
+    var ret = $("#wrap-term-selector").data('type');
     if(!ret){
       return false;
     }

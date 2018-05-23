@@ -386,7 +386,7 @@ i{
    dashbord
 -------------------------------------------------- */
 
-#wrap-dashbord{
+#wrap-term-selector{
   float: left;
   width: 100%;
   min-height: 55px;
@@ -394,18 +394,18 @@ i{
   padding: 0 10px;
 }
 
-#wrap-dashbord ul{
+#wrap-term-selector ul{
   list-style: none;
   margin-left: 0;
   padding: 0;
 }
 
-#wrap-dashbord .space{
+#wrap-term-selector .space{
   width: 100%;
   height: 10px;
 }
 
-#wrap-dashbord .inner{
+#wrap-term-selector .inner{
   z-index: 1000;
   opacity: 1;
   background: white;
