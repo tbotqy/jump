@@ -24,7 +24,7 @@ var Dashbord = {
     var elmErrorHtml = $(document.createElement("div")).html("<p>日付ナビゲーションの生成に失敗しました。<br/>画面をリロードして下さい。");
     $.ajax({
 
-      url:'/ajax/get_dashbord',
+      url:'/ajax/term_selector',
       type:'get',
       data:sendData,
       dataType:'html',

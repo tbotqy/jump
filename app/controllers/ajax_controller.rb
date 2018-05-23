@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class AjaxController < ApplicationController
   before_action :reject_non_ajax
-  before_action :check_login, :except => ['reject_non_ajax','get_dashbord','read_more','switch_term']
+  before_action :check_login, :except => ['reject_non_ajax','term_selector','read_more','switch_term']
   layout false
 
   def reject_non_ajax
@@ -255,7 +255,7 @@ class AjaxController < ApplicationController
     @oldest_tweet_id = @statuses.last.status_id_str
   end
 
-  def get_dashbord
+  def term_selector
 
     @action_type = params[:action_type]
 
