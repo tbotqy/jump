@@ -3,12 +3,12 @@ var Dashbord = {
 
   fetchDashbord: function(){
     /**
-     * acquires html code for dashbord and insert it to the html
+     * acquires html code for term selector and insert it to the html
      */
-    // check if dashbord should be requested
+    // check if term selector should be requested
     if( $("#wrap-timeline-lower").size() == 0 ) return;
 
-    // check if dashbord already exists
+    // check if term selector already exists
     if( $("#wrap-term-selectors").size() > 0 ) return;
 
     var elmWholeWrapper = $("#wrap-term-selector");
@@ -58,7 +58,7 @@ var Dashbord = {
   },
   MouseoverEvent: {
     onYearSelectors: function(){
-      // mouseover action for year list in dashbord
+      // mouseover action for year list in term selector
       $(".list-years").find("li").mouseover(function(){
         var self = $(this);
 
@@ -81,7 +81,7 @@ var Dashbord = {
       });
     },
     onMonthSelectors: function(){
-      // mouseover action for months list in dashbord
+      // mouseover action for months list in term selector
       $(".list-months").find("li").mouseover(function(){
         var self = $(this);
 
