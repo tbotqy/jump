@@ -20,7 +20,7 @@
             class_name = 'mid'
           end
           %>
-        <li data-date="date-<%= year %>">
+        <li data-date="<%= year %>">
           <a class="btn btn-link <%= class_name %>" data-date-type="year" href="<%= @base_url %>/<%= year %>" data-date="<%= year %>" data-complete-text="<%= year %>"> <%= year %></a>
         </li>
         <% end %>
@@ -46,7 +46,7 @@
             class_name = 'mid'
           end
           %>
-        <li data-date="date-<%= year+'-'+month %>"><a data-date-type="month" href="<%= @base_url %>/<%= year+'-'+month %>" data-date="<%= year+'-'+month %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= month %>"><%= month %></a></li>
+        <li data-date="<%= year+'-'+month %>"><a data-date-type="month" href="<%= @base_url %>/<%= year+'-'+month %>" data-date="<%= year+'-'+month %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= month %>"><%= month %></a></li>
         <% end %>
       </ul>
       <% end %>
@@ -72,7 +72,7 @@
                 class_name = 'mid'
               end
               %>
-              <li data-date="date-<%= year+'-'+month+'-'+day %>"><a data-date-type="day" href="<%= @base_url %>/<%= year+'-'+month+'-'+day %>" data-date="<%= year+'-'+month+'-'+day %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= day %>"><%= day %></a></li>
+              <li data-date="<%= year+'-'+month+'-'+day %>"><a data-date-type="day" href="<%= @base_url %>/<%= year+'-'+month+'-'+day %>" data-date="<%= year+'-'+month+'-'+day %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= day %>"><%= day %></a></li>
             <% end %>
           </ul>
         <% end %>

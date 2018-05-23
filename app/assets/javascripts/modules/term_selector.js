@@ -76,7 +76,7 @@ var TermSelector = {
         var year = self.attr('data-date');
 
         // show the months list whose class is equal to var year
-        $("#wrap-list-months").find("."+year).css('display','block');
+        $("#wrap-list-months").find(".date-"+year).css('display','block');
 
       });
     },
@@ -98,7 +98,7 @@ var TermSelector = {
         var month = self.attr('data-date');
 
         // show the days list whose class is equal to var month
-        $("#wrap-list-days").find("."+month).css('display','block');
+        $("#wrap-list-days").find(".date-"+month).css('display','block');
 
       });
     }
