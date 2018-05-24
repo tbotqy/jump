@@ -58,6 +58,10 @@ class User < ApplicationRecord
     Status.where(user_id: self.id, deleted_flag: false).count
   end
 
+  def friend_user_ids
+    self.class.where(twitter_id: friends.pluck(:following_twitter_id)).pluck(:id)
+  end
+
   def assign(auth)
     info = auth.extra.raw_info
     self.assign_attributes(

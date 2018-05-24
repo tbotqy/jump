@@ -3,6 +3,7 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :showable , -> {where(deleted_flag: false)}
+  scope :user_id, ->(user_ids) {where(user_id: user_ids)}
 
   # FIXME : this scope 'retweet' is only used in this class itself.
   # consider to delete this scope and replace with some private method.
@@ -15,6 +16,10 @@ class Status < ApplicationRecord
   after_save :update_user_timestamp
 
   class << self
+    def ordered_tweeted_unixtimes_by_user_id(user_id)
+      user_id(user_id).order(twitter_created_at_reversed: :asc).pluck(:twitter_created_at)
+    end
+
     def newest_in_tweeted_time
       order(twitter_created_at_reversed: :asc).first
     end
