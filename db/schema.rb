@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513054318) do
+ActiveRecord::Schema.define(version: 20180524090553) do
 
   create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20180513054318) do
     t.index ["status_id"], name: "status_id", using: :btree
   end
 
-  create_table "friends", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+  create_table "following_twitter_ids", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.bigint  "user_id",              null: false
     t.bigint  "following_twitter_id", null: false
     t.integer "created_at",           null: false
