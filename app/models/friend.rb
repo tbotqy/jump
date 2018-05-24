@@ -41,7 +41,7 @@ class Friend < ApplicationRecord
 
     def update_list(user_id, friend_ids)
       # delete user's friend list
-      destroy_all(user_id: user_id)
+      where(user_id: user_id).destroy_all
       # insert new friend list
       save_friends(user_id, friend_ids)
     end
