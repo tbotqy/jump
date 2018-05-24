@@ -256,22 +256,8 @@ class AjaxController < ApplicationController
   end
 
   def term_selector
-
-    @action_type = params[:action_type]
-
-    raise "action type is not specified" if !@action_type
-
-    @date_list = Status.showable.get_date_list(@action_type,@current_user.try!(:id))
-
-    @base_url = ""
-    case @action_type
-    when 'public_timeline'
-      @base_url = "/public_timeline"
-    when 'user_timeline'
-      @base_url = "/user_timeline"
-    when 'home_timeline'
-      @base_url = "/home_timeline"
-    end
+    timeline_type = TimelineType.new(params[:action_type])
+    @view_object = AjaxViewObject::TermSelector.new(timeline_type, @current_user&.id)
   end
 
   def make_initial_import
