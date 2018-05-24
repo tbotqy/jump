@@ -6,23 +6,10 @@
     <!-- #wrap-list-years -->
     <div id="wrap-list-years">
       <ul class="list-years my-btn-group">
-        <% max = @date_list.size %>
-        <% @date_list.each.with_index(1) do |(year,val), index| %>
-          <%
-          class_name = ""
-          if max == 1
-            class_name = 'first last'
-          elsif index == 1
-            class_name = 'first'
-          elsif index == max
-            class_name = 'last'
-          else
-            class_name = 'mid'
-          end
-          %>
-        <li data-date="<%= year %>">
-          <a class="btn btn-link <%= class_name %>" data-date-type="year" href="<%= @base_url %>/<%= year %>" data-date="<%= year %>" data-complete-text="<%= year %>"> <%= year %></a>
-        </li>
+        <% @view_object.year_list.li_tags.each do |li_tag| %>
+          <li data-date="<%= li_tag.data_date_value %>">
+            <%= link_to(li_tag.anchor_text, li_tag.anchor_href, data: {date_type: "year", date: li_tag.data_date_value, complete_text: li_tag.data_complete_text_value}, class: "btn btn-link #{li_tag.anchor_class_text}") %>
+          </li>
         <% end %>
       </ul>
     </div>
@@ -30,52 +17,28 @@
 
     <!-- #wrap-list-months -->
     <div id="wrap-list-months">
-      <% @date_list.each do |year,months| %>
-      <ul class="list-months date-<%= year %> my-btn-group">
-        <% max = months.size %>
-        <% months.each.with_index(1) do |(month,val),index| %>
-          <%
-          class_name = ""
-          if max == 1
-            class_name = 'first last'
-          elsif index == 1
-            class_name = 'first'
-          elsif index == max
-            class_name = 'last'
-          else
-            class_name = 'mid'
-          end
-          %>
-        <li data-date="<%= year+'-'+month %>"><a data-date-type="month" href="<%= @base_url %>/<%= year+'-'+month %>" data-date="<%= year+'-'+month %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= month %>"><%= month %></a></li>
-        <% end %>
-      </ul>
+      <% @view_object.month_list.ul_tags.each do |ul_tag| %>
+        <ul class="list-months my-btn-group <%= ul_tag.class_text %>">
+          <% ul_tag.li_tags.each do |li_tag| %>
+            <li data-date="<%= li_tag.data_date_value %>">
+              <%= link_to(li_tag.anchor_text, li_tag.anchor_href, data: {date_type: "month", date: li_tag.data_date_value, complete_text: li_tag.data_complete_text_value}, class: "btn btn-link #{li_tag.anchor_class_text}") %>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
     </div>
-      <!-- /#wrap-list-months -->
+    <!-- /#wrap-list-months -->
 
     <!-- #wrap-list-days -->
     <div id="wrap-list-days">
-      <% @date_list.each do |year,months| %>
-        <% months.each do |month,days| %>
-          <ul class="list-days date-<%= year+'-'+month %> my-btn-group">
-            <% max = days.size %>
-            <% days.each.with_index(1) do |(day,full_date),index| %>
-              <%
-              class_name = ""
-              if max == 1
-                class_name = 'first last'
-              elsif index == 1
-                class_name = 'first'
-              elsif index == max
-                class_name = 'last'
-              else
-                class_name = 'mid'
-              end
-              %>
-              <li data-date="<%= year+'-'+month+'-'+day %>"><a data-date-type="day" href="<%= @base_url %>/<%= year+'-'+month+'-'+day %>" data-date="<%= year+'-'+month+'-'+day %>" class="btn btn-link <%= class_name %>" data-complete-text="<%= day %>"><%= day %></a></li>
-            <% end %>
-          </ul>
-        <% end %>
+      <% @view_object.day_list.ul_tags.each do |ul_tag| %>
+        <ul class="list-days my-btn-group <%= ul_tag.class_text %>">
+          <% ul_tag.li_tags.each do |li_tag| %>
+            <li data-date="<%= li_tag.data_date_value %>">
+              <%= link_to(li_tag.anchor_text, li_tag.anchor_href, data: {date_type: "day", date: li_tag.data_date_value, complete_text: li_tag.data_complete_text_value}, class: "btn btn-link #{li_tag.anchor_class_text}") %>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
     </div>
     <!-- /#wrap-list-days -->
