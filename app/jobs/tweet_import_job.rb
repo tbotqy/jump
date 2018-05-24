@@ -1,4 +1,4 @@
-class TweetImportJob < ActiveJob::Base
+class TweetImportJob < ApplicationJob
   queue_as :default
 
   def perform(user_id:)

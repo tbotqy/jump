@@ -1,4 +1,4 @@
-class PublicDate < ActiveRecord::Base
+class PublicDate < ApplicationRecord
   class << self
     def add_record(unixtime_created_at)
       unless date_exists?(unixtime_created_at)
@@ -17,6 +17,10 @@ class PublicDate < ActiveRecord::Base
 
     def get_list
       select(:posted_unixtime).order('posted_unixtime DESC')
+    end
+
+    def ordered_unixtimes
+      order(posted_unixtime: :desc).pluck(:posted_unixtime)
     end
 
     # FIXME : make this private

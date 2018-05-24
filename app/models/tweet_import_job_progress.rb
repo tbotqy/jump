@@ -1,4 +1,4 @@
-class TweetImportJobProgress < ActiveRecord::Base
+class TweetImportJobProgress < ApplicationRecord
   belongs_to :user
 
   scope :finished, -> {where(finished: true)}

@@ -1,4 +1,4 @@
-class Entity < ActiveRecord::Base
+class Entity < ApplicationRecord
   belongs_to :status
   class << self
     def bulk_new_by_tweet(tweet)

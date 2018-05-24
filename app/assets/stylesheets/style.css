@@ -450,22 +450,22 @@ footer .copyright{
 }
 
 /* --------------------------------------------------
-   dashbord
+   term selector
 -------------------------------------------------- */
 
-#wrap-dashbord{
+#wrap-term-selector{
   float: left;
   width: 1085px;
   height: 123px;
   font-family: 'Questrial', sans-serif;
 }
 
-#wrap-dashbord .space{
+#wrap-term-selector .space{
   width: 100%;
   height: 10px;
 }
 
-#wrap-dashbord .inner{
+#wrap-term-selector .inner{
   height: 123px;
   position: fixed;
   top: 40px;
@@ -1151,7 +1151,7 @@ footer .copyright{
 }
 
 /* --------------------------------------------------
-   users.sent_tweets
+   users.user_timeline
 -------------------------------------------------- */
 #wrap-timeline-lower{
   width: 100%;

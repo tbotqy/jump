@@ -1,13 +1,10 @@
 source 'https://rubygems.org'
-gem 'rails', '~> 4.2.0'
-gem 'mysql2', '~> 0.4.0'
+gem 'rails', '~> 5.0.0'
+gem 'mysql2'
 gem 'unicorn'
-gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
-gem 'jbuilder', '~> 1.2'
-gem 'jpmobile', '~> 4.1.0'
+gem 'jpmobile', '~> 5.0.0'
 gem 'detect_timezone_rails'
 gem 'configatron'
 gem 'twitter'
@@ -15,8 +12,6 @@ gem 'omniauth'
 gem 'omniauth-twitter', github: 'arunagw/omniauth-twitter'
 gem 'twitter-text'
 gem 'turnout'
-gem 'rake', '12.0.0'
-gem 'activerecord-mysql-awesome'
 gem 'slim-rails'
 gem 'therubyracer', platforms: :ruby
 gem 'sidekiq'
@@ -24,9 +19,11 @@ gem 'sinatra', require: false
 gem 'redis-namespace'
 gem 'exception_notification'
 gem 'slack-notifier'
+gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development do
   gem 'web-console', '~> 2.0'
+  gem 'listen', '>= 3.0.5', '< 3.2'
 end
 group :development, :test do
   gem 'rspec-rails', '~> 3.5'

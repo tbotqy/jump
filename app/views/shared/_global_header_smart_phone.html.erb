@@ -9,9 +9,11 @@
     <nav class="drop-down-nav">
       <% if current_user.finished_initial_import? %>
         <% if controller.action_name == "setting" %>
-          <a class="btn btn-default btn-sm" href="/your/tweets"><i class="icon-comment"></i>タイムライン</a>
+          <a class="btn btn-default btn-sm" href="/user_timeline"><i class="icon-comment"></i>タイムライン</a>
         <% else %>
-          <a class="btn btn-default btn-sm link-config" href="/your/data"><i class="icon-hdd"></i>データ管理</a>
+          <%= link_to users_setting_path, class: "btn btn-default btn-sm link-config" do %>
+            <i class="icon-hdd"></i>データ管理
+          <% end %>
         <% end %>
       <% end %>
       <a class="btn btn-default btn-sm link-logout" href="/logout"><i class="icon-signout"></i>ログアウト</a>

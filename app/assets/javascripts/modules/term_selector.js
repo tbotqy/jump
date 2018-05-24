@@ -1,21 +1,21 @@
-var Dashbord = {
+var TermSelector = {
   handleWithSp: false,
 
-  fetchDashbord: function(){
+  fetchTermSelector: function(){
     /**
-     * acquires html code for dashbord and insert it to the html
+     * acquires html code for term selector and insert it to the html
      */
-    // check if dashbord should be requested
+    // check if term selector should be requested
     if( $("#wrap-timeline-lower").size() == 0 ) return;
 
-    // check if dashbord already exists
+    // check if term selector already exists
     if( $("#wrap-term-selectors").size() > 0 ) return;
 
-    var elmWholeWrapper = $("#wrap-dashbord");
+    var elmWholeWrapper = $("#wrap-term-selector");
     // show the loading icon
     elmWholeWrapper.html("<img src=\"/assets/ajax-loader.gif\" alt=\"読込中\" />");
 
-    var actionType = this.getDashbordType();
+    var actionType = this.getTermSelectorType();
 
     var sendData = {
       action_type:actionType
@@ -24,7 +24,7 @@ var Dashbord = {
     var elmErrorHtml = $(document.createElement("div")).html("<p>日付ナビゲーションの生成に失敗しました。<br/>画面をリロードして下さい。");
     $.ajax({
 
-      url:'/ajax/get_dashbord',
+      url:'/ajax/term_selector',
       type:'get',
       data:sendData,
       dataType:'html',
@@ -39,7 +39,7 @@ var Dashbord = {
       error:function(){
       },
       complete: function(){
-        Dashbord.bindEvents();
+        TermSelector.bindEvents();
       }
     });
   },
@@ -49,8 +49,8 @@ var Dashbord = {
     this.ClickEvent.fetchStatuses();
     this.ClickEvent.controlButtonState();
   },
-  getDashbordType: function(){
-    var ret = $("#wrap-dashbord").data('type');
+  getTermSelectorType: function(){
+    var ret = $("#wrap-term-selector").data('type');
     if(!ret){
       return false;
     }
@@ -58,7 +58,7 @@ var Dashbord = {
   },
   MouseoverEvent: {
     onYearSelectors: function(){
-      // mouseover action for year list in dashbord
+      // mouseover action for year list in term selector
       $(".list-years").find("li").mouseover(function(){
         var self = $(this);
 
@@ -76,12 +76,12 @@ var Dashbord = {
         var year = self.attr('data-date');
 
         // show the months list whose class is equal to var year
-        $("#wrap-list-months").find("."+year).css('display','block');
+        $("#wrap-list-months").find(".date-"+year).css('display','block');
 
       });
     },
     onMonthSelectors: function(){
-      // mouseover action for months list in dashbord
+      // mouseover action for months list in term selector
       $(".list-months").find("li").mouseover(function(){
         var self = $(this);
 
@@ -98,7 +98,7 @@ var Dashbord = {
         var month = self.attr('data-date');
 
         // show the days list whose class is equal to var month
-        $("#wrap-list-days").find("."+month).css('display','block');
+        $("#wrap-list-days").find(".date-"+month).css('display','block');
 
       });
     }

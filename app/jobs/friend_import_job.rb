@@ -1,4 +1,4 @@
-class FriendImportJob < ActiveJob::Base
+class FriendImportJob < ApplicationJob
   queue_as :default
 
   def perform(user_id:)

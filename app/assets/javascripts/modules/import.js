@@ -63,7 +63,7 @@ var Import = {
           $(".progress").removeClass("active");
           SharedFunctions.hideLoader("#wrap-import");
           setTimeout(function(){
-            location.href = "/your/tweets";
+            location.href = "/user_timeline";
           }, 2000);
         }else{
           Import.checkImportProgressWithInterval();

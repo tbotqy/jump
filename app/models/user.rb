@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   has_many :statuses, dependent: :destroy
   has_many :friends, dependent: :delete_all
@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
 
   def get_active_status_count
     Status.where(user_id: self.id, deleted_flag: false).count
+  end
+
+  def friend_user_ids
+    self.class.where(twitter_id: friends.pluck(:following_twitter_id)).pluck(:id)
   end
 
   def assign(auth)

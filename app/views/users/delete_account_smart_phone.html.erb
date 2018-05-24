@@ -21,7 +21,7 @@
     <div class="wrap-status">
       <p class="status">処理を取り消すことはできません。</p>
     </div>
-    <a class="btn btn-default cancel-delete" href="/your/data">キャンセル</a>
+    <%= link_to "キャンセル", users_setting_path, class: "btn btn-default cancel-delete" %>
     <button id="delete-account" class="btn btn-danger" data-loading-text="saying goodbye..." data-complete-text="削除完了" data-complete-text="エラー"><i class="icon-trash icon-white"></i>実行</button>
   </div>
   <!-- /.area-footer -->

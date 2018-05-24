@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class AjaxController < ApplicationController
-  before_filter :reject_non_ajax
-  before_filter :check_login, :except => ['reject_non_ajax','get_dashbord','read_more','switch_term']
+  before_action :reject_non_ajax
+  before_action :check_login, :except => ['reject_non_ajax','term_selector','read_more','switch_term']
   layout false
 
   def reject_non_ajax
@@ -235,7 +235,7 @@ class AjaxController < ApplicationController
 
     # fetch older statuses
     case destination_action_type.to_s
-    when 'tweets'
+    when 'user_timeline'
       @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).owned_by_current_user(@current_user.id)
     when 'home_timeline'
       @statuses = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
@@ -255,23 +255,9 @@ class AjaxController < ApplicationController
     @oldest_tweet_id = @statuses.last.status_id_str
   end
 
-  def get_dashbord
-
-    @action_type = params[:action_type]
-
-    raise "action type is not specified" if !@action_type
-
-    @date_list = Status.showable.get_date_list(@action_type,@current_user.try!(:id))
-
-    @base_url = ""
-    case @action_type
-    when 'public_timeline'
-      @base_url = "/public_timeline"
-    when 'sent_tweets'
-      @base_url = "/your/tweets"
-    when 'home_timeline'
-      @base_url = "/your/home_timeline"
-    end
+  def term_selector
+    timeline_type = TimelineType.new(params[:action_type])
+    @view_object = AjaxViewObject::TermSelector.new(timeline_type, @current_user&.id)
   end
 
   def make_initial_import
@@ -298,7 +284,7 @@ class AjaxController < ApplicationController
 
     fetch_num = 10
     case action_type
-    when 'tweets'
+    when 'user_timeline'
       if date
         @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_current_user(@current_user.id)
       else

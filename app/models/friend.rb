@@ -1,4 +1,4 @@
-class Friend < ActiveRecord::Base
+class Friend < ApplicationRecord
   belongs_to :user
 
   class << self
@@ -30,18 +30,12 @@ class Friend < ActiveRecord::Base
       end
 
       # update the time stamp in User model
-      User.find(user_id) do |u|
-        if u.nil?
-          put "not found"
-        else
-          u.update_attribute(:friends_updated_at, created_at)
-        end
-      end
+      User.find(user_id).update_attribute(:friends_updated_at, created_at)
     end
 
     def update_list(user_id, friend_ids)
       # delete user's friend list
-      destroy_all(user_id: user_id)
+      where(user_id: user_id).destroy_all
       # insert new friend list
       save_friends(user_id, friend_ids)
     end
