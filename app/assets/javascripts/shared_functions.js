@@ -3,33 +3,16 @@ var SharedFunctions = {
     /**
      * detect and get the action_type from given path
      */
-
-    // action type exists next to the second slash
-    var firstSlash = path.indexOf("/");
-
-    if(firstSlash == -1){
-      return false;
-    }
-
-    // check if current action type is public_timeline
     if(path.indexOf("public_timeline") != -1){
         return "public_timeline";
     }
 
-    var secondSlash = path.indexOf("/",firstSlash+1);
-
-    if(secondSlash == -1){
-      return false;
+    if(path.indexOf("user_timeline") != -1){
+      return "user_timeline";
     }
 
-    // check if more slash exists
-    var thirdSlash = path.indexOf("/",secondSlash+1);
-    if(thirdSlash == -1){
-      return path.substr(secondSlash+1);
-    }else{
-      // case that thirdSlash exists
-      var lengthActionType = thirdSlash - secondSlash;
-      return path.substr(secondSlash+1,lengthActionType-1);
+    if(path.indexOf("home_timeline") != -1){
+      return "home_timeline";
     }
   },
   scrollToPageTop: function(e){

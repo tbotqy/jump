@@ -3,6 +3,7 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :showable , -> {where(deleted_flag: false)}
+  scope :user_id, ->(user_ids) {where(user_id: user_ids)}
 
   # FIXME : this scope 'retweet' is only used in this class itself.
   # consider to delete this scope and replace with some private method.
@@ -15,6 +16,10 @@ class Status < ApplicationRecord
   after_save :update_user_timestamp
 
   class << self
+    def ordered_tweeted_unixtimes_by_user_id(user_id)
+      user_id(user_id).order(twitter_created_at_reversed: :asc).pluck(:twitter_created_at)
+    end
+
     def newest_in_tweeted_time
       order(twitter_created_at_reversed: :asc).first
     end
@@ -77,7 +82,7 @@ class Status < ApplicationRecord
     # FIXME : make this private
     def get_twitter_created_at_list(type_of_timeline,user_id = nil)
       case type_of_timeline
-      when 'sent_tweets'
+      when 'user_timeline'
         select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at_reversed)
       when 'home_timeline'
         select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_friend_of(user_id).order_for_date_list.pluck(:twitter_created_at_reversed)
@@ -112,7 +117,7 @@ class Status < ApplicationRecord
     # methods to define whose tweets to be searched
 
     def owned_by_current_user(user_id)
-      # used for users#sent_tweets
+      # used for users#user_timeline
       where(user_id: user_id)
     end
 

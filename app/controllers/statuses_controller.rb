@@ -6,13 +6,13 @@ class StatusesController < ApplicationController
   # show the screen for operating import
   def import
     # redirect initialized user
-    return redirect_to action: :sent_tweets if @current_user.finished_initial_import?
+    return redirect_to action: :user_timeline if @current_user.finished_initial_import?
 
     @working_job_exists = @current_user.has_working_job?
     @expected_total_import_count = TwitterServiceClient::UserTweet.maximum_fetchable_tweet_count(user_id: @current_user.id)
   end
 
-  def sent_tweets
+  def user_timeline
     # shows the tweets tweeted by logged-in user
 
     # this line may be changed when the page is published to not-loggedin visitors

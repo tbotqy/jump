@@ -16,8 +16,8 @@
                 <!-- .nav .pull-left -->
                 <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
                   <li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
-                  <li class="home_timeline"><a href="/your/home_timeline"><i class="icon-group margin"></i>友達</a></li>
-                  <li class="sent_tweets"><a href="/your/tweets"><i class="icon-user margin"></i>あなた</a></li>
+                  <li class="home_timeline"><a href="/home_timeline"><i class="icon-group margin"></i>友達</a></li>
+                  <li class="user_timeline"><a href="/user_timeline"><i class="icon-user margin"></i>あなた</a></li>
                 </ul>
                 <!-- /.nav .pull-left -->
               <% end %>
@@ -41,7 +41,9 @@
                   <ul class="dropdown-menu">
                     <% if current_user.finished_initial_import? %>
                       <li>
-                        <a class="link-config" href="/your/data"><i class="icon-hdd"></i>データ管理</a>
+                        <%= link_to users_setting_path, class: "link-config" do %>
+                          <i class="icon-hdd"></i>データ管理
+                        <% end %>
                       </li>
                       <li class="divider"></li>
                     <% end %>
@@ -61,7 +63,7 @@
               <ul id="link-timeline" class="nav page-nav pull-left" data-current-action-name="<%= controller.action_name %>">
                 <li class="public_timeline"><a href="/public_timeline"><i class="icon-globe margin"></i>みんな</a></li>
                 <li class="home_timeline disabled"><a href="#"><i class="icon-group margin"></i>友達</a></li>
-                <li class="sent_tweets disabled"><a href="#"><i class="icon-user margin"></i>あなた</a></li>
+                <li class="user_timeline disabled"><a href="#"><i class="icon-user margin"></i>あなた</a></li>
               </ul>
               <!-- /.nav .pull-left -->
               <!-- .nav .pull-right -->
