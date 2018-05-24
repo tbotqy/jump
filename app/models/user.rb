@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 
   has_many :statuses, dependent: :destroy
-  has_many :friends, dependent: :delete_all
+  has_many :following_twitter_ids, dependent: :delete_all
   has_many :tweet_import_job_progresses, dependent: :delete_all
 
   # FIXME : this is referenced only at one point
