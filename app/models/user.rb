@@ -59,7 +59,7 @@ class User < ApplicationRecord
   end
 
   def friend_user_ids
-    self.class.where(twitter_id: friends.pluck(:following_twitter_id)).pluck(:id)
+    self.class.where(twitter_id: following_twitter_ids.pluck(:following_twitter_id)).pluck(:id)
   end
 
   def friend_count
