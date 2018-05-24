@@ -62,6 +62,10 @@ class User < ApplicationRecord
     self.class.where(twitter_id: friends.pluck(:following_twitter_id)).pluck(:id)
   end
 
+  def friend_count
+    following_twitter_ids.count
+  end
+
   def assign(auth)
     info = auth.extra.raw_info
     self.assign_attributes(

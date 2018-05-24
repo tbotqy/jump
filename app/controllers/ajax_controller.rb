@@ -86,7 +86,7 @@ class AjaxController < ApplicationController
 
     ret = {
       :updated => do_update,
-      :friends_count => @current_user.friends.count,
+      :friends_count => @current_user.friend_count,
       :updated_date => Time.zone.at(@current_user.friends_updated_at).strftime('%F %T')
     }
 
