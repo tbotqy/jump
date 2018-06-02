@@ -3,6 +3,7 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :not_deleted , -> {where(deleted_flag: false)}
+  scope :not_private, -> {where(private: false)}
   scope :user_id, ->(user_ids) {where(user_id: user_ids)}
 
   # FIXME : this scope 'retweet' is only used in this class itself.

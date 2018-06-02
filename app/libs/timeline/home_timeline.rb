@@ -10,13 +10,13 @@ module Timeline
       if target_date.specified?
         # fetch statuses in specified date
         Status
-          .not_deleted
+          .not_deleted.not_private
           .get_status_in_date(target_date.date_string, PER_PAGE)
           .owned_by_friend_of(@timeline_owner.id)
       else
         # just fetch latest statuses
         Status
-          .not_deleted
+          .not_deleted.not_private
           .force_index(:idx_u_tcar_sisr_on_statuses)
           .get_latest_status(PER_PAGE).owned_by_friend_of(@timeline_owner.id)
       end
@@ -26,7 +26,7 @@ module Timeline
 
     def older_status
       Status
-        .not_deleted
+        .not_deleted.not_private
         .force_index(:idx_u_on_statuses)
         .get_older_status_by_tweet_id(oldest_tweet_id, 1)
         .owned_by_friend_of(@timeline_owner.id)
