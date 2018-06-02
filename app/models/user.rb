@@ -72,6 +72,7 @@ class User < ApplicationRecord
       twitter_id: info.id,
       name: info.name,
       screen_name: info.screen_name,
+      protected: info.protected?,
       profile_image_url_https: info.profile_image_url_https,
       time_zone: info.time_zone,
       utc_offset: info.utc_offset,
