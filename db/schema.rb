@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180602175938) do
+ActiveRecord::Schema.define(version: 20180602182841) do
 
   create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20180602175938) do
     t.boolean "possibly_sensitive",                                    null: false
     t.boolean "private",                               default: false, null: false
     t.integer "created_at",                                            null: false
-    t.integer "deleted_flag",                limit: 1, default: 0,     null: false
+    t.integer "deleted",                     limit: 1, default: 0,     null: false
     t.bigint  "status_id_str_reversed"
     t.integer "twitter_created_at_reversed"
     t.index ["status_id_str_reversed"], name: "idx_sisr_on_statuses", using: :btree
@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(version: 20180602175938) do
     t.bigint  "twitter_id",                              null: false
     t.string  "name",                                    null: false
     t.string  "screen_name",                             null: false
-    t.boolean "protected",               default: false, null: false
     t.string  "profile_image_url_https",                 null: false
     t.string  "time_zone"
     t.integer "utc_offset"
@@ -103,7 +102,7 @@ ActiveRecord::Schema.define(version: 20180602175938) do
     t.integer "statuses_updated_at"
     t.integer "friends_updated_at"
     t.boolean "closed_only",             default: false
-    t.boolean "deleted_flag",            default: false, null: false
+    t.boolean "deleted",                 default: false, null: false
     t.integer "created_at",                              null: false
     t.integer "updated_at",                              null: false
     t.index ["twitter_id"], name: "idx_ti_on_users", using: :btree
