@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524090553) do
+ActiveRecord::Schema.define(version: 20180602170028) do
 
   create_table "data_summaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.string  "type"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20180524090553) do
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive",                                    null: false
     t.integer "created_at",                                            null: false
-    t.integer "deleted_flag",                limit: 1, default: 0,     null: false
+    t.integer "private",                     limit: 1, default: 0,     null: false
     t.bigint  "status_id_str_reversed"
     t.integer "twitter_created_at_reversed"
     t.index ["status_id_str_reversed"], name: "idx_sisr_on_statuses", using: :btree
