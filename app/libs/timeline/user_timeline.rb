@@ -10,19 +10,18 @@ module Timeline
       if target_date.specified?
         # fetch statuses in specified date
         Status
-          .showable
           .get_status_in_date(target_date.date_string, PER_PAGE)
           .owned_by_current_user(@timeline_owner.id)
       else
         # just fetch latest statuses
-        Status.showable.get_latest_status(PER_PAGE).owned_by_current_user(@timeline_owner.id)
+        Status.get_latest_status(PER_PAGE).owned_by_current_user(@timeline_owner.id)
       end
     end
 
     private
 
     def older_status
-      Status.showable.get_older_status_by_tweet_id(oldest_tweet_id, 1).owned_by_current_user(@timeline_owner.id)
+      Status.get_older_status_by_tweet_id(oldest_tweet_id, 1).owned_by_current_user(@timeline_owner.id)
     end
   end
 end

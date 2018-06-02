@@ -45,7 +45,7 @@ class AjaxController < ApplicationController
     latest_tweet = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
     fresh_latest_created_at = Time.zone.parse(latest_tweet[0][:attrs][:created_at].to_s).to_i
 
-    existing_latest_status = Status.showable.get_latest_status(1).owned_by_current_user(@current_user.id)
+    existing_latest_status = Status.get_latest_status(1).owned_by_current_user(@current_user.id)
     if existing_latest_status.length > 0
       existing_latest_created_at = existing_latest_status.pluck(:twitter_created_at)[0]
     else
@@ -236,7 +236,7 @@ class AjaxController < ApplicationController
     # fetch older statuses
     case destination_action_type.to_s
     when 'user_timeline'
-      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).owned_by_current_user(@current_user.id)
+      @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).owned_by_current_user(@current_user.id)
     when 'home_timeline'
       @statuses = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     when 'public_timeline'
@@ -286,12 +286,12 @@ class AjaxController < ApplicationController
     case action_type
     when 'user_timeline'
       if date
-        @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_current_user(@current_user.id)
+        @statuses = Status.get_status_in_date(date,fetch_num).owned_by_current_user(@current_user.id)
       else
-        @statuses = Status.showable.get_latest_status(fetch_num).owned_by_current_user(@current_user.id)
+        @statuses = Status.get_latest_status(fetch_num).owned_by_current_user(@current_user.id)
       end
       if @statuses.present?
-        older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_current_user(@current_user.id)
+        older_status = Status.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_current_user(@current_user.id)
         @has_next = older_status.length > 0
       end
     when 'home_timeline'
