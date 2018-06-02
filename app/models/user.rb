@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 
   has_many :statuses, dependent: :destroy
-  has_many :friends, dependent: :delete_all
+  has_many :following_twitter_ids, dependent: :delete_all
   has_many :tweet_import_job_progresses, dependent: :delete_all
 
   # FIXME : this is referenced only at one point
@@ -59,7 +59,11 @@ class User < ApplicationRecord
   end
 
   def friend_user_ids
-    self.class.where(twitter_id: friends.pluck(:following_twitter_id)).pluck(:id)
+    self.class.where(twitter_id: following_twitter_ids.pluck(:following_twitter_id)).pluck(:id)
+  end
+
+  def friend_count
+    following_twitter_ids.count
   end
 
   def assign(auth)

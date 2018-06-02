@@ -1,4 +1,4 @@
-class Friend < ApplicationRecord
+class FollowingTwitterId < ApplicationRecord
   belongs_to :user
 
   class << self

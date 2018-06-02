@@ -123,7 +123,7 @@ class Status < ApplicationRecord
 
     def owned_by_friend_of(user_id)
       # used for users#home_timeline
-      friend_user_ids = Friend.get_friend_user_ids(user_id)
+      friend_user_ids = FollowingTwitterId.get_friend_user_ids(user_id)
       where('user_id IN (?)',friend_user_ids)
     end
 

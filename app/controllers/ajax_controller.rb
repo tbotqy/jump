@@ -71,14 +71,14 @@ class AjaxController < ApplicationController
     do_update = false
 
     # fetch the list of user's friends
-    existing_friend_ids = Friend.get_friend_twitter_ids(@current_user.id)
+    existing_friend_ids = FollowingTwitterId.get_friend_twitter_ids(@current_user.id)
     fresh_friend_ids = fetch_friend_list_by_twitter_id(@current_user.twitter_id)
 
     # check if update is required by comparing
     do_update = existing_friend_ids.sort! != fresh_friend_ids.sort!
 
     if do_update
-      Friend.update_list(@current_user.id,fresh_friend_ids)
+      FollowingTwitterId.update_list(@current_user.id,fresh_friend_ids)
     else
       # just update timestamp
       @current_user.update_attribute(:friends_updated_at,Time.now.to_i)
@@ -86,7 +86,7 @@ class AjaxController < ApplicationController
 
     ret = {
       :updated => do_update,
-      :friends_count => @current_user.friends.count,
+      :friends_count => @current_user.friend_count,
       :updated_date => Time.zone.at(@current_user.friends_updated_at).strftime('%F %T')
     }
 

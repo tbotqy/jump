@@ -16,7 +16,7 @@ module UsersViewObject
     end
 
     def friends_count
-      user.friends.count.to_s(:delimited)
+      user.friend_count.to_s(:delimited)
     end
 
     def profile_updated_at
