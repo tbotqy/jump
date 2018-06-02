@@ -2,7 +2,7 @@ class Status < ApplicationRecord
 
   belongs_to :user
   has_many :entities, dependent: :delete_all
-  scope :showable , -> {where(deleted_flag: false)}
+  scope :showable , -> {where(private: false)}
   scope :user_id, ->(user_ids) {where(user_id: user_ids)}
 
   # FIXME : this scope 'retweet' is only used in this class itself.
@@ -51,7 +51,7 @@ class Status < ApplicationRecord
         source: tweet.source,
         text: tweet.text,
         possibly_sensitive: tweet.possibly_sensitive? || false,
-        deleted_flag: false,
+        private: false,
         created_at: Time.now.to_i
       )
       ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?

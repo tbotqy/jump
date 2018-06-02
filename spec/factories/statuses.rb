@@ -19,7 +19,7 @@ FactoryBot.define do
     rt_created_at nil
     possibly_sensitive 0
     created_at 1345305654
-    deleted_flag 0
+    private 0
     status_id_str_reversed -111111111111111111
     twitter_created_at_reversed -1343637257
 
