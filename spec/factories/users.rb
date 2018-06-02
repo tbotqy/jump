@@ -4,6 +4,7 @@ FactoryBot.define do
     twitter_id 123456789
     name "test_name"
     screen_name "test_screen_name"
+    protected 0
     profile_image_url_https "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg"
     time_zone "Tokyo"
     utc_offset 32400

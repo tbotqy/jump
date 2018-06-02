@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 20180602175938) do
     t.bigint  "twitter_id",                              null: false
     t.string  "name",                                    null: false
     t.string  "screen_name",                             null: false
+    t.boolean "protected",               default: false, null: false
     t.string  "profile_image_url_https",                 null: false
     t.string  "time_zone"
     t.integer "utc_offset"
