@@ -238,9 +238,9 @@ class AjaxController < ApplicationController
     when 'user_timeline'
       @statuses = Status.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).owned_by_current_user(@current_user.id)
     when 'home_timeline'
-      @statuses = Status.not_private.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
+      @statuses = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     when 'public_timeline'
-      @statuses = Status.not_private.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
+      @statuses = Status.showable.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     end
 
     @statuses = @statuses.to_a
@@ -296,23 +296,23 @@ class AjaxController < ApplicationController
       end
     when 'home_timeline'
       if date
-        @statuses = Status.not_private.get_status_in_date(date,fetch_num).owned_by_friend_of(@current_user.id)
+        @statuses = Status.showable.get_status_in_date(date,fetch_num).owned_by_friend_of(@current_user.id)
       else
-        @statuses = Status.not_private.use_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@current_user.id)
+        @statuses = Status.showable.use_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@current_user.id)
       end
       if @statuses.present?
-        older_status = Status.not_private.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
+        older_status = Status.showable.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
         @has_next = older_status.length > 0
       end
     when 'public_timeline'
         if date
-          @statuses = Status.not_private.get_status_in_date(date,fetch_num)
+          @statuses = Status.showable.get_status_in_date(date,fetch_num)
         else
-          @statuses = Status.not_private.get_latest_status(fetch_num)
+          @statuses = Status.showable.get_latest_status(fetch_num)
         end
 
       if @statuses.present?
-        older_status = Status.not_private.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
+        older_status = Status.showable.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
         @has_next = older_status.length > 0
       end
 
