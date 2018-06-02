@@ -1,5 +1,4 @@
 class SessionController < ApplicationController
-  before_action :reject_protected_user!,       only: :login
   before_action :check_if_tokens_are_present!, only: :login
 
   # called when user was redirected back to our service from twitter.com
@@ -17,13 +16,6 @@ class SessionController < ApplicationController
   end
 
   private
-
-  # check whether user's twitter account is protected
-  def reject_protected_user!
-    return unless Rails.env.production?
-    return unless auth.extra.raw_info.protected
-    redirect_to controller: :pages, action: :sorry
-  end
 
   # check if tokens are acquired correctly
   def check_if_tokens_are_present!

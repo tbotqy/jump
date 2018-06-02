@@ -7,7 +7,6 @@ Jump::Application.routes.draw do
   root to: 'pages#service_top'
   get '/for_users', to: 'pages#for_users'
   get '/browsers',  to: 'pages#browsers'
-  get '/sorry',     to: 'pages#sorry'
 
   get '/auth/twitter/callback', to: 'session#login'
   get '/auth/failure',          to: 'session#logout'

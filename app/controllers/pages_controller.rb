@@ -10,7 +10,4 @@ class PagesController < ApplicationController
 
   def browsers
   end
-
-  def sorry
-  end
 end
