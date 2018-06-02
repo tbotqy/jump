@@ -6,26 +6,26 @@ class User < ApplicationRecord
 
   # FIXME : this is referenced only at one point
   # consider to delete this scope and replace with some private method
-  scope :active, lambda{where(deleted_flag: false)}
+  scope :active, lambda{where(deleted: false)}
 
   class << self
     def register_or_update!(auth)
-      user = find_or_initialize_by(twitter_id: auth.uid, deleted_flag: false)
+      user = find_or_initialize_by(twitter_id: auth.uid, deleted: false)
       user.assign(auth)
       user.save!
     end
 
     def find_active_with_auth(auth)
-      find_by(twitter_id: auth.uid, deleted_flag: false)
+      find_by(twitter_id: auth.uid, deleted: false)
     end
 
     def deactivate_account(user_id)
       # just turn the flag off, not actually delete user's status from database
-      deleted_status_count = Status.where(user_id: user_id).update_all(deleted_flag: true)
+      deleted_status_count = Status.where(user_id: user_id).update_all(deleted: true)
       # update stats
       DataSummary.decrease('active_status_count', deleted_status_count)
       # turn the flag off for users table
-      find(user_id).update_attribute(:deleted_flag, true)
+      find(user_id).update_attribute(:deleted, true)
     end
   end
 
@@ -55,7 +55,7 @@ class User < ApplicationRecord
   end
 
   def get_active_status_count
-    Status.where(user_id: self.id, deleted_flag: false).count
+    Status.where(user_id: self.id, deleted: false).count
   end
 
   def friend_user_ids
