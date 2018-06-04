@@ -1,31 +1,21 @@
 class PublishedStatusTweetedDate < ApplicationRecord
+  validates_uniqueness_of :tweeted_on
+
   class << self
-    def add_record(unixtime_created_at)
-      unless date_exists?(unixtime_created_at)
-        create(
-          posted_date: convert_time_to_date(unixtime_created_at),
-          posted_unixtime: unixtime_created_at
-        )
-      end
+    def add_from_unixtime!(unixtime)
+      date = Time.at(unixtime).utc.to_date
+      return if date_exists?(date)
+      create!(tweeted_on: date)
     end
 
-    # FIXME : make this private
-    def date_exists?(unixtime_created_at)
-      date = convert_time_to_date(unixtime_created_at)
-      where(posted_date: date).exists?
+    def all_sorted_dates
+      order(tweeted_on: :desc).pluck(:tweeted_on)
     end
 
-    def get_list
-      select(:posted_unixtime).order('posted_unixtime DESC')
-    end
+    private
 
-    def ordered_unixtimes
-      order(posted_unixtime: :desc).pluck(:posted_unixtime)
-    end
-
-    # FIXME : make this private
-    def convert_time_to_date(unixtime_created_at)
-      Time.zone.at(unixtime_created_at).strftime('%Y/%-m/%-d')
+    def date_exists?(date)
+      where(tweeted_on: date).exists?
     end
   end
 end

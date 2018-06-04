@@ -33,7 +33,7 @@ class Status < ApplicationRecord
         status.save!
 
         # save status's created_at values
-        PublishedStatusTweetedDate.add_record(tweet.created_at.to_i)
+        PublishedStatusTweetedDate.add_from_unixtime!(tweet.created_at.to_i)
       end
     end
 
@@ -60,11 +60,6 @@ class Status < ApplicationRecord
       ret
     end
 
-    def get_date_list(type_of_timeline,user_id = nil)
-      unixtime_list = get_twitter_created_at_list(type_of_timeline,user_id)
-      seriarize_unixtime_list(unixtime_list)
-    end
-
     def seriarize_unixtime_list(unixtime_list)
 
       # create 3D hash
@@ -79,19 +74,6 @@ class Status < ApplicationRecord
         ret[y.to_s][m.to_s][d.to_s] = y+"-"+m+"-"+d
       end
       ret
-    end
-
-    # FIXME : make this private
-    def get_twitter_created_at_list(type_of_timeline,user_id = nil)
-      case type_of_timeline
-      when 'user_timeline'
-        select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_current_user(user_id).order_for_timeline.pluck(:twitter_created_at_reversed)
-      when 'home_timeline'
-        select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_friend_of(user_id).order_for_date_list.pluck(:twitter_created_at_reversed)
-        #select(:twitter_created_at_reversed).uniq.owned_by_friend_of(user_id).pluck(:twitter_created_at_reversed)
-      when 'public_timeline'
-        PublishedStatusTweetedDate.get_list.pluck(:posted_unixtime)
-      end
     end
 
     # get methods for retrieving timeline

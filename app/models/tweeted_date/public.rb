@@ -15,11 +15,7 @@ class TweetedDate
     private
 
     def all_dates
-      @all_dates ||= all_unixtimes.map{|unixtime| Time.zone.at(unixtime).to_date}
-    end
-
-    def all_unixtimes
-      @all_unixtimes ||= PublishedStatusTweetedDate.ordered_unixtimes
+      @all_dates ||= PublishedStatusTweetedDate.all_sorted_dates
     end
   end
 end
