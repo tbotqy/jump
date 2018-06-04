@@ -1,4 +1,4 @@
-class PublicDate < ApplicationRecord
+class PublishedStatusTweetedDate < ApplicationRecord
   class << self
     def add_record(unixtime_created_at)
       unless date_exists?(unixtime_created_at)

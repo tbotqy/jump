@@ -19,7 +19,7 @@ class TweetedDate
     end
 
     def all_unixtimes
-      @all_unixtimes ||= PublicDate.ordered_unixtimes
+      @all_unixtimes ||= PublishedStatusTweetedDate.ordered_unixtimes
     end
   end
 end

@@ -33,7 +33,7 @@ class Status < ApplicationRecord
         status.save!
 
         # save status's created_at values
-        PublicDate.add_record(tweet.created_at.to_i)
+        PublishedStatusTweetedDate.add_record(tweet.created_at.to_i)
       end
     end
 
@@ -90,7 +90,7 @@ class Status < ApplicationRecord
         select(:twitter_created_at_reversed).group(:twitter_created_at_reversed).owned_by_friend_of(user_id).order_for_date_list.pluck(:twitter_created_at_reversed)
         #select(:twitter_created_at_reversed).uniq.owned_by_friend_of(user_id).pluck(:twitter_created_at_reversed)
       when 'public_timeline'
-        PublicDate.get_list.pluck(:posted_unixtime)
+        PublishedStatusTweetedDate.get_list.pluck(:posted_unixtime)
       end
     end
 
