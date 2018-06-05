@@ -37,29 +37,6 @@ class Status < ApplicationRecord
       end
     end
 
-    # MEMO : You might not have to keep this method public.
-    def new_by_tweet(tweet)
-      ret = new(
-        status_id_str: tweet.attrs[:id_str],
-        status_id_str_reversed: -1 * tweet.attrs[:id_str].to_i,
-        in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
-        in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
-        in_reply_to_screen_name: tweet.in_reply_to_screen_name,
-        place_full_name: tweet.place.try!(:full_name),
-        retweet_count: tweet.retweet_count,
-        twitter_created_at: Time.parse(tweet.created_at.to_s).to_i,
-        twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
-        source: tweet.source,
-        text: tweet.text,
-        possibly_sensitive: tweet.possibly_sensitive? || false,
-        private: tweet.user.protected?,
-        deleted: false,
-        created_at: Time.now.to_i
-      )
-      ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
-      ret
-    end
-
     def seriarize_unixtime_list(unixtime_list)
 
       # create 3D hash
@@ -118,6 +95,28 @@ class Status < ApplicationRecord
     # utils
 
     private
+
+    def new_by_tweet(tweet)
+      ret = new(
+        status_id_str: tweet.attrs[:id_str],
+        status_id_str_reversed: -1 * tweet.attrs[:id_str].to_i,
+        in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
+        in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
+        in_reply_to_screen_name: tweet.in_reply_to_screen_name,
+        place_full_name: tweet.place.try!(:full_name),
+        retweet_count: tweet.retweet_count,
+        twitter_created_at: Time.parse(tweet.created_at.to_s).to_i,
+        twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
+        source: tweet.source,
+        text: tweet.text,
+        possibly_sensitive: tweet.possibly_sensitive? || false,
+        private: tweet.user.protected?,
+        deleted: false,
+        created_at: Time.now.to_i
+      )
+      ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
+      ret
+    end
 
     def calc_from_and_to_of(date)
     # calculate the start/end date of given date in unixtime
