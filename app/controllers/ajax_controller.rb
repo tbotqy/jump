@@ -86,7 +86,7 @@ class AjaxController < ApplicationController
       # delete the status and turn the flag
       if Status.find(status_id).destroy
         # update stats
-        DataSummary.decrease('active_status_count',1)
+        ActiveStatusCount.decrement
 
         deleted = true
         owns = true
