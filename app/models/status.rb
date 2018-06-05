@@ -23,7 +23,7 @@ class Status < ApplicationRecord
       order(twitter_created_at_reversed: :asc).first
     end
 
-    def save_statuses!(user_id, tweets)
+    def save_tweets!(user_id, tweets)
       Array.wrap(tweets).each do |tweet|
         status          = new_by_tweet(tweet)
         status.user_id  = user_id
