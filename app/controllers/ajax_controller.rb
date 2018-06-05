@@ -155,11 +155,11 @@ class AjaxController < ApplicationController
   def switch_term
     timeline = case params[:action_type]
     when 'user_timeline'
-      Timeline::UserTimeline.new(params, @current_user)
+      Timeline::UserTimeline.new(params[:date], @current_user)
     when 'home_timeline'
-      Timeline::HomeTimeline.new(params, @current_user)
+      Timeline::HomeTimeline.new(params[:date], @current_user)
     when 'public_timeline'
-      Timline::PublicTimeline.new(params)
+      Timline::PublicTimeline.new(params[:date])
     end
 
     @has_next        = timeline.has_next?
