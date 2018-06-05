@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   # FIXME : this is referenced only at one point
   # consider to delete this scope and replace with some private method
-  scope :active, lambda{where(deleted: false)}
+  scope :active, -> {where(deleted: false)}
 
   class << self
     def register_or_update!(auth)
