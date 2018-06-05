@@ -35,36 +35,6 @@ class AjaxController < ApplicationController
     render :json => ret
   end
 
-  def check_status_update
-    # just check if status can be updated
-    ret = {}
-
-    api_params = {:user_id => @current_user.id, :count => 1, :include_rts => true}
-
-    # check if new status exists by comparing posted time
-    latest_tweet = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
-    fresh_latest_created_at = Time.zone.parse(latest_tweet[0][:attrs][:created_at].to_s).to_i
-
-    existing_latest_status = Status.not_deleted.get_latest_status(1).owned_by_current_user(@current_user.id)
-    if existing_latest_status.length > 0
-      existing_latest_created_at = existing_latest_status.pluck(:twitter_created_at)[0]
-    else
-      existing_latest_created_at = 0
-    end
-
-    # if fresh data's timestamp is greater than existing one, answers true
-    ret['do_update'] = fresh_latest_created_at.to_i > existing_latest_created_at
-
-    unless ret['do_update']
-      # mark current time
-      checked_at = Time.zone.now
-      User.find(@current_user.id).update_attribute(:statuses_updated_at,checked_at.to_i)
-      ret['checked_at'] = checked_at.strftime("%F %T")
-    end
-
-    render :json => ret
-  end
-
   def check_friend_update
     # initialization
     ret = {}
@@ -106,20 +76,6 @@ class AjaxController < ApplicationController
     render :json => ret
   end
 
-  def delete_account
-    ret = {}
-    dest_id = params[:dest_id]
-
-    # deletes all the associated data
-    if User.find(dest_id).destroy
-      ret[:result] = true
-    else
-      ret[:result] = false
-    end
-
-    render :json => ret
-  end
-
   def delete_status
     ret = {}
     status_id = params[:status_id_to_delete]
@@ -140,85 +96,6 @@ class AjaxController < ApplicationController
 
     ret[:deleted] = deleted
     ret[:owns] = owns
-
-    render :json => ret
-  end
-
-  def update_status
-    # initialization
-    count_saved = 0
-    continue = true
-    oldest_id_str = ""
-    updated_date = ""
-
-    # set basic params to retrieve tweets via api
-    api_params = { :include_rts => true, :include_entities => true }
-
-    # this is the oldest tweet's id of the statuses that have imported so far
-    max_id = params[:oldest_id_str].presence || false
-
-    if max_id
-      # set params to acquire 101 statuses that are older than the status with max_id
-      api_params[:count] = 101
-      api_params[:max_id] = max_id
-      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
-
-      # remove the newest status from result because it has been already saved in previous ajax call
-      if statuses.size > 0
-        statuses.shift
-      end
-    else
-      # acqurie 100 tweets
-      api_params[:count] = 100
-      user_twitter = create_twitter_client.user(@current_user.twitter_id)
-      statuses = create_twitter_client.user_timeline(@current_user.screen_name.to_s, api_params)
-    end
-
-    if statuses.present?
-
-      oldest_id_str = statuses.last[:attrs][:id_str]
-
-      # check latest status's tweeted time
-      existing_latest_status = Status.get_latest_status(1).owned_by_current_user(@current_user.id)[0]
-
-      if existing_latest_status
-        existing_latest_unixtime = ( Status.get_latest_status(1).owned_by_current_user(@current_user.id)[0] ).twitter_created_at
-      else
-        existing_latest_unixtime = 0
-      end
-
-      saved_count = 0
-      if existing_latest_unixtime > 0
-        # only save the tweets that have not been saved yet
-        statuses.each do |tweet|
-          if Time.parse(tweet.created_at.to_s).to_i > existing_latest_unixtime.to_i
-            Status.save_statuses!(@current_user.id,tweet)
-            saved_count += 1
-          else
-            # stop saving
-            continue = false
-          end
-        end
-
-      else
-        # just save all the tweets
-        Status.save_statuses!(@current_user.id,statuses)
-        saved_count = statuses.size
-      end
-
-    else
-      continue = false
-    end
-
-    # update stats
-    DataSummary.increase('active_status_count',saved_count)
-
-    # prepare data to return
-    ret = {}
-    ret[:continue] = continue
-    ret[:saved_count] = saved_count.to_i
-    ret[:oldest_id_str] = oldest_id_str
-    ret[:updated_date] = Time.zone.at(@current_user.updated_at.to_i).strftime('%F %T')
 
     render :json => ret
   end
