@@ -4,7 +4,7 @@ class Status < ApplicationRecord
   has_many :entities, dependent: :delete_all
   scope :not_deleted , -> {where(deleted: false)}
   scope :not_private, -> {where(private: false)}
-  scope :user_id, ->(user_ids) {where(user_id: user_ids)}
+  scope :tweeted_by, ->(user_ids) {where(user_id: user_ids)}
 
   # FIXME : this scope 'retweet' is only used in this class itself.
   # consider to delete this scope and replace with some private method.
@@ -18,7 +18,7 @@ class Status < ApplicationRecord
 
   class << self
     def ordered_tweeted_unixtimes_by_user_id(user_id)
-      user_id(user_id).order(twitter_created_at_reversed: :asc).pluck(:twitter_created_at)
+      tweeted_by(user_id).order(twitter_created_at_reversed: :asc).pluck(:twitter_created_at)
     end
 
     def newest_in_tweeted_time
@@ -57,13 +57,6 @@ class Status < ApplicationRecord
       # use status_id_str_reversed in order to search by index
       threshold_tweet_id_revered = -1*threshold_tweet_id.to_i
       includes(:user).where('statuses.status_id_str_reversed > ?',threshold_tweet_id_revered).limit(limit).order(:status_id_str_reversed)
-    end
-
-    # methods to define whose tweets to be searched
-
-    def owned_by_current_user(user_id)
-      # used for users#user_timeline
-      where(user_id: user_id)
     end
 
     def owned_by_friend_of(user_id)
