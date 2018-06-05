@@ -50,10 +50,6 @@ class User < ApplicationRecord
     tweet_import_job_progresses.unfinished.exists?
   end
 
-  def get_active_status_count
-    Status.where(user_id: self.id, deleted: false).count
-  end
-
   def friend_user_ids
     self.class.where(twitter_id: following_twitter_ids.pluck(:following_twitter_id)).pluck(:id)
   end
