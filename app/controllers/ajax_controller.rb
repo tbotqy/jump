@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class AjaxController < ApplicationController
   before_action :reject_non_ajax
   before_action :check_login, :except => ['reject_non_ajax','term_selector','read_more','switch_term']
