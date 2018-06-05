@@ -159,7 +159,7 @@ class AjaxController < ApplicationController
     when 'home_timeline'
       Timeline::HomeTimeline.new(params[:date], @current_user)
     when 'public_timeline'
-      Timline::PublicTimeline.new(params[:date])
+      Timeline::PublicTimeline.new(params[:date])
     end
 
     @has_next        = timeline.has_next?
