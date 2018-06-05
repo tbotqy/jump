@@ -37,22 +37,6 @@ class Status < ApplicationRecord
       end
     end
 
-    def seriarize_unixtime_list(unixtime_list)
-
-      # create 3D hash
-      ret = Hash.new { |hash,key| hash[key] = Hash.new { |hash,key| hash[key] = {} } }
-
-      unixtime_list.each do |t|
-        t = t.abs
-        y = Time.zone.at(t).year.to_s
-        m = Time.zone.at(t).month.to_s
-        d = Time.zone.at(t).day.to_s
-
-        ret[y.to_s][m.to_s][d.to_s] = y+"-"+m+"-"+d
-      end
-      ret
-    end
-
     # get methods for retrieving timeline
 
     def get_latest_status(limit = 10)
