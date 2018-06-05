@@ -153,54 +153,17 @@ class AjaxController < ApplicationController
   end
 
   def switch_term
-
-    action_type = params[:action_type]
-    date = params[:date]
-    date = nil if date == "notSpecified"
-    @has_next = false
-
-    fetch_num = 10
-    case action_type
+    timeline = case params[:action_type]
     when 'user_timeline'
-      if date
-        @statuses = Status.not_deleted.get_status_in_date(date,fetch_num).owned_by_current_user(@current_user.id)
-      else
-        @statuses = Status.not_deleted.get_latest_status(fetch_num).owned_by_current_user(@current_user.id)
-      end
-      if @statuses.present?
-        older_status = Status.not_deleted.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 ).owned_by_current_user(@current_user.id)
-        @has_next = older_status.length > 0
-      end
+      Timeline::UserTimeline.new(params, @current_user)
     when 'home_timeline'
-      if date
-        @statuses = Status.not_deleted.not_private.get_status_in_date(date,fetch_num).owned_by_friend_of(@current_user.id)
-      else
-        @statuses = Status.not_deleted.not_private.use_index(:idx_u_tcar_sisr_on_statuses).get_latest_status(fetch_num).owned_by_friend_of(@current_user.id)
-      end
-      if @statuses.present?
-        older_status = Status.not_deleted.not_private.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
-        @has_next = older_status.length > 0
-      end
+      Timeline::HomeTimeline.new(params, @current_user)
     when 'public_timeline'
-        if date
-          @statuses = Status.not_deleted.not_private.get_status_in_date(date,fetch_num)
-        else
-          @statuses = Status.not_deleted.not_private.get_latest_status(fetch_num)
-        end
-
-      if @statuses.present?
-        older_status = Status.not_deleted.not_private.get_older_status_by_tweet_id( @statuses.last.status_id_str,1 )
-        @has_next = older_status.length > 0
-      end
-
+      Timline::PublicTimeline.new(params)
     end
 
-    if @statuses.present?
-      # get the oldest tweet's posted timestamp
-      @oldest_tweet_id = @statuses.last.status_id_str
-    else
-      @oldest_tweet_id = false
-    end
-
+    @has_next        = timeline.has_next?
+    @statuses        = timeline.source_statuses
+    @oldest_tweet_id = timeline.oldest_tweet_id
   end
 end
