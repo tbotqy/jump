@@ -3,10 +3,6 @@ class ActiveStatusCount
   private_constant :REDIS_KEY_NAME
 
   class << self
-    def exec_count
-      REDIS.set(REDIS_KEY_NAME, Status.not_deleted.count)
-    end
-
     def increment
       REDIS.incr(REDIS_KEY_NAME)
     end
@@ -21,6 +17,10 @@ class ActiveStatusCount
 
     def current_count
       REDIS.get(REDIS_KEY_NAME).to_i
+    end
+
+    def count_up
+      REDIS.set(REDIS_KEY_NAME, Status.not_deleted.count)
     end
   end
 end
