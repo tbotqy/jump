@@ -7,6 +7,10 @@ class ActiveStatusCount
       REDIS.incr(REDIS_KEY_NAME)
     end
 
+    def increment_by(count)
+      REDIS.incrby(REDIS_KEY_NAME, count)
+    end
+
     def decrement
       REDIS.decr(REDIS_KEY_NAME)
     end
