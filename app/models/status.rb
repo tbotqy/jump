@@ -35,8 +35,6 @@ class Status < ApplicationRecord
       end
     end
 
-    # get methods for retrieving timeline
-
     def get_latest_status(limit = 10)
       includes(:user,:entities).limit(limit).order_for_timeline
     end
@@ -60,8 +58,6 @@ class Status < ApplicationRecord
     def get_active_status_count
       DataSummary.get_value_of("active_status_count")
     end
-
-    # utils
 
     private
 
