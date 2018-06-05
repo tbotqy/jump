@@ -10,10 +10,6 @@ class Status < ApplicationRecord
     tweeted_by(friend_user_ids)
   end
 
-  # FIXME : this scope 'retweet' is only used in this class itself.
-  # consider to delete this scope and replace with some private method.
-  scope :retweet , -> {where(is_retweet: true)}
-
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :order_for_date_list, ->{order("twitter_created_at_reversed ASC")}
   scope :use_index , ->(index_name) {from("#{table_name} USE INDEX(#{index_name})")}
