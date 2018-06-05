@@ -55,10 +55,6 @@ class Status < ApplicationRecord
       includes(:user).where('statuses.status_id_str_reversed > ?',threshold_tweet_id_revered).limit(limit).order(:status_id_str_reversed)
     end
 
-    def get_active_status_count
-      DataSummary.get_value_of("active_status_count")
-    end
-
     private
 
     def new_by_tweet(tweet)

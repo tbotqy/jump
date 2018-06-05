@@ -51,7 +51,7 @@ class TweetImportJob < ApplicationJob
   end
 
   def update_summary
-    DataSummary.increase('active_status_count', job_progress.count)
+    ActiveStatusCount.increment
   end
 
   def job_progress
