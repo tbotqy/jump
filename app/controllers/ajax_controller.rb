@@ -114,7 +114,7 @@ class AjaxController < ApplicationController
     when 'user_timeline'
       @statuses = Status.not_deleted.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).tweeted_by(@current_user.id)
     when 'home_timeline'
-      @statuses = Status.not_deleted.not_private.force_index(:idx_u_on_statuses).owned_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
+      @statuses = Status.not_deleted.not_private.force_index(:idx_u_on_statuses).tweeted_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     when 'public_timeline'
       @statuses = Status.not_deleted.not_private.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
     end

@@ -5,6 +5,10 @@ class Status < ApplicationRecord
   scope :not_deleted , -> {where(deleted: false)}
   scope :not_private, -> {where(private: false)}
   scope :tweeted_by, ->(user_ids) {where(user_id: user_ids)}
+  scope :tweeted_by_friend_of, ->(user_id) do
+    friend_user_ids = FollowingTwitterId.get_friend_user_ids(user_id)
+    tweeted_by(friend_user_ids)
+  end
 
   # FIXME : this scope 'retweet' is only used in this class itself.
   # consider to delete this scope and replace with some private method.
@@ -57,12 +61,6 @@ class Status < ApplicationRecord
       # use status_id_str_reversed in order to search by index
       threshold_tweet_id_revered = -1*threshold_tweet_id.to_i
       includes(:user).where('statuses.status_id_str_reversed > ?',threshold_tweet_id_revered).limit(limit).order(:status_id_str_reversed)
-    end
-
-    def owned_by_friend_of(user_id)
-      # used for users#home_timeline
-      friend_user_ids = FollowingTwitterId.get_friend_user_ids(user_id)
-      where('user_id IN (?)',friend_user_ids)
     end
 
     def get_active_status_count
