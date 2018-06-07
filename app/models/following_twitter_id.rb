@@ -1,5 +1,6 @@
 class FollowingTwitterId < ApplicationRecord
   belongs_to :user
+  scope :user_id, ->(user_id){where(user_id: user_id)}
 
   class << self
     def get_friend_user_ids(user_id)
