@@ -14,7 +14,7 @@ class FriendImportProcess
   end
 
   def import!
-    FollowingTwitterId.save_friends(@user_id, fresh_friend_twitter_ids)
+    FollowingTwitterId.register!(@user_id, fresh_friend_twitter_ids)
   end
 
   def import_if_needed!

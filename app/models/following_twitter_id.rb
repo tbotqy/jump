@@ -3,13 +3,11 @@ class FollowingTwitterId < ApplicationRecord
   scope :user_id, ->(user_id){where(user_id: user_id)}
 
   class << self
-    def save_friends(user_id, friend_ids)
-      created_at = Time.now.to_i
-
-      friend_ids.each do |fid|
-        create(
+    def register!(user_id, following_twitter_ids)
+      following_twitter_ids.each do |following_twitter_id|
+        create!(
           user_id: user_id,
-          following_twitter_id: fid,
+          following_twitter_id: following_twitter_id,
           created_at: created_at
         )
       end
