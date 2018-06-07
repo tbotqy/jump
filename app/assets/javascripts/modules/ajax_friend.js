@@ -33,31 +33,18 @@ var AjaxFriend = {
       dataType: "json",
 
       success: function(responce){
-        count = responce.friends_count;
-        updated = responce.updated;
-        updated_date = responce.updated_date;
+        area_friends.find(".count .total-num").fadeOut(function(){
+          $(this).text(responce.friends_count);
+        }).fadeIn();
 
-        // show the result
-        if(updated){
-          area_friends.find(".count .total-num").fadeOut(function(){
-            $(this).text(count);
-          }).fadeIn();
+        area_friends.find(AjaxFriend.additionalNumClassStr()).fadeOut(function(){
+          $(this).addClass("alert alert-success").text("更新しました");
+        }).fadeIn();
 
-          area_friends.find(AjaxFriend.additionalNumClassStr()).fadeOut(function(){
-            $(this).addClass("alert alert-success").text("更新しました");
-          }).fadeIn();
-
-          $("#update-friends").text("更新完了");
-        }else{
-          area_friends.find(AjaxFriend.additionalNumClassStr()).fadeOut(function(){
-            $(this).addClass("alert alert-info").text("変更はありません");
-          }).fadeIn();
-
-          $("#update-friends").text("処理終了");
-        }
+        $("#update-friends").text("更新完了");
 
         area_friends.find(".last-update .date").fadeOut(function(){
-          $(this).text(updated_date);
+          $(this).text(responce.updated_date);
         }).fadeIn();
       },
 
