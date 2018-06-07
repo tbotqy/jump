@@ -6,7 +6,7 @@ class Status < ApplicationRecord
   scope :not_private, -> {where(private: false)}
   scope :tweeted_by, ->(user_ids) {where(user_id: user_ids)}
   scope :tweeted_by_friend_of, ->(user_id) do
-    friend_user_ids = FollowingTwitterId.get_friend_user_ids(user_id)
+    friend_user_ids = User.find(user_id).friend_user_ids
     tweeted_by(friend_user_ids)
   end
 
