@@ -30,7 +30,6 @@ class FriendImportProcess
   private
 
   def difference_exists?
-    #raise [existing_friend_twitter_ids , fresh_friend_twitter_ids].join("::::")
     existing_friend_twitter_ids != fresh_friend_twitter_ids
   end
 
