@@ -7,16 +7,16 @@ module Timeline
 
     def source_statuses
       if target_date.specified?
-        Status.showable.get_status_in_date(target_date.date_string, PER_PAGE)
+        Status.not_deleted.not_private.get_status_in_date(target_date.date_string, PER_PAGE)
       else
-        Status.showable.get_latest_status(PER_PAGE)
+        Status.not_deleted.not_private.get_latest_status(PER_PAGE)
       end
     end
 
     private
 
     def older_status
-      Status.showable.get_older_status_by_tweet_id(oldest_tweet_id, 1)
+      Status.not_deleted.not_private.get_older_status_by_tweet_id(oldest_tweet_id, 1)
     end
   end
 end

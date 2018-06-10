@@ -26,14 +26,6 @@ describe User do
     end
   end
 
-  describe "#get_oldest_active_tweet_id" do
-    pending "Will be replaced with other method."
-  end
-
-  describe "#get_active_status_count" do
-    pending "Will be replaced with other method."
-  end
-
   describe "register_or_update!" do
     context "if given auth points the user not yet registered" do
       it "increases the total numer of records in users table by 1" do

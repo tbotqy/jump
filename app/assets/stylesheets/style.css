@@ -1133,24 +1133,6 @@ footer .copyright{
 }
 
 /* --------------------------------------------------
-   users.we_are_sorry
--------------------------------------------------- */
-#container-main .sorry .alert{
-  position: relative;
-  top: 200px;
-}
-
-#container-main .sorry  .alert > p,
-#container-main .sorry  .alert > h4{
-  font-size: 80%;
-  text-align: center;
-}
-
-#container-main .sorry  .alert > h4{
-  margin: 10px 0;
-}
-
-/* --------------------------------------------------
    users.user_timeline
 -------------------------------------------------- */
 #wrap-timeline-lower{

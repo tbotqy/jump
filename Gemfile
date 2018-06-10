@@ -20,6 +20,7 @@ gem 'redis-namespace'
 gem 'exception_notification'
 gem 'slack-notifier'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'activerecord-import'
 
 group :development do
   gem 'web-console', '~> 2.0'

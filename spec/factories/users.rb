@@ -4,6 +4,7 @@ FactoryBot.define do
     twitter_id 123456789
     name "test_name"
     screen_name "test_screen_name"
+    protected 0
     profile_image_url_https "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg"
     time_zone "Tokyo"
     utc_offset 32400
@@ -15,7 +16,7 @@ FactoryBot.define do
     statuses_updated_at 1482676461
     friends_updated_at 1482774672
     closed_only 0
-    deleted_flag 0
+    deleted 0
     created_at 1345305649
     updated_at 1482774672
 
