@@ -1,4 +1,5 @@
 class PublishedStatusTweetedDate < ApplicationRecord
+  # MEMO : This is ununsed class. Directly fetching Status#tweeted_on instead.
   validates_uniqueness_of :tweeted_on
 
   class << self

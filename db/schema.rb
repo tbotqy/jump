@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180605172419) do
+ActiveRecord::Schema.define(version: 20180609171415) do
 
   create_table "entities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.bigint  "status_id",              null: false
@@ -62,7 +62,10 @@ ActiveRecord::Schema.define(version: 20180605172419) do
     t.integer "deleted",                     limit: 1, default: 0,     null: false
     t.bigint  "status_id_str_reversed"
     t.integer "twitter_created_at_reversed"
+    t.date    "tweeted_on"
     t.index ["status_id_str_reversed"], name: "idx_sisr_on_statuses", using: :btree
+    t.index ["tweeted_on", "deleted", "private"], name: "index_statuses_on_tweeted_on_and_deleted_and_private", using: :btree
+    t.index ["tweeted_on"], name: "index_statuses_on_tweeted_on", using: :btree
     t.index ["twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_tcar_sisr_on_statuses", using: :btree
     t.index ["user_id", "twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_u_tcar_sisr_on_statuses", using: :btree
     t.index ["user_id", "twitter_created_at_reversed"], name: "idx_u_tcar_on_statuses", using: :btree

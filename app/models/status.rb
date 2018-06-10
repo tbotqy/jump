@@ -29,9 +29,6 @@ class Status < ApplicationRecord
         status.user_id  = user_id
         status.entities = Entity.bulk_new_by_tweet(tweet)
         status.save!
-
-        # save status's created_at values
-        PublishedStatusTweetedDate.add_from_unixtime!(tweet.created_at.to_i)
       end
     end
 
