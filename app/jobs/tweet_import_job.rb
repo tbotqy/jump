@@ -39,7 +39,7 @@ class TweetImportJob < ApplicationJob
   end
 
   def save_tweets!(tweets)
-    Status.save_statuses!(@user_id, tweets)
+    Status.save_tweets!(@user_id, tweets)
   end
 
   def record_progress!(tweet_count_additionally_imported)
@@ -51,7 +51,7 @@ class TweetImportJob < ApplicationJob
   end
 
   def update_summary
-    DataSummary.increase('active_status_count', job_progress.count)
+    ActiveStatusCount.increment_by(job_progress.count)
   end
 
   def job_progress
