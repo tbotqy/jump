@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180609171415) do
+ActiveRecord::Schema.define(version: 20180610111329) do
 
   create_table "entities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.bigint  "status_id",              null: false
@@ -31,11 +31,6 @@ ActiveRecord::Schema.define(version: 20180609171415) do
     t.bigint  "following_twitter_id", null: false
     t.integer "created_at",           null: false
     t.index ["user_id"], name: "idx_u_on_friends", using: :btree
-  end
-
-  create_table "published_status_tweeted_dates", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.date "tweeted_on", null: false
-    t.index ["tweeted_on"], name: "index_published_status_tweeted_dates_on_tweeted_on", unique: true, using: :btree
   end
 
   create_table "statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
