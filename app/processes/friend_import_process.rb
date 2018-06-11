@@ -4,8 +4,8 @@ class FriendImportProcess
       new(user_id).import!
     end
 
-    def import_if_needed!(user_id)
-      new(user_id).import_if_needed!
+    def update!(user_id)
+      new(user_id).update!
     end
   end
 
@@ -17,7 +17,7 @@ class FriendImportProcess
     FollowingTwitterId.register!(@user_id, fresh_friend_twitter_ids)
   end
 
-  def import_if_needed!
+  def update!
     if difference_exists?
       FollowingTwitterId.user_id(@user_id).delete_all
       import!

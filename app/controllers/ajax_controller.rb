@@ -35,7 +35,7 @@ class AjaxController < ApplicationController
   end
 
   def check_friend_update
-    FriendImportProcess.import_if_needed!(@current_user.id)
+    FriendImportProcess.update!(@current_user.id)
 
     ret = {
       :friends_count => @current_user.friend_count,
