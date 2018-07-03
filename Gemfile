@@ -21,6 +21,7 @@ gem 'exception_notification'
 gem 'slack-notifier'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'activerecord-import'
+gem 'whenever'
 
 group :development do
   gem 'web-console', '~> 2.0'
