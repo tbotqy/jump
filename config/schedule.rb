@@ -19,5 +19,5 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, {:error => 'log/cron/error.log', :standard => 'log/cron/standard.log'}
+set :output, 'log/crontab.log'
 set :environment, :production
