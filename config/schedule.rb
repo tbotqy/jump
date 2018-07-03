@@ -19,5 +19,9 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, {:error => 'log/cron/error.log', :standard => 'log/cron/standard.log'}
+set :output, 'log/crontab.log'
 set :environment, :production
+
+every 1.day, at: '1:00 am' do
+  runner 'ProfileUpdateJob.perform_now'
+end
