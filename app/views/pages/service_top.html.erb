@@ -1,76 +1,60 @@
-<% content_for :footer do %>
-  <%= render "shared/footer" %>
-<% end %>
-<% content_for(:title){"クリックひとつで、過去のあの日のツイートへ"} %>
-<!-- #wrap-login -->
-<div id="wrap-login">
-  <!-- .upper -->
-  <header class="upper caramel">
-    <div class="brand">
-      <h1 class="name">TwitJump</h1>
-      <span class="version">beta</span>
-    </div>
-    <div class="sub-title">
-    </div>
-  </header>
-  <!-- /.upper -->
-
-  <!-- .lower -->
-  <div class="lower caramel">
-
-    <!-- .inner -->
-    <div class="inner">
-
-      <!-- .lower .left -->
-      <div class="left">
-        <div class="remark">
-          <h3>みんなのあの日のつぶやきも</h3>
-          <div class="description">
-            <p>人々がつぶやいた事を日付を指定して振り返る事ができます</p>
-            <span class="info alert alert-info">現在の共有ツイート数 : <%= number_with_delimiter(@total_status_num,:delimiter=>",") %></span>
-          </div>
-
+<div id="service-top-container bg-light">
+  <div id="upper-container" class="container-fluid bg-caramel">
+    <div class="container pb-4">
+      <div id="brand-wrapper" class="row text-center align-items-end">
+        <div class="col">
+          <h1 class="col col-12">TwitJump</h1>
+          <p class="col col-12">クリックひとつで、過去のあの日のツイートへ</p>
         </div>
-
-        <div class="wrap-btn-public">
-          <a href="/public_timeline" class="link btn btn-primary" data-loading-text="パブリックタイムラインを見てみる">パブリックタイムラインを見てみる</a>
-        </div>
-        <script>
-        (function(){
-          $(".link.btn").click(function(){
-            $(this).button("loading");
-          });
-        })();
-        </script>
-
       </div>
-      <!-- /.lower .left -->
-
-      <!-- .lower .right -->
-      <div class="right">
-
-        <div class="remark">
-          <h3>あなたのあの日のつぶやきも</h3>
-          <div class="description">
-            <p>サインインすれば、あなたやあなたがフォローしている人たちによる<br/><span class="lower-line"> タイムラインを振り返ることもできます</span></p>
-          </div>
-        </div>
-
-        <div class="wrap-btn-auth">
-          <a href="/auth/twitter" class="link btn-auth">Sign in with Twitter</a>
-        </div>
-
-        <div class="readme">
-          <a  href="#modal-how-data-are-treated" data-toggle="modal">※ご利用に際して</a>
-        </div>
-
-      </div>
-      <!-- /.lower .right -->
-
     </div>
-    <!-- /.inner -->
   </div>
-  <!-- /.lower -->
+
+  <div id="lower-container" class="container pt-4">
+    <div class="row">
+      <div class="col col-lg-6 col-sm-12 pt-3">
+        <div class="card text-center">
+          <h5 class="card-header">みんなのあの日のつぶやきも</h5>
+          <div class="card-body">
+            <p class="card-text">人々がつぶやいた事を日付を指定して振り返る事ができます</p>
+            <p class="card-text">現在の共有ツイート数 : 12,043,657</p>
+            <a href="#" class="btn btn-primary">パブリックタイムラインを見てみる</a>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-6 col-sm-12 pt-3">
+        <div class="card text-center">
+          <h5 class="card-header">あなたのあの日のつぶやきも</h5>
+          <div class="card-body">
+            <p class="card-text">サインインすれば、あなたやあなたがフォローしている人たちによる</p>
+            <p class="card-text">タイムラインを振り返ることもできます</p>
+            <a href="#" class="btn btn-info">ツイッターアカウントで登録</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- /#wrap-login -->
-<%= render "shared/modal_how_data_are_treated" %>
+<style>
+.bg-caramel{
+  background-color: #f2eee6;
+}
+
+#service-top-container{
+  height: 1000px;
+}
+
+#brand-wrapper{
+  height: 250px;
+  font-family: "Emblema One";
+  color: rgb(122, 110, 126);
+}
+
+#upper-container{
+  box-shadow: 0 0 1px 0;
+}
+
+#lower-container{
+  height: 300px;
+}
+</style>
