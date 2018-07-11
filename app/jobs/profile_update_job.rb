@@ -5,7 +5,8 @@ class ProfileUpdateJob < ApplicationJob
     User.active.pluck(:id).each do |user_id|
       begin
         ProfileUpdateProcess.call!(user_id)
-      rescue Twitter::Error
+      rescue Twitter::Error => twitter_error
+        ProfileUpdateFailLog.log!(user_id, twitter_error.message)
         next
       rescue => e
         ExceptionNotifier.notify_exception(e)
