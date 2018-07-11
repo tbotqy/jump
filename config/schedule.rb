@@ -23,5 +23,5 @@ set :output, 'log/crontab.log'
 set :environment, :production
 
 every 1.day, at: '1:00 am' do
-  runner 'ProfileUpdateJob.perform_now'
+  rake 'update_user_profile:for_all_active_users'
 end
