@@ -2,7 +2,7 @@ class ProfileUpdateJob < ApplicationJob
   queue_as :default
 
   def perform
-    User.active.pluck(:id).each do |user_id|
+    target_user_ids.each do |user_id|
       begin
         ProfileUpdateProcess.call!(user_id)
       rescue Twitter::Error => twitter_error
@@ -13,5 +13,12 @@ class ProfileUpdateJob < ApplicationJob
         exit
       end
     end
+  end
+
+  private
+
+  def target_user_ids
+    failed_user_ids = ProfileUpdateFailLog.pluck(:user_id)
+    User.where.not(id: failed_user_ids).active.pluck(:id)
   end
 end
