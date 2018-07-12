@@ -57,7 +57,7 @@ module ApplicationHelper
     tweet_body.gsub!(/@(\w+)/,"<a href=\"https://twitter.com/\\1\" target=\"_blank\">@\\1</a>")
 
     # linkify hashtags
-    tweet_body.gsub!(/ #(\w+)/,"<a href=\"http://twitter.com/search?q=%23\\1\" target=\"_blank\"> #\\1</a>")
+    tweet_body.gsub!(/ #(\w+)/,"<a href=\"https://twitter.com/search?q=%23\\1\" target=\"_blank\"> #\\1</a>")
 
     tweet_body
   end
