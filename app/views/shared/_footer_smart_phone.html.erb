@@ -10,7 +10,7 @@
     <!-- .upper -->
     <div class="upper">
       <div class="wrap-fb pull-left">
-  <div class="fb-like" data-href="http://<%= request.host %>" data-send="false" data-show-faces="false" data-layout="button_count"></div>
+  <div class="fb-like" data-href="https://<%= request.host %>" data-send="false" data-show-faces="false" data-layout="button_count"></div>
       </div>
       <div class="wrap-twitter-tweet pull-left">
       <%= render "shared/twitter_share_button" %>
@@ -21,7 +21,7 @@
     <!-- .lower -->
     <div class="lower">
       <div class="wrap-hatena pull-left">
-  <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><%= image_tag("http://b.st-hatena.com/images/entry-button/button-only.gif", alt: "このエントリーをはてなブックマークに追加", width: 20, height: 20, style: "border: none;") %></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+  <a href="https://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><%= image_tag("https://b.st-hatena.com/images/entry-button/button-only.gif", alt: "このエントリーをはてなブックマークに追加", width: 20, height: 20, style: "border: none;") %></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
       </div>
       <div class=" wrap-gplus pull-left">
   <div class="g-plusone" data-size="medium"></div>
@@ -46,7 +46,7 @@
   </div>
   <!-- /.wrap-social-plugins -->
 
-  <p class="copyright"><a class="brand" href="http://<%= request.host %>">TwitJump</a> © <%= Time.now.year %></p>
+  <p class="copyright"><a class="brand" href="https://<%= request.host %>">TwitJump</a> © <%= Time.now.year %></p>
 
 </div>
 <!-- /#container-footer-->
