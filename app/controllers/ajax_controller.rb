@@ -83,35 +83,16 @@ class AjaxController < ApplicationController
   end
 
   def read_more
-    @oldest_tweet_id = params[:oldest_tweet_id]
-    destination_action_type = params[:destination_action_type]
+    timeline_type = TimelineType.new(params[:destination_action_type])
+    timeline = Timeline.read_more(
+                 type: timeline_type,
+                 prev_oldest_tweet_id: params[:oldest_tweet_id].to_i,
+                 timeline_owner: @current_user
+               )
 
-    @statuses = nil
-    @has_next = false
-
-    fetch_num = 10 # shows 10 statuses at one request
-    request_fetch_num = fetch_num +1 # requests +1 statuses to check if more statuses exist
-
-    # fetch older statuses
-    case destination_action_type.to_s
-    when 'user_timeline'
-      @statuses = Status.not_deleted.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num).tweeted_by(@current_user.id)
-    when 'home_timeline'
-      @statuses = Status.not_deleted.not_private.force_index(:idx_u_on_statuses).tweeted_by_friend_of(@current_user.id).get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
-    when 'public_timeline'
-      @statuses = Status.not_deleted.not_private.get_older_status_by_tweet_id(@oldest_tweet_id,request_fetch_num)
-    end
-
-    @statuses = @statuses.to_a
-
-    # check if any older status exists
-    if @statuses.count != request_fetch_num
-      @has_next = false
-    else
-      @statuses.pop
-      @has_next = true
-    end
-    @oldest_tweet_id = @statuses.last.status_id_str
+    @statuses        = timeline.source_statuses
+    @has_next        = timeline.has_next?
+    @oldest_tweet_id = timeline.oldest_tweet_id
   end
 
   def term_selector
