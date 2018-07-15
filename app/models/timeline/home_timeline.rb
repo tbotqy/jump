@@ -1,4 +1,4 @@
-module Timeline
+class Timeline
   class HomeTimeline < Base
     def title
       base_text = "#{@timeline_owner.name}(@#{@timeline_owner.screen_name}) さんのホームタイムライン"
@@ -13,6 +13,13 @@ module Timeline
           .not_deleted.not_private
           .get_status_in_date(target_date.date_string, PER_PAGE)
           .tweeted_by_friend_of(@timeline_owner.id)
+      elsif @largest_tweet_id.present?
+        # fetch statuses whose tweet_id is equal to or smaller than @largest_tweet_id
+        Status
+          .not_deleted.not_private
+          .force_index(:idx_u_on_statuses)
+          .tweeted_by_friend_of(@timeline_owner.id)
+          .get_older_status_by_tweet_id(@largest_tweet_id + 1, PER_PAGE)
       else
         # just fetch latest statuses
         Status

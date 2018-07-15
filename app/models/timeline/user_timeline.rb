@@ -1,4 +1,4 @@
-module Timeline
+class Timeline
   class UserTimeline < Base
     def title
       base_text = "#{@timeline_owner.name}(@#{@timeline_owner.screen_name}) さんのツイート"
@@ -12,6 +12,12 @@ module Timeline
         Status
           .not_deleted
           .get_status_in_date(target_date.date_string, PER_PAGE)
+          .tweeted_by(@timeline_owner.id)
+      elsif @largest_tweet_id.present?
+        # fetch statuses whose tweet_id is equal to or smaller than @largest_tweet_id
+        Status
+          .not_deleted
+          .get_older_status_by_tweet_id(@largest_tweet_id, PER_PAGE)
           .tweeted_by(@timeline_owner.id)
       else
         # just fetch latest statuses
