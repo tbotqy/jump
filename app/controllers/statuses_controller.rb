@@ -18,7 +18,7 @@ class StatusesController < ApplicationController
     # this line may be changed when the page is published to not-loggedin visitors
     @timeline_owner = @current_user
 
-    timeline = Timeline::UserTimeline.new(params[:date], @timeline_owner)
+    timeline = Timeline.user_timeline(date: params[:date], timeline_owner: @timeline_owner)
     @title           = timeline.title
     @has_next        = timeline.has_next?
     @statuses        = timeline.source_statuses
@@ -31,7 +31,7 @@ class StatusesController < ApplicationController
     # this line may be changed when the page is published to not-loggedin visitors
     @timeline_owner = @current_user
 
-    timeline = Timeline::HomeTimeline.new(params[:date], @timeline_owner)
+    timeline = Timeline.home_timeline(date: params[:date], timeline_owner: @timeline_owner)
     @title           = timeline.title
     @has_next        = timeline.has_next?
     @statuses        = timeline.source_statuses
@@ -40,7 +40,7 @@ class StatusesController < ApplicationController
 
   def public_timeline
     # TODO : reduce the number of instance vars
-    timeline         = Timeline::PublicTimeline.new(params[:date])
+    timeline         = Timeline.public_timeline(date: params[:date])
     @title           = timeline.title
     @has_next        = timeline.has_next?
     @statuses        = timeline.source_statuses

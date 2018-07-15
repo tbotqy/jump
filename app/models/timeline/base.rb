@@ -1,10 +1,11 @@
-module Timeline
+class Timeline
   class Base
     PER_PAGE = 10
     private_constant :PER_PAGE
 
-    def initialize(date_string, timeline_owner = nil)
+    def initialize(date_string: ,largest_tweet_id: ,timeline_owner: )
       @date_string = date_string
+      @largest_tweet_id = largest_tweet_id
       @timeline_owner = timeline_owner
     end
 
