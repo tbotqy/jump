@@ -116,14 +116,11 @@ class AjaxController < ApplicationController
   end
 
   def switch_term
-    timeline = case params[:action_type]
-    when 'user_timeline'
-      Timeline::UserTimeline.new(params[:date], @current_user)
-    when 'home_timeline'
-      Timeline::HomeTimeline.new(params[:date], @current_user)
-    when 'public_timeline'
-      Timeline::PublicTimeline.new(params[:date])
-    end
+    timeline = Timeline.by_type_and_date(
+                 type: TimelineType.new(params[:action_type]),
+                 date: params[:date],
+                 timeline_owner: @current_user
+               )
 
     @has_next        = timeline.has_next?
     @statuses        = timeline.source_statuses
