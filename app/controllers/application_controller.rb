@@ -84,14 +84,4 @@ class ApplicationController < ActionController::Base
   def logged_in?
     session[:user_id] ? true : false
   end
-
-  def create_twitter_client
-    user =  @current_user
-    Twitter::REST::Client.new do |config|
-      config.consumer_key       = configatron.consumer_key
-      config.consumer_secret    = configatron.consumer_secret
-      config.access_token        = user.token
-      config.access_token_secret = user.token_secret
-    end
-  end
 end
