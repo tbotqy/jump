@@ -94,17 +94,4 @@ class ApplicationController < ActionController::Base
       config.access_token_secret = user.token_secret
     end
   end
-
-  def fetch_friend_list_by_twitter_id(twitter_id)
-    # fetch friend list from twitter
-    ret = []
-    next_cursor = -1
-    while next_cursor != 0
-      # fetch all the frined ids from twitter
-      obj_friends = create_twitter_client.friend_ids(twitter_id,{:cursor => next_cursor})
-      ret += obj_friends.attrs[:ids]
-      next_cursor = obj_friends.attrs[:next_cursor]
-    end
-    ret
-  end
 end
