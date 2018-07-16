@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  # stop rejecting incompatible ua
   before_action :fetch_current_user!, :apply_user_time_zone, :reject_incompatible_ua
   rescue_from Exception, with: :render_500 if Rails.env.production?
 
