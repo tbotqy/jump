@@ -74,12 +74,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def get_current_user
-    if logged_in?
-      User.find(session[:user_id]) rescue redirect_to :controller => "logs", :action => "logout"
-    end
-  end
-
   def logged_in?
     session[:user_id] ? true : false
   end
