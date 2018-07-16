@@ -6,11 +6,7 @@ class ApplicationController < ActionController::Base
 
   # stop rejecting incompatible ua
   before_action :fetch_current_user!, :apply_user_time_zone, :reject_incompatible_ua
-
-  # handlers for exceptions
-  if Rails.env.production?
-    rescue_from Exception, :with => :render_500
-  end
+  rescue_from Exception, with: :render_500 if Rails.env.production?
 
   def render_404(exception = nil)
     @title = "ページが見つかりません"
