@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   def available_ua?
     # reject msie whose version is not 9
     ua = request.env['HTTP_USER_AGENT'].to_s
-    return false if uq.include?("MSIE") && ua.include?("9.0")
+    return false if ua.include?("MSIE") && ua.include?("9.0")
     true
   end
 
