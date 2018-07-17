@@ -28,9 +28,9 @@
     <link href='https://fonts.googleapis.com/css?family=Contrail+One|Fugaz+One|Emblema+One|Questrial|PT+Sans' rel='stylesheet' type='text/css'>
     <% if request.smart_phone? %>
      <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
-      <%= stylesheet_link_tag "smart_phone/application", :media => "all" %>
+      <%= stylesheet_link_tag "smart_phone/application", media: "all" %>
     <% else %>
-      <%= stylesheet_link_tag "application", :media => "all" %>
+      <%= stylesheet_link_tag "application", media: "all" %>
     <% end %>
     <%= javascript_include_tag "application" %>
     <%= yield :javascript_include_tags %>
