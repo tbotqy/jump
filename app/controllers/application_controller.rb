@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, with: :render_500 if Rails.env.production?
 
   def render_404(exception = nil)
-    @title = "ページが見つかりません"
     if exception
       logger.info "Rendering 404 with exception: #{exception.message}"
     end
@@ -17,7 +16,6 @@ class ApplicationController < ActionController::Base
 
   def render_500(exception = nil)
     ExceptionNotifier.notify_exception(exception, env: request.env)
-    @title = "サーバーエラー"
     if exception
       logger.info "Rendering 500 with exception: #{exception.message}"
     end
