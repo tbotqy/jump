@@ -36,13 +36,9 @@ class ApplicationController < ActionController::Base
   end
 
   def reject_incompatible_ua
-
-    if request.xhr? then return true end
-    if params[:action] == "browsers" then return true end
-
-    unless is_available_ua?
-      redirect_to :controller => "users", :action => "browsers"
-    end
+    return if request.xhr? || params[:action] == "browsers"
+    return if is_available_ua?
+    redirect_to controller: "users", action: "browsers"
   end
 
   def apply_user_time_zone
