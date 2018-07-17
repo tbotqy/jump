@@ -1,10 +1,10 @@
 class AjaxController < ApplicationController
   before_action :reject_non_ajax
-  before_action :check_login, :except => ['reject_non_ajax','term_selector','read_more','switch_term']
+  before_action :check_login, except: ['reject_non_ajax','term_selector','read_more','switch_term']
   layout false
 
   def reject_non_ajax
-    redirect_to :status => :method_not_allowed  unless request.xhr?
+    redirect_to status: :method_not_allowed unless request.xhr?
   end
 
   def check_profile_update
@@ -31,18 +31,18 @@ class AjaxController < ApplicationController
     ret[:updated_value] = updated_value
     ret[:updated_date] = Time.zone.at(@current_user.updated_at.to_i).strftime('%F %T')
 
-    render :json => ret
+    render json: ret
   end
 
   def check_friend_update
     FriendImportProcess.update!(@current_user.id)
 
     ret = {
-      :friends_count => @current_user.friend_count,
-      :updated_date => Time.zone.at(@current_user.friends_updated_at).strftime('%F %T')
+      friends_count: @current_user.friend_count,
+      updated_date: Time.zone.at(@current_user.friends_updated_at).strftime('%F %T')
     }
 
-    render :json => ret
+    render json: ret
   end
 
   def deactivate_account
@@ -55,7 +55,7 @@ class AjaxController < ApplicationController
     sleep 3
 
     ret[:deleted] = deleted
-    render :json => ret
+    render json: ret
   end
 
   def delete_status
@@ -65,7 +65,7 @@ class AjaxController < ApplicationController
     owns = false;
 
     # check if user owns the status with given status_id
-    if Status.where(:user_id => @current_user.id,:id => status_id).exists?
+    if Status.where(user_id: @current_user.id, id: status_id).exists?
       # delete the status and turn the flag
       if Status.find(status_id).destroy
         # update stats
@@ -79,7 +79,7 @@ class AjaxController < ApplicationController
     ret[:deleted] = deleted
     ret[:owns] = owns
 
-    render :json => ret
+    render json: ret
   end
 
   def read_more
