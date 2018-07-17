@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     render :file => "errors/500", :status => 500, :layout => "error", :content_type => 'text/html'
   end
 
-  def is_available_ua?
+  def available_ua?
     # reject msie whose version is not 9
     ua = request.env['HTTP_USER_AGENT'].to_s
     return false if uq.include?("MSIE") && ua.include?("9.0")
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
 
   def reject_incompatible_ua
     return if request.xhr? || params[:action] == "browsers"
-    return if is_available_ua?
+    return if available_ua?
     redirect_to controller: "users", action: "browsers"
   end
 
