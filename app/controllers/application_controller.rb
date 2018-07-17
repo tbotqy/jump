@@ -45,16 +45,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_login
-    unless logged_in?
-      redirect_to root_url
-    else
-      return true
-    end
+  def redirect_if_not_logged_in
+    redirect_to root_url unless logged_in?
   end
 
   def check_tweet_import
-    if check_login
+    if redirect_if_not_logged_in
       unless User.find(session[:user_id]).finished_initial_import?
         redirect_to :controller => "statuses", :action => "import"
       end

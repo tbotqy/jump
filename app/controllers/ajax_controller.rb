@@ -1,6 +1,6 @@
 class AjaxController < ApplicationController
   before_action :reject_non_ajax
-  before_action :check_login, :except => ['reject_non_ajax','term_selector','read_more','switch_term']
+  before_action :redirect_if_not_logged_in, :except => ['reject_non_ajax','term_selector','read_more','switch_term']
   layout false
 
   def reject_non_ajax
