@@ -3,10 +3,6 @@ class AjaxController < ApplicationController
   before_action :check_login, except: ['reject_non_ajax','term_selector','read_more','switch_term']
   layout false
 
-  def reject_non_ajax
-    redirect_to status: :method_not_allowed unless request.xhr?
-  end
-
   def check_profile_update
     ret = {}
 
@@ -125,5 +121,11 @@ class AjaxController < ApplicationController
     @has_next        = timeline.has_next?
     @statuses        = timeline.source_statuses
     @oldest_tweet_id = timeline.oldest_tweet_id
+  end
+
+  private
+
+  def reject_non_ajax
+    redirect_to status: :method_not_allowed unless request.xhr?
   end
 end
