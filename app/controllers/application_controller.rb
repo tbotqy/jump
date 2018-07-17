@@ -50,10 +50,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_tweet_import
-    if redirect_if_not_logged_in
-      unless User.find(session[:user_id]).finished_initial_import?
-        redirect_to :controller => "statuses", :action => "import"
-      end
-    end
+    return if @current_user&.finished_initial_import?
+    redirect_to controller: "statuses", action: "import"
   end
 end
