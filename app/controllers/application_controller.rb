@@ -32,15 +32,15 @@ class ApplicationController < ActionController::Base
   end
 
   def apply_user_time_zone
-    if @current_user
-      Time.zone = @current_user.time_zone
+    if current_user
+      Time.zone = current_user.time_zone
     else
       Time.zone = cookies[:timezone] || 'UTC'
     end
   end
 
   def check_tweet_import
-    return if @current_user&.finished_initial_import?
+    return if current_user&.finished_initial_import?
     redirect_to controller: "statuses", action: "import"
   end
 end

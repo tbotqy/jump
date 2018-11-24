@@ -35,7 +35,7 @@
   </head>
   <body>
     <div id="fb-root"></div>
-    <%= render "shared/global_header", {current_user: @current_user} %>
+    <%= render "shared/global_header", {current_user: current_user} %>
     <!-- #container-main -->
     <div id="container-main" class="<%= controller.action_name %>">
       <div class="inner">
