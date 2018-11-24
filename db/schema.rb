@@ -84,9 +84,9 @@ ActiveRecord::Schema.define(version: 20181124104509) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.string  "uid"
+    t.string  "uid",                                     null: false
     t.bigint  "twitter_id",                              null: false
-    t.string  "provider"
+    t.string  "provider",                                null: false
     t.string  "name",                                    null: false
     t.string  "screen_name",                             null: false
     t.boolean "protected",               default: false, null: false
