@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   class << self
     def register_or_update!(auth)
-      user = find_or_initialize_by(twitter_id: auth.uid, deleted: false)
+      user = find_or_initialize_by(uid: auth.uid, provider: auth.provider, twitter_id: auth.uid, deleted: false)
       user.assign(auth)
       user.save!
     end
