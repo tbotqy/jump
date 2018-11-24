@@ -1,7 +1,7 @@
 <!-- #container-header -->
 <header id="container-header">
   <h1><a class="brand pull-left" href="/">TwitJump</a></h1>
-  <% if logged_in? %>
+  <% if user_signed_in? %>
     <a href="#" class="btn btn-xs drop-down pull-right">
       <%= image_tag(current_user.profile_image_url_https, class: "profile-img", width:30) %>
       <i class="icon-caret-down"></i>

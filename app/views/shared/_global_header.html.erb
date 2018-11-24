@@ -10,7 +10,7 @@
           <!-- .container -->
           <div class="container">
             <a  class="brand" href="/">TwitJump</a>
-            <% if logged_in? %>
+            <% if user_signed_in? %>
               <% if current_user.finished_initial_import? %>
 
                 <!-- .nav .pull-left -->
