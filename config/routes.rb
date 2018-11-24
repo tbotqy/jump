@@ -4,6 +4,8 @@ Jump::Application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
   root to: 'pages#service_top'
   get '/for_users', to: 'pages#for_users'
   get '/browsers',  to: 'pages#browsers'
