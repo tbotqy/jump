@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  devise :omniauthable
 
   has_many :statuses, dependent: :destroy
   has_many :following_twitter_ids, dependent: :delete_all
