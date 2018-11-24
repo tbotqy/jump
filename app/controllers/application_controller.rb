@@ -39,10 +39,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_login
-    redirect_to root_url unless logged_in?
-  end
-
   def check_tweet_import
     return if @current_user&.finished_initial_import?
     redirect_to controller: "statuses", action: "import"

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :check_login
+  before_action :authenticate_user!
   before_action :check_tweet_import
 
   def setting

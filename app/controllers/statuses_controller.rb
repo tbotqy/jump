@@ -1,6 +1,6 @@
 class StatusesController < ApplicationController
 
-  before_action :check_login, except: :public_timeline
+  before_action :authenticate_user!, except: :public_timeline
   before_action :check_tweet_import, except: [:import, :public_timeline]
 
   # show the screen for operating import
