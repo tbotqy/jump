@@ -3,7 +3,7 @@
   <%= javascript_include_tag "statuses/public_timeline" %>
 <% end %>
 <% content_for :global_header do %>
-  <%= render "shared/global_header",{ :current_user => @current_user || false} %>
+  <%= render "shared/global_header",{current_user: @current_user} %>
 <% end %>
 <%= render "shared/term_selector" %>
 <%= render "shared/adsense/pc/public_timeline/above_timeline" %>
@@ -11,7 +11,7 @@
 <div id="wrap-timeline-lower">
   <!-- #wrap-main -->
   <div id="wrap-main">
-    <%= render "shared/timeline", {:statuses => @statuses, :has_next => @has_next, :current_user => @current_user, :oldest_tweet_id => @oldest_tweet_id} %>
+    <%= render "shared/timeline", {statuses: @statuses, has_next: @has_next, current_user: @current_user, oldest_tweet_id: @oldest_tweet_id} %>
   </div>
   <!-- /#wrap-main -->
 </div>

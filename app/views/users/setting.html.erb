@@ -4,7 +4,7 @@
   <%= javascript_include_tag "users/setting_pc" %>
 <% end %>
 <% content_for :global_header do %>
-  <%= render "shared/global_header",{ :current_user => @current_user} %>
+  <%= render "shared/global_header",{current_user: @current_user} %>
 <% end %>
 <% content_for :footer do %>
   <%= render "shared/footer" %>
