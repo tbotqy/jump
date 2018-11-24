@@ -19,7 +19,7 @@
       <a class="btn btn-default btn-sm link-logout" href="/logout"><i class="icon-signout"></i>ログアウト</a>
     </nav>
   <% else %>
-    <a class="btn-auth btn btn-info pull-right btn-sm" href="/auth/twitter">登録</a>
+    <%= link_to '登録', user_twitter_omniauth_authorize_path, class: 'btn-auth btn btn-info pull-right btn-sm' %>
   <% end %>
 </header>
 <!-- /#container-header -->
