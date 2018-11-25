@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include Jpmobile::ViewSelector
-  include SessionModule
 
   protect_from_forgery
 
