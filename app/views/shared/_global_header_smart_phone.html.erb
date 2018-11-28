@@ -16,7 +16,9 @@
           <% end %>
         <% end %>
       <% end %>
-      <a class="btn btn-default btn-sm link-logout" href="/logout"><i class="icon-signout"></i>ログアウト</a>
+      <%= link_to destroy_user_session_path, class: 'btn btn-default btn-sm link-logout' do %>
+        <i class="icon-signout"></i>ログアウト
+      <% end %>
     </nav>
   <% else %>
     <%= link_to '登録', user_twitter_omniauth_authorize_path, class: 'btn-auth btn btn-info pull-right btn-sm' %>

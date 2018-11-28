@@ -48,7 +48,9 @@
                       <li class="divider"></li>
                     <% end %>
                     <li>
-                      <a class="link-logout" href="/logout"><i class="icon-signout"></i>ログアウト</a>
+                      <%= link_to destroy_user_session_path, class: 'link-logout' do %>
+                        <i class="icon-signout"></i>ログアウト
+                      <% end %>
                     </li>
                   </ul>
                   <!-- /.dropdown-menu -->
