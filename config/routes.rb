@@ -14,10 +14,6 @@ Jump::Application.routes.draw do
   get '/for_users', to: 'pages#for_users'
   get '/browsers',  to: 'pages#browsers'
 
-  get '/auth/twitter/callback', to: 'session#login'
-  get '/auth/failure',          to: 'session#logout'
-  get '/logout',                to: 'session#logout'
-
   get '/users/setting', to: 'users#setting'
   get '/users/delete_account', to: 'users#delete_account'
 
