@@ -32,7 +32,7 @@ $(function(){
 
           setTimeout(
               function(){
-                    SharedFunctions.redirectToLogout();
+                    SharedFunctions.redirectToSignOut();
               }, 3000
             );
 
