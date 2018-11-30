@@ -1,7 +1,9 @@
 FactoryBot.define do
   factory :user do
 
+    uid 123456789
     twitter_id 123456789
+    provider 'twitter'
     name "test_name"
     screen_name "test_screen_name"
     protected 0
