@@ -1,6 +1,6 @@
 <!-- .wrap-each-status -->
 <div class="wrap-each-status"
-<% if logged_in? && status.user.twitter_id == current_user.twitter_id %>
+<% if user_signed_in? && status.user.twitter_id == current_user.twitter_id %>
 data-status-id="<%= status.id %>"
 <% end %>>
 <!-- .profile-image -->
@@ -57,7 +57,7 @@ data-status-id="<%= status.id %>"
     </div>
     <!-- /.pull-left -->
 
-    <% if logged_in? && status.user.twitter_id == current_user.twitter_id %>
+    <% if user_signed_in? && status.user.twitter_id == current_user.twitter_id %>
     <span class="link-delete" data-status-id="<%= status.id %>">
       <a href="#"> <i class="icon-trash"></i> </a>
     </span>

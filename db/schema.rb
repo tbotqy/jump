@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711172625) do
+ActiveRecord::Schema.define(version: 20181124104509) do
 
   create_table "entities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.bigint  "status_id",              null: false
@@ -84,7 +84,9 @@ ActiveRecord::Schema.define(version: 20180711172625) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+    t.string  "uid",                                     null: false
     t.bigint  "twitter_id",                              null: false
+    t.string  "provider",                                null: false
     t.string  "name",                                    null: false
     t.string  "screen_name",                             null: false
     t.boolean "protected",               default: false, null: false

@@ -1,10 +1,9 @@
 class ApplicationController < ActionController::Base
   include Jpmobile::ViewSelector
-  include SessionModule
 
   protect_from_forgery
 
-  before_action :fetch_current_user!, :apply_user_time_zone, :reject_incompatible_ua
+  before_action :apply_user_time_zone, :reject_incompatible_ua
   rescue_from Exception, with: :render_500 if Rails.env.production?
 
   def render_404(exception = nil)
@@ -32,19 +31,15 @@ class ApplicationController < ActionController::Base
   end
 
   def apply_user_time_zone
-    if @current_user
-      Time.zone = @current_user.time_zone
+    if current_user
+      Time.zone = current_user.time_zone
     else
       Time.zone = cookies[:timezone] || 'UTC'
     end
   end
 
-  def check_login
-    redirect_to root_url unless logged_in?
-  end
-
   def check_tweet_import
-    return if @current_user&.finished_initial_import?
+    return if current_user&.finished_initial_import?
     redirect_to controller: "statuses", action: "import"
   end
 end

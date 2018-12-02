@@ -10,7 +10,7 @@
           <!-- .container -->
           <div class="container">
             <a  class="brand" href="/">TwitJump</a>
-            <% if logged_in? %>
+            <% if user_signed_in? %>
               <% if current_user.finished_initial_import? %>
 
                 <!-- .nav .pull-left -->
@@ -48,7 +48,9 @@
                       <li class="divider"></li>
                     <% end %>
                     <li>
-                      <a class="link-logout" href="/logout"><i class="icon-signout"></i>ログアウト</a>
+                      <%= link_to destroy_user_session_path, class: 'link-sign-out' do %>
+                        <i class="icon-signout"></i>ログアウト
+                      <% end %>
                     </li>
                   </ul>
                   <!-- /.dropdown-menu -->
@@ -68,7 +70,7 @@
               <!-- /.nav .pull-left -->
               <!-- .nav .pull-right -->
               <ul id="link-auth" class="nav pull-right">
-                <li><a class="btn-auth" href="/auth/twitter">Sign in with Twitter</a></li>
+                <li><%= link_to 'Sign in with Twiter', user_twitter_omniauth_authorize_path, class: 'btn-auth' %></li>
               </ul>
               <!-- /.nav .pull-right -->
             <% end %>

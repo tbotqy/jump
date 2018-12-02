@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def logged_in?
-    session[:user_id] ? true : false
-  end
-
   def title_text
     site_name = configatron.site_name
 

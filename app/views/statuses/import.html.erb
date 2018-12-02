@@ -4,7 +4,7 @@
   <%= javascript_include_tag "statuses/import" %>
 <% end %>
 <% content_for :global_header do %>
-  <%= render "shared/global_header",{current_user: @current_user} %>
+  <%= render "shared/global_header",{current_user: current_user} %>
 <% end %>
 <% content_for :footer do %>
   <%= render "shared/footer" %>
@@ -18,9 +18,9 @@
     <h2>タイムラインを取り込む</h2>
 
     <h4>
-      <a href="https://twitter.com/<%= @current_user.screen_name %>" target="_blank">
+      <a href="https://twitter.com/<%= current_user.screen_name %>" target="_blank">
         <%= image_tag("twitter-bird-light-bgs.png", width: 30) %>
-        @<%= @current_user.screen_name %></a>のツイートを
+        @<%= current_user.screen_name %></a>のツイートを
         <button id="start-import" data-loading-text="保存中..." data-complete-text="取得完了" class="btn btn-success"><i class="icon-random icon-white"></i>取り込み開始</button><%= image_tag("ajax-loader.gif", class: "loader") %>
     </h4>
   </div>
@@ -60,7 +60,7 @@
       <div class="wrap-profile-image">
         <div class="profile-image">
           <div class="viewport">
-            <a href="https://twitter.com/<%= @current_user.screen_name %>"><%= image_tag(@current_user.profile_image_url_https, alt: @current_user.screen_name) %></a>
+            <a href="https://twitter.com/<%= current_user.screen_name %>"><%= image_tag(current_user.profile_image_url_https, alt: current_user.screen_name) %></a>
           </div>
         </div>
       </div>

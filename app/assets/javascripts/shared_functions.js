@@ -34,8 +34,8 @@ var SharedFunctions = {
       parentName.find(".loader").fadeOut();
     }
   },
-  redirectToLogout: function(){
-    location.href = "/logout";
+  redirectToSignOut: function(){
+    location.href = "/sign_out";
   },
   showDeleteCompleteMessage: function(hasBeenSucceeded, isForPC){
     var message = "";

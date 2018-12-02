@@ -39,7 +39,7 @@ $(function(){
         if(deleted){
           setTimeout(
             function(){
-              SharedFunctions.redirectToLogout();
+              SharedFunctions.redirectToSignOut();
             }, 3000
           );
         }else{
