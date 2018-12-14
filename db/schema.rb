@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181124104509) do
+ActiveRecord::Schema.define(version: 20181214005934) do
 
   create_table "entities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.bigint  "status_id",              null: false
@@ -84,27 +84,27 @@ ActiveRecord::Schema.define(version: 20181124104509) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.string  "uid",                                     null: false
-    t.bigint  "twitter_id",                              null: false
-    t.string  "provider",                                null: false
-    t.string  "name",                                    null: false
-    t.string  "screen_name",                             null: false
-    t.boolean "protected",               default: false, null: false
-    t.string  "profile_image_url_https",                 null: false
-    t.string  "time_zone"
-    t.integer "utc_offset"
-    t.integer "twitter_created_at",                      null: false
-    t.string  "lang",                                    null: false
-    t.string  "token",                                   null: false
-    t.string  "token_secret",                            null: false
-    t.boolean "finished_initial_import", default: false, null: false
-    t.integer "token_updated_at"
-    t.integer "statuses_updated_at"
-    t.integer "friends_updated_at"
-    t.boolean "closed_only",             default: false
-    t.boolean "deleted",                 default: false, null: false
-    t.integer "created_at",                              null: false
-    t.integer "updated_at",                              null: false
+    t.string   "uid",                                     null: false
+    t.bigint   "twitter_id",                              null: false
+    t.string   "provider",                                null: false
+    t.string   "name",                                    null: false
+    t.string   "screen_name",                             null: false
+    t.boolean  "protected",               default: false, null: false
+    t.string   "profile_image_url_https",                 null: false
+    t.string   "time_zone"
+    t.integer  "utc_offset"
+    t.integer  "twitter_created_at",                      null: false
+    t.string   "lang",                                    null: false
+    t.string   "token",                                   null: false
+    t.string   "token_secret",                            null: false
+    t.boolean  "finished_initial_import", default: false, null: false
+    t.integer  "token_updated_at"
+    t.integer  "statuses_updated_at"
+    t.integer  "friends_updated_at"
+    t.boolean  "closed_only",             default: false
+    t.boolean  "deleted",                 default: false, null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.index ["twitter_id"], name: "idx_ti_on_users", using: :btree
   end
 
