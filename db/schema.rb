@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181214005934) do
+ActiveRecord::Schema.define(version: 20181215143603) do
 
   create_table "entities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.bigint  "status_id",              null: false
@@ -41,30 +41,31 @@ ActiveRecord::Schema.define(version: 20181214005934) do
   end
 
   create_table "statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
-    t.bigint  "user_id",                                               null: false
-    t.bigint  "status_id_str",                                         null: false
-    t.bigint  "in_reply_to_status_id_str"
-    t.bigint  "in_reply_to_user_id_str"
-    t.string  "in_reply_to_screen_name"
-    t.string  "place_full_name"
-    t.integer "retweet_count"
-    t.integer "twitter_created_at",                                    null: false
-    t.string  "source",                                                null: false
-    t.string  "text",                                                  null: false
-    t.boolean "is_retweet",                            default: false, null: false
-    t.string  "rt_name"
-    t.string  "rt_screen_name"
-    t.string  "rt_profile_image_url_https"
-    t.string  "rt_text"
-    t.string  "rt_source"
-    t.integer "rt_created_at"
-    t.boolean "possibly_sensitive",                                    null: false
-    t.boolean "private",                               default: false, null: false
-    t.integer "created_at",                                            null: false
-    t.integer "deleted",                     limit: 1, default: 0,     null: false
-    t.bigint  "status_id_str_reversed"
-    t.integer "twitter_created_at_reversed"
-    t.date    "tweeted_on"
+    t.bigint   "user_id",                                               null: false
+    t.bigint   "status_id_str",                                         null: false
+    t.bigint   "in_reply_to_status_id_str"
+    t.bigint   "in_reply_to_user_id_str"
+    t.string   "in_reply_to_screen_name"
+    t.string   "place_full_name"
+    t.integer  "retweet_count"
+    t.integer  "twitter_created_at",                                    null: false
+    t.string   "source",                                                null: false
+    t.string   "text",                                                  null: false
+    t.boolean  "is_retweet",                            default: false, null: false
+    t.string   "rt_name"
+    t.string   "rt_screen_name"
+    t.string   "rt_profile_image_url_https"
+    t.string   "rt_text"
+    t.string   "rt_source"
+    t.integer  "rt_created_at"
+    t.boolean  "possibly_sensitive",                                    null: false
+    t.boolean  "private",                               default: false, null: false
+    t.integer  "deleted",                     limit: 1, default: 0,     null: false
+    t.bigint   "status_id_str_reversed"
+    t.integer  "twitter_created_at_reversed"
+    t.date     "tweeted_on"
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
     t.index ["status_id_str_reversed"], name: "idx_sisr_on_statuses", using: :btree
     t.index ["tweeted_on", "deleted", "private"], name: "index_statuses_on_tweeted_on_and_deleted_and_private", using: :btree
     t.index ["tweeted_on"], name: "index_statuses_on_tweeted_on", using: :btree
