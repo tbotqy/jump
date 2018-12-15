@@ -12,7 +12,7 @@ class Status < ApplicationRecord
 
   scope :order_for_timeline , ->{order("twitter_created_at_reversed ASC","status_id_str_reversed ASC")}
   scope :force_index , ->(index_name) {from("#{table_name} FORCE INDEX(#{index_name})")}
-  after_save :update_user_timestamp
+  #after_save :update_user_timestamp
 
   class << self
     def ordered_tweeted_unixtimes_by_user_id(user_id)
