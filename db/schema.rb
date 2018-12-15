@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181215003840) do
+ActiveRecord::Schema.define(version: 20181215014843) do
 
   create_table "entities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.bigint  "status_id",              null: false
@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 20181215003840) do
     t.integer  "rt_created_at"
     t.boolean  "possibly_sensitive",                                    null: false
     t.boolean  "private",                               default: false, null: false
-    t.integer  "created_at_int",                                        null: false
     t.integer  "deleted",                     limit: 1, default: 0,     null: false
     t.bigint   "status_id_str_reversed"
     t.integer  "twitter_created_at_reversed"
