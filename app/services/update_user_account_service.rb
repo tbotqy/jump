@@ -1,16 +1,20 @@
 class UpdateUserAccountService
+  private_class_method :new
+
   class << self
     def call!(target_user_id)
-      new(target_user_id).sync!
+      new(target_user_id).send(:call!)
     end
   end
+
+  private
 
   def initialize(target_user_id)
     @target_user_id = target_user_id
     fetch_fresh_data!
   end
 
-  def sync!
+  def call!
     target_user.update!(
       name:        @user_info.name,
       screen_name: @user_info.screen_name,
