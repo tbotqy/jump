@@ -1,30 +1,33 @@
-class FriendImportProcess
-  class << self
-    def initial_import!(user_id)
-      new(user_id).import!
-    end
+class PullFolloweesService
+  private_class_method :new
 
-    def update!(user_id)
-      new(user_id).update!
+  class << self
+    def call!(user_id)
+      new(user_id).send(:call!)
     end
   end
+
+  private
 
   def initialize(user_id)
     @user_id = user_id
   end
 
-  def import!
+  def call!
+    if difference_exists?
+      delete_and_register!
+    else
+      update_timestamp!
+    end
+  end
+
+  def delete_and_register!
+    FollowingTwitterId.user_id(@user_id).delete_all
     FollowingTwitterId.register!(@user_id, fresh_friend_twitter_ids)
   end
 
-  def update!
-    if difference_exists?
-      FollowingTwitterId.user_id(@user_id).delete_all
-      import!
-    else
-      # just update timestamp
-      User.find(@user_id).update_attribute(:friends_updated_at, Time.now.utc.to_i)
-    end
+  def update_timestamp!
+    User.find(@user_id).update_attribute(:friends_updated_at, Time.now.utc.to_i)
   end
 
   private
