@@ -1,4 +1,4 @@
-class ProfileUpdateProcess
+class UpdateUserAccountService
   class << self
     def call!(target_user_id)
       new(target_user_id).sync!

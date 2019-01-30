@@ -4,7 +4,7 @@ class ProfileUpdateJob < ApplicationJob
   def perform
     target_user_ids.each do |user_id|
       begin
-        ProfileUpdateProcess.call!(user_id)
+        UpdateUserAccountService.call!(user_id)
       rescue Twitter::Error => twitter_error
         ProfileUpdateFailLog.log!(user_id, twitter_error.message)
         next
