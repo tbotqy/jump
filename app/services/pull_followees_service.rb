@@ -2,7 +2,7 @@ class PullFolloweesService
   private_class_method :new
 
   class << self
-    def call!(user_id)
+    def call!(user_id:)
       new(user_id).send(:call!)
     end
   end

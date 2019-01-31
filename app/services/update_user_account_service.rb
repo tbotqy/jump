@@ -2,15 +2,15 @@ class UpdateUserAccountService
   private_class_method :new
 
   class << self
-    def call!(target_user_id)
-      new(target_user_id).send(:call!)
+    def call!(user_id:)
+      new(user_id).send(:call!)
     end
   end
 
   private
 
-  def initialize(target_user_id)
-    @target_user_id = target_user_id
+  def initialize(user_id)
+    @user_id = user_id
     fetch_fresh_data!
   end
 
@@ -29,12 +29,12 @@ class UpdateUserAccountService
   private
 
   def fetch_fresh_data!
-    client = TwitterRestClient.by_user_id(@target_user_id)
+    client = TwitterRestClient.by_user_id(@user_id)
     @user_info    = client.user
     @setting_info = client.settings
   end
 
   def target_user
-    User.find(@target_user_id)
+    User.find(@user_id)
   end
 end

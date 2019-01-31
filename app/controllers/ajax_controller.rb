@@ -31,7 +31,7 @@ class AjaxController < ApplicationController
   end
 
   def check_friend_update
-    PullFolloweesService.call!(current_user.id)
+    PullFolloweesService.call!(user_id: current_user.id)
 
     ret = {
       friends_count: current_user.friend_count,
