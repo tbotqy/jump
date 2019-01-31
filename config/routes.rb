@@ -18,9 +18,10 @@ Jump::Application.routes.draw do
   get '/users/delete_account', to: 'users#delete_account'
 
   get '/statuses/import',            to: 'statuses#import'
-  get '/user_timeline/(:date)',      to: 'statuses#user_timeline',   as: :user_timeline
-  get '/home_timeline/(:date)',      to: 'statuses#home_timeline',   as: :home_timeline
-  get '/public_timeline/(:date)',    to: 'statuses#public_timeline', as: :public_timeline
+
+  get '/user_timeline/(:year(/:month(/:day)))',   to: 'statuses#user_timeline',   as: :user_timeline
+  get '/home_timeline/(:year(/:month(/:day)))',   to: 'statuses#home_timeline',   as: :home_timeline
+  get '/public_timeline/(:year(/:month(/:day)))', to: 'statuses#public_timeline', as: :public_timeline
 
   post '/ajax/check_profile_update', to: 'ajax#check_profile_update'
   post '/ajax/check_friend_update',  to: 'ajax#check_friend_update'
