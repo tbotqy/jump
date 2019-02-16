@@ -30,7 +30,6 @@ pickle-email-*.html
 *~
 wget-log
 /config/database.yml
-/config/config.yml
 /config/secrets.yml
 start_unicorn.sh
 apply_ga_filter.html
