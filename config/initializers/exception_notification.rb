@@ -12,7 +12,7 @@ ExceptionNotification.configure do |config|
   # The ignore_if method can be invoked multiple times to add extra conditions.
   config.ignore_if do |exception, options|
      !Rails.env.production?
-   end
+  end
 
   # Notifiers =================================================================
 
