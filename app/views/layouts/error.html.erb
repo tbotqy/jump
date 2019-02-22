@@ -19,7 +19,7 @@
     <link href='https://fonts.googleapis.com/css?family=Contrail+One|Fugaz+One|Emblema+One|Questrial|PT+Sans' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag "application", media: "all" %>
     <%= csrf_meta_tags %>
-    <% if configatron.site_mode == "production" %>
+    <% if Rails.env.production? %>
       <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-28886746-8']);
