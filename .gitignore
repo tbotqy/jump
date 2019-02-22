@@ -35,3 +35,7 @@ start_unicorn.sh
 apply_ga_filter.html
 secret.yml
 /.vscode/*
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
