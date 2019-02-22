@@ -17,8 +17,8 @@ ExceptionNotification.configure do |config|
   # Notifiers =================================================================
 
   config.add_notifier :slack, {
-    webhook_url: configatron.slack_webhook_url,
-    channel: '#exceptions',
+    webhook_url: Settings.slack.webhook_url,
+    channel: Settings.slack.channel,
     additional_parameters: { mrkdwn: true }
   }
 
