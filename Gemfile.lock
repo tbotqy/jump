@@ -65,7 +65,6 @@ GEM
       activesupport (>= 3.0)
       deep_merge (~> 1.2.1)
       dry-validation (>= 0.12.2)
-    configatron (4.5.1)
     connection_pool (2.2.1)
     crass (1.0.4)
     database_cleaner (1.7.0)
@@ -328,7 +327,6 @@ DEPENDENCIES
   activerecord-import
   bootsnap (>= 1.1.0)
   config
-  configatron
   database_cleaner
   detect_timezone_rails
   devise
