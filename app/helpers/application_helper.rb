@@ -1,6 +1,6 @@
 module ApplicationHelper
   def title_text
-    site_name = configatron.site_name
+    site_name = Settings.site_name
 
     return content_for(:title) + " - " + site_name if content_for(:title)
     site_name

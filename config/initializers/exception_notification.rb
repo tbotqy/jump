@@ -12,13 +12,13 @@ ExceptionNotification.configure do |config|
   # The ignore_if method can be invoked multiple times to add extra conditions.
   config.ignore_if do |exception, options|
      !Rails.env.production?
-   end
+  end
 
   # Notifiers =================================================================
 
   config.add_notifier :slack, {
-    webhook_url: configatron.slack_webhook_url,
-    channel: '#exceptions',
+    webhook_url: Settings.slack.webhook_url,
+    channel: Settings.slack.channel,
     additional_parameters: { mrkdwn: true }
   }
 

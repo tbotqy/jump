@@ -1,5 +1,5 @@
 Jump::Application.routes.draw do
-  constraints SidekiqDashbordConstraint.new do
+  constraints SidekiqDashboardConstraint.new do
     require 'sidekiq/web'
     mount Sidekiq::Web => '/sidekiq'
   end

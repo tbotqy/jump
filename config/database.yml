@@ -1,0 +1,20 @@
+base: &base
+  adapter: mysql2
+  username: <%= ENV.fetch('DB_USER_NAME') %>
+  password: <%= ENV.fetch('DB_PASSWORD') %>
+  host: localhost
+  charset: utf8mb4
+  collation: utf8mb4_bin
+  encoding: utf8mb4
+
+development:
+  <<: *base
+  database: jump_development
+
+test:
+  <<: *base
+  database: jump_test
+
+production:
+  <<: *base
+  database: jump_production
