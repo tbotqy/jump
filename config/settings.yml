@@ -8,4 +8,4 @@ slack:
   webhook_url: <%= ENV.fetch('SLACK_WEBHOOK_URL') %>
   channel: <%= ENV.fetch('SLACK_CHANNEL') %>
 
-sidekiq_dashbord_user_id: <%= ENV.fetch('SIDEKIQ_DASHBORD_USER_ID') %>
+sidekiq_dashboard_user_id: <%= ENV.fetch('SIDEKIQ_DASHBOARD_USER_ID') %>
