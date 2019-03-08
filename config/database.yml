@@ -2,7 +2,7 @@ base: &base
   adapter: mysql2
   username: <%= ENV.fetch('DB_USER_NAME') %>
   password: <%= ENV.fetch('DB_PASSWORD') %>
-  host: localhost
+  host: <%= ENV.fetch('DB_HOST') %>
   charset: utf8mb4
   collation: utf8mb4_bin
   encoding: utf8mb4
