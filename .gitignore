@@ -29,7 +29,6 @@ pickle-email-*.html
 .#*
 *~
 wget-log
-start_unicorn.sh
 apply_ga_filter.html
 secret.yml
 /.vscode/*
