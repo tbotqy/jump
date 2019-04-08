@@ -4,6 +4,8 @@ RUN apt-get update && apt-get install -y libidn11-dev
 
 WORKDIR /app
 
+ENV TZ Asia/Tokyo
+
 COPY Gemfile /app
 COPY Gemfile.lock /app
 RUN if [ "${RAILS_ENV}" = "development" ] || [ "${RAILS_ENV}" = "test" ]; then \
