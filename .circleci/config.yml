@@ -67,9 +67,3 @@ jobs:
           destination: test-results
       - store_artifacts:
           path: coverage
-
-workflows:
-  version: 2
-  workflow:
-    jobs:
-      - build:
