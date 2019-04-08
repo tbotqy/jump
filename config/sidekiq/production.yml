@@ -1,0 +1,7 @@
+:verbose: false
+:pidfile: ./tmp/pids/sidekiq.pid
+:logfile: ./log/sidekiq.production.log
+:concurrency:  10
+:retry: 0
+:queues:
+  - default
