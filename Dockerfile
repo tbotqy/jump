@@ -4,12 +4,13 @@ RUN apt-get update && apt-get install -y libidn11-dev
 
 WORKDIR /app
 
-ARG RAILS_ENV=development
-ENV RAILS_ENV=$RAILS_ENV
-
 COPY Gemfile /app
 COPY Gemfile.lock /app
-RUN bundle install --jobs=4
+RUN if [ "${RAILS_ENV}" = "development" ] || [ "${RAILS_ENV}" = "test" ]; then \
+    bundle install --jobs 4; \
+  else \
+    bundle install --jobs 4 --without development test; \
+  fi
 
 COPY . /app
 RUN bundle exec rake assets:precompile
