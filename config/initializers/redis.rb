@@ -1,1 +1,1 @@
-REDIS ||= Redis.new(host: ENV.fetch('CACHE_HOST'), port: ENV.fetch('CACHE_PORT'))
+REDIS ||= Redis.new(host: ENV.fetch('JUMP_CACHE_HOST'), port: ENV.fetch('JUMP_CACHE_PORT'))
