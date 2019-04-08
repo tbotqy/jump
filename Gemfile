@@ -34,4 +34,5 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_bot_rails'
   gem 'database_cleaner'
+  gem "rspec_junit_formatter"
 end
