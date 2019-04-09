@@ -10,9 +10,18 @@ jobs:
       - image: circleci/ruby:2.4.3-stretch
         environment:
           RAILS_ENV: test
+          SITE_NAME: test
+          SECRET_KEY_BASE: foo
           JUMP_DB_HOST: 127.0.0.1
           JUMP_DB_USER_NAME: root
           JUMP_DB_PASSWORD: ""
+          JUMP_CACHE_HOST: 127.0.0.1
+          JUMP_CACHE_PORT: 6379
+          TWITTER_CONSUMER_KEY: foo
+          TWITTER_CONSUMER_SECRET_KEY: foo
+          SLACK_WEBHOOK_URL: foo
+          SLACK_CHANNEL: foo
+          SIDEKIQ_DASHBOARD_USER_ID: foo
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
