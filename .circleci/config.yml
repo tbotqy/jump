@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.4.3
+      - image: circleci/ruby:2.4.3-stretch
         environment:
           RAILS_ENV: test
           JUMP_DB_HOST: 127.0.0.1
@@ -31,7 +31,9 @@ jobs:
             - v1-dependencies-{{ checksum "Gemfile.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
+      - run:
+          name: install libidn11-dev for gem 'twitter-text'(which depends on idn-ruby)
+          command: sudo apt update && sudo apt -y install libidn11-dev
       - run:
           name: install dependencies
           command: |
