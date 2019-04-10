@@ -22,7 +22,7 @@ FactoryBot.define do
     private 0
     created_at 1345305654
     deleted 0
-    status_id_str_reversed -111111111111111111
-    twitter_created_at_reversed -1343637257
+    status_id_str_reversed { -111111111111111111 }
+    twitter_created_at_reversed { -1343637257 }
   end
 end
