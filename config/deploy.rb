@@ -8,6 +8,9 @@ set :rbenv_ruby, "2.4.3"
 set :sidekiq_service_name, "sidekiq_#{fetch(:application)}_#{fetch(:sidekiq_env)}"
 set :sidekiq_monit_conf_file, "#{sidekiq_service_name}.conf"
 
+
+set :format, :dot if ENV["REDUCE_CAP_LOG"]
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
