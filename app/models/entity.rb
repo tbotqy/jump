@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Entity < ApplicationRecord
   belongs_to :status
   class << self
@@ -15,13 +17,13 @@ class Entity < ApplicationRecord
 
     private
 
-    def bulk_new_by_type(type, entities)
-      entities.map do |entity|
-        ret = new(created_at: Time.zone.now.to_i)
-        ret.assign_by_type(type, entity)
-        ret
+      def bulk_new_by_type(type, entities)
+        entities.map do |entity|
+          ret = new(created_at: Time.zone.now.to_i)
+          ret.assign_by_type(type, entity)
+          ret
+        end
       end
-    end
   end
 
   def assign_by_type(type, entity)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TweetedDate
   class ByUserFriend
     def initialize(user_id)
@@ -18,16 +20,16 @@ class TweetedDate
 
     private
 
-    def tweeted_dates
-      @tweeted_dates ||= tweeted_unixtimes.map{|unixtime| Time.zone.at(unixtime).to_date}
-    end
+      def tweeted_dates
+        @tweeted_dates ||= tweeted_unixtimes.map { |unixtime| Time.zone.at(unixtime).to_date }
+      end
 
-    def tweeted_unixtimes
-      Status.ordered_tweeted_unixtimes_by_user_id(friend_user_ids)
-    end
+      def tweeted_unixtimes
+        Status.ordered_tweeted_unixtimes_by_user_id(friend_user_ids)
+      end
 
-    def friend_user_ids
-      User.find(@user_id).friend_user_ids
-    end
+      def friend_user_ids
+        User.find(@user_id).friend_user_ids
+      end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Timeline
   class HomeTimeline < Base
     def title
@@ -31,12 +33,12 @@ class Timeline
 
     private
 
-    def older_status
-      Status
-        .not_deleted.not_private
-        .force_index(:idx_u_on_statuses)
-        .get_older_status_by_tweet_id(oldest_tweet_id, 1)
-        .tweeted_by_friend_of(@timeline_owner.id)
-    end
+      def older_status
+        Status
+          .not_deleted.not_private
+          .force_index(:idx_u_on_statuses)
+          .get_older_status_by_tweet_id(oldest_tweet_id, 1)
+          .tweeted_by_friend_of(@timeline_owner.id)
+      end
   end
 end
