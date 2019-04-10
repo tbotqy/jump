@@ -17,7 +17,7 @@ services:
 
   worker:
     build: .
-    command: bundle exec sidekiq -C config/sidekiq.yml -e development
+    command: bundle exec sidekiq -e development
     restart: always
     env_file: .env
     stdin_open: true
