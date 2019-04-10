@@ -31,6 +31,12 @@ group :development do
   gem "web-console", "~> 2.0"
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "rails-erd"
+  gem "capistrano", "~> 3.11", require: false
+  gem "capistrano-rbenv", require: false
+  gem "capistrano-bundler", require: false
+  gem "capistrano-rails", require: false
+  gem "capistrano3-puma", require: false
+  gem "capistrano-sidekiq", require: false
 end
 group :development, :test do
   gem "rspec-rails", "~> 3.5"
