@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AjaxViewObject
   class TermSelector
     class MonthList::UlTag
@@ -24,9 +26,9 @@ module AjaxViewObject
 
       private
 
-      def target_months_count
-        @target_months_count ||= @target_months.count
-      end
+        def target_months_count
+          @target_months_count ||= @target_months.count
+        end
     end
   end
 end

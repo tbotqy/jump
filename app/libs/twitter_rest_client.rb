@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TwitterRestClient
   class << self
     def by_user_id(user_id)

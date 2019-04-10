@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActiveStatusCount
   REDIS_KEY_NAME = "active_status_count_#{Rails.env}"
   private_constant :REDIS_KEY_NAME

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class TweetImportJobProgress < ApplicationRecord
   belongs_to :user
 
-  scope :finished, -> {where(finished: true)}
-  scope :unfinished, -> {where(finished: false)}
+  scope :finished, -> { where(finished: true) }
+  scope :unfinished, -> { where(finished: false) }
 
   class << self
     def latest_by_user_id(user_id)

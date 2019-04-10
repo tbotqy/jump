@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include Jpmobile::ViewSelector
 
@@ -8,18 +10,18 @@ class ApplicationController < ActionController::Base
 
   def render_404(exception = nil)
     logger.info "Rendering 404 with exception: #{exception.message}" if exception
-    render file: "errors/404", status: 404, layout: "error", content_type: 'text/html'
+    render file: "errors/404", status: 404, layout: "error", content_type: "text/html"
   end
 
   def render_500(exception = nil)
     ExceptionNotifier.notify_exception(exception, env: request.env)
     logger.info "Rendering 500 with exception: #{exception.message}" if exception
-    render file: "errors/500", status: 500, layout: "error", content_type: 'text/html'
+    render file: "errors/500", status: 500, layout: "error", content_type: "text/html"
   end
 
   def available_ua?
     # reject msie whose version is not 9
-    ua = request.env['HTTP_USER_AGENT'].to_s
+    ua = request.env["HTTP_USER_AGENT"].to_s
     return false if ua.include?("MSIE") && ua.include?("9.0")
     true
   end
@@ -34,7 +36,7 @@ class ApplicationController < ActionController::Base
     if current_user
       Time.zone = current_user.time_zone
     else
-      Time.zone = cookies[:timezone] || 'UTC'
+      Time.zone = cookies[:timezone] || "UTC"
     end
   end
 

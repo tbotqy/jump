@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AjaxViewObject
   class TermSelector
     class MonthList
@@ -14,9 +16,9 @@ module AjaxViewObject
 
       private
 
-      def months_by_year
-        @target_months.group_by(&:beginning_of_year)
-      end
+        def months_by_year
+          @target_months.group_by(&:beginning_of_year)
+        end
     end
   end
 end
