@@ -32,6 +32,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 gem "activerecord-import"
 gem "whenever"
 gem "devise"
+gem "sentry-raven"
 
 group :development do
   gem "web-console", "~> 2.0"
