@@ -3,25 +3,28 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
-ahcors:
-  - restore_cache: &restore_cache
+anchors:
+  restore_cache: &restore_cache
     # Download and cache dependencies
-    keys:
-      - v1-dependencies-{{ checksum "Gemfile.lock" }}
-      # fallback to using the latest cache if no exact match is found
-      - v1-dependencies-
-  - install_dependencies: &install_dependencies
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+  install_libs_for_idn_ruby: &install_libs_for_idn_ruby
     - run:
         name: install libidn11-dev for gem 'twitter-text'(which depends on idn-ruby)
         command: sudo apt update && sudo apt -y install libidn11-dev
+  install_dependencies: &install_dependencies
     - run:
         name: install dependencies
         command: |
           bundle install --jobs=4 --retry=3 --path vendor/bundle
-  - save_cache: &save_cache
-      paths:
-        - ./vendor/bundle
-      key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+  save_cache: &save_cache
+    - save_cache:
+        paths:
+          - ./vendor/bundle
+        key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 jobs:
   build:
     docker:
@@ -38,9 +41,10 @@ jobs:
 
     steps:
       - checkout
-      *restore_cache:
-      *install_dependencies
-      *save_cache:
+      - <<: *restore_cache
+      - <<: *install_libs_for_idn_ruby
+      - <<: *install_dependencies
+      - <<: *save_cache
 
       # Database setup
       - run: bundle exec rake db:create
@@ -73,9 +77,10 @@ jobs:
       - image: circleci/ruby:2.4.3-stretch
     steps:
       - checkout
-      *restore_cache:
-      *install_dependencies
-      *save_cache:
+      - <<: *restore_cache
+      - <<: *install_libs_for_idn_ruby
+      - <<: *install_dependencies
+      - <<: *save_cache
       - run: bundle exec rubocop
 
 workflows:
