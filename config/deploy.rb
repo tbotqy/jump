@@ -5,6 +5,8 @@ set :application, "jump"
 set :repo_url, "git@github.com:tbotaq/jump.git"
 set :rbenv_ruby, "2.4.3"
 
+set :sidekiq_service_name, "sidekiq_#{fetch(:application)}_#{fetch(:sidekiq_env)}"
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
