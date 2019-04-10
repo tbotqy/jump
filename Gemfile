@@ -32,6 +32,7 @@ group :development do
   gem "listen", ">= 3.0.5", "< 3.2"
   gem "rails-erd"
   gem "capistrano", "~> 3.11", require: false
+  gem "capistrano-rbenv", require: false
 end
 group :development, :test do
   gem "rspec-rails", "~> 3.5"
