@@ -1,7 +1,3 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
 anchors:
   restore_cache: &restore_cache
@@ -28,29 +24,18 @@ anchors:
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/ruby:2.4.3-stretch
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
       - image: circleci/mysql:5.7
-
     working_directory: ~/repo
-
     steps:
       - checkout
       - <<: *restore_cache
       - <<: *install_libs_for_idn_ruby
       - <<: *install_dependencies
       - <<: *save_cache
-
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-
-      # run tests!
       - run:
           name: run tests
           command: |
@@ -62,7 +47,6 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
                             $TEST_FILES
-
       # collect reports
       - store_test_results:
           path: /tmp/test-results
@@ -71,7 +55,6 @@ jobs:
           destination: test-results
       - store_artifacts:
           path: coverage
-
   lint:
     docker:
       - image: circleci/ruby:2.4.3-stretch
