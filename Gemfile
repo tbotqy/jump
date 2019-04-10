@@ -33,6 +33,7 @@ group :development do
   gem "rails-erd"
   gem "capistrano", "~> 3.11", require: false
   gem "capistrano-rbenv", require: false
+  gem "capistrano-bundler", require: false
 end
 group :development, :test do
   gem "rspec-rails", "~> 3.5"
