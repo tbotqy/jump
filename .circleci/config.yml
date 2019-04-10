@@ -87,13 +87,4 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - lint
-      - test:
-          requires:
-            - lint
-      - deploy:
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
+      - deploy
