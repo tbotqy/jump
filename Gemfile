@@ -26,8 +26,6 @@ gem "therubyracer", platforms: :ruby
 gem "sidekiq"
 gem "sinatra", require: false
 gem "redis-namespace"
-gem "exception_notification"
-gem "slack-notifier"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "activerecord-import"
 gem "whenever"
