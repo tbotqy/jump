@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/arunagw/omniauth-twitter.git
+  remote: https://github.com/arunagw/omniauth-twitter.git
   revision: 3e9ca3593d8496bf6b59754da9ac6bcd63ed20ec
   specs:
     omniauth-twitter (1.4.0)
