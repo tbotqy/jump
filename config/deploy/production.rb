@@ -9,6 +9,12 @@
 
 server "deploy", user: "deploy", roles: %w{app web}
 
+set :puma_threads,            [5, 5]
+set :puma_workers,            2
+set :puma_preload_app,        true
+set :puma_init_active_record, true
+set :puma_daemonize,          true
+
 # role-based syntax
 # ==================
 
