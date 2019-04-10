@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AjaxViewObject
   class TermSelector
     class YearList::LiTag

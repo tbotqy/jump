@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :status do
-
     status_id_str 111111111111111111
     in_reply_to_status_id_str nil
     in_reply_to_user_id_str nil
@@ -23,6 +24,5 @@ FactoryBot.define do
     deleted 0
     status_id_str_reversed -111111111111111111
     twitter_created_at_reversed -1343637257
-
   end
 end

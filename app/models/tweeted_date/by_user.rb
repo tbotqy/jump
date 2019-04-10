@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TweetedDate
   class ByUser
     def initialize(user_id)
@@ -18,12 +20,12 @@ class TweetedDate
 
     private
 
-    def tweeted_dates
-      @tweeted_dates ||= tweeted_unixtimes.map{|unixtime| Time.zone.at(unixtime).to_date}
-    end
+      def tweeted_dates
+        @tweeted_dates ||= tweeted_unixtimes.map { |unixtime| Time.zone.at(unixtime).to_date }
+      end
 
-    def tweeted_unixtimes
-      Status.ordered_tweeted_unixtimes_by_user_id(@user_id)
-    end
+      def tweeted_unixtimes
+        Status.ordered_tweeted_unixtimes_by_user_id(@user_id)
+      end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def twitter
     User.register_or_update!(auth)
@@ -9,8 +11,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
-  # read acquired access tokens
-  def auth
-    @auth ||= request.env['omniauth.auth']
-  end
+    # read acquired access tokens
+    def auth
+      @auth ||= request.env["omniauth.auth"]
+    end
 end

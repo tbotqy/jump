@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Timeline
   class Base
     PER_PAGE = 10
     private_constant :PER_PAGE
 
-    def initialize(date_string: ,largest_tweet_id: ,timeline_owner: )
+    def initialize(date_string:, largest_tweet_id:, timeline_owner:)
       @date_string = date_string
       @largest_tweet_id = largest_tweet_id
       @timeline_owner = timeline_owner
@@ -34,65 +36,65 @@ class Timeline
 
     private
 
-    def oldest_status
-      source_statuses.try!(:last)
-    end
-
-    def older_status
-      raise "code me"
-    end
-
-    class TargetDate
-      # TODO : delegate these logics to routes
-      attr_reader :date_string
-      def initialize(date_string_from_params)
-        @date_string = date_string_from_params
+      def oldest_status
+        source_statuses.try!(:last)
       end
 
-      def specified?
-        date_string.present?
+      def older_status
+        raise "code me"
       end
 
-      def formatted_date
-        # FIXME : get rid of this
-        completed_date_string.to_date.strftime(format_pattern)
-      end
-
-      private
-
-      def year_only?
-        !month_specified? && !day_specified?
-      end
-
-      def month_specified?
-        date_string.split(/-/).size == 2
-      end
-
-      def day_specified?
-        date_string.split(/-/).size == 3
-      end
-
-      def completed_date_string
-        case
-        when day_specified?
-          date_string
-        when month_specified?
-          "#{date_string}-1"
-        when year_only?
-          "#{date_string}-1-1"
+      class TargetDate
+        # TODO : delegate these logics to routes
+        attr_reader :date_string
+        def initialize(date_string_from_params)
+          @date_string = date_string_from_params
         end
-      end
 
-      def format_pattern
-        case
-        when day_specified?
-          "%Y年%m月%-d日"
-        when month_specified?
-          "%Y年%m月"
-        when year_only?
-          "%Y年"
+        def specified?
+          date_string.present?
         end
+
+        def formatted_date
+          # FIXME : get rid of this
+          completed_date_string.to_date.strftime(format_pattern)
+        end
+
+        private
+
+          def year_only?
+            !month_specified? && !day_specified?
+          end
+
+          def month_specified?
+            date_string.split(/-/).size == 2
+          end
+
+          def day_specified?
+            date_string.split(/-/).size == 3
+          end
+
+          def completed_date_string
+            case
+            when day_specified?
+              date_string
+            when month_specified?
+              "#{date_string}-1"
+            when year_only?
+              "#{date_string}-1-1"
+            end
+          end
+
+          def format_pattern
+            case
+            when day_specified?
+              "%Y年%m月%-d日"
+            when month_specified?
+              "%Y年%m月"
+            when year_only?
+              "%Y年"
+            end
+          end
       end
-    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UsersViewObject
   class Setting
     delegate :name,        to: :user, prefix: :user
@@ -8,7 +10,7 @@ module UsersViewObject
     end
 
     def profile_image_url
-      user.profile_image_url_https.gsub(/_normal/,'_reasonably_small')
+      user.profile_image_url_https.gsub(/_normal/, "_reasonably_small")
     end
 
     def total_status_count
@@ -20,17 +22,17 @@ module UsersViewObject
     end
 
     def profile_updated_at
-      Time.zone.at(user.updated_at).strftime('%F %T')
+      Time.zone.at(user.updated_at).strftime("%F %T")
     end
 
     def friends_updated_at
       friends_updated_at = user.friends_updated_at
       return "---" if friends_updated_at.blank?
-      Time.zone.at(friends_updated_at).strftime('%F %T')
+      Time.zone.at(friends_updated_at).strftime("%F %T")
     end
 
     def statuses_updated_at
-      Time.zone.at(user.statuses_updated_at).strftime('%F %T')
+      Time.zone.at(user.statuses_updated_at).strftime("%F %T")
     end
 
     def status_import_is_working?
@@ -39,6 +41,6 @@ module UsersViewObject
 
     private
 
-    attr_reader :user # for delegate
+      attr_reader :user # for delegate
   end
 end

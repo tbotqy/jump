@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def title_text
     site_name = Settings.site_name
@@ -7,13 +9,13 @@ module ApplicationHelper
   end
 
   def calc_tweet_posted_time(dest_unixtime, force_full_format = false, show_minute = false)
-    dest_year = Time.zone.at(dest_unixtime).strftime('%Y').to_i
-    current_year = Time.zone.now.strftime('%Y').to_i
+    dest_year = Time.zone.at(dest_unixtime).strftime("%Y").to_i
+    current_year = Time.zone.now.strftime("%Y").to_i
 
-    format = current_year > dest_year || force_full_format ? '%Y年%-m月%-d日' : '%-m月%-d日'
+    format = current_year > dest_year || force_full_format ? "%Y年%-m月%-d日" : "%-m月%-d日"
     format += " %-H:%M" if show_minute
 
-    Time.zone.at(dest_unixtime).strftime( format )
+    Time.zone.at(dest_unixtime).strftime(format)
   end
 
   def calc_relative_timestamp(dest_unixtime)
@@ -31,7 +33,7 @@ module ApplicationHelper
       # obeys view behavior in twitter
       # 2.4 hour is shown as 2 hour
       # 2.5 hour is shown as 3 hour
-      return (diff/3600).round.to_s + "時間"
+      return (diff / 3600).round.to_s + "時間"
     elsif dest_unixtime.between?(1.year.ago.to_i, current_time) # less than 1 year
       return Time.zone.at(dest_unixtime).strftime("%-m月%-d日")
     else
@@ -39,21 +41,21 @@ module ApplicationHelper
     end
   end
 
-  def linkify_tweet_body(tweet_body,entities_from_api)
+  def linkify_tweet_body(tweet_body, entities_from_api)
     return tweet_body if entities_from_api.empty?
 
     # linkify urls obeying Twitter display requirements
     entities_from_api.each do |entity|
       if entity.url
-        tweet_body.gsub!(entity.url,'<a href="'+entity.url+'" target="_blank">'+entity.display_url+'</a>')
+        tweet_body.gsub!(entity.url, '<a href="' + entity.url + '" target="_blank">' + entity.display_url + "</a>")
       end
     end
 
     # linkify user mentions
-    tweet_body.gsub!(/@(\w+)/,"<a href=\"https://twitter.com/\\1\" target=\"_blank\">@\\1</a>")
+    tweet_body.gsub!(/@(\w+)/, "<a href=\"https://twitter.com/\\1\" target=\"_blank\">@\\1</a>")
 
     # linkify hashtags
-    tweet_body.gsub!(/ #(\w+)/,"<a href=\"https://twitter.com/search?q=%23\\1\" target=\"_blank\"> #\\1</a>")
+    tweet_body.gsub!(/ #(\w+)/, "<a href=\"https://twitter.com/search?q=%23\\1\" target=\"_blank\"> #\\1</a>")
 
     tweet_body
   end

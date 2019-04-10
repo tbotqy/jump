@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProfileUpdateJob < ApplicationJob
   queue_as :default
 
@@ -17,8 +19,8 @@ class ProfileUpdateJob < ApplicationJob
 
   private
 
-  def target_user_ids
-    failed_user_ids = ProfileUpdateFailLog.pluck(:user_id)
-    User.where.not(id: failed_user_ids).active.pluck(:id)
-  end
+    def target_user_ids
+      failed_user_ids = ProfileUpdateFailLog.pluck(:user_id)
+      User.where.not(id: failed_user_ids).active.pluck(:id)
+    end
 end

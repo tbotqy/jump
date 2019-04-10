@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TimelineType
   VALID_TYPE_SYMS = [:public_timeline, :user_timeline, :home_timeline]
   private_constant :VALID_TYPE_SYMS
@@ -21,8 +23,8 @@ class TimelineType
 
   private
 
-  def validate_type_sym!
-    return if VALID_TYPE_SYMS.include?(@type_sym)
-    raise "Unexpected type symbol(#{@type_sym}) given."
-  end
+    def validate_type_sym!
+      return if VALID_TYPE_SYMS.include?(@type_sym)
+      raise "Unexpected type symbol(#{@type_sym}) given."
+    end
 end

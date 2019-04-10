@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Timeline
   class PublicTimeline < Base
     def title
@@ -20,8 +22,8 @@ class Timeline
 
     private
 
-    def older_status
-      Status.not_deleted.not_private.get_older_status_by_tweet_id(oldest_tweet_id, 1)
-    end
+      def older_status
+        Status.not_deleted.not_private.get_older_status_by_tweet_id(oldest_tweet_id, 1)
+      end
   end
 end

@@ -1,5 +1,6 @@
-module Lib
+# frozen_string_literal: true
 
+module Lib
   # create the Struct which behaves like OmniAuth::AuthHash
   def auth_hash
     auth_hash_struct   = Struct.new(:uid, :provider, :credentials, :extra)
@@ -19,6 +20,6 @@ module Lib
       false
     )
 
-    auth_hash_struct.new(raw_info.id, 'twitter', credentials_struct.new("test_token", "test_secret"), extra_struct.new(raw_info))
+    auth_hash_struct.new(raw_info.id, "twitter", credentials_struct.new("test_token", "test_secret"), extra_struct.new(raw_info))
   end
 end

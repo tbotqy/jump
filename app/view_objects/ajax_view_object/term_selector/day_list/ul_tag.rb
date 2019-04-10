@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AjaxViewObject
   class TermSelector
     class DayList::UlTag
@@ -24,9 +26,9 @@ module AjaxViewObject
 
       private
 
-      def target_days_count
-        @target_days_count ||= @target_days.count
-      end
+        def target_days_count
+          @target_days_count ||= @target_days.count
+        end
     end
   end
 end

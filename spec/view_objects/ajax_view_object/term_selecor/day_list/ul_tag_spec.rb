@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 describe AjaxViewObject::TermSelector::DayList::UlTag do
   let(:ul_tag) do
@@ -8,7 +10,7 @@ describe AjaxViewObject::TermSelector::DayList::UlTag do
       link_path_without_date: link_path_without_date,
     )
   end
-  let(:target_month){Date.today.beginning_of_month}
+  let(:target_month) { Date.today.beginning_of_month }
   let(:target_days) do
     [
       Date.new(target_month.year, target_month.month, 1),
@@ -16,17 +18,17 @@ describe AjaxViewObject::TermSelector::DayList::UlTag do
       Date.new(target_month.year, target_month.month, 20)
     ]
   end
-  let(:link_path_without_date){"/user_timeline"}
+  let(:link_path_without_date) { "/user_timeline" }
 
   describe "#class_text" do
-    subject{ul_tag.class_text}
-    it{is_expected.to eq "date-#{target_month.strftime("%Y-%-m")}"}
+    subject { ul_tag.class_text }
+    it { is_expected.to eq "date-#{target_month.strftime("%Y-%-m")}" }
   end
 
   describe "#li_tags" do
-    subject{ul_tag.li_tags}
+    subject { ul_tag.li_tags }
     it "holds as much items as target_days has" do
-      is_expected.to satisfy{|subject| subject.count == target_days.count}
+      is_expected.to satisfy { |subject| subject.count == target_days.count }
     end
   end
 end

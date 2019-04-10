@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AjaxViewObject
   class TermSelector
     class YearList
@@ -19,9 +21,9 @@ module AjaxViewObject
 
       private
 
-      def target_years_count
-        @target_years_count ||= @target_years.count
-      end
+        def target_years_count
+          @target_years_count ||= @target_years.count
+        end
     end
   end
 end

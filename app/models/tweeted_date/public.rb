@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TweetedDate
   class Public
     def years
@@ -14,8 +16,8 @@ class TweetedDate
 
     private
 
-    def all_dates
-      @all_dates ||= Status.not_deleted.not_private.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
-    end
+      def all_dates
+        @all_dates ||= Status.not_deleted.not_private.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
+      end
   end
 end
