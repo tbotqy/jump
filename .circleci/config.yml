@@ -66,6 +66,23 @@ jobs:
       - <<: *save_cache
       - run: bundle exec rubocop
 
+  deploy:
+    docker:
+      - image: circleci/ruby:2.4.3-stretch
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "61:b7:07:85:a1:14:6b:d6:a5:a2:73:01:a1:ac:fb:95"
+      - <<: *restore_cache
+      - <<: *install_libs_for_idn_ruby
+      - <<: *install_dependencies
+      - <<: *save_cache
+      - run:
+          name: Deploy
+          command: bundle exec cap production deploy
+
 workflows:
   version: 2
   workflow:
@@ -74,3 +91,9 @@ workflows:
       - test:
           requires:
             - lint
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
