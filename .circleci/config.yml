@@ -22,7 +22,7 @@ anchors:
           - ./vendor/bundle
         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/ruby:2.4.3-stretch
       - image: circleci/mysql:5.7
@@ -71,6 +71,6 @@ workflows:
   workflow:
     jobs:
       - lint
-      - build:
+      - test:
           requires:
             - lint
