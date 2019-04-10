@@ -1,5 +1,6 @@
-class PagesController < ApplicationController
+# frozen_string_literal: true
 
+class PagesController < ApplicationController
   def service_top
     @total_user_num   = User.active.count
     @total_status_num = ActiveStatusCount.current_count

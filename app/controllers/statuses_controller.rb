@@ -1,5 +1,6 @@
-class StatusesController < ApplicationController
+# frozen_string_literal: true
 
+class StatusesController < ApplicationController
   before_action :authenticate_user!, except: :public_timeline
   before_action :check_tweet_import, except: [:import, :public_timeline]
 
@@ -46,5 +47,4 @@ class StatusesController < ApplicationController
     @statuses        = timeline.source_statuses
     @oldest_tweet_id = timeline.oldest_tweet_id
   end
-
 end

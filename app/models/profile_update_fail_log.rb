@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProfileUpdateFailLog < ApplicationRecord
   class << self
     def log!(user_id, error_message)

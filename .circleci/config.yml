@@ -1,63 +1,41 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
 version: 2
+anchors:
+  restore_cache: &restore_cache
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+  install_libs_for_idn_ruby: &install_libs_for_idn_ruby
+    - run:
+        name: install libidn11-dev for gem 'twitter-text'(which depends on idn-ruby)
+        command: sudo apt update && sudo apt -y install libidn11-dev
+  install_dependencies: &install_dependencies
+    - run:
+        name: install dependencies
+        command: |
+          bundle install --jobs=4 --retry=3 --path vendor/bundle
+  save_cache: &save_cache
+    - save_cache:
+        paths:
+          - ./vendor/bundle
+        key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 jobs:
-  build:
+  test:
     docker:
-      # specify the version you desire here
       - image: circleci/ruby:2.4.3-stretch
-        environment:
-          RAILS_ENV: test
-          SITE_NAME: test
-          SECRET_KEY_BASE: foo
-          JUMP_DB_HOST: 127.0.0.1
-          JUMP_DB_USER_NAME: root
-          JUMP_DB_PASSWORD: ""
-          JUMP_CACHE_HOST: 127.0.0.1
-          JUMP_CACHE_PORT: 6379
-          TWITTER_CONSUMER_KEY: foo
-          TWITTER_CONSUMER_SECRET_KEY: foo
-          SLACK_WEBHOOK_URL: foo
-          SLACK_CHANNEL: foo
-          SIDEKIQ_DASHBOARD_USER_ID: foo
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
       - image: circleci/mysql:5.7
-
     working_directory: ~/repo
-
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run:
-          name: install libidn11-dev for gem 'twitter-text'(which depends on idn-ruby)
-          command: sudo apt update && sudo apt -y install libidn11-dev
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-
+      - <<: *restore_cache
+      - <<: *install_libs_for_idn_ruby
+      - <<: *install_dependencies
+      - <<: *save_cache
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-
-      # run tests!
       - run:
           name: run tests
           command: |
@@ -69,7 +47,6 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
                             $TEST_FILES
-
       # collect reports
       - store_test_results:
           path: /tmp/test-results
@@ -78,3 +55,22 @@ jobs:
           destination: test-results
       - store_artifacts:
           path: coverage
+  lint:
+    docker:
+      - image: circleci/ruby:2.4.3-stretch
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *install_libs_for_idn_ruby
+      - <<: *install_dependencies
+      - <<: *save_cache
+      - run: bundle exec rubocop
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - lint
+      - test:
+          requires:
+            - lint

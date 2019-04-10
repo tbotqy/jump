@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class FollowingTwitterId < ApplicationRecord
   belongs_to :user
-  scope :user_id, ->(user_id){where(user_id: user_id)}
+  scope :user_id, ->(user_id) { where(user_id: user_id) }
 
   class << self
     def register!(user_id, following_twitter_ids)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AjaxViewObject
   class TermSelector
     class DayList
@@ -14,9 +16,9 @@ module AjaxViewObject
 
       private
 
-      def days_by_month
-        @target_days.group_by(&:beginning_of_month)
-      end
+        def days_by_month
+          @target_days.group_by(&:beginning_of_month)
+        end
     end
   end
 end

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
-
     uid 123456789
     twitter_id 123456789
-    provider 'twitter'
+    provider "twitter"
     name "test_name"
     screen_name "test_screen_name"
     protected 0
@@ -39,6 +40,5 @@ FactoryBot.define do
 
     trait(:with_no_status) do
     end
-
   end
 end

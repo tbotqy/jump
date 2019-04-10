@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TweetedDate
   class << self
     def by(timeline_type, user_id)
