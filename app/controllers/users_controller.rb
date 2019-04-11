@@ -10,8 +10,4 @@ class UsersController < ApplicationController
 
   def delete_account
   end
-
-  def sentry_test
-    User.foo
-  end
 end
