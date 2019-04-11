@@ -33,5 +33,8 @@ Jump::Application.routes.draw do
   post '/ajax/check_import_progress',to: 'ajax#check_import_progress'
   get  '/ajax/switch_term',          to: 'ajax#switch_term'
 
+  # TODO: revert
+  get "/users/sentry_test", to: "users#sentry_test"
+
   get  '*path', to: 'application#render_404'
 end

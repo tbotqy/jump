@@ -4,8 +4,4 @@ twitter:
   consumer_key: <%= ENV.fetch('TWITTER_CONSUMER_KEY') %>
   consumer_secret_key: <%= ENV.fetch('TWITTER_CONSUMER_SECRET_KEY') %>
 
-slack:
-  webhook_url: <%= ENV.fetch('SLACK_WEBHOOK_URL') %>
-  channel: <%= ENV.fetch('SLACK_CHANNEL') %>
-
 sidekiq_dashboard_user_id: <%= ENV.fetch('SIDEKIQ_DASHBOARD_USER_ID') %>

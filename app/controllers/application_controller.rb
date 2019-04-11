@@ -9,14 +9,19 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, with: :render_500 if Rails.env.production?
 
   def render_404(exception = nil)
-    logger.info "Rendering 404 with exception: #{exception.message}" if exception
-    render file: "errors/404", status: 404, layout: "error", content_type: "text/html"
+    render_error(exception, 404)
   end
 
   def render_500(exception = nil)
-    ExceptionNotifier.notify_exception(exception, env: request.env)
-    logger.info "Rendering 500 with exception: #{exception.message}" if exception
-    render file: "errors/500", status: 500, layout: "error", content_type: "text/html"
+    render_error(exception, 500)
+  end
+
+  def render_error(e, status_code)
+    if e.present?
+      Rails.logger.error(e.message)
+      Raven.capture_exception(e)
+    end
+    render file: "errors/#{status_code}", status: status_code, layout: "error", content_type: "text/html"
   end
 
   def available_ua?
