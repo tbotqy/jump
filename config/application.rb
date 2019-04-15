@@ -1,6 +1,8 @@
-require_relative 'boot'
+# frozen_string_literal: true
 
-require 'rails/all'
+require_relative "boot"
+
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -27,9 +29,9 @@ module Jump
     # Enable the asset pipeline
     config.assets.enabled = true
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = "1.0"
     # add fonts dir for font awesome
-    config.assets.paths << Rails.root.join("app","assets","fonts")
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.generators.template_engine = :slim
 
     config.active_job.queue_adapter = :sidekiq

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.11.0"
 
@@ -33,7 +35,7 @@ append :linked_files, ".env" # TODO: add "config/master.key" when upgrade rails
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
-append :linked_dirs, '.bundle', 'log', 'tmp/pids', 'tmp/sockets'
+append :linked_dirs, ".bundle", "log", "tmp/pids", "tmp/sockets"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
