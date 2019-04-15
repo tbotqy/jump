@@ -27,7 +27,6 @@ gem "sidekiq"
 gem "redis-namespace"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "activerecord-import"
-gem "whenever"
 gem "devise"
 gem "sentry-raven"
 
