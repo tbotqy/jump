@@ -1,1 +1,3 @@
-REDIS ||= Redis.new(host: ENV.fetch('JUMP_CACHE_HOST'), port: ENV.fetch('JUMP_CACHE_PORT'))
+# frozen_string_literal: true
+
+REDIS ||= Redis.new(host: ENV.fetch("JUMP_CACHE_HOST"), port: ENV.fetch("JUMP_CACHE_PORT"))

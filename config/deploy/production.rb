@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
@@ -53,12 +55,11 @@ set :puma_daemonize,          true
 #    auth_methods: %w(password)
 #  }
 #
-set :ssh_options, {
+set :ssh_options,
   keys: %w(~/.ssh/id_rsa),
   forward_agent: true,
   auth_methods: %w(publickey),
   port: "5001"
-}
 
 # The server-based syntax can be used to override options:
 # ------------------------------------

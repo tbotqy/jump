@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SidekiqDashboardConstraint
   def matches?(request)
     return true unless in_env_to_constraint?
@@ -6,7 +8,7 @@ class SidekiqDashboardConstraint
 
   private
 
-  def in_env_to_constraint?
-    Rails.env.production?
-  end
+    def in_env_to_constraint?
+      Rails.env.production?
+    end
 end

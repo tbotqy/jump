@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Sidekiq.configure_server do |config|
   config.redis = { url: "redis://#{ENV.fetch('JUMP_CACHE_HOST')}:#{ENV.fetch('JUMP_CACHE_PORT')}", namespace: "sidekiq_#{Rails.env}" }
 end
