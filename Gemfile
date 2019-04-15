@@ -24,7 +24,6 @@ gem "turnout"
 gem "slim-rails"
 gem "therubyracer", platforms: :ruby
 gem "sidekiq"
-gem "sinatra", require: false
 gem "redis-namespace"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "activerecord-import"
