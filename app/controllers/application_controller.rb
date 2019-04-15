@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  before_action :apply_user_time_zone, :reject_incompatible_ua
+  before_action :apply_user_time_zone
   rescue_from Exception, with: :render_500 if Rails.env.production?
 
   def render_404(exception = nil)
@@ -22,19 +22,6 @@ class ApplicationController < ActionController::Base
       Raven.capture_exception(e)
     end
     render file: "errors/#{status_code}", status: status_code, layout: "error", content_type: "text/html"
-  end
-
-  def available_ua?
-    # reject msie whose version is not 9
-    ua = request.env["HTTP_USER_AGENT"].to_s
-    return false if ua.include?("MSIE") && ua.include?("9.0")
-    true
-  end
-
-  def reject_incompatible_ua
-    return if request.xhr? || params[:action] == "browsers"
-    return if available_ua?
-    redirect_to controller: "users", action: "browsers"
   end
 
   def apply_user_time_zone

@@ -12,7 +12,6 @@ Jump::Application.routes.draw do
 
   root to: 'pages#service_top'
   get '/for_users', to: 'pages#for_users'
-  get '/browsers',  to: 'pages#browsers'
 
   get '/users/setting', to: 'users#setting'
   get '/users/delete_account', to: 'users#delete_account'
