@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require bootstrap.min
+//= require bootstrap/dist/js/bootstrap.min
 //= require detect_timezone
 //= require jquery.detect_timezone
 //= require jquery.cookie
