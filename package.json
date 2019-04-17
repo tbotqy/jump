@@ -1,0 +1,27 @@
+{
+  "name": "jump",
+  "version": "1.0.0",
+  "description": "A timeline viewer by RoR, which used to be implemented by [CakePHP](https://github.com/tbotqy/timeline-viewer).",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "eslint": "^5.16.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbotaq/jump.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbotaq/jump/issues"
+  },
+  "homepage": "https://github.com/tbotaq/jump#readme"
+}
