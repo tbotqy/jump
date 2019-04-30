@@ -17,11 +17,7 @@ class TweetedDate
     private
 
       def all_dates
-        @all_dates ||= tweeted_unixtimes.map { |unixtime| Time.zone.at(unixtime).to_date }.uniq
-      end
-
-      def tweeted_unixtimes
-        Status.not_deleted.not_private.order(twitter_created_at_reversed: :asc).pluck(:twitter_created_at)
+        @all_dates ||= Status.not_deleted.not_private.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
       end
   end
 end
