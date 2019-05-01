@@ -77,31 +77,17 @@ class Status < ApplicationRecord
         ret
       end
 
-      def calc_from_and_to_of(date)
-        # calculate the start/end date of given date in unixtime
-
-        # detect the type of given date
-        parts = date.to_s.split(/-/)
-
-        year = parts[0].to_i
-        month = parts[1].to_i
-        day = parts[2].to_i
-
-        ret = {}
-        offset_rational = Rational(Time.zone.utc_offset / 3600, 24)
-        case parts.size
-        when 1 # only year is specified
-          ret[:from] = DateTime.new(year).new_offset(offset_rational).beginning_of_year.to_i
-          ret[:to] = DateTime.new(year).new_offset(offset_rational).end_of_year.to_i
-        when 2 # year and month is specified
-          ret[:from] = DateTime.new(year, month).new_offset(offset_rational).beginning_of_month.to_i
-          ret[:to] = DateTime.new(year, month).new_offset(offset_rational).end_of_month.to_i
-        when 3 # year and month and day is specified
-          ret[:from] = DateTime.new(year, month, day).new_offset(offset_rational).beginning_of_day.to_i
-          ret[:to] = DateTime.new(year, month, day).new_offset(offset_rational).end_of_day.to_i
+      # date_string: YYYY(-M(-D))
+      def date_range_of(date_string)
+        year, month, day = date_string.split("-")
+        time = Time.zone.local(year, month, day)
+        if year && month && day
+          time.all_day
+        elsif year && month
+          time.all_month
+        elsif year
+          time.all_year
         end
-
-        ret
       end
   end
 
