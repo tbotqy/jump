@@ -13,7 +13,7 @@ class Timeline
         # fetch statuses in specified date
         Status
           .not_deleted
-          .get_status_in_date(target_date.date_string, PER_PAGE)
+          .tweeted_in(target_date.date_string, PER_PAGE)
           .tweeted_by(@timeline_owner.id)
       elsif @largest_tweet_id.present?
         # fetch statuses whose tweet_id is equal to or smaller than @largest_tweet_id

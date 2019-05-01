@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe Status do
-  describe ".get_status_in_date" do
-    subject { Status.get_status_in_date(date_string) }
+  describe ".tweeted_in" do
+    subject { Status.tweeted_in(date_string) }
     context "only year is given" do
       let(:date_string) { "2019" }
       let!(:status_2018_12_31) { create(:status, twitter_created_at: Time.zone.local(2018, 12, 31, 23, 59, 59).to_i) }

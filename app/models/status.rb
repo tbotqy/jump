@@ -38,7 +38,7 @@ class Status < ApplicationRecord
     end
 
     # date_string: YYYY(-M(-D))
-    def get_status_in_date(date_string, limit = 10)
+    def tweeted_in(date_string, limit = 10)
       # search the statuses tweeted in given date
       date_range = date_range_of(date_string)
       from = date_range.first.to_i
