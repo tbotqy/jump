@@ -37,10 +37,11 @@ class Status < ApplicationRecord
       includes(:user, :entities).limit(limit).order_for_timeline
     end
 
-    def get_status_in_date(date = "YYYY(/MM(/DD))", limit = 10)
+    # date_string: YYYY(-M(-D))
+    def get_status_in_date(date_string, limit = 10)
       # search the statuses tweeted in given date
       # calculate the beginning and ending time of given date in unixtime
-      date_range = date_range_of(date)
+      date_range = date_range_of(date_string)
       from = date_range.first.to_i
       to   = date_range.last.to_i
 
