@@ -39,10 +39,12 @@ class Status < ApplicationRecord
 
     def get_status_in_date(date = "YYYY(/MM(/DD))", limit = 10)
       # search the statuses tweeted in given date
-
       # calculate the beginning and ending time of given date in unixtime
-      date = calc_from_and_to_of(date)
-      includes(:user, :entities).where(twitter_created_at_reversed: -1 * date[:to]..-1 * date[:from]).limit(limit).order_for_timeline
+      date_range = date_range_of(date)
+      from = date_range.first.to_i
+      to   = date_range.last.to_i
+
+      includes(:user, :entities).where(twitter_created_at_reversed: (-1 * to)..(-1 * from)).limit(limit).order_for_timeline
     end
 
     def get_older_status_by_tweet_id(threshold_tweet_id, limit = 10)
