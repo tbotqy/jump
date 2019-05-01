@@ -92,8 +92,6 @@ GEM
     database_cleaner (1.7.0)
     debug_inspector (0.0.3)
     deep_merge (1.2.1)
-    detect_timezone_rails (0.0.5)
-      railties (>= 3.1)
     devise (4.5.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -380,7 +378,6 @@ DEPENDENCIES
   capistrano3-puma
   config
   database_cleaner
-  detect_timezone_rails
   devise
   dotenv-rails
   factory_bot_rails
