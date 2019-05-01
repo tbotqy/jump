@@ -9,7 +9,6 @@ FactoryBot.define do
     screen_name "test_screen_name"
     protected 0
     profile_image_url_https "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg"
-    utc_offset 32400
     twitter_created_at 1342689117
     lang "ja"
     token "hoge"

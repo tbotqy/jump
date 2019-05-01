@@ -8,7 +8,7 @@ class AjaxController < ApplicationController
   def check_profile_update
     ret = {}
 
-    values_to_check = ["name", "screen_name", "profile_image_url_https", "utc_offset", "lang"]
+    values_to_check = ["name", "screen_name", "profile_image_url_https", "lang"]
     fresh_data = TwitterRestClient.by_user_id(current_user.id).user(current_user.twitter_id)
     existing_data = current_user.attributes
 
