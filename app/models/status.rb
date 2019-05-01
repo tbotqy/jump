@@ -64,7 +64,7 @@ class Status < ApplicationRecord
           in_reply_to_screen_name: tweet.in_reply_to_screen_name,
           place_full_name: tweet.place.try!(:full_name),
           retweet_count: tweet.retweet_count,
-          tweeted_on: Time.at(tweet.created_at.to_i).utc.to_date,
+          tweeted_on: Time.at(tweet.created_at.to_i).in_time_zone.to_date,
           twitter_created_at: Time.parse(tweet.created_at.to_s).to_i,
           twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
           source: tweet.source,
