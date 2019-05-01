@@ -22,8 +22,6 @@ class UpdateUserAccountService
         screen_name: @user_info.screen_name,
         protected:   @user_info.protected?,
         profile_image_url_https: @user_info.profile_image_url_https.to_s,
-        time_zone:   @setting_info.time_zone[:name],
-        utc_offset:  @setting_info.time_zone[:utc_offset],
         lang:        @user_info.lang
       )
     end
