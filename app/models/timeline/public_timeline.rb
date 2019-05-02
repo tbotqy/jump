@@ -9,7 +9,7 @@ class Timeline
 
     def source_statuses
       if target_date.specified?
-        Status.not_deleted.not_private.get_status_in_date(target_date.date_string, PER_PAGE)
+        Status.not_deleted.not_private.tweeted_in(target_date.date_string, PER_PAGE)
       elsif @largest_tweet_id.present?
         # fetch statuses whose tweet_id is equal to or smaller than @largest_tweet_id
         Status

@@ -37,12 +37,14 @@ class Status < ApplicationRecord
       includes(:user, :entities).limit(limit).order_for_timeline
     end
 
-    def get_status_in_date(date = "YYYY(/MM(/DD))", limit = 10)
+    # date_string: YYYY(-M(-D))
+    def tweeted_in(date_string, limit = 10)
       # search the statuses tweeted in given date
+      date_range = date_range_of(date_string)
+      from = date_range.first.to_i
+      to   = date_range.last.to_i
 
-      # calculate the beginning and ending time of given date in unixtime
-      date = calc_from_and_to_of(date)
-      includes(:user, :entities).where(twitter_created_at_reversed: -1 * date[:to]..-1 * date[:from]).limit(limit).order_for_timeline
+      includes(:user, :entities).where(twitter_created_at_reversed: (-1 * to)..(-1 * from)).limit(limit).order_for_timeline
     end
 
     def get_older_status_by_tweet_id(threshold_tweet_id, limit = 10)
@@ -77,31 +79,17 @@ class Status < ApplicationRecord
         ret
       end
 
-      def calc_from_and_to_of(date)
-        # calculate the start/end date of given date in unixtime
-
-        # detect the type of given date
-        parts = date.to_s.split(/-/)
-
-        year = parts[0].to_i
-        month = parts[1].to_i
-        day = parts[2].to_i
-
-        ret = {}
-        offset_rational = Rational(Time.zone.utc_offset / 3600, 24)
-        case parts.size
-        when 1 # only year is specified
-          ret[:from] = DateTime.new(year).new_offset(offset_rational).beginning_of_year.to_i
-          ret[:to] = DateTime.new(year).new_offset(offset_rational).end_of_year.to_i
-        when 2 # year and month is specified
-          ret[:from] = DateTime.new(year, month).new_offset(offset_rational).beginning_of_month.to_i
-          ret[:to] = DateTime.new(year, month).new_offset(offset_rational).end_of_month.to_i
-        when 3 # year and month and day is specified
-          ret[:from] = DateTime.new(year, month, day).new_offset(offset_rational).beginning_of_day.to_i
-          ret[:to] = DateTime.new(year, month, day).new_offset(offset_rational).end_of_day.to_i
+      # date_string: YYYY(-M(-D))
+      def date_range_of(date_string)
+        year, month, day = date_string.split("-")
+        time = Time.zone.local(year, month, day)
+        if year && month && day
+          time.all_day
+        elsif year && month
+          time.all_month
+        elsif year
+          time.all_year
         end
-
-        ret
       end
   end
 
