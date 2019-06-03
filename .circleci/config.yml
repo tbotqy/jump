@@ -1,6 +1,7 @@
 version: 2
 anchors:
-  restore_cache: &restore_cache
+  # for backend
+  restore_backend_cache: &restore_backend_cache
     # Download and cache dependencies
     - restore_cache:
         keys:
@@ -11,28 +12,61 @@ anchors:
     - run:
         name: install libidn11-dev for gem 'twitter-text'(which depends on idn-ruby)
         command: sudo apt update && sudo apt -y install libidn11-dev
-  install_dependencies: &install_dependencies
+  install_backend_dependencies: &install_backend_dependencies
     - run:
         name: install dependencies
         command: |
-          bundle install --jobs=4 --retry=3 --path vendor/bundle
-  save_cache: &save_cache
+          bundle check || bundle install --jobs=4 --retry=3 --path vendor/bundle
+  save_backend_cache: &save_backend_cache
     - save_cache:
         paths:
           - ./vendor/bundle
         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+  # for frontend
+  frontend_docker_env: &frontend_docker_env
+    - image: circleci/node:latest
+      environment:
+        TZ: Asia/Tokyo
+  restore_frontend_cache: &restore_frontend_cache
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "frontend/yarn.lock" }}
+          - v1-dependencies-
+  install_frontend_dependencies: &install_frontend_dependencies
+    - run:
+        working_directory: "frontend"
+        command: yarn install
+  save_frontend_cache: &save_frontend_cache
+    - save_cache:
+        paths:
+          - ./frontend/node_modules
+        key: v1-dependencies-{{ checksum "frontend/yarn.lock" }}
+
 jobs:
-  test:
+  # for backend
+  lint_backend:
+    docker:
+      - image: circleci/ruby:2.4.3-stretch
+    steps:
+      - checkout
+      - <<: *restore_backend_cache
+      - <<: *install_libs_for_idn_ruby
+      - <<: *install_backend_dependencies
+      - <<: *save_backend_cache
+      - run: bundle exec rubocop
+
+  build_backend:
     docker:
       - image: circleci/ruby:2.4.3-stretch
       - image: circleci/mysql:5.7
     working_directory: ~/repo
     steps:
       - checkout
-      - <<: *restore_cache
+      - <<: *restore_backend_cache
       - <<: *install_libs_for_idn_ruby
-      - <<: *install_dependencies
-      - <<: *save_cache
+      - <<: *install_backend_dependencies
+      - <<: *save_backend_cache
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
@@ -55,16 +89,33 @@ jobs:
           destination: test-results
       - store_artifacts:
           path: coverage
-  lint:
+
+  # for frontend
+  lint_frontend:
     docker:
-      - image: circleci/ruby:2.4.3-stretch
+      - <<: *frontend_docker_env
+    working_directory: ~/repo
     steps:
       - checkout
-      - <<: *restore_cache
-      - <<: *install_libs_for_idn_ruby
-      - <<: *install_dependencies
-      - <<: *save_cache
-      - run: bundle exec rubocop
+      - <<: *restore_frontend_cache
+      - <<: *install_frontend_dependencies
+      - <<: *save_frontend_cache
+      - run:
+          working_directory: "frontend"
+          command: yarn lint
+
+  build_frontend:
+    docker:
+      - <<: *frontend_docker_env
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - <<: *restore_frontend_cache
+      - <<: *install_frontend_dependencies
+      - <<: *save_frontend_cache
+      - run:
+          working_directory: "frontend"
+          command: yarn build
 
   deploy:
     docker:
@@ -75,10 +126,10 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "61:b7:07:85:a1:14:6b:d6:a5:a2:73:01:a1:ac:fb:95"
-      - <<: *restore_cache
+      - <<: *restore_backend_cache
       - <<: *install_libs_for_idn_ruby
-      - <<: *install_dependencies
-      - <<: *save_cache
+      - <<: *install_backend_dependencies
+      - <<: *save_backend_cache
       - run:
           name: Deploy
           command: bundle exec cap production deploy
@@ -87,15 +138,21 @@ jobs:
 
 workflows:
   version: 2
-  workflow:
+  frontend:
     jobs:
-      - lint
-      - test:
+      - lint_frontend
+      - build_frontend:
           requires:
-            - lint
+            - lint_frontend
+  backend:
+    jobs:
+      - lint_backend
+      - build_backend:
+          requires:
+            - lint_backend
       - deploy:
           requires:
-            - test
+            - build_backend
           filters:
             branches:
               only: master
