@@ -44,7 +44,18 @@ anchors:
 
 jobs:
   # for backend
-  test_backend:
+  lint_backend:
+    docker:
+      - image: circleci/ruby:2.4.3-stretch
+    steps:
+      - checkout
+      - <<: *restore_backend_cache
+      - <<: *install_libs_for_idn_ruby
+      - <<: *install_backend_dependencies
+      - <<: *save_backend_cache
+      - run: bundle exec rubocop
+
+  build_backend:
     docker:
       - image: circleci/ruby:2.4.3-stretch
       - image: circleci/mysql:5.7
@@ -77,16 +88,6 @@ jobs:
           destination: test-results
       - store_artifacts:
           path: coverage
-  lint_backend:
-    docker:
-      - image: circleci/ruby:2.4.3-stretch
-    steps:
-      - checkout
-      - <<: *restore_backend_cache
-      - <<: *install_libs_for_idn_ruby
-      - <<: *install_backend_dependencies
-      - <<: *save_backend_cache
-      - run: bundle exec rubocop
 
   # for frontend
   lint_frontend:
@@ -101,6 +102,7 @@ jobs:
       - run:
           working_directory: "frontend"
           command: yarn lint
+
   build_frontend:
     docker:
       - <<: *frontend_docker_env
@@ -144,12 +146,12 @@ workflows:
   backend:
     jobs:
       - lint_backend
-      - test_backend:
+      - build_backend:
           requires:
             - lint_backend
       - deploy:
           requires:
-            - test_backend
+            - build_backend
           filters:
             branches:
               only: master
