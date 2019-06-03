@@ -9,7 +9,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server ENV.fetch("DEPLOY_TO_IP"), user: "deploy", roles: %w{app web}
+server ENV.fetch("DEPLOY_TO_IP"), user: "deploy", roles: %w{app web db}
 
 set :puma_threads,            [5, 5]
 set :puma_workers,            2
