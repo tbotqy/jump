@@ -10,7 +10,6 @@ FactoryBot.define do
     protected 0
     profile_image_url_https "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg"
     twitter_created_at 1342689117
-    lang "ja"
     token "hoge"
     token_secret "fuga"
     token_updated_at 1

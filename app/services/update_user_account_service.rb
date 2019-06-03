@@ -21,8 +21,7 @@ class UpdateUserAccountService
         name:        @user_info.name,
         screen_name: @user_info.screen_name,
         protected:   @user_info.protected?,
-        profile_image_url_https: @user_info.profile_image_url_https.to_s,
-        lang:        @user_info.lang
+        profile_image_url_https: @user_info.profile_image_url_https.to_s
       )
     end
 
