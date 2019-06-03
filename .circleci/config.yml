@@ -21,6 +21,27 @@ anchors:
         paths:
           - ./vendor/bundle
         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+  # for frontend
+  frontend_docker_env: &frontend_docker_env
+    - image: circleci/node:latest
+      environment:
+        TZ: Asia/Tokyo
+  restore_frontend_cache: &restore_frontend_cache
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "frontend/yarn.lock" }}
+          - v1-dependencies-
+  install_frontend_dependencies: &install_frontend_dependencies
+    - run:
+        working_directory: "frontend"
+        command: yarn install
+  save_frontend_cache: &save_frontend_cache
+    - save_cache:
+        paths:
+          - ./frontend/node_modules
+        key: v1-dependencies-{{ checksum "frontend/yarn.lock" }}
+
 jobs:
   test:
     docker:
@@ -66,6 +87,32 @@ jobs:
       - <<: *save_cache
       - run: bundle exec rubocop
 
+  # for frontend
+  lint_frontend:
+    docker:
+      - <<: *frontend_docker_env
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - <<: *restore_frontend_cache
+      - <<: *install_frontend_dependencies
+      - <<: *save_frontend_cache
+      - run:
+          working_directory: "frontend"
+          command: yarn lint
+  build_frontend:
+    docker:
+      - <<: *frontend_docker_env
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - <<: *restore_frontend_cache
+      - <<: *install_frontend_dependencies
+      - <<: *save_frontend_cache
+      - run:
+          working_directory: "frontend"
+          command: yarn build
+
   deploy:
     docker:
       - image: circleci/ruby:2.4.3-stretch
@@ -87,6 +134,12 @@ jobs:
 
 workflows:
   version: 2
+  frontend:
+    jobs:
+      - lint_frontend
+      - build_frontend:
+          requires:
+            - lint_frontend
   workflow:
     jobs:
       - lint
