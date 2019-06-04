@@ -11,10 +11,11 @@ const styles = {
 
 function BrandLogo(props) {
   const { classes, ...others } = props;
+  const serviceName = process.env.REACT_APP_SERVICE_NAME;
 
   return (
     <Link { ...others } href="/" underline="none">
-      <span className={ classes.brandText }>FooBar</span>
+      <span className={ classes.brandText }>{ serviceName }</span>
     </Link>
   );
 }
