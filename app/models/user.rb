@@ -70,7 +70,6 @@ class User < ApplicationRecord
       protected: info.protected?,
       profile_image_url_https: info.profile_image_url_https,
       twitter_created_at: Time.zone.parse(info.created_at).to_i,
-      lang: info.lang,
       token: auth.credentials.token,
       token_secret: auth.credentials.secret,
     )
