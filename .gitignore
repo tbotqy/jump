@@ -9,7 +9,6 @@ capybara-*.html
 /db/*.sqlite3
 /db/data.yaml
 /public/system/*
-/public/assets/*
 !/public/assets/bg-btn-blue.png
 !/public/assets/ajax-loader.gif
 !/public/assets/awesome-webfont.eot
