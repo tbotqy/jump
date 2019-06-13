@@ -11,17 +11,12 @@ gem "dotenv-rails"
 gem "rails", "~> 5.0.0"
 gem "mysql2"
 gem "puma"
-gem "uglifier", ">= 1.3.0"
-gem "jquery-rails"
-gem "jpmobile", "~> 5.0.0"
 gem "config"
 gem "twitter"
 gem "omniauth"
 gem "omniauth-twitter"
 gem "twitter-text"
 gem "turnout"
-gem "slim-rails"
-gem "therubyracer", platforms: :ruby
 gem "sidekiq"
 gem "sidekiq-cron", "~> 1.1"
 gem "redis-namespace"
@@ -31,8 +26,6 @@ gem "devise"
 gem "sentry-raven"
 
 group :development do
-  gem "web-console", "~> 2.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
   gem "rails-erd"
   gem "capistrano", "~> 3.11", require: false
   gem "capistrano-rbenv", require: false
