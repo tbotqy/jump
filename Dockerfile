@@ -12,4 +12,3 @@ COPY Gemfile.lock /app
 RUN bundle install --jobs=4
 
 COPY . /app
-RUN bundle exec rake assets:precompile
