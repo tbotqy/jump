@@ -1,4 +1,4 @@
-FROM ruby:2.4
+FROM ruby:2.6.3
 
 RUN apt-get update && apt-get install -y libidn11-dev
 
