@@ -8,7 +8,7 @@ Sidekiq.configure_client do |config|
   config.redis = { url: "redis://#{ENV.fetch('JUMP_CACHE_HOST')}:#{ENV.fetch('JUMP_CACHE_PORT')}", namespace: "jump_sidekiq_#{Rails.env}" }
 end
 
-#schedule_file = "config/sidekiq_cron_schedule.yml"
-#if File.exist?(schedule_file) && Sidekiq.server?
+# schedule_file = "config/sidekiq_cron_schedule.yml"
+# if File.exist?(schedule_file) && Sidekiq.server?
 #  Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file)
-#end
+# end

@@ -5,13 +5,11 @@ class ProfileUpdateJob < ApplicationJob
 
   def perform
     target_user_ids.each do |user_id|
-      begin
-        UpdateUserAccountService.call!(user_id: user_id)
-      rescue Twitter::Error => twitter_error
-        # TODO: include to service class
-        ProfileUpdateFailLog.log!(user_id, twitter_error.message)
-        next
-      end
+      UpdateUserAccountService.call!(user_id: user_id)
+    rescue Twitter::Error => twitter_error
+      # TODO: include to service class
+      ProfileUpdateFailLog.log!(user_id, twitter_error.message)
+      next
     end
   end
 
