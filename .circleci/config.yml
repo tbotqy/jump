@@ -47,7 +47,7 @@ jobs:
   # for backend
   lint_backend:
     docker:
-      - image: circleci/ruby:2.4.3-stretch
+      - image: circleci/ruby:2.6.3-stretch
     steps:
       - checkout
       - <<: *restore_backend_cache
@@ -58,7 +58,7 @@ jobs:
 
   build_backend:
     docker:
-      - image: circleci/ruby:2.4.3-stretch
+      - image: circleci/ruby:2.6.3-stretch
       - image: circleci/mysql:5.7
     working_directory: ~/repo
     steps:
@@ -119,7 +119,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/ruby:2.4.3-stretch
+      - image: circleci/ruby:2.6.3-stretch
     working_directory: ~/repo
     steps:
       - checkout
