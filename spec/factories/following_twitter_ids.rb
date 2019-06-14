@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :following_twitter_id do
-    following_twitter_id 123456789
+    following_twitter_id { 123456789 }
   end
 end
