@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem "dotenv-rails"
-gem "rails", "~> 5.0.0"
+gem "rails", "~> 5.2.0"
 gem "mysql2"
 gem "puma"
 gem "config"
@@ -40,5 +40,6 @@ group :development, :test do
   gem "database_cleaner"
   gem "rspec_junit_formatter"
   gem "rubocop", require: false
-  gem "rubocop-rails_config", require: false
+  gem "rubocop-rails_config", require: false, git: "git://github.com/Floppy/rubocop-rails_config", branch: "update-indent-rule"
+  gem "rubocop-rspec"
 end

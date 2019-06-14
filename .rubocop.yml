@@ -1,5 +1,8 @@
+require: rubocop-rspec
 inherit_gem:
   rubocop-rails_config:
     - config/rails.yml
 AllCops:
-  TargetRubyVersion: 2.4.3
+  TargetRubyVersion: 2.6.3
+FactoryBot/AttributeDefinedStatically:
+  Enabled: true
