@@ -13,10 +13,6 @@ class User < ApplicationRecord
       user.assign(auth)
       user.save!
     end
-
-    def find_active_with_auth(auth)
-      find_by(twitter_id: auth.uid)
-    end
   end
 
   def status_newest_in_tweeted_time
