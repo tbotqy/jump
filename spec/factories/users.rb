@@ -16,7 +16,6 @@ FactoryBot.define do
     statuses_updated_at { 1482676461 }
     friends_updated_at { 1482774672 }
     closed_only { 0 }
-    deleted { 0 }
     created_at { 1345305649 }
     updated_at { 1482774672 }
 

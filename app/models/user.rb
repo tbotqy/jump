@@ -9,13 +9,13 @@ class User < ApplicationRecord
 
   class << self
     def register_or_update!(auth)
-      user = find_or_initialize_by(uid: auth.uid, provider: auth.provider, twitter_id: auth.uid, deleted: false)
+      user = find_or_initialize_by(uid: auth.uid, provider: auth.provider, twitter_id: auth.uid)
       user.assign(auth)
       user.save!
     end
 
     def find_active_with_auth(auth)
-      find_by(twitter_id: auth.uid, deleted: false)
+      find_by(twitter_id: auth.uid)
     end
 
     def deactivate_account(user_id)
@@ -23,8 +23,6 @@ class User < ApplicationRecord
       deleted_status_count = Status.where(user_id: user_id).update_all(deleted: true)
       # update stats
       ActiveStatusCount.decrement_by(deleted_status_count)
-      # turn the flag off for users table
-      find(user_id).update_attribute(:deleted, true)
     end
   end
 
