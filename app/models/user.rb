@@ -7,10 +7,6 @@ class User < ApplicationRecord
   has_many :following_twitter_ids, dependent: :delete_all
   has_many :tweet_import_job_progresses, dependent: :delete_all
 
-  # FIXME : this is referenced only at one point
-  # consider to delete this scope and replace with some private method
-  scope :active, -> { where(deleted: false) }
-
   class << self
     def register_or_update!(auth)
       user = find_or_initialize_by(uid: auth.uid, provider: auth.provider, twitter_id: auth.uid, deleted: false)
