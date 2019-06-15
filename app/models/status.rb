@@ -3,7 +3,6 @@
 class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
-  scope :not_deleted, -> { where(deleted: false) }
   scope :not_private, -> { where(private: false) }
   scope :tweeted_by, ->(user_ids) { where(user_id: user_ids) }
   scope :tweeted_by_friend_of, ->(user_id) do
@@ -72,8 +71,7 @@ class Status < ApplicationRecord
           source: tweet.source,
           text: tweet.text,
           possibly_sensitive: tweet.possibly_sensitive? || false,
-          private: tweet.user.protected?,
-          deleted: false
+          private: tweet.user.protected?
         )
         ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
         ret

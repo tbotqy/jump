@@ -7,28 +7,11 @@ class User < ApplicationRecord
   has_many :following_twitter_ids, dependent: :delete_all
   has_many :tweet_import_job_progresses, dependent: :delete_all
 
-  # FIXME : this is referenced only at one point
-  # consider to delete this scope and replace with some private method
-  scope :active, -> { where(deleted: false) }
-
   class << self
     def register_or_update!(auth)
-      user = find_or_initialize_by(uid: auth.uid, provider: auth.provider, twitter_id: auth.uid, deleted: false)
+      user = find_or_initialize_by(uid: auth.uid, provider: auth.provider, twitter_id: auth.uid)
       user.assign(auth)
       user.save!
-    end
-
-    def find_active_with_auth(auth)
-      find_by(twitter_id: auth.uid, deleted: false)
-    end
-
-    def deactivate_account(user_id)
-      # just turn the flag off, not actually delete user's status from database
-      deleted_status_count = Status.where(user_id: user_id).update_all(deleted: true)
-      # update stats
-      ActiveStatusCount.decrement_by(deleted_status_count)
-      # turn the flag off for users table
-      find(user_id).update_attribute(:deleted, true)
     end
   end
 

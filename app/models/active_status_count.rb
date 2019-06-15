@@ -26,7 +26,7 @@ class ActiveStatusCount
     end
 
     def count_up
-      REDIS.set(REDIS_KEY_NAME, Status.not_deleted.count)
+      REDIS.set(REDIS_KEY_NAME, Status.count)
     end
   end
 end
