@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_15_091057) do
+ActiveRecord::Schema.define(version: 2019_06_15_095744) do
   create_table "entities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -61,14 +61,13 @@ ActiveRecord::Schema.define(version: 2019_06_15_091057) do
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive", null: false
     t.boolean "private", default: false, null: false
-    t.integer "deleted", limit: 1, default: 0, null: false
     t.bigint "status_id_str_reversed"
     t.integer "twitter_created_at_reversed"
     t.date "tweeted_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status_id_str_reversed"], name: "idx_sisr_on_statuses"
-    t.index ["tweeted_on", "deleted", "private"], name: "index_statuses_on_tweeted_on_and_deleted_and_private"
+    t.index ["tweeted_on", "private"], name: "index_statuses_on_tweeted_on_and_deleted_and_private"
     t.index ["tweeted_on"], name: "index_statuses_on_tweeted_on"
     t.index ["twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_tcar_sisr_on_statuses"
     t.index ["user_id", "twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_u_tcar_sisr_on_statuses"
