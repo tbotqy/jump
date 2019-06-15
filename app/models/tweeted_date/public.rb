@@ -17,7 +17,7 @@ class TweetedDate
     private
 
       def all_dates
-        @all_dates ||= Status.not_deleted.not_private.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
+        @all_dates ||= Status.not_private.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
       end
   end
 end

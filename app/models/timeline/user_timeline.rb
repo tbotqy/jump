@@ -12,25 +12,23 @@ class Timeline
       if target_date.specified?
         # fetch statuses in specified date
         Status
-          .not_deleted
           .tweeted_in(target_date.date_string, PER_PAGE)
           .tweeted_by(@timeline_owner.id)
       elsif @largest_tweet_id.present?
         # fetch statuses whose tweet_id is equal to or smaller than @largest_tweet_id
         Status
-          .not_deleted
           .get_older_status_by_tweet_id(@largest_tweet_id, PER_PAGE)
           .tweeted_by(@timeline_owner.id)
       else
         # just fetch latest statuses
-        Status.not_deleted.get_latest_status(PER_PAGE).tweeted_by(@timeline_owner.id)
+        Status.get_latest_status(PER_PAGE).tweeted_by(@timeline_owner.id)
       end
     end
 
     private
 
       def older_status
-        Status.not_deleted.get_older_status_by_tweet_id(oldest_tweet_id, 1).tweeted_by(@timeline_owner.id)
+        Status.get_older_status_by_tweet_id(oldest_tweet_id, 1).tweeted_by(@timeline_owner.id)
       end
   end
 end

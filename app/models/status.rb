@@ -3,7 +3,6 @@
 class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
-  scope :not_deleted, -> { where(deleted: false) }
   scope :not_private, -> { where(private: false) }
   scope :tweeted_by, ->(user_ids) { where(user_id: user_ids) }
   scope :tweeted_by_friend_of, ->(user_id) do
