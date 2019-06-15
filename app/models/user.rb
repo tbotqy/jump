@@ -17,13 +17,6 @@ class User < ApplicationRecord
     def find_active_with_auth(auth)
       find_by(twitter_id: auth.uid)
     end
-
-    def deactivate_account(user_id)
-      # just turn the flag off, not actually delete user's status from database
-      deleted_status_count = Status.where(user_id: user_id).update_all(deleted: true)
-      # update stats
-      ActiveStatusCount.decrement_by(deleted_status_count)
-    end
   end
 
   def status_newest_in_tweeted_time
