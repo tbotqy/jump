@@ -6,6 +6,7 @@ require File.expand_path("../../config/environment", __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "spec_helper"
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -27,6 +28,7 @@ require "rspec/rails"
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.check_pending!
+include OmniauthMock
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -61,4 +63,5 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
 
   OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:twitter] = auth_hash_mock
 end
