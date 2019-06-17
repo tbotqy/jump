@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i|twitter|
 
   has_many :statuses, dependent: :destroy
-  has_many :following_twitter_ids, dependent: :delete_all
+  has_many :followees, dependent: :delete_all
   has_many :tweet_import_job_progresses, dependent: :delete_all
 
   validates :uid,                     uniqueness: true, presence: true, length: { maximum: 255 }
@@ -63,10 +63,10 @@ class User < ApplicationRecord
   end
 
   def friend_user_ids
-    self.class.where(twitter_id: following_twitter_ids.pluck(:following_twitter_id)).pluck(:id)
+    self.class.where(twitter_id: followees.pluck(:twitter_id)).pluck(:id)
   end
 
   def friend_count
-    following_twitter_ids.count
+    followees.count
   end
 end

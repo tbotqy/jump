@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-class FollowingTwitterId < ApplicationRecord
+class Followee < ApplicationRecord
   belongs_to :user
   scope :user_id, ->(user_id) { where(user_id: user_id) }
 
   class << self
-    def register!(user_id, following_twitter_ids)
-      Array.wrap(following_twitter_ids).each do |following_twitter_id|
+    def register!(user_id, twitter_ids)
+      Array.wrap(twitter_ids).each do |twitter_id|
         create!(
           user_id: user_id,
-          following_twitter_id: following_twitter_id
+          twitter_id: twitter_id
         )
       end
 
