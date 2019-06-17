@@ -24,8 +24,8 @@ class PullFolloweesService
     end
 
     def delete_and_register!
-      FollowingTwitterId.user_id(@user_id).delete_all
-      FollowingTwitterId.register!(@user_id, fresh_friend_twitter_ids)
+      Followee.user_id(@user_id).delete_all
+      Followee.register!(@user_id, fresh_friend_twitter_ids)
     end
 
     def update_timestamp!
@@ -39,7 +39,7 @@ class PullFolloweesService
     end
 
     def existing_friend_twitter_ids
-      @existing_friend_twitter_ids ||= FollowingTwitterId.user_id(@user_id).pluck(:following_twitter_id).sort
+      @existing_friend_twitter_ids ||= Followee.user_id(@user_id).pluck(:twitter_id).sort
     end
 
     def fresh_friend_twitter_ids
