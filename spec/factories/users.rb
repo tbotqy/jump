@@ -19,7 +19,7 @@ FactoryBot.define do
 
     trait(:with_friend) do
       after(:create) do |u|
-        FactoryBot.create(:following_twitter_id, user_id: u.id)
+        FactoryBot.create(:followee, user_id: u.id)
       end
     end
 
