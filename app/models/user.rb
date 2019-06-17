@@ -41,6 +41,16 @@ class User < ApplicationRecord
     end
   end
 
+  def as_json(_options = {})
+    {
+      name:              name,
+      screen_name:       screen_name,
+      profile_image_url: profile_image_url_https,
+      status_count:      statuses.count,
+      followee_count:    followees.count
+    }
+  end
+
   def status_newest_in_tweeted_time
     statuses.newest_in_tweeted_time
   end
@@ -64,9 +74,5 @@ class User < ApplicationRecord
 
   def friend_user_ids
     self.class.where(twitter_id: followees.pluck(:twitter_id)).pluck(:id)
-  end
-
-  def friend_count
-    followees.count
   end
 end
