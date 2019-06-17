@@ -11,7 +11,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to status_import_path
     end
   rescue => e
-    # on the development mode,
+    # rescue the exception explicitly to unify the behavior between the environments
     Raven.capture_exception(e)
     head 500
  end
