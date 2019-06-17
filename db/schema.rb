@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_17_080258) do
+ActiveRecord::Schema.define(version: 2019_06_17_080819) do
   create_table "entities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2019_06_17_080258) do
 
   create_table "followees", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "following_twitter_id", null: false
+    t.bigint "twitter_id", null: false
     t.integer "created_at", null: false
     t.index ["user_id"], name: "idx_u_on_friends"
   end
