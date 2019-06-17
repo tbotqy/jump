@@ -46,6 +46,6 @@ group :development, :test do
   gem "database_cleaner"
   gem "rspec_junit_formatter"
   gem "rubocop", require: false
-  gem "rubocop-rails_config", require: false, git: "git://github.com/Floppy/rubocop-rails_config", branch: "update-indent-rule"
+  gem "rubocop-rails_config", require: false
   gem "rubocop-rspec"
 end
