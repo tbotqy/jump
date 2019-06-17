@@ -116,9 +116,16 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+    Bullet.start_request if Bullet.enable?
   end
 
   config.after(:each) do
     DatabaseCleaner.clean
+    if Bullet.enable?
+      config.after(:each) do
+        Bullet.perform_out_of_channel_notifications if Bullet.notification?
+        Bullet.end_request
+      end
+    end
   end
 end
