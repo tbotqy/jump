@@ -63,17 +63,17 @@ RSpec.describe "User authentication", type: :request do
             end
           end
 
-          describe "redirection after registration/update" do
+          describe "redirection" do
             before do
               OmniAuth.config.mock_auth[:twitter] = auth_hash_mock.merge(uid: authenticating_user.uid)
               get user_twitter_omniauth_callback_path
             end
 
-            context "the user has never imported own tweets" do
+            context "the user has never imported its own tweets yet" do
               let!(:authenticating_user) { create(:user, finished_initial_import: false) }
               it { expect(response).to redirect_to status_import_path }
             end
-            context "the user has already imported own tweets" do
+            context "the user has already imported its own tweets" do
               let!(:authenticating_user) { create(:user, finished_initial_import: true) }
               it { expect(response).to redirect_to user_timeline_path }
             end
