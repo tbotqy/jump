@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :user do
-    uid { "123456789" }
-    twitter_id { 123456789 }
+    sequence(:uid) { |n| "123456789#{n}" }
+    sequence(:twitter_id) { |n| "123456789#{n}".to_i }
     provider { "twitter" }
     name { "test_name" }
     screen_name { "test_screen_name" }
