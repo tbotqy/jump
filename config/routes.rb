@@ -1,5 +1,17 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+
+  devise_scope :user do
+    get "sign_out", to: "devise/sessions#destroy"
+  end
+
+  direct :user_timeline do
+    "/user_timeline"
+  end
+
+  direct :status_import do
+    "/statuses/import"
+  end
 end

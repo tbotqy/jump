@@ -2,22 +2,20 @@
 
 FactoryBot.define do
   factory :user do
-    uid { 123456789 }
-    twitter_id { 123456789 }
+    sequence(:uid) { |n| "123456789#{n}" }
+    sequence(:twitter_id) { |n| "123456789#{n}".to_i }
     provider { "twitter" }
     name { "test_name" }
     screen_name { "test_screen_name" }
-    protected { 0 }
+    protected { false }
     profile_image_url_https { "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg" }
     twitter_created_at { 1342689117 }
-    token { "hoge" }
-    token_secret { "fuga" }
-    token_updated_at { 1 }
+    token { "test_token" }
+    token_secret { "test_token_secret" }
+    token_updated_at { 1482676460 }
     statuses_updated_at { 1482676461 }
     friends_updated_at { 1482774672 }
-    closed_only { 0 }
-    created_at { 1345305649 }
-    updated_at { 1482774672 }
+    closed_only { false }
 
     trait(:with_friend) do
       after(:create) do |u|
