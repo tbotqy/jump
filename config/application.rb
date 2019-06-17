@@ -37,5 +37,9 @@ module Jump
     config.session_store :cookie_store
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
+
+    config.generators do |g|
+      g.test_framework :rspec, controller_specs: false
+    end
   end
 end
