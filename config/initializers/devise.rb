@@ -287,4 +287,13 @@ Devise.setup do |config|
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end
+
+  # set/delete user_id on sign_in/sign_out
+  Warden::Manager.after_set_user do |user, auth, opts|
+    auth.cookies[:uid] = user.uid
+  end
+
+  Warden::Manager.before_logout do |user, auth, opts|
+    auth.cookies.delete :uid
+  end
 end
