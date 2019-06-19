@@ -17,6 +17,23 @@ FactoryBot.define do
     friends_updated_at { 1482774672 }
     closed_only { false }
 
+    trait(:with_statuses_and_followees) do
+      transient do
+        status_count   { 5 }
+        followee_count { 10 }
+      end
+
+      after(:create) do |user, evaluator|
+        # create followees of the user
+        followees = create_list(:user, evaluator.followee_count)
+        ## register created users as user's followees
+        followees.pluck(:twitter_id).each { |twitter_id| create(:followee, user: user, twitter_id: twitter_id) }
+
+        # create user's statuses
+        create_list(:status, evaluator.status_count, user: user)
+      end
+    end
+
     trait(:with_friend) do
       after(:create) do |u|
         FactoryBot.create(:followee, user_id: u.id)
