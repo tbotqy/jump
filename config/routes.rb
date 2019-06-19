@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   direct :status_import do
     "/statuses/import"
   end
+
+  resources :users, only: [:show]
 end
