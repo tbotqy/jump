@@ -122,4 +122,33 @@ describe User do
       end
     end
   end
+
+  describe "#as_json" do
+    subject { user.as_json }
+    let(:name)              { "name" }
+    let(:screen_name)       { "screen_name" }
+    let(:profile_image_url) { "profile_image_url" }
+    let(:status_count)      { 100 }
+    let(:followee_count)    { 200 }
+    let(:user) do
+      create(:user,
+        :with_statuses_and_followees,
+        name:                    name,
+        screen_name:             screen_name,
+        profile_image_url_https: profile_image_url,
+        status_count:            status_count,
+        followee_count:          followee_count
+      )
+    end
+
+    it do
+      is_expected.to include(
+        name:              name,
+        screen_name:       screen_name,
+        profile_image_url: profile_image_url,
+        status_count:      status_count,
+        followee_count:    followee_count
+      )
+    end
+  end
 end
