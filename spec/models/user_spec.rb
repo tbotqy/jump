@@ -131,17 +131,14 @@ describe User do
     let(:status_count)      { 100 }
     let(:followee_count)    { 200 }
     let(:user) do
-      user = create(:user, name: name, screen_name: screen_name, profile_image_url_https: profile_image_url)
-
-      # create followees of the user
-      followees = create_list(:user, followee_count)
-      ## register created users as user's followees
-      followees.pluck(:twitter_id).each { |twitter_id| create(:followee, user: user, twitter_id: twitter_id) }
-
-      # create user's statuses
-      create_list(:status, status_count, user: user)
-
-      user
+      create(:user,
+        :with_statuses_and_followees,
+        name:                    name,
+        screen_name:             screen_name,
+        profile_image_url_https: profile_image_url,
+        status_count:            status_count,
+        followee_count:          followee_count
+      )
     end
 
     it do
