@@ -6,11 +6,25 @@ class UsersController < ApplicationController
   # GET /users/:id
   def show
     user = User.find(params[:id])
-
-    if user != current_user
-      raise Errors::BadRequest, "Given id is not authenticated user's."
-    end
+    authorize_operation_for!(user)
 
     render json: user
   end
+
+  # DELETE /users/:id
+  def destroy
+    user = User.find(params[:id])
+    authorize_operation_for!(user)
+
+    DestroyUserJob.perform_later(user_id: params[:id])
+    head :accepted
+  end
+
+  private
+
+    def authorize_operation_for!(resource)
+      unless current_user === resource
+        raise Errors::BadRequest, "Attempting to operate on other's resource."
+      end
+    end
 end
