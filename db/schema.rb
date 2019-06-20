@@ -12,8 +12,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_17_080819) do
-  create_table "entities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+ActiveRecord::Schema.define(version: 2019_06_20_095527) do
+  create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
     t.string "display_url"
@@ -27,21 +27,21 @@ ActiveRecord::Schema.define(version: 2019_06_17_080819) do
     t.index ["status_id"], name: "status_id"
   end
 
-  create_table "followees", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "twitter_id", null: false
     t.integer "created_at", null: false
     t.index ["user_id"], name: "idx_u_on_friends"
   end
 
-  create_table "profile_update_fail_logs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "profile_update_fail_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "error_message", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "statuses", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "status_id_str", null: false
     t.bigint "in_reply_to_status_id_str"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2019_06_17_080819) do
     t.index ["user_id"], name: "idx_u_on_statuses"
   end
 
-  create_table "tweet_import_job_progresses", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "tweet_import_job_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "job_id", limit: 36, null: false
     t.integer "user_id", null: false
     t.integer "count", default: 0, null: false
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2019_06_17_080819) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "twitter_id", null: false
     t.string "provider", null: false
