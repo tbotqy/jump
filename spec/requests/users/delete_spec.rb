@@ -43,7 +43,7 @@ RSpec.describe "Users", type: :request do
             end
             it_behaves_like "doesn't enqueue the job"
             it_behaves_like "respond with status code", :bad_request
-            it_behaves_like "response body has error messages", "Attempting to operate on other's resource."
+            it_behaves_like "respond with authorization error message"
           end
           context "given id is an authenticated user's id" do
             let(:user) { create(:user) }
