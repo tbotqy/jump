@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_040545) do
+ActiveRecord::Schema.define(version: 2019_06_21_041423) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2019_06_21_040545) do
     t.integer "indice_l", null: false
     t.string "entity_type", null: false
     t.integer "created_at", null: false
-    t.index ["status_id"], name: "status_id"
   end
 
   create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
