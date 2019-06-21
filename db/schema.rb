@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_095527) do
+ActiveRecord::Schema.define(version: 2019_06_21_041930) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -24,21 +24,22 @@ ActiveRecord::Schema.define(version: 2019_06_20_095527) do
     t.integer "indice_l", null: false
     t.string "entity_type", null: false
     t.integer "created_at", null: false
-    t.index ["status_id"], name: "status_id"
+    t.index ["status_id"], name: "fk_rails_994021b93c"
   end
 
   create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "twitter_id", null: false
     t.integer "created_at", null: false
-    t.index ["user_id"], name: "idx_u_on_friends"
+    t.index ["user_id"], name: "fk_rails_18581d83f3"
   end
 
   create_table "profile_update_fail_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "error_message", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "fk_rails_daeb5deee9"
   end
 
   create_table "statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -72,16 +73,16 @@ ActiveRecord::Schema.define(version: 2019_06_20_095527) do
     t.index ["twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_tcar_sisr_on_statuses"
     t.index ["user_id", "twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_u_tcar_sisr_on_statuses"
     t.index ["user_id", "twitter_created_at_reversed"], name: "idx_u_tcar_on_statuses"
-    t.index ["user_id"], name: "idx_u_on_statuses"
   end
 
   create_table "tweet_import_job_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "job_id", limit: 36, null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.integer "count", default: 0, null: false
     t.boolean "finished", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "fk_rails_e62285fa61"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -105,4 +106,10 @@ ActiveRecord::Schema.define(version: 2019_06_20_095527) do
     t.index ["twitter_id"], name: "idx_ti_on_users"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
+
+  add_foreign_key "entities", "statuses"
+  add_foreign_key "followees", "users"
+  add_foreign_key "profile_update_fail_logs", "users"
+  add_foreign_key "statuses", "users"
+  add_foreign_key "tweet_import_job_progresses", "users"
 end

@@ -19,7 +19,6 @@ class Timeline
         # fetch statuses whose tweet_id is equal to or smaller than @largest_tweet_id
         Status
           .not_private
-          .force_index(:idx_u_on_statuses)
           .tweeted_by_friend_of(@timeline_owner.id)
           .get_older_status_by_tweet_id(@largest_tweet_id + 1, PER_PAGE)
       else
@@ -36,7 +35,6 @@ class Timeline
       def older_status
         Status
           .not_private
-          .force_index(:idx_u_on_statuses)
           .get_older_status_by_tweet_id(oldest_tweet_id, 1)
           .tweeted_by_friend_of(@timeline_owner.id)
       end
