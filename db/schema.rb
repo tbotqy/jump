@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_082529) do
+ActiveRecord::Schema.define(version: 2019_06_21_082851) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_082529) do
     t.boolean "closed_only", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["twitter_id"], name: "idx_ti_on_users"
+    t.index ["twitter_id"], name: "index_users_on_twitter_id"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
