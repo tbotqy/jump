@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_20_095527) do
+ActiveRecord::Schema.define(version: 2019_06_21_025149) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_06_20_095527) do
   end
 
   create_table "profile_update_fail_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "error_message", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 2019_06_20_095527) do
 
   create_table "tweet_import_job_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "job_id", limit: 36, null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.integer "count", default: 0, null: false
     t.boolean "finished", default: false, null: false
     t.datetime "created_at", null: false
