@@ -4,21 +4,10 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :not_private, -> { where(private: false) }
-  scope :tweeted_by, ->(user_ids) { where(user_id: user_ids) }
-  scope :tweeted_by_friend_of, ->(user_id) do
-    friend_user_ids = User.find(user_id).friend_user_ids
-    tweeted_by(friend_user_ids)
-  end
-
   scope :order_for_timeline, -> { order("twitter_created_at_reversed ASC", "status_id_str_reversed ASC") }
-  scope :force_index, ->(index_name) { from("#{table_name} FORCE INDEX(#{index_name})") }
   after_save :update_user_timestamp
 
   class << self
-    def ordered_tweeted_unixtimes_by_user_id(user_id)
-      tweeted_by(user_id).order(twitter_created_at_reversed: :asc).pluck(:twitter_created_at)
-    end
-
     def newest_in_tweeted_time
       order(twitter_created_at_reversed: :asc).first
     end
@@ -32,10 +21,6 @@ class Status < ApplicationRecord
       end
     end
 
-    def get_latest_status(limit = 10)
-      includes(:user, :entities).limit(limit).order_for_timeline
-    end
-
     # date_string: YYYY(-M(-D))
     def tweeted_in(date_string, limit = 10)
       # search the statuses tweeted in given date
@@ -44,14 +29,6 @@ class Status < ApplicationRecord
       to   = date_range.last.to_i
 
       includes(:user, :entities).where(twitter_created_at_reversed: (-1 * to)..(-1 * from)).limit(limit).order_for_timeline
-    end
-
-    def get_older_status_by_tweet_id(threshold_tweet_id, limit = 10)
-      # search the statuses whose status_id_str is smaller than given threshold_tweet_id
-      # used to proccess read more button's request
-      # use status_id_str_reversed in order to search by index
-      threshold_tweet_id_revered = -1 * threshold_tweet_id.to_i
-      includes(:user).where("statuses.status_id_str_reversed > ?", threshold_tweet_id_revered).limit(limit).order(:status_id_str_reversed)
     end
 
     private
