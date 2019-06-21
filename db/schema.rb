@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_025910) do
+ActiveRecord::Schema.define(version: 2019_06_21_032407) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(version: 2019_06_21_025910) do
     t.index ["twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_tcar_sisr_on_statuses"
     t.index ["user_id", "twitter_created_at_reversed", "status_id_str_reversed"], name: "idx_u_tcar_sisr_on_statuses"
     t.index ["user_id", "twitter_created_at_reversed"], name: "idx_u_tcar_on_statuses"
-    t.index ["user_id"], name: "idx_u_on_statuses"
   end
 
   create_table "tweet_import_job_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
