@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_025149) do
+ActiveRecord::Schema.define(version: 2019_06_21_025910) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_025149) do
     t.boolean "finished", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "fk_rails_e62285fa61"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -105,4 +106,6 @@ ActiveRecord::Schema.define(version: 2019_06_21_025149) do
     t.index ["twitter_id"], name: "idx_ti_on_users"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
+
+  add_foreign_key "tweet_import_job_progresses", "users"
 end
