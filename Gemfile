@@ -24,6 +24,7 @@ gem "bootsnap", ">= 1.1.0", require: false
 gem "activerecord-import"
 gem "devise"
 gem "sentry-raven"
+gem "kaminari"
 
 group :development do
   gem "rails-erd"
