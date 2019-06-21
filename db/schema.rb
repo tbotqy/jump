@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_041423) do
+ActiveRecord::Schema.define(version: 2019_06_21_041930) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_041423) do
     t.integer "indice_l", null: false
     t.string "entity_type", null: false
     t.integer "created_at", null: false
+    t.index ["status_id"], name: "fk_rails_994021b93c"
   end
 
   create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -106,6 +107,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_041423) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "entities", "statuses"
   add_foreign_key "followees", "users"
   add_foreign_key "profile_update_fail_logs", "users"
   add_foreign_key "statuses", "users"
