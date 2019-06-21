@@ -55,10 +55,6 @@ class User < ApplicationRecord
     statuses.newest_in_tweeted_time
   end
 
-  def last_status
-    statuses&.last
-  end
-
   def has_any_status?
     statuses.exists?
   end
@@ -66,13 +62,5 @@ class User < ApplicationRecord
   def finish_initial_import!
     self.finished_initial_import = true
     save!
-  end
-
-  def has_working_job?
-    tweet_import_job_progresses.unfinished.exists?
-  end
-
-  def friend_user_ids
-    self.class.where(twitter_id: followees.pluck(:twitter_id)).pluck(:id)
   end
 end
