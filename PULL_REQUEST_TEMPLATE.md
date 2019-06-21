@@ -1,1 +1,1 @@
-closes https://github.com/tbotaq/jump_pm/issues/
+closes https://github.com/tbotaq/jump-pm/issues/
