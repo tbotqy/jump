@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :provider,                presence: true, length: { maximum: 255 }
   validates :name,                    presence: true, length: { maximum: 255 }
   validates :screen_name,             presence: true, length: { maximum: 255 }
-  validates :protected,               inclusion: { in: [true, false] }
+  validates :protected_flag,          inclusion: { in: [true, false] }
   validates :profile_image_url_https, length: { maximum: 255 }
   validates :twitter_created_at,      numericality: true, length: { maximum: 11 }
   validates :token,                   presence: true, length: { maximum: 255 }
@@ -24,14 +24,14 @@ class User < ApplicationRecord
   validates :closed_only,             inclusion: { in: [true, false] }, allow_nil: true
 
   class << self
-    def register_or_update!(provider:, uid:, twitter_id:, twitter_created_at:, name:, screen_name:, protected:, profile_image_url_https:, token:, token_secret:)
+    def register_or_update!(provider:, uid:, twitter_id:, twitter_created_at:, name:, screen_name:, protected_flag:, profile_image_url_https:, token:, token_secret:)
       user = find_or_initialize_by(uid: uid)
       user.update!(
         twitter_id:              twitter_id,
         provider:                provider,
         name:                    name,
         screen_name:             screen_name,
-        protected:               protected,
+        protected_flag:          protected_flag,
         profile_image_url_https: profile_image_url_https,
         twitter_created_at:      Time.zone.parse(twitter_created_at).to_i,
         token:                   token,

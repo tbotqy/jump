@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_21_082851) do
+ActiveRecord::Schema.define(version: 2019_06_22_115102) do
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_082851) do
     t.string "rt_source"
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive", null: false
-    t.boolean "private", default: false, null: false
+    t.boolean "private_flag", default: false, null: false
     t.bigint "status_id_str_reversed"
     t.integer "twitter_created_at_reversed"
     t.date "tweeted_on"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2019_06_21_082851) do
     t.string "provider", null: false
     t.string "name", null: false
     t.string "screen_name", null: false
-    t.boolean "protected", default: false, null: false
+    t.boolean "protected_flag", default: false, null: false
     t.string "profile_image_url_https", null: false
     t.integer "twitter_created_at", null: false
     t.string "token", null: false
