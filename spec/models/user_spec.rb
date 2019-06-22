@@ -13,7 +13,7 @@ describe User do
           provider:                "twitter",
           name:                    "passed_name",
           screen_name:             "passed_screen_name",
-          protected:               true,
+          protected_flag:          true,
           profile_image_url_https: "passed_url",
           twitter_created_at:      "Thu Jul 4 00:00:00 +0000 2013",
           token:                   "passed_token",
@@ -48,7 +48,7 @@ describe User do
           provider:                "twitter",
           name:                    "name_before_update",
           screen_name:             "screen_name_before_update",
-          protected:               false,
+          protected_flag:          false,
           profile_image_url_https: "url_before_update",
           twitter_created_at:      Time.zone.parse("Thu Jul 4 00:00:00 +0000 2013").to_i,
           token:                   "token_before_update",
@@ -66,7 +66,7 @@ describe User do
           provider:                "twitter",
           name:                    "name_after_update",
           screen_name:             "screen_name_after_update",
-          protected:               true,
+          protected_flag:          true,
           profile_image_url_https: "url_after_update",
           twitter_created_at:      "Thu Jul 4 00:00:00 +0000 2013",
           token:                   "token_after_update",
@@ -90,7 +90,7 @@ describe User do
           expect { subject }.not_to change { User.count }
         end
         describe "all the attrs of targeting user are updated" do
-          %i|name screen_name protected profile_image_url_https token token_secret|.each do |attr|
+          %i|name screen_name protected_flag profile_image_url_https token token_secret|.each do |attr|
             it "updates ##{attr} with given one" do
               expect { subject }.to change { User.find_by!(uid: params[:uid]).send(attr) }.from(attrs_before_update[attr]).to(params[attr])
             end
