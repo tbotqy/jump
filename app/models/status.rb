@@ -32,7 +32,6 @@ class Status < ApplicationRecord
     end
 
     private
-
       def new_by_tweet(tweet)
         ret = new(
           status_id_str: tweet.attrs[:id_str],
