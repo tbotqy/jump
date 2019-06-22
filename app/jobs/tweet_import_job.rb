@@ -10,7 +10,6 @@ class TweetImportJob < ApplicationJob
   end
 
   private
-
     def determine_smallest_tweet_id_to_fetch!
       # MEMO : this method is intended to be called under these conditions
       # - only once

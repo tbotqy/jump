@@ -18,7 +18,6 @@ module TwitterServiceClient
     end
 
     private
-
       def fetch_friend_ids_all!
         while !@next_cursor.zero?
           friends = twitter_rest_client.friend_ids(twitter_id, cursor: @next_cursor)

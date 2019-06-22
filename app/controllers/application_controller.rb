@@ -13,7 +13,6 @@ class ApplicationController < ActionController::API
   rescue_from Errors::Unauthorized,         with: :render_401
 
   private
-
     def authenticate_user!
       raise Errors::Unauthorized, "The request need authentication." unless user_signed_in?
     end

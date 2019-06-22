@@ -10,7 +10,6 @@ class UpdateUserAccountService
   end
 
   private
-
     def initialize(user_id)
       @user_id = user_id
       fetch_fresh_data!
@@ -26,7 +25,6 @@ class UpdateUserAccountService
     end
 
   private
-
     def fetch_fresh_data!
       client = TwitterRestClient.by_user_id(@user_id)
       @user_info    = client.user

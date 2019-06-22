@@ -14,7 +14,6 @@ class ProfileUpdateJob < ApplicationJob
   end
 
   private
-
     def target_user_ids
       failed_user_ids = ProfileUpdateFailLog.pluck(:user_id)
       User.where.not(id: failed_user_ids).pluck(:id)

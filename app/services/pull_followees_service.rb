@@ -10,7 +10,6 @@ class PullFolloweesService
   end
 
   private
-
     def initialize(user_id)
       @user_id = user_id
     end
@@ -33,7 +32,6 @@ class PullFolloweesService
     end
 
   private
-
     def difference_exists?
       existing_friend_twitter_ids != fresh_friend_twitter_ids
     end

@@ -22,7 +22,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   private
-
     delegate :provider,
              :uid,
              to: :auth
