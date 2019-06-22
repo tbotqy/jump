@@ -16,7 +16,6 @@ class Entity < ApplicationRecord
     end
 
     private
-
       def bulk_new_by_type(type, entities)
         entities.map do |entity|
           ret = new(created_at: Time.zone.now.to_i)

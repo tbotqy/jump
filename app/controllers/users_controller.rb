@@ -21,7 +21,6 @@ class UsersController < ApplicationController
   end
 
   private
-
     def authorize_operation_for!(resource)
       unless current_user === resource
         raise Errors::BadRequest, "Attempting to operate on other's resource."

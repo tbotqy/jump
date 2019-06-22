@@ -40,7 +40,6 @@ module TwitterServiceClient
     end
 
     private
-
       def twitter_rest_client
         @twitter_rest_client ||= TwitterRestClient.by_user_id(@user_id)
       end
