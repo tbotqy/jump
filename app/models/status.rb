@@ -3,7 +3,7 @@
 class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
-  scope :not_private, -> { where(private: false) }
+  scope :not_private, -> { where(private_flag: false) }
   scope :order_for_timeline, -> { order("twitter_created_at_reversed ASC", "status_id_str_reversed ASC") }
   after_save :update_user_timestamp
 
@@ -48,7 +48,7 @@ class Status < ApplicationRecord
           source: tweet.source,
           text: tweet.text,
           possibly_sensitive: tweet.possibly_sensitive? || false,
-          private: tweet.user.protected?
+          private_flag: tweet.user.protected_flag?
         )
         ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
         ret

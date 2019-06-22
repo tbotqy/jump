@@ -7,7 +7,7 @@ FactoryBot.define do
     provider { "twitter" }
     name { "test_name" }
     screen_name { "test_screen_name" }
-    protected { false }
+    protected_flag { false }
     profile_image_url_https { "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg" }
     twitter_created_at { 1342689117 }
     token { "test_token" }
