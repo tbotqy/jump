@@ -45,7 +45,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         twitter_created_at: created_at,
         name:               name,
         screen_name:        screen_name,
-        protected:          protected,
+        protected_flag:     protected,
         profile_image_url_https: profile_image_url_https,
         token:              token,
         token_secret:       secret
