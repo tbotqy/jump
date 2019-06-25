@@ -15,5 +15,7 @@ Rails.application.routes.draw do
     "/statuses/import"
   end
 
-  resources :users, only: %i|show destroy|
+  resources :users, only: %i|show destroy| do
+    resources :statuses, only: %i|index|, module: :users
+  end
 end

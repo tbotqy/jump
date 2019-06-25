@@ -11,10 +11,17 @@ class ApplicationController < ActionController::API
 
   rescue_from Errors::BadRequest,           with: :render_400
   rescue_from Errors::Unauthorized,         with: :render_401
+  rescue_from Errors::NotFound,             with: :render_404
 
   private
     def authenticate_user!
       raise Errors::Unauthorized, "The request need authentication." unless user_signed_in?
+    end
+
+    def authorize_operation_for!(resource)
+      unless current_user === resource
+        raise Errors::BadRequest, "Attempting to operate on other's resource."
+      end
     end
 
     def render_400(e)
