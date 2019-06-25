@@ -49,7 +49,7 @@ RSpec.describe "Users::Statuses", type: :request do
             sign_in signed_in_user
             subject
           end
-          it_behaves_like "request for the others' resource"
+          it_behaves_like "request for the other user's resource"
         end
         context "authorized to operate on the found user" do
           context "user has no status" do
