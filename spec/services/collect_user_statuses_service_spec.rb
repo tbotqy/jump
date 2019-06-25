@@ -82,37 +82,41 @@ describe CollectUserStatusesService do
           end
 
           describe "monthly search" do
-            let(:user) { create(:user) }
+            describe "it only returns the statuses that have been tweeted (at or before) the end of specified month" do
+              let(:user) { create(:user) }
 
-            # pre-register user's statuses
-            let(:boundary_time) { Time.local(year, month).end_of_month }
-            include_context "user has 3 statuses tweeted around the boundary_time"
+              # pre-register user's statuses
+              let(:boundary_time) { Time.local(year, month).end_of_month }
+              include_context "user has 3 statuses tweeted around the boundary_time"
 
-            let(:user_id) { user.id }
-            let(:year)    { 2019 }
-            let(:month)   { 3 }
-            let(:day)     { nil }
-            let(:page)    { 1 }
+              let(:user_id) { user.id }
+              let(:year)    { 2019 }
+              let(:month)   { 3 }
+              let(:day)     { nil }
+              let(:page)    { 1 }
 
-            include_examples "only includes those statuses that are tweeted at or before boundary time"
+              include_examples "only includes those statuses that are tweeted at or before boundary time"
+            end
           end
 
           describe "daily search" do
-            let(:user) { create(:user) }
+            describe "it only returns the statuses that have been tweeted (at or before) the end of specified day" do
+              let(:user) { create(:user) }
 
-            # pre-register user's statuses
-            let(:boundary_time) { Time.local(year, month, day).end_of_day }
-            include_context "user has 3 statuses tweeted around the boundary_time"
+              # pre-register user's statuses
+              let(:boundary_time) { Time.local(year, month, day).end_of_day }
+              include_context "user has 3 statuses tweeted around the boundary_time"
 
-            include_context "pre-register a non-targeted user and its status"
+              include_context "pre-register a non-targeted user and its status"
 
-            let(:user_id) { user.id }
-            let(:year)    { 2019 }
-            let(:month)   { 3 }
-            let(:day)     { 20 }
-            let(:page)    { 1 }
+              let(:user_id) { user.id }
+              let(:year)    { 2019 }
+              let(:month)   { 3 }
+              let(:day)     { 20 }
+              let(:page)    { 1 }
 
-            include_examples "only includes those statuses that are tweeted at or before boundary time"
+              include_examples "only includes those statuses that are tweeted at or before boundary time"
+            end
           end
         end
 
