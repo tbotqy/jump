@@ -5,6 +5,11 @@ class Status < ApplicationRecord
   has_many :entities, dependent: :delete_all
   scope :not_private, -> { where(private_flag: false) }
   scope :order_for_timeline, -> { order("twitter_created_at_reversed ASC", "status_id_str_reversed ASC") }
+  scope :tweeted_at_or_before, -> (time) do
+    boundary = time.to_i
+    where("twitter_created_at_reversed >= ?", -1 * boundary)
+  end
+
   after_save :update_user_timestamp
 
   class << self
