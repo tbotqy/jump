@@ -76,4 +76,41 @@ describe Status do
       end
     end
   end
+
+  describe "#as_json" do
+    subject { status.as_json }
+    let(:status_id_str)      { 12345 }
+    let(:text)               { "text" }
+    let(:twitter_created_at) { Time.local(2019, 3, 1).to_i }
+    let(:is_retweet)         { false }
+
+    let!(:status) { create(:status, status_id_str: status_id_str, text: text, twitter_created_at: twitter_created_at, is_retweet: is_retweet) }
+
+    context "status has no entity" do
+      it do
+        is_expected.to include(
+          tweet_id:   status_id_str,
+          text:       text,
+          tweeted_at: Time.at(twitter_created_at),
+          is_retweet: is_retweet,
+          entities:   [],
+          user:       status.user.as_json
+        )
+      end
+    end
+
+    context "status has some entities" do
+      let!(:entities) { create_list(:entity, 3, status: status) }
+      it do
+        is_expected.to include(
+          tweet_id:   status_id_str,
+          text:       text,
+          tweeted_at: Time.at(twitter_created_at),
+          is_retweet: is_retweet,
+          entities:   status.entities.as_json,
+          user:       status.user.as_json
+        )
+      end
+    end
+  end
 end

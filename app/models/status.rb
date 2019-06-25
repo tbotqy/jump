@@ -72,6 +72,17 @@ class Status < ApplicationRecord
       end
   end
 
+  def as_json(_options = {})
+    {
+      tweet_id:   status_id_str,
+      text:       text,
+      tweeted_at: Time.at(twitter_created_at).in_time_zone.iso8601,
+      is_retweet: is_retweet,
+      entities:   entities.as_json,
+      user:       user.as_json
+    }
+  end
+
   def update_user_timestamp
     user.update_attribute(:statuses_updated_at, Time.now.to_i)
   end
