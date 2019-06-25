@@ -12,7 +12,7 @@ shared_examples "unauthenticated request" do
   it_behaves_like "respond with status code", :unauthorized
 end
 
-shared_examples "request for the others' resource" do
+shared_examples "request for the other user's resource" do
   it_behaves_like "respond with status code", :unauthorized
   it_behaves_like "response body has error messages", "Attempting to operate on other's resource."
 end
