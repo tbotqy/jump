@@ -23,5 +23,6 @@ FactoryBot.define do
     private_flag { 0 }
     status_id_str_reversed { -1 * status_id_str }
     twitter_created_at_reversed { -1 * twitter_created_at }
+    tweeted_on { Time.at(twitter_created_at).in_time_zone.to_date }
   end
 end
