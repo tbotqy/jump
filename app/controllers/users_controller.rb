@@ -19,11 +19,4 @@ class UsersController < ApplicationController
     DestroyUserJob.perform_later(user_id: params[:id])
     head :accepted
   end
-
-  private
-    def authorize_operation_for!(resource)
-      unless current_user === resource
-        raise Errors::InvalidParam, "Attempting to operate on other's resource."
-      end
-    end
 end
