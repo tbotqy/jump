@@ -11,3 +11,15 @@ end
 shared_examples "respond with authorization error message" do
   it_behaves_like "response body has error messages", "Attempting to operate on other's resource."
 end
+
+shared_examples "unauthenticated request" do
+  it_behaves_like "respond with status code", :unauthorized
+end
+
+shared_examples "request for the others' resource" do
+  it_behaves_like "respond with status code", :bad_request
+end
+
+shared_examples "a scope" do
+  it { expect(subject).to be_an(ActiveRecord::Relation) }
+end
