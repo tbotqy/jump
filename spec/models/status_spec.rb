@@ -3,6 +3,24 @@
 require "rails_helper"
 
 describe Status do
+  describe ".tweeted_at_or_before" do
+    subject { Status.tweeted_at_or_before(targeting_time) }
+    context "no record matches" do
+      let(:targeting_time)                { Time.local(2019, 3, 1).beginning_of_day }
+      let!(:tweeted_after_targeting_time) { create(:status, twitter_created_at: targeting_time.to_i + 1) }
+      it { is_expected.to be_none }
+      it_behaves_like "a scope"
+    end
+    context "some records match" do
+      let(:targeting_time)                 { Time.local(2019, 3, 1).beginning_of_day }
+      let!(:tweeted_before_targeting_time) { create(:status, twitter_created_at: targeting_time.to_i - 1) }
+      let!(:tweeted_at_targeting_time)     { create(:status, twitter_created_at: targeting_time.to_i) }
+      let!(:tweeted_after_targeting_time)  { create(:status, twitter_created_at: targeting_time.to_i + 1) }
+      it { is_expected.to contain_exactly(tweeted_before_targeting_time, tweeted_at_targeting_time) }
+      it_behaves_like "a scope"
+    end
+  end
+
   describe ".tweeted_in" do
     subject { Status.tweeted_in(date_string) }
     context "only year is given" do
