@@ -122,10 +122,10 @@ RSpec.describe "Users::Statuses", type: :request do
                   end
                 end
                 describe "sort" do
-                  it "lists newer tweet as its first item" do
+                  it "lists the newest tweet as its first item" do
                     expect(response.parsed_body.first["text"]).to eq(status_tweeted_at_boundary.text)
                   end
-                  it "lists older tweet as its last item" do
+                  it "lists the oldest tweet as its last item" do
                     expect(response.parsed_body.last["text"]).to  eq(status_tweeted_before_boundary.text)
                   end
                 end
