@@ -20,7 +20,7 @@ class ApplicationController < ActionController::API
 
     def authorize_operation_for!(resource)
       unless current_user === resource
-        raise Errors::InvalidParam, "Attempting to operate on other's resource."
+        raise Errors::Unauthorized, "Attempting to operate on other's resource."
       end
     end
 

@@ -35,8 +35,7 @@ RSpec.describe "Users", type: :request do
               sign_in user
               get user_path(id: other_user_id)
             end
-            it_behaves_like "respond with status code", :bad_request
-            it_behaves_like "respond with authorization error message"
+            it_behaves_like "request for the others' resource"
           end
           context "given id is an authenticated user's id" do
             let(:name)              { "name" }
