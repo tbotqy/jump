@@ -37,21 +37,37 @@ describe CollectUserStatusesService do
       end
       context "user has some statuses" do
         describe "boundary test on date-search" do
+          shared_context "user has 3 statuses tweeted around the boundary_time" do
+            let(:boundary_unixtime) { boundary_time.to_i }
+            let!(:status_tweeted_before_boundary) do
+              status = create(:status, id: 1, user: user, text: "to be ordered as 2nd item", twitter_created_at: boundary_unixtime - 1)
+              create_list(:entity, 2, status: status)
+              status
+            end
+            let!(:status_tweeted_at_boundary) do
+              # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
+              status = create(:status, id: 2, user: user, text: "to be ordered as 1st item",  twitter_created_at: boundary_unixtime)
+              create_list(:entity, 2, status: status)
+              status
+            end
+            let!(:status_tweeted_after_boundary) do
+              status = create(:status, user: user, text: "to be filtered", twitter_created_at: boundary_unixtime + 1)
+              create_list(:entity, 2, status: status)
+              status
+            end
+          end
+
+          shared_examples "only includes those statuses that are tweeted at or before boundary time" do
+            it { is_expected.to contain_exactly(status_tweeted_before_boundary, status_tweeted_at_boundary) }
+          end
+
           describe "yearly search" do
             describe "it only returns the statuses that have been tweeted at or before the end of specified year" do
               let(:user) { create(:user) }
 
               # pre-register user's statuses
-              let(:specified_year) { Time.local(year).beginning_of_year }
-              let!(:status_tweeted_at_end_of_year) do
-                create(:status, user: user, twitter_created_at: specified_year.end_of_year.to_i)
-              end
-              let!(:status_tweeted_before_end_of_year) do
-                create(:status, user: user, twitter_created_at: specified_year.end_of_year.to_i - 1)
-              end
-              let!(:status_tweeted_at_beginning_of_next_year) do
-                create(:status, user: user, twitter_created_at: specified_year.next_year.beginning_of_year.to_i)
-              end
+              let(:boundary_time) { Time.local(year).end_of_year }
+              include_context "user has 3 statuses tweeted around the boundary_time"
 
               include_context "pre-register a non-targeted user and its status"
 
@@ -60,7 +76,8 @@ describe CollectUserStatusesService do
               let(:month)   { nil }
               let(:day)     { nil }
               let(:page)    { 1 }
-              it { is_expected.to contain_exactly(status_tweeted_at_end_of_year, status_tweeted_before_end_of_year) }
+
+              include_examples "only includes those statuses that are tweeted at or before boundary time"
             end
           end
 
@@ -68,39 +85,24 @@ describe CollectUserStatusesService do
             let(:user) { create(:user) }
 
             # pre-register user's statuses
-            let(:specified_month) { Time.local(year, month).beginning_of_month }
-            let!(:status_tweeted_at_end_of_month) do
-              create(:status, user: user, twitter_created_at: specified_month.end_of_month.to_i)
-            end
-            let!(:status_tweeted_before_end_of_month) do
-              create(:status, user: user, twitter_created_at: specified_month.end_of_month.to_i - 1)
-            end
-            let!(:status_tweeted_at_beginning_of_next_month) do
-              create(:status, user: user, twitter_created_at: specified_month.next_month.beginning_of_month.to_i)
-            end
+            let(:boundary_time) { Time.local(year, month).end_of_month }
+            include_context "user has 3 statuses tweeted around the boundary_time"
 
             let(:user_id) { user.id }
             let(:year)    { 2019 }
             let(:month)   { 3 }
             let(:day)     { nil }
             let(:page)    { 1 }
-            it { is_expected.to contain_exactly(status_tweeted_at_end_of_month, status_tweeted_before_end_of_month) }
+
+            include_examples "only includes those statuses that are tweeted at or before boundary time"
           end
 
           describe "daily search" do
             let(:user) { create(:user) }
 
             # pre-register user's statuses
-            let(:specified_day) { Time.local(year, month, day).beginning_of_day }
-            let!(:status_tweeted_at_end_of_day) do
-              create(:status, user: user, twitter_created_at: specified_day.end_of_day.to_i)
-            end
-            let!(:status_tweeted_before_end_of_day) do
-              create(:status, user: user, twitter_created_at: specified_day.end_of_day.to_i - 1)
-            end
-            let!(:status_tweeted_at_beginning_of_next_day) do
-              create(:status, user: user, twitter_created_at: specified_day.next_day.beginning_of_day.to_i)
-            end
+            let(:boundary_time) { Time.local(year, month, day).end_of_day }
+            include_context "user has 3 statuses tweeted around the boundary_time"
 
             include_context "pre-register a non-targeted user and its status"
 
@@ -109,7 +111,8 @@ describe CollectUserStatusesService do
             let(:month)   { 3 }
             let(:day)     { 20 }
             let(:page)    { 1 }
-            it { is_expected.to contain_exactly(status_tweeted_at_end_of_day, status_tweeted_before_end_of_day) }
+
+            include_examples "only includes those statuses that are tweeted at or before boundary time"
           end
         end
 
