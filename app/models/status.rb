@@ -47,7 +47,7 @@ class Status < ApplicationRecord
           source: tweet.source,
           text: tweet.text,
           possibly_sensitive: tweet.possibly_sensitive? || false,
-          private_flag: tweet.user.protected_flag?
+          private_flag: tweet.user.protected?
         )
         ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
         ret
