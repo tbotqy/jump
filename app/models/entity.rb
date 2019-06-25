@@ -25,6 +25,15 @@ class Entity < ApplicationRecord
       end
   end
 
+  def as_json(_options = {})
+    {
+      url: url,
+      display_url: display_url,
+      indice_f: indice_f,
+      indice_l: indice_l
+    }
+  end
+
   def assign_by_type(type, entity)
     case type
     when :hashtags
