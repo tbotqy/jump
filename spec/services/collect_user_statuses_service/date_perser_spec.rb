@@ -75,7 +75,7 @@ describe CollectUserStatusesService::DateParser do
     subject { described_class.new(year, month, day).last_moment_of_params! }
 
     shared_examples "raises error" do
-      it { expect { subject }.to raise_error(Errors::BadRequest, "Given date(year: #{year}, month: #{month}, day: #{day}) is incomplete to be parsed to Time.") }
+      it { expect { subject }.to raise_error(Errors::InvalidParam, "Given date(year: #{year}, month: #{month}, day: #{day}) is incomplete to be parsed to Time.") }
     end
 
     context "year: 2019" do

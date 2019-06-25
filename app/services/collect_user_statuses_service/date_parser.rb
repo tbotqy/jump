@@ -23,7 +23,7 @@ class CollectUserStatusesService
         # 2019.end_of_year
         Time.local(year).end_of_year
       else
-        raise Errors::BadRequest, "Given date(year: #{year}, month: #{month}, day: #{day}) is incomplete to be parsed to Time."
+        raise Errors::InvalidParam, "Given date(year: #{year}, month: #{month}, day: #{day}) is incomplete to be parsed to Time."
       end
     end
 

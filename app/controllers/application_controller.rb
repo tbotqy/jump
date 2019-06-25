@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   rescue_from RuntimeError,                 with: :render_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
-  rescue_from Errors::BadRequest,           with: :render_400
+  rescue_from Errors::InvalidParam,         with: :render_400
   rescue_from Errors::Unauthorized,         with: :render_401
   rescue_from Errors::NotFound,             with: :render_404
 
@@ -20,7 +20,7 @@ class ApplicationController < ActionController::API
 
     def authorize_operation_for!(resource)
       unless current_user === resource
-        raise Errors::BadRequest, "Attempting to operate on other's resource."
+        raise Errors::InvalidParam, "Attempting to operate on other's resource."
       end
     end
 
