@@ -6,9 +6,9 @@ RSpec.describe "Users::Statuses", type: :request do
   describe "GET /users/:id/statuses" do
     subject { get user_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page) }
 
-    shared_context "pre-register a user and its status whose user_id is not equal with params[:id]" do
-      let!(:non_targeted_user)        { create(:user) }
-      let!(:non_targeted_user_status) { create(:status, user: non_targeted_user, twitter_created_at: Time.local(year, month, day).to_i) }
+    before do
+      # pre-register a user and its status whose user_id is not equal with params[:id]
+      create(:status, user: create(:user), twitter_created_at: Time.local(year, month, day).to_i)
     end
 
     context "not authenticated" do
@@ -70,13 +70,14 @@ RSpec.describe "Users::Statuses", type: :request do
               shared_context "user has 3 statuses tweeted around the boundary_time" do
                 let(:boundary_unixtime) { boundary_time.to_i }
                 let!(:status_tweeted_before_boundary) do
-                  status = create(:status, id: 1, user: user, text: "to be ordered as 2nd item", twitter_created_at: boundary_unixtime - 1)
+                  status = create(:status, user: user, text: "to be ordered as 2nd item", twitter_created_at: boundary_unixtime - 1)
                   create_list(:entity, 2, status: status)
                   status
                 end
                 let!(:status_tweeted_at_boundary) do
                   # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
-                  status = create(:status, id: 2, user: user, text: "to be ordered as 1st item",  twitter_created_at: boundary_unixtime)
+                  id = status_tweeted_before_boundary.id + 1
+                  status = create(:status, id: id, user: user, text: "to be ordered as 1st item",  twitter_created_at: boundary_unixtime)
                   create_list(:entity, 2, status: status)
                   status
                 end
@@ -155,8 +156,6 @@ RSpec.describe "Users::Statuses", type: :request do
                   let(:boundary_time) { Time.local(year).end_of_year }
                   include_context "user has 3 statuses tweeted around the boundary_time"
 
-                  include_context "pre-register a user and its status whose user_id is not equal with params[:id]"
-
                   let(:user_id) { user.id }
                   let(:year)    { 2019 }
                   let(:month)   { nil }
@@ -202,8 +201,6 @@ RSpec.describe "Users::Statuses", type: :request do
                   # pre-register user's statuses
                   let(:boundary_time) { Time.local(year, month, day).end_of_day }
                   include_context "user has 3 statuses tweeted around the boundary_time"
-
-                  include_context "pre-register a user and its status whose user_id is not equal with params[:id]"
 
                   let(:user_id) { user.id }
                   let(:year)    { 2019 }
