@@ -4,7 +4,12 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :not_private, -> { where(private_flag: false) }
-  scope :order_for_timeline, -> { order("twitter_created_at_reversed ASC", "status_id_str_reversed ASC") }
+  scope :order_for_timeline, -> { order(twitter_created_at_reversed: :asc, status_id_str_reversed: :asc) }
+  scope :tweeted_at_or_before, -> (time) do
+    boundary = time.to_i
+    where("twitter_created_at_reversed >= ?", -1 * boundary)
+  end
+
   after_save :update_user_timestamp
 
   class << self
@@ -65,6 +70,17 @@ class Status < ApplicationRecord
           time.all_year
         end
       end
+  end
+
+  def as_json(_options = {})
+    {
+      tweet_id:   status_id_str,
+      text:       text,
+      tweeted_at: Time.at(twitter_created_at).in_time_zone.iso8601,
+      is_retweet: is_retweet,
+      entities:   entities.as_json,
+      user:       user.as_json
+    }
   end
 
   def update_user_timestamp
