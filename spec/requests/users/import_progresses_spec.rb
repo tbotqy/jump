@@ -45,7 +45,7 @@ RSpec.describe "Users::ImportProgresses", type: :request do
           end
           context "user has some import progress records" do
             context "no status has been imported yet" do
-              let!(:user)                         { create(:user) }
+              let!(:user)                        { create(:user) }
               let!(:user_id)                     { user.id }
               let!(:tweet_import_job_progresses) { create_list(:tweet_import_job_progress, 3, user: user, count: 0, percentage_denominator: percentage_denominator) }
 
@@ -65,7 +65,7 @@ RSpec.describe "Users::ImportProgresses", type: :request do
               end
             end
             context "some statuses have been imported" do
-              let!(:user)                         { create(:user) }
+              let!(:user)                        { create(:user) }
               let!(:user_id)                     { user.id }
               let!(:statuses)                    { create_list(:status, assumed_imported_status_count, user: user) }
               let!(:entities)                    { statuses.each { |status| create(:entity, status: status) } }
