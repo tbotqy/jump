@@ -106,4 +106,36 @@ RSpec.describe TweetImportJobProgress, type: :model do
       end
     end
   end
+
+  describe "#as_json" do
+    subject { tweet_import_job_progress.as_json }
+    context "no status has been imported" do
+      let(:user)                       { create(:user) }
+      let!(:tweet_import_job_progress) { create(:tweet_import_job_progress, count: 0, user: user) }
+      it do
+        is_expected.to include(
+          percentage:  0,
+          last_status: {},
+          user:        user.as_json
+        )
+      end
+    end
+    context "some status has been imported" do
+      let(:user)                       { create(:user) }
+      let!(:statuses)                  { create_list(:status, assumed_imported_status_count, user: user) }
+      let!(:entities)                  { statuses.each { |status| create(:entity, status: status) } }
+      let(:tweet_import_job_progress)  { create(:tweet_import_job_progress, user: user, count: assumed_imported_status_count, percentage_denominator: percentage_denominator) }
+
+      let(:assumed_imported_status_count) { 3 }
+      let(:percentage_denominator)        { 200 }
+      let(:expected_percentage)           { 1 } # (3/200.to_f).floor
+      it do
+        is_expected.to include(
+          percentage:  expected_percentage,
+          last_status: statuses.last.as_json,
+          user:        user.as_json
+        )
+      end
+    end
+  end
 end

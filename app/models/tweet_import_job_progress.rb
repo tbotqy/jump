@@ -2,6 +2,7 @@
 
 class TweetImportJobProgress < ApplicationRecord
   belongs_to :user
+  has_many   :statuses, through: :user
 
   validates :percentage_denominator, presence: true, numericality: { other_than: 0 }
 
@@ -12,6 +13,14 @@ class TweetImportJobProgress < ApplicationRecord
     def latest_by_user_id(user_id)
       where(user_id: user_id).last
     end
+  end
+
+  def as_json(_options = {})
+    {
+      percentage:  percentage,
+      last_status: statuses.last.as_json || {},
+      user:        user.as_json
+    }
   end
 
   def increment_count!(by:)
