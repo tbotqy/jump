@@ -19,6 +19,14 @@ class TweetImportJobProgress < ApplicationRecord
     save!
   end
 
+  def percentage
+    if [count, percentage_denominator].any?(&:negative?)
+      raise "Calculating with some negative value. (count: #{count}, percentage_denominator: #{percentage_denominator})"
+    end
+    calculation_result = ((count / percentage_denominator.to_f) * 100).floor
+    [100, calculation_result].min
+  end
+
   def mark_as_finished!
     self.finished = true
     save!
