@@ -3,6 +3,8 @@
 class TweetImportJobProgress < ApplicationRecord
   belongs_to :user
 
+  validates :percentage_denominator, presence: true, numericality: { other_than: 0 }
+
   scope :finished, -> { where(finished: true) }
   scope :unfinished, -> { where(finished: false) }
 
