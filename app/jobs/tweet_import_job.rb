@@ -27,7 +27,7 @@ class TweetImportJob < ApplicationJob
     def process!
       largest_tweet_id_to_fetch = nil
       loop do
-        tweets = TwitterServiceClient::UserTweet.fetch_tweets_with_id_range!(user_id: @user_id, smallest_tweet_id: @smallest_tweet_id_to_fetch, largest_tweet_id: largest_tweet_id_to_fetch)
+        tweets = FetchUserTweetsByIdRangeService.call!(user_id: @user_id, min_tweet_id: @smallest_tweet_id_to_fetch, max_tweet_id: largest_tweet_id_to_fetch)
         break if tweets.blank?
         save_tweets!(tweets)
         record_progress!(tweets.count)
