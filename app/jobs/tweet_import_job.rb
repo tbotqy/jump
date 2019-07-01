@@ -56,14 +56,14 @@ class TweetImportJob < ApplicationJob
     end
 
     def job_progress
-      @job_progress ||= TweetImportJobProgress.new(job_id: job_id, user_id: @user_id, percentage_denominator: maximum_fetchable_tweet_count)
+      @job_progress ||= TweetImportJobProgress.new(job_id: job_id, user_id: @user_id, percentage_denominator: estimated_number_of_tweets_to_be_imported)
     end
 
     def user
       @user ||= User.find(@user_id)
     end
 
-    def maximum_fetchable_tweet_count
-      @maximum_fetchable_tweet_count ||= TwitterServiceClient::UserTweet.maximum_fetchable_tweet_count(user_id: @user_id)
+    def estimated_number_of_tweets_to_be_imported
+      CalculateAcquirableTweetCountService.call!(user_id: @user_id)
     end
 end
