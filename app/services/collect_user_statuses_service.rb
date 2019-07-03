@@ -46,6 +46,6 @@ class CollectUserStatusesService
     end
 
     def date_parser
-      @date_parser ||= CollectUserStatusesService::DateParser.new(year, month, day)
+      @date_parser ||= DateParser.new(year, month, day)
     end
 end
