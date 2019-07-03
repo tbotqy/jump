@@ -8,7 +8,7 @@ def presence_of(obj)
   obj
 end
 
-describe SearchStatusesService::DateParser do
+describe CollectUserStatusesService::DateParser do
   describe "#date_specified?" do
     subject { described_class.new(year, month, day).date_specified? }
 

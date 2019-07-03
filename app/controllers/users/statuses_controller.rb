@@ -7,12 +7,12 @@ module Users
     def index
       user = User.find(params[:user_id])
       authorize_operation_for!(user)
-      statuses = SearchStatusesService.call!(params_to_search_by)
+      statuses = CollectUserStatusesService.call!(params_to_collect_by)
       render json: statuses
     end
 
     private
-      def params_to_search_by
+      def params_to_collect_by
         params.permit(:user_id, :year, :month, :day, :page).to_h.symbolize_keys
       end
   end

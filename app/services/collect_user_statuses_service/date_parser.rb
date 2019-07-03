@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SearchStatusesService
+class CollectUserStatusesService
   class DateParser
     def initialize(year, month, day)
       @year  = year
