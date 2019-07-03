@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CollectUserStatusesService
+class SearchStatusesService
   class << self
     def call!(user_id:, year: nil, month: nil, day: nil, page: 1)
       new(user_id, year, month, day, page).call!
@@ -46,6 +46,6 @@ class CollectUserStatusesService
     end
 
     def date_parser
-      @date_parser ||= CollectUserStatusesService::DateParser.new(year, month, day)
+      @date_parser ||= SearchStatusesService::DateParser.new(year, month, day)
     end
 end

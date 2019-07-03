@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-describe CollectUserStatusesService do
+describe SearchStatusesService do
   describe ".call!" do
-    subject { CollectUserStatusesService.call!(user_id: user_id, year: year, month: month, day: day, page: page) }
+    subject { described_class.call!(user_id: user_id, year: year, month: month, day: day, page: page) }
 
     before do
       # pre-register a user and its status whose user_id is not equal with params[:id]
