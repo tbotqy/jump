@@ -17,7 +17,6 @@ class User < ApplicationRecord
   validates :twitter_created_at,      numericality: true, length: { maximum: 11 }
   validates :token,                   presence: true, length: { maximum: 255 }
   validates :token_secret,            presence: true, length: { maximum: 255 }
-  validates :finished_initial_import, inclusion: { in: [true, false] }
   validates :token_updated_at,        numericality: true, length: { maximum: 11 }, allow_nil: true
   validates :statuses_updated_at,     numericality: true, length: { maximum: 11 }, allow_nil: true
   validates :friends_updated_at,      numericality: true, length: { maximum: 11 }, allow_nil: true
@@ -57,10 +56,5 @@ class User < ApplicationRecord
 
   def has_any_status?
     statuses.exists?
-  end
-
-  def finish_initial_import!
-    self.finished_initial_import = true
-    save!
   end
 end

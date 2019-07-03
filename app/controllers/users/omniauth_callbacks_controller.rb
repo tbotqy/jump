@@ -5,7 +5,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = User.register_or_update!(user_params)
     sign_in user
 
-    if user.finished_initial_import?
+    if user.has_any_status?
       redirect_to user_timeline_path
     else
       redirect_to status_import_path

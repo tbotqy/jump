@@ -5,6 +5,7 @@ FactoryBot.define do
     sequence(:job_id) { |n| "abcdefg#{n}" }
     user
     count { 3200 }
+    percentage_denominator { 3200 }
     finished { false }
   end
 end

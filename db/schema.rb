@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_22_115102) do
+ActiveRecord::Schema.define(version: 2019_07_01_144212) do
+
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url"
@@ -75,6 +74,7 @@ ActiveRecord::Schema.define(version: 2019_06_22_115102) do
     t.string "job_id", limit: 36, null: false
     t.bigint "user_id", null: false
     t.integer "count", default: 0, null: false
+    t.integer "percentage_denominator", null: false
     t.boolean "finished", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(version: 2019_06_22_115102) do
     t.integer "twitter_created_at", null: false
     t.string "token", null: false
     t.string "token_secret", null: false
-    t.boolean "finished_initial_import", default: false, null: false
     t.integer "token_updated_at"
     t.integer "statuses_updated_at"
     t.integer "friends_updated_at"

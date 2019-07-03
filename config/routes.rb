@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i|show destroy| do
-    resources :statuses, only: %i|index|, module: :users
+    resources :statuses,        only: %i|index|, module: :users
+    resource  :import_progress, only: %i|show|,  module: :users
   end
 end
