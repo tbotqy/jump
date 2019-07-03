@@ -24,9 +24,8 @@ class CollectPublicStatusesService
   end
 
   private
+    include DateParsable
     attr_reader :year, :month, :day, :page
-
-    delegate :date_specified?, :last_moment_of_params!, to: :date_parser
 
     def fetch_public_statuses_all
       @collection = Status.not_private.includes(:entities)
@@ -42,9 +41,5 @@ class CollectPublicStatusesService
 
     def check_if_collection_exists!
       raise Errors::NotFound, "No status found." unless @collection.exists?
-    end
-
-    def date_parser
-      @date_parser ||= DateParser.new(year, month, day)
     end
 end
