@@ -31,17 +31,23 @@ RSpec.describe CalculateAcquirableTweetCountService do
         context "diff > 3200" do
           let(:existing_status_count) { 1 }
           let(:total_tweet_count)     { 3202 }
-          it { is_expected.to eq 3200 }
+          it "always be 3200" do
+            is_expected.to eq 3200
+          end
         end
         context "diff == 3200" do
           let(:existing_status_count) { 2 }
           let(:total_tweet_count)     { 3202 }
-          it { is_expected.to eq 3200 }
+          it "must be 3200( == diff)" do
+            is_expected.to eq 3200
+          end
         end
         context "diff < 3200" do
           let(:existing_status_count) { 3 }
           let(:total_tweet_count)     { 3202 }
-          it { is_expected.to eq (3202 - 3) }
+          it "eq with diff" do
+            is_expected.to eq (3202 - 3)
+          end
         end
       end
     end
