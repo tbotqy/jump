@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :followee do
-    twitter_id { 123456789 }
+    sequence(:twitter_id) { |n| "123456789#{n}".to_i }
   end
 end
