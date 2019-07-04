@@ -15,6 +15,8 @@ class UpdateUserAccountService
       fetch_fresh_data!
     end
 
+    attr_reader :user_id
+
     def call!
       target_user.update!(
         name:        @user_info.name,
@@ -24,14 +26,13 @@ class UpdateUserAccountService
       )
     end
 
-  private
     def fetch_fresh_data!
-      client = TwitterRestClient.by_user_id(@user_id)
+      client = TwitterRestClient.by_user_id(user_id)
       @user_info    = client.user
       @setting_info = client.settings
     end
 
     def target_user
-      User.find(@user_id)
+      User.find(user_id)
     end
 end
