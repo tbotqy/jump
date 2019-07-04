@@ -13,11 +13,11 @@ class CalculateAcquirableTweetCountService
   end
 
   private
-    attr_reader :user_id
-
     def initialize(user_id)
       @user_id = user_id
     end
+
+    attr_reader :user_id
 
     def call!
       [TRACEABLE_TWEET_COUNT_LIMIT, not_imported_tweet_count].min
