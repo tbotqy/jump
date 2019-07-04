@@ -33,7 +33,6 @@ class PullFolloweesService
       User.find(user_id).update_attribute(:friends_updated_at, Time.now.utc.to_i)
     end
 
-  private
     def difference_exists?
       existing_friend_twitter_ids != fresh_friend_twitter_ids
     end
