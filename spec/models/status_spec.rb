@@ -3,6 +3,20 @@
 require "rails_helper"
 
 describe Status do
+  describe ".not_private" do
+    subject { Status.not_private }
+    context "no record matches" do
+      before { create_list(:status, 3, private_flag: true) }
+      it { is_expected.to be_none }
+      it_behaves_like "a scope"
+    end
+    context "some record matches" do
+      let!(:public_statuses)  { create_list(:status, 3, private_flag: false) }
+      let!(:private_statuses) { create_list(:status, 3, private_flag: true) }
+      it { is_expected.to contain_exactly(*public_statuses) }
+      it_behaves_like "a scope"
+    end
+  end
   describe ".tweeted_at_or_before" do
     subject { Status.tweeted_at_or_before(targeting_time) }
     context "no record matches" do

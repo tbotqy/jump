@@ -25,9 +25,8 @@ class CollectUserStatusesService
   end
 
   private
+    include DateParsable
     attr_reader :user_id, :year, :month, :day, :page
-
-    delegate :date_specified?, :last_moment_of_params!, to: :date_parser
 
     def fetch_user_statuses_all!
       @collection = User.find(user_id).statuses.includes(:entities)
@@ -43,9 +42,5 @@ class CollectUserStatusesService
 
     def check_if_collection_exists!
       raise Errors::NotFound, "No status found." unless @collection.exists?
-    end
-
-    def date_parser
-      @date_parser ||= CollectUserStatusesService::DateParser.new(year, month, day)
     end
 end
