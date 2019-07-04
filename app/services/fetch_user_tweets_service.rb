@@ -13,13 +13,13 @@ class FetchUserTweetsService
   end
 
   private
-    attr_reader :user_id, :tweeted_after_id, :tweeted_before_id
-
     def initialize(user_id, tweeted_after_id, tweeted_before_id)
       @user_id           = user_id
       @tweeted_after_id  = tweeted_after_id
       @tweeted_before_id = tweeted_before_id
     end
+
+    attr_reader :user_id, :tweeted_after_id, :tweeted_before_id
 
     def call!
       twitter_rest_client.user_timeline(twitter_id, api_params)
