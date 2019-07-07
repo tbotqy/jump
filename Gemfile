@@ -47,7 +47,7 @@ group :development, :test do
   gem "database_cleaner"
   gem "rspec_junit_formatter"
   gem "rubocop", require: false
-  gem "rubocop-rails_config", require: false
+  gem "rubocop-rails_config", require: false, git: "https://github.com/grimmxsleeper/rubocop-rails_config"
   gem "rubocop-rspec"
   gem "bullet"
 end
