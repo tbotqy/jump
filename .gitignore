@@ -29,3 +29,4 @@ config/environments/*.local.yml
 .env
 
 .DS_Store
+development
