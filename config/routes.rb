@@ -18,8 +18,10 @@ Rails.application.routes.draw do
   resources :statuses, only: %i|index|
 
   resources :users, only: %i|show destroy| do
-    resources :statuses,        only: %i|index|, module: :users
-    resources :followee_statuses, only: %i|index|, module: :users
-    resource  :import_progress, only: %i|show|,  module: :users
+    scope module: :users do
+      resources :statuses,          only: %i|index|
+      resources :followee_statuses, only: %i|index|
+      resource  :import_progress,   only: %i|show|
+    end
   end
 end
