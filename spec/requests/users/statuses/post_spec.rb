@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe "Users::Statuses", type: :request do
-  describe "PUT /users/:id/statuses" do
-    subject { put user_statuses_path(user_id: user_id) }
+  describe "POST /users/:id/statuses" do
+    subject { post user_statuses_path(user_id: user_id) }
     shared_examples "doesn't enqueue the job" do
       it { expect(ImportTweetsJob).not_to have_been_enqueued }
     end

@@ -11,8 +11,8 @@ module Users
       render json: statuses
     end
 
-    # PUT /users/:id/statuses
-    def update
+    # POST /users/:id/statuses
+    def create
       user = User.find(params[:user_id])
       authorize_operation_for!(user)
       ImportTweetsJob.perform_later(user_id: params[:user_id])
