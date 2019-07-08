@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PullFolloweesService
+class ImportFolloweesService
   private_class_method :new
 
   class << self
