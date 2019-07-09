@@ -17,28 +17,26 @@ class ImportFolloweesService
     attr_reader :user_id
 
     def call!
-      delete_and_register!
-      update_timestamp!
+      renew!
+      log!
     end
 
-    def delete_and_register!
-      Followee.user_id(user_id).delete_all
-      Followee.register!(user_id, fresh_friend_twitter_ids)
+    def renew!
+      ActiveRecord::Base.transaction do
+        user.followees.delete_all
+        fresh_twitter_ids.each { |id| user.followees.create!(twitter_id: id) }
+      end
     end
 
-    def update_timestamp!
-      User.find(user_id).update_attribute(:friends_updated_at, Time.now.utc.to_i)
+    def log!
+      user.update!(friends_updated_at: Time.now.utc.to_i)
     end
 
-    def difference_exists?
-      existing_friend_twitter_ids != fresh_friend_twitter_ids
-    end
-
-    def existing_friend_twitter_ids
-      @existing_friend_twitter_ids ||= Followee.user_id(user_id).pluck(:twitter_id).sort
-    end
-
-    def fresh_friend_twitter_ids
+    def fresh_twitter_ids
       @fresh_friend_twitter_ids ||= TwitterServiceClient::Friend.fetch_friend_twitter_ids(user_id: user_id).sort
+    end
+
+    def user
+      @user ||= User.find(user_id)
     end
 end
