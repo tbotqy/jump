@@ -17,15 +17,15 @@ class ImportFolloweesService
     attr_reader :user_id
 
     def call!
-      renew!
-      log!
+      ActiveRecord::Base.transaction do
+        renew!
+        log!
+      end
     end
 
     def renew!
-      ActiveRecord::Base.transaction do
-        user.followees.delete_all
-        fresh_twitter_ids.each { |id| user.followees.create!(twitter_id: id) }
-      end
+      user.followees.delete_all
+      fresh_twitter_ids.each { |id| user.followees.create!(twitter_id: id) }
     end
 
     def log!
