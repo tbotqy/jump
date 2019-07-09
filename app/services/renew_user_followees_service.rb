@@ -33,7 +33,7 @@ class RenewUserFolloweesService
     end
 
     def fresh_twitter_ids
-      @fresh_friend_twitter_ids ||= TwitterServiceClient::Friend.fetch_friend_twitter_ids(user_id: user_id).sort
+      FetchUserFolloweeTwitterIdsService.call!(user_id: user_id)
     end
 
     def user
