@@ -17,11 +17,8 @@ class ImportFolloweesService
     attr_reader :user_id
 
     def call!
-      if difference_exists?
-        delete_and_register!
-      else
-        update_timestamp!
-      end
+      delete_and_register!
+      update_timestamp!
     end
 
     def delete_and_register!
