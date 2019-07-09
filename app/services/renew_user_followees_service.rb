@@ -25,7 +25,7 @@ class RenewUserFolloweesService
 
     def renew!
       user.followees.delete_all
-      fresh_twitter_ids.each { |id| user.followees.create!(twitter_id: id) }
+      fresh_twitter_ids.each { |twitter_id| user.followees.create!(twitter_id: twitter_id) }
     end
 
     def log!

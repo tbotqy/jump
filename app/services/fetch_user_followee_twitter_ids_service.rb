@@ -11,8 +11,8 @@ class FetchUserFolloweeTwitterIdsService
 
   private
     def initialize(user_id)
-      @user_id      = user_id
-      @next_cursor  = -1
+      @user_id              = user_id
+      @next_cursor          = -1
       @followee_twitter_ids = []
     end
 
@@ -32,10 +32,10 @@ class FetchUserFolloweeTwitterIdsService
     end
 
     def twitter_id
-      @twitter_id ||= User.find(@user_id).twitter_id
+      @twitter_id ||= User.find(user_id).twitter_id
     end
 
     def twitter_rest_client
-      @twitter_rest_client ||= TwitterRestClient.by_user_id(@user_id)
+      @twitter_rest_client ||= TwitterRestClient.by_user_id(user_id)
     end
 end
