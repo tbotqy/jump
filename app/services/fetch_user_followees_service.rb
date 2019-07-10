@@ -25,14 +25,10 @@ class FetchUserFolloweesService
 
     def fetch_followee_twitter_ids_all!
       while !@next_cursor.zero?
-        followees              = twitter_rest_client.friend_ids(twitter_id, cursor: @next_cursor)
+        followees              = twitter_rest_client.friend_ids(cursor: @next_cursor)
         @followee_twitter_ids += followees.attrs[:ids]
         @next_cursor           = followees.attrs[:next_cursor]
       end
-    end
-
-    def twitter_id
-      @twitter_id ||= User.find(user_id).twitter_id
     end
 
     def twitter_rest_client
