@@ -59,8 +59,8 @@ describe RenewUserFolloweesService do
                 twitter_ids_before_renew.each { |twitter_id| create(:followee, user: user, twitter_id: twitter_id) }
                 # stub API response
                 allow_any_instance_of(described_class).to receive(:fresh_twitter_ids).and_return(twitter_ids_after_renew)
-                # stub timestamp that is used as timestamp
-                allow_any_instance_of(described_class).to receive(:current_time).and_return(timestamp_after_renew)
+                # assume at when logged to be timestamp_after_renew
+                travel_to(Time.at(timestamp_after_renew).utc)
                 # get logging to fail
                 allow_any_instance_of(User).to receive(:update!).with(friends_updated_at: timestamp_after_renew).and_raise(ActiveRecord::RecordInvalid)
               end
@@ -86,8 +86,8 @@ describe RenewUserFolloweesService do
                 before do
                   # stub API response
                   allow_any_instance_of(described_class).to receive(:fresh_twitter_ids).and_return(twitter_ids_after_renew)
-                  # stub timestamp that is used as timestamp
-                  allow_any_instance_of(described_class).to receive(:current_time).and_return(timestamp_after_renew)
+                  # assume at when logged to be timestamp_after_renew
+                  travel_to(Time.at(timestamp_after_renew).utc)
                 end
                 it_behaves_like "updates user's followee"
                 it_behaves_like "updates timestamp"
@@ -104,8 +104,8 @@ describe RenewUserFolloweesService do
                   twitter_ids_before_renew.each { |twitter_id| create(:followee, user: user, twitter_id: twitter_id) }
                   # stub API response
                   allow_any_instance_of(described_class).to receive(:fresh_twitter_ids).and_return(twitter_ids_after_renew)
-                  # stub timestamp that is used as timestamp
-                  allow_any_instance_of(described_class).to receive(:current_time).and_return(timestamp_after_renew)
+                  # assume at when logged to be timestamp_after_renew
+                  travel_to(Time.at(timestamp_after_renew).utc)
                 end
                 it_behaves_like "updates user's followee"
                 it_behaves_like "updates timestamp"
