@@ -32,7 +32,7 @@ describe RenewUserFolloweesService do
         context "failed to acquire the latest followees" do
           let!(:user)    { create(:user) }
           let!(:user_id) { user.id }
-          before { allow(FetchUserFolloweeTwitterIdsService).to receive(:call!).and_raise(RuntimeError) }
+          before { allow(FetchUserFolloweesService).to receive(:call!).and_raise(RuntimeError) }
           it { is_expected.to raise_error(RuntimeError) }
           it_behaves_like "doesn't renew user's followees"
           it_behaves_like "doesn't update timestamp"

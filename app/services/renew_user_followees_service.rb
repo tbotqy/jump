@@ -33,7 +33,7 @@ class RenewUserFolloweesService
     end
 
     def fresh_twitter_ids
-      FetchUserFolloweeTwitterIdsService.call!(user_id: user_id)
+      FetchUserFolloweesService.call!(user_id: user_id)
     end
 
     def user

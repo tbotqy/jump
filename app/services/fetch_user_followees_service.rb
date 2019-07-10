@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FetchUserFolloweeTwitterIdsService
+class FetchUserFolloweesService
   private_class_method :new
 
   class << self
