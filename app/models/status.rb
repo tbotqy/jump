@@ -26,16 +26,6 @@ class Status < ApplicationRecord
       end
     end
 
-    # date_string: YYYY(-M(-D))
-    def tweeted_in(date_string, limit = 10)
-      # search the statuses tweeted in given date
-      date_range = date_range_of(date_string)
-      from = date_range.first.to_i
-      to   = date_range.last.to_i
-
-      includes(:user, :entities).where(twitter_created_at_reversed: (-1 * to)..(-1 * from)).limit(limit).order_for_timeline
-    end
-
     private
       def new_by_tweet(tweet)
         ret = new(
@@ -56,19 +46,6 @@ class Status < ApplicationRecord
         )
         ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
         ret
-      end
-
-      # date_string: YYYY(-M(-D))
-      def date_range_of(date_string)
-        year, month, day = date_string.split("-")
-        time = Time.zone.local(year, month, day)
-        if year && month && day
-          time.all_day
-        elsif year && month
-          time.all_month
-        elsif year
-          time.all_year
-        end
       end
   end
 
