@@ -29,7 +29,7 @@ class RenewUserFolloweesService
     end
 
     def log!
-      user.update!(friends_updated_at: current_time)
+      user.update!(friends_updated_at: now)
     end
 
     def fresh_twitter_ids
@@ -40,7 +40,7 @@ class RenewUserFolloweesService
       @user ||= User.find(user_id)
     end
 
-    def current_time
+    def now
       Time.now.utc.to_i
     end
 end
