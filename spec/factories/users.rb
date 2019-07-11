@@ -33,15 +33,6 @@ FactoryBot.define do
       end
     end
 
-    trait(:with_friend) do
-      after(:create) do |u|
-        FactoryBot.create(:followee, user_id: u.id)
-      end
-    end
-
-    trait(:with_no_friend) do
-    end
-
     trait(:with_status) do
       after(:create) do |u|
         FactoryBot.create(:status, user_id: u.id)
