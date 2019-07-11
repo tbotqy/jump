@@ -14,7 +14,6 @@ FactoryBot.define do
     token_secret { "test_token_secret" }
     token_updated_at { 1482676460 }
     statuses_updated_at { 1482676461 }
-    friends_updated_at { 1482774672 }
     closed_only { false }
 
     trait(:with_statuses_and_followees) do

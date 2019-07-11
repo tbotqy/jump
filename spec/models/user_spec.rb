@@ -55,7 +55,6 @@ describe User do
           token_secret:            "token_secret_before_update",
           token_updated_at:        1482676460,
           statuses_updated_at:     1482676461,
-          friends_updated_at:      1482774672,
           closed_only: false
         }
       end

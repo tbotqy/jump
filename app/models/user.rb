@@ -19,7 +19,6 @@ class User < ApplicationRecord
   validates :token_secret,            presence: true, length: { maximum: 255 }
   validates :token_updated_at,        numericality: true, length: { maximum: 11 }, allow_nil: true
   validates :statuses_updated_at,     numericality: true, length: { maximum: 11 }, allow_nil: true
-  validates :friends_updated_at,      numericality: true, length: { maximum: 11 }, allow_nil: true
   validates :closed_only,             inclusion: { in: [true, false] }, allow_nil: true
 
   class << self

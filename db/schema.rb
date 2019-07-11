@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_01_144212) do
+ActiveRecord::Schema.define(version: 2019_07_11_031222) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -94,7 +94,6 @@ ActiveRecord::Schema.define(version: 2019_07_01_144212) do
     t.string "token_secret", null: false
     t.integer "token_updated_at"
     t.integer "statuses_updated_at"
-    t.integer "friends_updated_at"
     t.boolean "closed_only", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
