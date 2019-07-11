@@ -4,7 +4,7 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :not_private, -> { where(private_flag: false) }
-  scope :order_for_timeline, -> { order(twitter_created_at_reversed: :asc, status_id_str_reversed: :asc) }
+  scope :order_for_timeline, -> { order(twitter_created_at_reversed: :asc, tweet_id_reversed: :asc) }
   scope :tweeted_at_or_before, -> (time) do
     boundary = time.to_i
     where("twitter_created_at_reversed >= ?", -1 * boundary)
@@ -29,9 +29,9 @@ class Status < ApplicationRecord
     private
       def new_by_tweet(tweet)
         ret = new(
-          status_id_str: tweet.attrs[:id_str],
-          status_id_str_reversed: -1 * tweet.attrs[:id_str].to_i,
-          in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
+          tweet_id: tweet.attrs[:id_str],
+          tweet_id_reversed: -1 * tweet.attrs[:id_str].to_i,
+          in_reply_to_tweet_id: tweet.attrs[:in_reply_to_status_id_str],
           in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
           in_reply_to_screen_name: tweet.in_reply_to_screen_name,
           place_full_name: tweet.place.try!(:full_name),
@@ -51,7 +51,7 @@ class Status < ApplicationRecord
 
   def as_json(_options = {})
     {
-      tweet_id:   status_id_str,
+      tweet_id:   tweet_id,
       text:       text,
       tweeted_at: Time.at(twitter_created_at).in_time_zone.iso8601,
       is_retweet: is_retweet,

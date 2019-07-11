@@ -37,17 +37,17 @@ describe Status do
 
   describe "#as_json" do
     subject { status.as_json }
-    let(:status_id_str)      { 12345 }
+    let(:tweet_id)           { 12345 }
     let(:text)               { "text" }
     let(:twitter_created_at) { Time.local(2019, 3, 1).to_i }
     let(:is_retweet)         { false }
 
-    let!(:status) { create(:status, status_id_str: status_id_str, text: text, twitter_created_at: twitter_created_at, is_retweet: is_retweet) }
+    let!(:status) { create(:status, tweet_id: tweet_id, text: text, twitter_created_at: twitter_created_at, is_retweet: is_retweet) }
 
     context "status has no entity" do
       it do
         is_expected.to include(
-          tweet_id:   status_id_str,
+          tweet_id:   tweet_id,
           text:       text,
           tweeted_at: Time.at(twitter_created_at),
           is_retweet: is_retweet,
@@ -61,7 +61,7 @@ describe Status do
       let!(:entities) { create_list(:entity, 3, status: status) }
       it do
         is_expected.to include(
-          tweet_id:   status_id_str,
+          tweet_id:   tweet_id,
           text:       text,
           tweeted_at: Time.at(twitter_created_at),
           is_retweet: is_retweet,

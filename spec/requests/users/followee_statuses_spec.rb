@@ -359,7 +359,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                 describe "values" do
                   it "contains actual registered values in each item" do
                     expect(response.parsed_body.first.deep_symbolize_keys).to include(
-                      tweet_id:   status_tweeted_at_boundary.status_id_str,
+                      tweet_id:   status_tweeted_at_boundary.tweet_id,
                       text:       status_tweeted_at_boundary.text,
                       tweeted_at: Time.at(status_tweeted_at_boundary.twitter_created_at).in_time_zone.iso8601,
                       is_retweet: status_tweeted_at_boundary.is_retweet,
@@ -367,7 +367,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                       user:       status_tweeted_at_boundary.user.as_json
                     )
                     expect(response.parsed_body.last.deep_symbolize_keys).to include(
-                      tweet_id:   status_tweeted_before_boundary.status_id_str,
+                      tweet_id:   status_tweeted_before_boundary.tweet_id,
                       text:       status_tweeted_before_boundary.text,
                       tweeted_at: Time.at(status_tweeted_before_boundary.twitter_created_at).in_time_zone.iso8601,
                       is_retweet: status_tweeted_before_boundary.is_retweet,
