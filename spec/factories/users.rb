@@ -8,7 +8,7 @@ FactoryBot.define do
     name { "test_name" }
     screen_name { "test_screen_name" }
     protected_flag { false }
-    profile_image_url_https { "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg" }
+    avatar_url { "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg" }
     twitter_created_at { 1342689117 }
     access_token { "test_access_token" }
     access_token_secret { "test_access_token_secret" }

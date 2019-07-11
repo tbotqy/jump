@@ -38,19 +38,19 @@ RSpec.describe "Users", type: :request do
             it_behaves_like "request for the other user's resource"
           end
           context "given id is an authenticated user's id" do
-            let(:name)              { "name" }
-            let(:screen_name)       { "screen_name" }
-            let(:profile_image_url) { "profile_image_url" }
-            let(:status_count)      { 10 }
-            let(:followee_count)    { 20 }
+            let(:name)           { "name" }
+            let(:screen_name)    { "screen_name" }
+            let(:avatar_url)     { "avatar_url" }
+            let(:status_count)   { 10 }
+            let(:followee_count) { 20 }
             let(:user) do
               create(:user,
                 :with_statuses_and_followees,
-                name:                    name,
-                screen_name:             screen_name,
-                profile_image_url_https: profile_image_url,
-                status_count:            status_count,
-                followee_count:          followee_count
+                name:           name,
+                screen_name:    screen_name,
+                avatar_url:     avatar_url,
+                status_count:   status_count,
+                followee_count: followee_count
               )
             end
             let(:id) { user.id }
@@ -62,11 +62,11 @@ RSpec.describe "Users", type: :request do
             it_behaves_like "respond with status code", :ok
             it do
               expect(response.body).to eq({
-                name:              name,
-                screen_name:       screen_name,
-                profile_image_url: profile_image_url,
-                status_count:      status_count,
-                followee_count:    followee_count
+                name:           name,
+                screen_name:    screen_name,
+                avatar_url:     avatar_url,
+                status_count:   status_count,
+                followee_count: followee_count
               }.to_json)
             end
           end
