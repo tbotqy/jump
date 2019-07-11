@@ -15,7 +15,7 @@ FactoryBot.define do
     is_retweet { 0 }
     rt_name { nil }
     rt_screen_name { nil }
-    rt_profile_image_url_https { nil }
+    rt_avatar_url { nil }
     rt_text { nil }
     rt_source { nil }
     rt_created_at { nil }

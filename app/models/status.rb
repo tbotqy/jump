@@ -68,7 +68,7 @@ class Status < ApplicationRecord
     self.is_retweet = true
     self.rt_name = retweeted_status.user.name
     self.rt_screen_name = retweeted_status.user.screen_name
-    self.rt_profile_image_url_https = retweeted_status.user.profile_image_url_https.to_s
+    self.rt_avatar_url = retweeted_status.user.profile_image_url_https.to_s
     self.rt_text = retweeted_status.text
     self.rt_source = retweeted_status.source
     self.rt_created_at = retweeted_status.created_at.to_i
