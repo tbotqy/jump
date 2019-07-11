@@ -17,19 +17,14 @@ class RenewUserFolloweesService
     attr_reader :user_id
 
     def call!
-      ActiveRecord::Base.transaction do
-        renew!
-        log!
-      end
+      renew!
     end
 
     def renew!
-      user.followees.delete_all
-      fresh_twitter_ids.each { |twitter_id| user.followees.create!(twitter_id: twitter_id) }
-    end
-
-    def log!
-      user.update!(friends_updated_at: now)
+      ActiveRecord::Base.transaction do
+        user.followees.delete_all
+        fresh_twitter_ids.each { |twitter_id| user.followees.create!(twitter_id: twitter_id) }
+      end
     end
 
     def fresh_twitter_ids
