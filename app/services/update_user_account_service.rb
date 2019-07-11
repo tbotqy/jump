@@ -27,7 +27,7 @@ class UpdateUserAccountService
     end
 
     def fetch_fresh_data!
-      client = TwitterRestClient.by_user_id(user_id)
+      client = TwitterRestClient.by_user_id!(user_id)
       @user_info    = client.user
       @setting_info = client.settings
     end

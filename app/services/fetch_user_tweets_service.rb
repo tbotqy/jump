@@ -45,6 +45,6 @@ class FetchUserTweetsService
     end
 
     def twitter_rest_client
-      TwitterRestClient.by_user_id(user_id)
+      TwitterRestClient.by_user_id!(user_id)
     end
 end

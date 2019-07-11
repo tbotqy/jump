@@ -29,7 +29,7 @@ class CalculateAcquirableTweetCountService
     end
 
     def total_tweet_count
-      @total_tweet_count ||= TwitterRestClient.by_user_id(user_id).user.tweets_count
+      @total_tweet_count ||= TwitterRestClient.by_user_id!(user_id).user.tweets_count
     end
 
     def existing_status_count
