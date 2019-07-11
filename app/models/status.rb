@@ -31,7 +31,7 @@ class Status < ApplicationRecord
         ret = new(
           status_id_str: tweet.attrs[:id_str],
           tweet_id_reversed: -1 * tweet.attrs[:id_str].to_i,
-          in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
+          in_reply_to_tweet_id: tweet.attrs[:in_reply_to_status_id_str],
           in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
           in_reply_to_screen_name: tweet.in_reply_to_screen_name,
           place_full_name: tweet.place.try!(:full_name),

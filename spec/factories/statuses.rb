@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :status do
     user
     status_id_str { 111111111111111111 }
-    in_reply_to_status_id_str { nil }
+    in_reply_to_tweet_id { nil }
     in_reply_to_user_id_str { nil }
     in_reply_to_screen_name { nil }
     place_full_name { nil }
