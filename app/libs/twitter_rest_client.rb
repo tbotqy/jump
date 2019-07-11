@@ -2,7 +2,7 @@
 
 class TwitterRestClient
   class << self
-    def by_user_id(user_id)
+    def by_user_id!(user_id)
       user = User.find(user_id)
       Twitter::REST::Client.new do |config|
         config.consumer_key        = Settings.twitter.consumer_key
