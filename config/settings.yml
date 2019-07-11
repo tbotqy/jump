@@ -2,6 +2,6 @@ site_name: <%= ENV.fetch('SITE_NAME') %>
 
 twitter:
   consumer_key: <%= ENV.fetch('TWITTER_CONSUMER_KEY') %>
-  consumer_secret_key: <%= ENV.fetch('TWITTER_CONSUMER_SECRET_KEY') %>
+  consumer_secret: <%= ENV.fetch('TWITTER_CONSUMER_SECRET') %>
 
 sidekiq_dashboard_user_id: <%= ENV.fetch('SIDEKIQ_DASHBOARD_USER_ID') %>

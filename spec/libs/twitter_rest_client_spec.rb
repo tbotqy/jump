@@ -15,10 +15,10 @@ describe TwitterRestClient do
       let(:access_token)        { "access_token" }
       let(:access_token_secret) { "access_token_secret" }
 
-      let!(:user_id) { create(:user, token: access_token, token_secret: access_token_secret).id }
+      let!(:user_id) { create(:user, access_token: access_token, access_token_secret: access_token_secret).id }
       before do
         allow(Settings).to receive_message_chain(:twitter, :consumer_key).and_return(consumer_key)
-        allow(Settings).to receive_message_chain(:twitter, :consumer_secret_key).and_return(consumer_secret)
+        allow(Settings).to receive_message_chain(:twitter, :consumer_secret).and_return(consumer_secret)
       end
       it { is_expected.to be_a(Twitter::REST::Client) }
       it "has been configured to have all the credentials set" do

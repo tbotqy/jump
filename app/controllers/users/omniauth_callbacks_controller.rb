@@ -47,8 +47,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         screen_name:        screen_name,
         protected_flag:     protected,
         profile_image_url_https: profile_image_url_https,
-        token:              token,
-        token_secret:       secret
+        access_token:        token,
+        access_token_secret: secret
       }
     end
 

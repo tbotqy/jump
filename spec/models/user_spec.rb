@@ -16,12 +16,12 @@ describe User do
           protected_flag:          true,
           profile_image_url_https: "passed_url",
           twitter_created_at:      "Thu Jul 4 00:00:00 +0000 2013",
-          token:                   "passed_token",
-          token_secret:            "passed_token_secret"
+          access_token:            "passed_access_token",
+          access_token_secret:     "passed_access_token_secret"
         }
       end
       context "failed to register" do
-        let(:params) { valid_params.update(token: nil) }
+        let(:params) { valid_params.update(access_token: nil) }
         it { expect { subject }.to raise_error(ActiveRecord::RecordInvalid) }
         it "doesn't increase the total number of users" do
           expect { subject rescue nil }.not_to change { User.count }
@@ -51,8 +51,8 @@ describe User do
           protected_flag:          false,
           profile_image_url_https: "url_before_update",
           twitter_created_at:      Time.zone.parse("Thu Jul 4 00:00:00 +0000 2013").to_i,
-          token:                   "token_before_update",
-          token_secret:            "token_secret_before_update",
+          access_token:            "access_token_before_update",
+          access_token_secret:     "access_token_secret_before_update",
           token_updated_at:        1482676460,
           statuses_updated_at:     1482676461,
           closed_only: false
@@ -68,12 +68,12 @@ describe User do
           protected_flag:          true,
           profile_image_url_https: "url_after_update",
           twitter_created_at:      "Thu Jul 4 00:00:00 +0000 2013",
-          token:                   "token_after_update",
-          token_secret:            "token_secret_after_update"
+          access_token:            "access_token_after_update",
+          access_token_secret:     "access_token_secret_after_update"
         }
       end
       context "failed to update" do
-        let(:params) { valid_params.update(token: nil) }
+        let(:params) { valid_params.update(access_token: nil) }
         it { expect { subject }.to raise_error(ActiveRecord::RecordInvalid) }
         it "doesn't increase the total number of users" do
           expect { subject rescue nil }.not_to change { User.count }
@@ -89,7 +89,7 @@ describe User do
           expect { subject }.not_to change { User.count }
         end
         describe "all the attrs of targeting user are updated" do
-          %i|name screen_name protected_flag profile_image_url_https token token_secret|.each do |attr|
+          %i|name screen_name protected_flag profile_image_url_https access_token access_token_secret|.each do |attr|
             it "updates ##{attr} with given one" do
               expect { subject }.to change { User.find_by!(uid: params[:uid]).send(attr) }.from(attrs_before_update[attr]).to(params[attr])
             end
