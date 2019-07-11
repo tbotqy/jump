@@ -10,8 +10,8 @@ FactoryBot.define do
     protected_flag { false }
     profile_image_url_https { "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg" }
     twitter_created_at { 1342689117 }
-    token { "test_token" }
-    token_secret { "test_token_secret" }
+    access_token { "test_access_token" }
+    access_token_secret { "test_access_token_secret" }
     token_updated_at { 1482676460 }
     statuses_updated_at { 1482676461 }
     closed_only { false }
