@@ -29,7 +29,7 @@ class Status < ApplicationRecord
     private
       def new_by_tweet(tweet)
         ret = new(
-          status_id_str: tweet.attrs[:id_str],
+          tweet_id: tweet.attrs[:id_str],
           tweet_id_reversed: -1 * tweet.attrs[:id_str].to_i,
           in_reply_to_tweet_id: tweet.attrs[:in_reply_to_status_id_str],
           in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
@@ -51,7 +51,7 @@ class Status < ApplicationRecord
 
   def as_json(_options = {})
     {
-      tweet_id:   status_id_str,
+      tweet_id:   tweet_id,
       text:       text,
       tweeted_at: Time.at(twitter_created_at).in_time_zone.iso8601,
       is_retweet: is_retweet,
