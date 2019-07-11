@@ -8,16 +8,16 @@ describe User do
     context "register new user" do
       let(:valid_params) do
         {
-          uid:                     "uid",
-          twitter_id:              123456789,
-          provider:                "twitter",
-          name:                    "passed_name",
-          screen_name:             "passed_screen_name",
-          protected_flag:          true,
-          profile_image_url_https: "passed_url",
-          twitter_created_at:      "Thu Jul 4 00:00:00 +0000 2013",
-          access_token:            "passed_access_token",
-          access_token_secret:     "passed_access_token_secret"
+          uid:                 "uid",
+          twitter_id:          123456789,
+          provider:            "twitter",
+          name:                "passed_name",
+          screen_name:         "passed_screen_name",
+          protected_flag:      true,
+          avatar_url:          "passed_url",
+          twitter_created_at:  "Thu Jul 4 00:00:00 +0000 2013",
+          access_token:        "passed_access_token",
+          access_token_secret: "passed_access_token_secret"
         }
       end
       context "failed to register" do
@@ -43,33 +43,33 @@ describe User do
       let!(:existing_user) { create(:user, **attrs_before_update) }
       let(:attrs_before_update) do
         {
-          uid:                     "uid",
-          twitter_id:              123456789,
-          provider:                "twitter",
-          name:                    "name_before_update",
-          screen_name:             "screen_name_before_update",
-          protected_flag:          false,
-          profile_image_url_https: "url_before_update",
-          twitter_created_at:      Time.zone.parse("Thu Jul 4 00:00:00 +0000 2013").to_i,
-          access_token:            "access_token_before_update",
-          access_token_secret:     "access_token_secret_before_update",
-          token_updated_at:        1482676460,
-          statuses_updated_at:     1482676461,
-          closed_only: false
+          uid:                 "uid",
+          twitter_id:          123456789,
+          provider:            "twitter",
+          name:                "name_before_update",
+          screen_name:         "screen_name_before_update",
+          protected_flag:      false,
+          avatar_url:          "url_before_update",
+          twitter_created_at:  Time.zone.parse("Thu Jul 4 00:00:00 +0000 2013").to_i,
+          access_token:        "access_token_before_update",
+          access_token_secret: "access_token_secret_before_update",
+          token_updated_at:    1482676460,
+          statuses_updated_at: 1482676461,
+          closed_only:         false
         }
       end
       let(:valid_params) do
         {
-          uid:                     "uid",
-          twitter_id:              123456789,
-          provider:                "twitter",
-          name:                    "name_after_update",
-          screen_name:             "screen_name_after_update",
-          protected_flag:          true,
-          profile_image_url_https: "url_after_update",
-          twitter_created_at:      "Thu Jul 4 00:00:00 +0000 2013",
-          access_token:            "access_token_after_update",
-          access_token_secret:     "access_token_secret_after_update"
+          uid:                 "uid",
+          twitter_id:          123456789,
+          provider:            "twitter",
+          name:                "name_after_update",
+          screen_name:         "screen_name_after_update",
+          protected_flag:      true,
+          avatar_url:          "url_after_update",
+          twitter_created_at:  "Thu Jul 4 00:00:00 +0000 2013",
+          access_token:        "access_token_after_update",
+          access_token_secret: "access_token_secret_after_update"
         }
       end
       context "failed to update" do
@@ -89,7 +89,7 @@ describe User do
           expect { subject }.not_to change { User.count }
         end
         describe "all the attrs of targeting user are updated" do
-          %i|name screen_name protected_flag profile_image_url_https access_token access_token_secret|.each do |attr|
+          %i|name screen_name protected_flag avatar_url access_token access_token_secret|.each do |attr|
             it "updates ##{attr} with given one" do
               expect { subject }.to change { User.find_by!(uid: params[:uid]).send(attr) }.from(attrs_before_update[attr]).to(params[attr])
             end
@@ -124,29 +124,29 @@ describe User do
 
   describe "#as_json" do
     subject { user.as_json }
-    let(:name)              { "name" }
-    let(:screen_name)       { "screen_name" }
-    let(:profile_image_url) { "profile_image_url" }
-    let(:status_count)      { 100 }
-    let(:followee_count)    { 200 }
+    let(:name)           { "name" }
+    let(:screen_name)    { "screen_name" }
+    let(:avatar_url)     { "avatar_url" }
+    let(:status_count)   { 100 }
+    let(:followee_count) { 200 }
     let(:user) do
       create(:user,
         :with_statuses_and_followees,
-        name:                    name,
-        screen_name:             screen_name,
-        profile_image_url_https: profile_image_url,
-        status_count:            status_count,
-        followee_count:          followee_count
+        name:           name,
+        screen_name:    screen_name,
+        avatar_url:     avatar_url,
+        status_count:   status_count,
+        followee_count: followee_count
       )
     end
 
     it do
       is_expected.to include(
-        name:              name,
-        screen_name:       screen_name,
-        profile_image_url: profile_image_url,
-        status_count:      status_count,
-        followee_count:    followee_count
+        name:           name,
+        screen_name:    screen_name,
+        avatar_url:     avatar_url,
+        status_count:   status_count,
+        followee_count: followee_count
       )
     end
   end
