@@ -17,6 +17,38 @@ describe Status do
       it_behaves_like "a scope"
     end
   end
+
+  describe ".order_by_newest_to_oldest" do
+    subject { Status.order_by_newest_to_oldest }
+
+    shared_examples "orders statuses by tweet_id DESC" do
+      it { expect(subject.pluck(:tweet_id)).to eq (1..5).to_a.reverse }
+    end
+
+    context "statuses are tweeted at the different times" do
+      before do
+        now = Time.now.utc.to_i
+        create(:status, tweet_id: 1, twitter_created_at: now - 4.seconds)
+        create(:status, tweet_id: 2, twitter_created_at: now - 3.seconds)
+        create(:status, tweet_id: 3, twitter_created_at: now - 2.seconds)
+        create(:status, tweet_id: 4, twitter_created_at: now - 1.second)
+        create(:status, tweet_id: 5, twitter_created_at: now)
+      end
+      it_behaves_like "orders statuses by tweet_id DESC"
+      it_behaves_like "a scope"
+    end
+    context "statuses are tweeted at the same time" do
+      before do
+        now = Time.now.utc.to_i
+        [2, 4, 1, 5, 3].each do |tweet_id|
+          create(:status, tweet_id: tweet_id, twitter_created_at: now)
+        end
+      end
+      it_behaves_like "orders statuses by tweet_id DESC"
+      it_behaves_like "a scope"
+    end
+  end
+
   describe ".tweeted_at_or_before" do
     subject { Status.tweeted_at_or_before(targeting_time) }
     context "no record matches" do
