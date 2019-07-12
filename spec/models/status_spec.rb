@@ -73,21 +73,21 @@ describe Status do
       it { expect { subject }.to raise_error(ActiveRecord::RecordNotFound) }
     end
     context "some statuses exist" do
-      context "there are three statuses tweeted at the different times" do
-        let!(:now) { Time.now.utc.to_i }
-        let!(:status_tweeted_at_the_most_recent) { create(:status, tweet_id: 3, twitter_created_at: now) }
-        let!(:status_tweeted_at_2nd_the_recent)  { create(:status, tweet_id: 2, twitter_created_at: now - 1.second) }
-        let!(:status_tweeted_at_3rd_the_recent)  { create(:status, tweet_id: 1, twitter_created_at: now - 2.seconds) }
-        it "returns the tweet_id of the status tweeted at the most recent of the three" do
-          is_expected.to eq status_tweeted_at_the_most_recent.tweet_id
-        end
+      shared_examples "returns the tweet_id of the status whose tweet_id is bigger than the other's" do
+        it { is_expected.to eq status_with_bigger_tweet_id.tweet_id }
       end
-      context "there are two statuses tweeted at the same time" do
-        let!(:now) { Time.now.utc.to_i }
-        let!(:status_with_bigger_tweet_id)  { create(:status, tweet_id: 2, twitter_created_at: now) }
-        let!(:status_with_smaller_tweet_id) { create(:status, tweet_id: 1, twitter_created_at: now) }
-        it "returns the tweet_id of the status whose tweet_id is bigger than the other's" do
-          is_expected.to eq status_with_bigger_tweet_id.tweet_id
+      describe "black box test" do
+        context "there are some statuses tweeted at the different times" do
+          let!(:now) { Time.now.utc.to_i }
+          let!(:status_with_bigger_tweet_id)  { create(:status, tweet_id: 2, twitter_created_at: now) }
+          let!(:status_with_smaller_tweet_id) { create(:status, tweet_id: 1, twitter_created_at: now - 1.seconds) }
+          it_behaves_like "returns the tweet_id of the status whose tweet_id is bigger than the other's"
+        end
+        context "there are some statuses tweeted at the same time" do
+          let!(:now) { Time.now.utc.to_i }
+          let!(:status_with_bigger_tweet_id)  { create(:status, tweet_id: 2, twitter_created_at: now) }
+          let!(:status_with_smaller_tweet_id) { create(:status, tweet_id: 1, twitter_created_at: now) }
+          it_behaves_like "returns the tweet_id of the status whose tweet_id is bigger than the other's"
         end
       end
     end
