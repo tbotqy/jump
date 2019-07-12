@@ -13,8 +13,8 @@ class Status < ApplicationRecord
   after_save :update_user_timestamp
 
   class << self
-    def most_recent_tweet_id
-      order_for_timeline.first.tweet_id
+    def most_recent_tweet_id!
+      order_for_timeline.first!.tweet_id
     end
 
     def save_tweets!(user_id, tweets)

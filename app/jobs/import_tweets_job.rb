@@ -5,16 +5,16 @@ class ImportTweetsJob < ApplicationJob
 
   def perform(user_id:)
     @user_id = user_id
-    initialize_parameter
+    initialize_parameter!
     import!
   end
 
   private
     attr_reader :user_id
 
-    def initialize_parameter
+    def initialize_parameter!
       if user.has_any_status?
-        @initial_most_recent_tweet_id = user.statuses.most_recent_tweet_id
+        @initial_most_recent_tweet_id = user.statuses.most_recent_tweet_id!
       else
         @initial_most_recent_tweet_id = nil
       end
