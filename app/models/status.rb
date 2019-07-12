@@ -4,7 +4,7 @@ class Status < ApplicationRecord
   belongs_to :user
   has_many :entities, dependent: :delete_all
   scope :not_private, -> { where(private_flag: false) }
-  scope :order_for_timeline, -> { order(twitter_created_at_reversed: :asc, tweet_id_reversed: :asc) }
+  scope :order_by_newest_to_oldest, -> { order(twitter_created_at_reversed: :asc, tweet_id_reversed: :asc) }
   scope :tweeted_at_or_before, -> (time) do
     boundary = time.to_i
     where("twitter_created_at_reversed >= ?", -1 * boundary)
@@ -14,7 +14,7 @@ class Status < ApplicationRecord
 
   class << self
     def most_recent_tweet_id!
-      order_for_timeline.first!.tweet_id
+      order_by_newest_to_oldest.first!.tweet_id
     end
 
     def save_tweets!(user_id, tweets)

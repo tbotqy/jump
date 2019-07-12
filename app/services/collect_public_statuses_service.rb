@@ -27,7 +27,7 @@ class CollectPublicStatusesService
       scope_by_date if date_specified?
       apply_pagination
       check_if_collection_exists!
-      @collection.order_for_timeline
+      @collection.order_by_newest_to_oldest
     end
 
     def fetch_public_statuses_all
