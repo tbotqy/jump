@@ -41,7 +41,7 @@ describe Status do
       it { expect { subject }.to raise_error(ActiveRecord::RecordNotFound) }
     end
     context "some statuses exist" do
-      context "three statuses tweeted at the different time exist" do
+      context "there are three statuses tweeted at the different time" do
         let!(:now) { Time.now.utc.to_i }
         let!(:status_tweeted_at_the_most_recent) { create(:status, tweet_id: 3, twitter_created_at: now) }
         let!(:status_tweeted_at_2nd_the_recent)  { create(:status, tweet_id: 2, twitter_created_at: now - 1.second) }
@@ -50,7 +50,7 @@ describe Status do
           is_expected.to eq status_tweeted_at_the_most_recent.tweet_id
         end
       end
-      context "two statuses tweeted at the same time exists" do
+      context "there are two statuses tweeted at the same time" do
         let!(:now) { Time.now.utc.to_i }
         let!(:status_with_bigger_tweet_id)  { create(:status, tweet_id: 2, twitter_created_at: now) }
         let!(:status_with_smaller_tweet_id) { create(:status, tweet_id: 1, twitter_created_at: now) }
