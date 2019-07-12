@@ -2,10 +2,11 @@
 
 class Status < ApplicationRecord
   belongs_to :user
-  has_many :entities, dependent: :delete_all
-  scope :not_private, -> { where(private_flag: false) }
+  has_many   :entities, dependent: :delete_all
+
+  scope :not_private,               -> { where(private_flag: false) }
   scope :order_by_newest_to_oldest, -> { order(twitter_created_at_reversed: :asc, tweet_id_reversed: :asc) }
-  scope :tweeted_at_or_before, -> (time) do
+  scope :tweeted_at_or_before,      -> (time) do
     boundary = time.to_i
     where("twitter_created_at_reversed >= ?", -1 * boundary)
   end
