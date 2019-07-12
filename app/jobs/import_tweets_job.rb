@@ -14,7 +14,7 @@ class ImportTweetsJob < ApplicationJob
 
     def initialize_parameter
       if user.has_any_status?
-        @initial_most_recent_tweet_id = user.status_newest_in_tweeted_time.tweet_id
+        @initial_most_recent_tweet_id = user.statuses.most_recent_tweet_id
       else
         @initial_most_recent_tweet_id = nil
       end
