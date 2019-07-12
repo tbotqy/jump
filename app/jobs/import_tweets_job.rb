@@ -33,6 +33,7 @@ class ImportTweetsJob < ApplicationJob
         oldest_id_of_all_fetched_tweets = tweets.last.id
       end
       close_progress!
+      record_timestamp!
       update_summary
     end
 
@@ -46,6 +47,10 @@ class ImportTweetsJob < ApplicationJob
 
     def close_progress!
       job_progress.mark_as_finished!
+    end
+
+    def record_timestamp!
+      user.update!(statuses_updated_at: Time.now.utc.to_i)
     end
 
     def update_summary

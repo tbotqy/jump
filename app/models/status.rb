@@ -11,8 +11,6 @@ class Status < ApplicationRecord
     where("twitter_created_at_reversed >= ?", -1 * boundary)
   end
 
-  after_save :update_user_timestamp
-
   class << self
     def most_recent_tweet_id!
       order_by_newest_to_oldest.first!.tweet_id
@@ -56,10 +54,6 @@ class Status < ApplicationRecord
       entities:   entities.as_json,
       user:       user.as_json
     }
-  end
-
-  def update_user_timestamp
-    user.update_attribute(:statuses_updated_at, Time.now.to_i)
   end
 
   def assign_retweeted_status(retweeted_status)
