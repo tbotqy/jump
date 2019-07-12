@@ -18,13 +18,10 @@ class Status < ApplicationRecord
       order_by_newest_to_oldest.first!.tweet_id
     end
 
-    def save_tweets!(user_id, tweets)
-      Array.wrap(tweets).each do |tweet|
-        status          = new_by_tweet(tweet)
-        status.user_id  = user_id
-        status.entities = Entity.bulk_new_by_tweet(tweet)
-        status.save!
-      end
+    def create_by_tweet!(tweet)
+      status          = new_by_tweet(tweet)
+      status.entities = Entity.bulk_new_by_tweet(tweet)
+      status.save!
     end
 
     private
