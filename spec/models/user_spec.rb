@@ -103,22 +103,15 @@ describe User do
   end
 
   describe "#has_any_status?" do
-    subject { User.first.has_any_status? }
-    context "user has any status" do
-      before do
-        FactoryBot.create(:user, :with_status)
-      end
-      it "returns true" do
-        is_expected.to eq true
-      end
-    end
+    subject { user.has_any_status? }
     context "user has no status" do
-      before do
-        FactoryBot.create(:user, :with_no_status)
-      end
-      it "returns false" do
-        is_expected.to eq false
-      end
+      let!(:user) { create(:user) }
+      it { is_expected.to be false }
+    end
+    context "user has some statuses" do
+      let!(:user)     { create(:user) }
+      let!(:statuses) { create_list(:status, 2, user: user) }
+      it { is_expected.to be true }
     end
   end
 

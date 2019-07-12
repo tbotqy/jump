@@ -32,14 +32,5 @@ FactoryBot.define do
         create_list(:status, evaluator.status_count, user: user)
       end
     end
-
-    trait(:with_status) do
-      after(:create) do |u|
-        FactoryBot.create(:status, user_id: u.id)
-      end
-    end
-
-    trait(:with_no_status) do
-    end
   end
 end
