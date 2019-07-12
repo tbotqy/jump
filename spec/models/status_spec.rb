@@ -35,6 +35,50 @@ describe Status do
     end
   end
 
+  describe ".most_recent_tweet_id!" do
+    subject { Status.most_recent_tweet_id! }
+    context "no status exists" do
+      it { expect { subject }.to raise_error(ActiveRecord::RecordNotFound) }
+    end
+    context "some statuses exist" do
+      context "three statuses tweeted at the different time exist" do
+        let!(:now) { Time.now.utc.to_i }
+        let!(:status_tweeted_at_the_most_recent) { create(:status, tweet_id: 3, twitter_created_at: now) }
+        let!(:status_tweeted_at_2nd_the_recent)  { create(:status, tweet_id: 2, twitter_created_at: now - 1.second) }
+        let!(:status_tweeted_at_3rd_the_recent)  { create(:status, tweet_id: 1, twitter_created_at: now - 2.seconds) }
+        it "returns the tweet_id of the status tweeted at the most recent of the three" do
+          is_expected.to eq status_tweeted_at_the_most_recent.tweet_id
+        end
+      end
+      context "two statuses tweeted at the same time exists" do
+        let!(:now) { Time.now.utc.to_i }
+        let!(:status_with_bigger_tweet_id)  { create(:status, tweet_id: 2, twitter_created_at: now) }
+        let!(:status_with_smaller_tweet_id) { create(:status, tweet_id: 1, twitter_created_at: now) }
+        it "returns the tweet_id of the status whose tweet_id is bigger than the other's" do
+          is_expected.to eq status_with_bigger_tweet_id.tweet_id
+        end
+      end
+    end
+
+    describe "user scope can be applied" do
+      let!(:now) { Time.now.utc.to_i }
+      let!(:user_with_some_statuses)       { create(:user) }
+      let!(:the_most_recent_status)        { create(:status, user: user_with_some_statuses, twitter_created_at: now,            tweet_id: 2) }
+      let!(:second_the_most_recent_status) { create(:status, user: user_with_some_statuses, twitter_created_at: now - 1.second, tweet_id: 1) }
+
+      let!(:user_with_no_status)           { create(:user) }
+      context "scoped by the user with some statuses" do
+        subject { user_with_some_statuses.statuses.most_recent_tweet_id! }
+        it { expect { subject }.not_to raise_error }
+        it { is_expected.to eq the_most_recent_status.tweet_id }
+      end
+      context "scoped by the user with no status" do
+        subject { user_with_no_status.statuses.most_recent_tweet_id! }
+        it { expect { subject }.to raise_error(ActiveRecord::RecordNotFound) }
+      end
+    end
+  end
+
   describe "#as_json" do
     subject { status.as_json }
     let(:tweet_id)           { 12345 }
