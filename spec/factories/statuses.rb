@@ -3,13 +3,13 @@
 FactoryBot.define do
   factory :status do
     user
-    tweet_id { twitter_created_at }
+    tweet_id { tweeted_at }
     in_reply_to_tweet_id { nil }
     in_reply_to_user_id_str { nil }
     in_reply_to_screen_name { nil }
     place_full_name { nil }
     retweet_count { 0 }
-    sequence(:twitter_created_at)
+    sequence(:tweeted_at)
     source { "web" }
     text { "Hello, This is a tweet in factory." }
     is_retweet { 0 }
@@ -22,7 +22,7 @@ FactoryBot.define do
     possibly_sensitive { 0 }
     private_flag { 0 }
     tweet_id_reversed { -1 * tweet_id }
-    twitter_created_at_reversed { -1 * twitter_created_at }
-    tweeted_on { Time.at(twitter_created_at).in_time_zone.to_date }
+    tweeted_at_reversed { -1 * tweeted_at }
+    tweeted_on { Time.at(tweeted_at).in_time_zone.to_date }
   end
 end

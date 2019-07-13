@@ -33,7 +33,7 @@ class Status < ApplicationRecord
           place_full_name:             tweet.place.try!(:full_name),
           retweet_count:               tweet.retweet_count,
           tweeted_on:                  Time.at(tweet.created_at.to_i).in_time_zone.to_date,
-          twitter_created_at:          Time.parse(tweet.created_at.to_s).to_i,
+          tweeted_at:                  Time.parse(tweet.created_at.to_s).to_i,
           twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
           source:                      tweet.source,
           text:                        tweet.text,
@@ -49,7 +49,7 @@ class Status < ApplicationRecord
     {
       tweet_id:   tweet_id,
       text:       text,
-      tweeted_at: Time.at(twitter_created_at).in_time_zone.iso8601,
+      tweeted_at: Time.at(tweeted_at).in_time_zone.iso8601,
       is_retweet: is_retweet,
       entities:   entities.as_json,
       user:       user.as_json

@@ -13,7 +13,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
       create(:followee, user: dummy_user, twitter_id: followee_of_dummy_user.twitter_id)
 
       time = [year, month, day].any?(&:present?) ? Time.local(year, month, day) : Time.current
-      create(:status, user: followee_of_dummy_user, twitter_created_at: time.to_i)
+      create(:status, user: followee_of_dummy_user, tweeted_at: time.to_i)
     end
 
     context "not authenticated" do
@@ -93,19 +93,19 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
               shared_context "user's followee has 3 statuses tweeted around the boundary_time" do |without_entities|
                 let(:boundary_unixtime) { boundary_time.to_i }
                 let!(:status_tweeted_before_boundary) do
-                  status = create(:status, user: followee, text: "to be ordered as 2nd item", twitter_created_at: boundary_unixtime - 1)
+                  status = create(:status, user: followee, text: "to be ordered as 2nd item", tweeted_at: boundary_unixtime - 1)
                   create_list(:entity, 2, status: status) unless without_entities
                   status
                 end
                 let!(:status_tweeted_at_boundary) do
                   # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
                   id = status_tweeted_before_boundary.id + 1
-                  status = create(:status, id: id, user: followee, text: "to be ordered as 1st item", twitter_created_at: boundary_unixtime)
+                  status = create(:status, id: id, user: followee, text: "to be ordered as 1st item", tweeted_at: boundary_unixtime)
                   create_list(:entity, 2, status: status) unless without_entities
                   status
                 end
                 let!(:status_tweeted_after_boundary) do
-                  status = create(:status, user: followee, text: "to be filtered", twitter_created_at: boundary_unixtime + 1)
+                  status = create(:status, user: followee, text: "to be filtered", tweeted_at: boundary_unixtime + 1)
                   create_list(:entity, 2, status: status) unless without_entities
                   status
                 end
@@ -231,7 +231,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                   # To test if the sort is applied, registering in random order, by using #shuffle.
                   (1..15).to_a.shuffle.each do |seconds_ago|
                     tweeted_at = Time.local(year, month, day).end_of_day - seconds_ago.seconds
-                    create(:status, user: followee, text: "#{seconds_ago}th-new status", twitter_created_at: tweeted_at.to_i)
+                    create(:status, user: followee, text: "#{seconds_ago}th-new status", tweeted_at: tweeted_at.to_i)
                   end
 
                   sign_in user
@@ -361,7 +361,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                     expect(response.parsed_body.first.deep_symbolize_keys).to include(
                       tweet_id:   status_tweeted_at_boundary.tweet_id,
                       text:       status_tweeted_at_boundary.text,
-                      tweeted_at: Time.at(status_tweeted_at_boundary.twitter_created_at).in_time_zone.iso8601,
+                      tweeted_at: Time.at(status_tweeted_at_boundary.tweeted_at).in_time_zone.iso8601,
                       is_retweet: status_tweeted_at_boundary.is_retweet,
                       entities:   status_tweeted_at_boundary.entities.as_json,
                       user:       status_tweeted_at_boundary.user.as_json
@@ -369,7 +369,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                     expect(response.parsed_body.last.deep_symbolize_keys).to include(
                       tweet_id:   status_tweeted_before_boundary.tweet_id,
                       text:       status_tweeted_before_boundary.text,
-                      tweeted_at: Time.at(status_tweeted_before_boundary.twitter_created_at).in_time_zone.iso8601,
+                      tweeted_at: Time.at(status_tweeted_before_boundary.tweeted_at).in_time_zone.iso8601,
                       is_retweet: status_tweeted_before_boundary.is_retweet,
                       entities:   status_tweeted_before_boundary.entities.as_json,
                       user:       status_tweeted_before_boundary.user.as_json
