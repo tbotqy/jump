@@ -13,7 +13,7 @@ describe CollectFolloweeStatusesService do
       create(:followee, user: dummy_user, twitter_id: followee_of_dummy_user.twitter_id)
 
       time = [year, month, day].any?(&:present?) ? Time.local(year, month, day) : Time.current
-      create(:status, user: followee_of_dummy_user, twitter_created_at: time.to_i)
+      create(:status, user: followee_of_dummy_user, tweeted_at: time.to_i)
     end
 
     shared_examples "raises Errors::NotFound error" do
@@ -57,19 +57,19 @@ describe CollectFolloweeStatusesService do
           shared_context "user's followee has 3 statuses tweeted around the boundary_time" do
             let(:boundary_unixtime) { boundary_time.to_i }
             let!(:status_tweeted_before_boundary) do
-              status = create(:status, user: followee, text: "to be ordered as 2nd item", twitter_created_at: boundary_unixtime - 1)
+              status = create(:status, user: followee, text: "to be ordered as 2nd item", tweeted_at: boundary_unixtime - 1)
               create_list(:entity, 2, status: status)
               status
             end
             let!(:status_tweeted_at_boundary) do
               # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
               id = status_tweeted_before_boundary.id + 1
-              status = create(:status, id: id, user: followee, text: "to be ordered as 1st item",  twitter_created_at: boundary_unixtime)
+              status = create(:status, id: id, user: followee, text: "to be ordered as 1st item",  tweeted_at: boundary_unixtime)
               create_list(:entity, 2, status: status)
               status
             end
             let!(:status_tweeted_after_boundary) do
-              status = create(:status, user: followee, text: "to be filtered", twitter_created_at: boundary_unixtime + 1)
+              status = create(:status, user: followee, text: "to be filtered", tweeted_at: boundary_unixtime + 1)
               create_list(:entity, 2, status: status)
               status
             end
@@ -176,8 +176,8 @@ describe CollectFolloweeStatusesService do
               # Register the statuses tweeted in ending of the specified date.
               # To test if the sort is applied, registering in random order, by using #shuffle.
               (1..15).to_a.shuffle.each do |seconds_ago|
-                tweeted_at = Time.local(year, month, day).end_of_day - seconds_ago.seconds
-                create(:status, user: followee, text: "#{seconds_ago}th-new status", twitter_created_at: tweeted_at.to_i)
+                tweeted_at = (Time.local(year, month, day).end_of_day - seconds_ago.seconds).to_i
+                create(:status, user: followee, text: "#{seconds_ago}th-new status", tweeted_at: tweeted_at)
               end
             end
 

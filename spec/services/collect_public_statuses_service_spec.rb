@@ -22,19 +22,19 @@ describe CollectPublicStatusesService do
         shared_context "there are 3 public statuses tweeted around the boundary_time" do
           let(:boundary_unixtime) { boundary_time.to_i }
           let!(:status_tweeted_before_boundary) do
-            status = create(:status, text: "to be ordered as 2nd item", private_flag: false, twitter_created_at: boundary_unixtime - 1)
+            status = create(:status, text: "to be ordered as 2nd item", private_flag: false, tweeted_at: boundary_unixtime - 1)
             create_list(:entity, 2, status: status)
             status
           end
           let!(:status_tweeted_at_boundary) do
             # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
             id = status_tweeted_before_boundary.id + 1
-            status = create(:status, id: id, text: "to be ordered as 1st item", private_flag: false, twitter_created_at: boundary_unixtime)
+            status = create(:status, id: id, text: "to be ordered as 1st item", private_flag: false, tweeted_at: boundary_unixtime)
             create_list(:entity, 2, status: status)
             status
           end
           let!(:status_tweeted_after_boundary) do
-            status = create(:status, text: "to be filtered", private_flag: false, twitter_created_at: boundary_unixtime + 1)
+            status = create(:status, text: "to be filtered", private_flag: false, tweeted_at: boundary_unixtime + 1)
             create_list(:entity, 2, status: status)
             status
           end
@@ -95,8 +95,8 @@ describe CollectPublicStatusesService do
           # Register the statuses tweeted in ending of the specified date.
           # To test if the sort is applied, registering in random order, by using #shuffle.
           (1..15).to_a.shuffle.each do |seconds_ago|
-            tweeted_at = Time.local(year, month, day).end_of_day - seconds_ago.seconds
-            create(:status, text: "#{seconds_ago}th-new status", private_flag: false, twitter_created_at: tweeted_at.to_i)
+            tweeted_at = (Time.local(year, month, day).end_of_day - seconds_ago.seconds).to_i
+            create(:status, text: "#{seconds_ago}th-new status", private_flag: false, tweeted_at: tweeted_at)
           end
         end
 
@@ -148,8 +148,8 @@ describe CollectPublicStatusesService do
         let(:page)  { 1 }
 
         let(:specified_time)    { Time.local(year, month, day).end_of_day }
-        let!(:public_statuses)  { create_list(:status, 3, private_flag: false, twitter_created_at: specified_time.to_i) }
-        let!(:private_statuses) { create_list(:status, 3, private_flag: true,  twitter_created_at: specified_time.to_i) }
+        let!(:public_statuses)  { create_list(:status, 3, private_flag: false, tweeted_at: specified_time.to_i) }
+        let!(:private_statuses) { create_list(:status, 3, private_flag: true,  tweeted_at: specified_time.to_i) }
 
         it "only returns public statuses" do
           is_expected.to contain_exactly(*public_statuses)

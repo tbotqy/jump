@@ -8,7 +8,7 @@ class Status < ApplicationRecord
   scope :order_by_newest_to_oldest, -> { order(tweet_id_reversed: :asc) }
   scope :tweeted_at_or_before,      -> (time) do
     boundary = time.to_i
-    where("twitter_created_at_reversed >= ?", -1 * boundary)
+    where("tweeted_at_reversed >= ?", -1 * boundary)
   end
 
   class << self
@@ -25,20 +25,20 @@ class Status < ApplicationRecord
     private
       def new_by_tweet(tweet)
         ret = new(
-          tweet_id:                    tweet.attrs[:id_str],
-          tweet_id_reversed:           -1 * tweet.attrs[:id_str].to_i,
-          in_reply_to_tweet_id:        tweet.attrs[:in_reply_to_status_id_str],
-          in_reply_to_user_id_str:     tweet.attrs[:in_reply_to_user_id_str],
-          in_reply_to_screen_name:     tweet.in_reply_to_screen_name,
-          place_full_name:             tweet.place.try!(:full_name),
-          retweet_count:               tweet.retweet_count,
-          tweeted_on:                  Time.at(tweet.created_at.to_i).in_time_zone.to_date,
-          twitter_created_at:          Time.parse(tweet.created_at.to_s).to_i,
-          twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
-          source:                      tweet.source,
-          text:                        tweet.text,
-          possibly_sensitive:          tweet.possibly_sensitive? || false,
-          private_flag:                tweet.user.protected?
+          tweet_id:                tweet.attrs[:id_str],
+          tweet_id_reversed:       -1 * tweet.attrs[:id_str].to_i,
+          in_reply_to_tweet_id:    tweet.attrs[:in_reply_to_status_id_str],
+          in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
+          in_reply_to_screen_name: tweet.in_reply_to_screen_name,
+          place_full_name:         tweet.place.try!(:full_name),
+          retweet_count:           tweet.retweet_count,
+          tweeted_on:              Time.at(tweet.created_at.to_i).in_time_zone.to_date,
+          tweeted_at:              Time.parse(tweet.created_at.to_s).to_i,
+          tweeted_at_reversed:     -1 * Time.parse(tweet.created_at.to_s).to_i,
+          source:                  tweet.source,
+          text:                    tweet.text,
+          possibly_sensitive:      tweet.possibly_sensitive? || false,
+          private_flag:            tweet.user.protected?
         )
         ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
         ret
@@ -49,7 +49,7 @@ class Status < ApplicationRecord
     {
       tweet_id:   tweet_id,
       text:       text,
-      tweeted_at: Time.at(twitter_created_at).in_time_zone.iso8601,
+      tweeted_at: Time.at(tweeted_at).in_time_zone.iso8601,
       is_retweet: is_retweet,
       entities:   entities.as_json,
       user:       user.as_json
