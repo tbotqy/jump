@@ -5,16 +5,16 @@ class ImportTweetsJob < ApplicationJob
 
   def perform(user_id:)
     @user_id = user_id
-    initialize_parameter
+    initialize_parameter!
     import!
   end
 
   private
     attr_reader :user_id
 
-    def initialize_parameter
+    def initialize_parameter!
       if user.has_any_status?
-        @initial_most_recent_tweet_id = user.status_newest_in_tweeted_time.tweet_id
+        @initial_most_recent_tweet_id = user.statuses.most_recent_tweet_id!
       else
         @initial_most_recent_tweet_id = nil
       end
@@ -33,11 +33,12 @@ class ImportTweetsJob < ApplicationJob
         oldest_id_of_all_fetched_tweets = tweets.last.id
       end
       close_progress!
+      record_timestamp!
       update_summary
     end
 
     def save_tweets!(tweets)
-      Status.save_tweets!(user_id, tweets)
+      tweets.each { |tweet| user.statuses.create_by_tweet!(tweet) }
     end
 
     def record_progress!(tweet_count_additionally_imported)
@@ -46,6 +47,10 @@ class ImportTweetsJob < ApplicationJob
 
     def close_progress!
       job_progress.mark_as_finished!
+    end
+
+    def record_timestamp!
+      user.update!(statuses_updated_at: Time.now.utc.to_i)
     end
 
     def update_summary

@@ -13,7 +13,7 @@ RSpec.describe "Statuses", type: :request do
         let(:day)   { 4 }
         let(:page)  { 1 }
         before do
-          create_list(:status, 3, private_flag: false, twitter_created_at: Time.local(year, month, day).end_of_day.to_i)
+          create_list(:status, 3, private_flag: false, tweeted_at: Time.local(year, month, day).end_of_day.to_i)
           subject
         end
         it_behaves_like "respond with status code", :ok
@@ -33,19 +33,19 @@ RSpec.describe "Statuses", type: :request do
         shared_context "there are 3 public statuses tweeted around the boundary_time" do
           let(:boundary_unixtime) { boundary_time.to_i }
           let!(:status_tweeted_before_boundary) do
-            status = create(:status, text: "to be ordered as 2nd item", private_flag: false, twitter_created_at: boundary_unixtime - 1)
+            status = create(:status, text: "to be ordered as 2nd item", private_flag: false, tweeted_at: boundary_unixtime - 1)
             create_list(:entity, 2, status: status)
             status
           end
           let!(:status_tweeted_at_boundary) do
             # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
             id = status_tweeted_before_boundary.id + 1
-            status = create(:status, id: id, text: "to be ordered as 1st item", private_flag: false, twitter_created_at: boundary_unixtime)
+            status = create(:status, id: id, text: "to be ordered as 1st item", private_flag: false, tweeted_at: boundary_unixtime)
             create_list(:entity, 2, status: status)
             status
           end
           let!(:status_tweeted_after_boundary) do
-            status = create(:status, text: "to be filtered", private_flag: false, twitter_created_at: boundary_unixtime + 1)
+            status = create(:status, text: "to be filtered", private_flag: false, tweeted_at: boundary_unixtime + 1)
             create_list(:entity, 2, status: status)
             status
           end
@@ -70,7 +70,7 @@ RSpec.describe "Statuses", type: :request do
               expect(response.parsed_body.first.deep_symbolize_keys).to include(
                 tweet_id:   status_tweeted_at_boundary.tweet_id,
                 text:       status_tweeted_at_boundary.text,
-                tweeted_at: Time.at(status_tweeted_at_boundary.twitter_created_at).in_time_zone.iso8601,
+                tweeted_at: Time.at(status_tweeted_at_boundary.tweeted_at).in_time_zone.iso8601,
                 is_retweet: status_tweeted_at_boundary.is_retweet,
                 entities:   status_tweeted_at_boundary.entities.as_json,
                 user:       status_tweeted_at_boundary.user.as_json
@@ -78,7 +78,7 @@ RSpec.describe "Statuses", type: :request do
               expect(response.parsed_body.last.deep_symbolize_keys).to include(
                 tweet_id:   status_tweeted_before_boundary.tweet_id,
                 text:       status_tweeted_before_boundary.text,
-                tweeted_at: Time.at(status_tweeted_before_boundary.twitter_created_at).in_time_zone.iso8601,
+                tweeted_at: Time.at(status_tweeted_before_boundary.tweeted_at).in_time_zone.iso8601,
                 is_retweet: status_tweeted_before_boundary.is_retweet,
                 entities:   status_tweeted_before_boundary.entities.as_json,
                 user:       status_tweeted_before_boundary.user.as_json
@@ -170,8 +170,8 @@ RSpec.describe "Statuses", type: :request do
         let(:page)  { 1 }
 
         let(:specified_time)    { Time.local(year, month, day).end_of_day }
-        let!(:public_statuses)  { create_list(:status, 3, private_flag: false, text: "public  status", twitter_created_at: specified_time.to_i) }
-        let!(:private_statuses) { create_list(:status, 3, private_flag: true,  text: "private status", twitter_created_at: specified_time.to_i) }
+        let!(:public_statuses)  { create_list(:status, 3, private_flag: false, text: "public  status", tweeted_at: specified_time.to_i) }
+        let!(:private_statuses) { create_list(:status, 3, private_flag: true,  text: "private status", tweeted_at: specified_time.to_i) }
         before { subject }
         it "only returns public statuses" do
           texts_in_public_statuses = public_statuses.pluck(:text)
