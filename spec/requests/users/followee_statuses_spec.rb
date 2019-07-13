@@ -100,7 +100,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                 let!(:status_tweeted_at_boundary) do
                   # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
                   id = status_tweeted_before_boundary.id + 1
-                  status = create(:status, id: id, user: followee, text: "to be ordered as 1st item",  twitter_created_at: boundary_unixtime)
+                  status = create(:status, id: id, user: followee, text: "to be ordered as 1st item", twitter_created_at: boundary_unixtime)
                   create_list(:entity, 2, status: status) unless without_entities
                   status
                 end
