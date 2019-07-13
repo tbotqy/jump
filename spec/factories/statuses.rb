@@ -23,6 +23,5 @@ FactoryBot.define do
     private_flag { 0 }
     tweet_id_reversed { -1 * tweet_id }
     tweeted_at_reversed { -1 * tweeted_at }
-    tweeted_on { Time.at(tweeted_at).in_time_zone.to_date }
   end
 end
