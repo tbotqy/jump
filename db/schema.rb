@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_13_072640) do
+ActiveRecord::Schema.define(version: 2019_07_13_074700) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -41,6 +41,18 @@ ActiveRecord::Schema.define(version: 2019_07_13_072640) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status_id"], name: "index_hashtags_on_status_id"
+  end
+
+  create_table "media", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "status_id", null: false
+    t.string "url", null: false
+    t.string "direct_url", null: false
+    t.string "display_url", null: false
+    t.integer "index_f", null: false
+    t.integer "index_l", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status_id"], name: "index_media_on_status_id"
   end
 
   create_table "profile_update_fail_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -123,6 +135,7 @@ ActiveRecord::Schema.define(version: 2019_07_13_072640) do
   add_foreign_key "entities", "statuses"
   add_foreign_key "followees", "users"
   add_foreign_key "hashtags", "statuses"
+  add_foreign_key "media", "statuses"
   add_foreign_key "profile_update_fail_logs", "users"
   add_foreign_key "statuses", "users"
   add_foreign_key "tweet_import_job_progresses", "users"
