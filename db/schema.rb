@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_13_064309) do
+ActiveRecord::Schema.define(version: 2019_07_13_072640) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -89,6 +89,17 @@ ActiveRecord::Schema.define(version: 2019_07_13_064309) do
     t.index ["user_id"], name: "fk_rails_e62285fa61"
   end
 
+  create_table "urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "status_id", null: false
+    t.string "url", null: false
+    t.string "display_url", null: false
+    t.integer "index_f", null: false
+    t.integer "index_l", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status_id"], name: "index_urls_on_status_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "twitter_id", null: false
@@ -115,4 +126,5 @@ ActiveRecord::Schema.define(version: 2019_07_13_064309) do
   add_foreign_key "profile_update_fail_logs", "users"
   add_foreign_key "statuses", "users"
   add_foreign_key "tweet_import_job_progresses", "users"
+  add_foreign_key "urls", "statuses"
 end
