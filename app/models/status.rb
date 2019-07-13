@@ -2,6 +2,7 @@
 
 class Status < ApplicationRecord
   belongs_to :user
+  has_many   :hashtags, dependent: :delete_all
   has_many   :entities, dependent: :delete_all
 
   scope :not_private,               -> { where(private_flag: false) }
