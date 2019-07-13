@@ -3,13 +3,13 @@
 FactoryBot.define do
   factory :status do
     user
-    tweet_id { 111111111111111111 }
+    tweet_id { twitter_created_at }
     in_reply_to_tweet_id { nil }
     in_reply_to_user_id_str { nil }
     in_reply_to_screen_name { nil }
     place_full_name { nil }
     retweet_count { 0 }
-    twitter_created_at { 1343637257 }
+    sequence(:twitter_created_at)
     source { "web" }
     text { "Hello, This is a tweet in factory." }
     is_retweet { 0 }
