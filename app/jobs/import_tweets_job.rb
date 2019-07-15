@@ -14,7 +14,7 @@ class ImportTweetsJob < ApplicationJob
     def import!
       oldest_id_of_all_fetched_tweets = nil
       loop do
-        tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: @initial_most_recent_tweet_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
+        tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
         break if tweets.blank?
         save_tweets!(tweets)
         record_progress!(tweets.count)
