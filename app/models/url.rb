@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class URL < ApplicationRecord
+class Url < ApplicationRecord
   belongs_to :status
 
   include IndexValidations
