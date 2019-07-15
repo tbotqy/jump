@@ -29,7 +29,7 @@ class ImportTweetsJob < ApplicationJob
     end
 
     def save_tweets!(tweets)
-      tweets.each { |tweet| user.statuses.create_by_tweet!(tweet) }
+      tweets.each { |tweet| user.statuses.create_by_tweet!(tweet) unless Status.exists?(tweet_id: tweet.id) }
     end
 
     def record_progress!(tweet_count_additionally_imported)
