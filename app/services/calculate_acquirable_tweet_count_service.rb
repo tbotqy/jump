@@ -20,19 +20,10 @@ class CalculateAcquirableTweetCountService
     attr_reader :user_id
 
     def call!
-      [TRACEABLE_TWEET_COUNT_LIMIT, not_imported_tweet_count].min
-    end
-
-    def not_imported_tweet_count
-      return 0 if total_tweet_count <= existing_status_count
-      total_tweet_count - existing_status_count
+      [TRACEABLE_TWEET_COUNT_LIMIT, total_tweet_count].min
     end
 
     def total_tweet_count
       @total_tweet_count ||= TwitterRestClient.by_user_id!(user_id).user.tweets_count
-    end
-
-    def existing_status_count
-      @existing_status_count ||= User.find(user_id).statuses.count
     end
 end

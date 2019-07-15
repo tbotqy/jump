@@ -14,41 +14,19 @@ RSpec.describe CalculateAcquirableTweetCountService do
       let(:user)     { create(:user) }
       let!(:user_id) { user.id }
       before do
-        create_list(:status, existing_status_count, user: user)
         allow_any_instance_of(Twitter::REST::Client).to receive_message_chain(:user, :tweets_count).and_return(total_tweet_count)
       end
-      context "existing status count > total tweet count" do
-        let(:existing_status_count) { 10 }
-        let(:total_tweet_count)     { 9 }
-        it { is_expected.to eq 0 }
+      context "total tweet count < 3200" do
+        let(:total_tweet_count) { 3199 }
+        it { is_expected.to eq 3199 }
       end
-      context "existing status count == total tweet count" do
-        let(:existing_status_count) { 10 }
-        let(:total_tweet_count)     { 10 }
-        it { is_expected.to eq 0 }
+      context "total tweet count == 3200" do
+        let(:total_tweet_count) { 3200 }
+        it { is_expected.to eq 3200 }
       end
-      context "existing status count < total tweet count" do
-        context "diff > 3200" do
-          let(:existing_status_count) { 1 }
-          let(:total_tweet_count)     { 3202 }
-          it "always be 3200" do
-            is_expected.to eq 3200
-          end
-        end
-        context "diff == 3200" do
-          let(:existing_status_count) { 2 }
-          let(:total_tweet_count)     { 3202 }
-          it "must be 3200( == diff)" do
-            is_expected.to eq 3200
-          end
-        end
-        context "diff < 3200" do
-          let(:existing_status_count) { 3 }
-          let(:total_tweet_count)     { 3202 }
-          it "eq with diff" do
-            is_expected.to eq (3202 - 3)
-          end
-        end
+      context "total tweet count > 3200" do
+        let(:total_tweet_count) { 3201 }
+        it { is_expected.to eq 3200 }
       end
     end
   end
