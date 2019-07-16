@@ -25,6 +25,7 @@ gem "activerecord-import"
 gem "devise"
 gem "sentry-raven"
 gem "kaminari"
+gem "ruby-progressbar"
 
 group :development do
   gem "rails-erd"

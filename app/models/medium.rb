@@ -5,6 +5,6 @@ class Medium < ApplicationRecord
 
   include IndexValidations
   validates :url,         presence: true, length: { maximum: 255 }
-  validates :direct_url,  presence: true, length: { maximum: 255 }
+  validates :direct_url,  length: { maximum: 255 }
   validates :display_url, presence: true, length: { maximum: 255 }
 end
