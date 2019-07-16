@@ -148,8 +148,8 @@ describe CollectPublicStatusesService do
         let(:page)  { 1 }
 
         let(:specified_time)    { Time.local(year, month, day).end_of_day }
-        let!(:public_statuses)  { create_list(:status, 3, private_flag: false, tweeted_at: specified_time.to_i) }
-        let!(:private_statuses) { create_list(:status, 3, private_flag: true,  tweeted_at: specified_time.to_i) }
+        let!(:public_statuses)  { (1..3).to_a.map { |i| create(:status, private_flag: false, tweeted_at: specified_time.to_i, tweet_id: i) } }
+        let!(:private_statuses) { (4..6).to_a.map { |i| create(:status, private_flag: true,  tweeted_at: specified_time.to_i, tweet_id: i) } }
 
         it "only returns public statuses" do
           is_expected.to contain_exactly(*public_statuses)

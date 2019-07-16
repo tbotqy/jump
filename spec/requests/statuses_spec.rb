@@ -13,7 +13,7 @@ RSpec.describe "Statuses", type: :request do
         let(:day)   { 4 }
         let(:page)  { 1 }
         before do
-          create_list(:status, 3, private_flag: false, tweeted_at: Time.local(year, month, day).end_of_day.to_i)
+          3.times { |i| create(:status, private_flag: false, tweet_id: i, tweeted_at: Time.local(year, month, day).end_of_day.to_i) }
           subject
         end
         it_behaves_like "respond with status code", :ok
@@ -170,11 +170,11 @@ RSpec.describe "Statuses", type: :request do
         let(:page)  { 1 }
 
         let(:specified_time)    { Time.local(year, month, day).end_of_day }
-        let!(:public_statuses)  { create_list(:status, 3, private_flag: false, text: "public  status", tweeted_at: specified_time.to_i) }
-        let!(:private_statuses) { create_list(:status, 3, private_flag: true,  text: "private status", tweeted_at: specified_time.to_i) }
+        let!(:public_statuses)  { (1..3).to_a.map { |i| create(:status, private_flag: false, text: "public  status", tweeted_at: specified_time.to_i, tweet_id: i) } }
+        let!(:private_statuses) { (4..6).to_a.map { |i| create(:status, private_flag: true,  text: "private status", tweeted_at: specified_time.to_i, tweet_id: i) } }
         before { subject }
         it "only returns public statuses" do
-          texts_in_public_statuses = public_statuses.pluck(:text)
+          texts_in_public_statuses = public_statuses.map(&:text)
           expect(response.parsed_body.map { |item| item["text"] }).to contain_exactly(*texts_in_public_statuses)
         end
       end
