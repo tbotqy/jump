@@ -409,6 +409,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails_config
   rubocop-rspec
+  ruby-progressbar
   sentry-raven
   sidekiq
   sidekiq-cron (~> 1.1)
