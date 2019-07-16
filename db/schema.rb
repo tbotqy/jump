@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_13_074700) do
+ActiveRecord::Schema.define(version: 2019_07_16_030319) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2019_07_13_074700) do
   create_table "media", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
     t.string "url", null: false
-    t.string "direct_url", null: false
+    t.string "direct_url"
     t.string "display_url", null: false
     t.integer "index_f", null: false
     t.integer "index_l", null: false
