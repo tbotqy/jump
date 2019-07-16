@@ -7,6 +7,8 @@ class Status < ApplicationRecord
   has_many   :media,    dependent: :delete_all
   has_many   :entities, dependent: :delete_all
 
+  validates :tweet_id, uniqueness: true, numericality: { only_integer: true }
+
   scope :not_private,               -> { where(private_flag: false) }
   scope :order_by_newest_to_oldest, -> { order(tweet_id_reversed: :asc) }
   scope :tweeted_at_or_before,      -> (time) do
