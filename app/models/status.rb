@@ -7,7 +7,26 @@ class Status < ApplicationRecord
   has_many   :media,    dependent: :delete_all
   has_many   :entities, dependent: :delete_all
 
-  validates :tweet_id, uniqueness: true, numericality: { only_integer: true }
+  validates :tweet_id,                presence: true,  uniqueness: true, numericality: { only_integer: true }
+  validates :in_reply_to_tweet_id,    allow_nil: true, numericality: { only_integer: true }
+  validates :in_reply_to_user_id_str, allow_nil: true, numericality: { only_integer: true }
+  validates :in_reply_to_screen_name, allow_nil: true, length: { maximum: 255 }
+  validates :place_full_name,         allow_nil: true, length: { maximum: 255 }
+  validates :retweet_count,           allow_nil: true, numericality: { only_integer: true }
+  validates :source,                  presence: true,  length: { maximum: 255 }
+  validates :text,                    presence: true,  length: { maximum: 255 }
+  validates :is_retweet_before_type_cast, inclusion: { in: [true, false] }
+  validates :rt_name,                 allow_nil: true, length: { maximum: 255 }
+  validates :rt_screen_name,          allow_nil: true, length: { maximum: 255 }
+  validates :rt_avatar_url,           allow_nil: true, length: { maximum: 255 }
+  validates :rt_text,                 allow_nil: true, length: { maximum: 255 }
+  validates :rt_source,               allow_nil: true, length: { maximum: 255 }
+  validates :rt_created_at,           allow_nil: true, numericality: { only_integer: true }
+  validates :possibly_sensitive_before_type_cast, inclusion: { in: [true, false] }
+  validates :private_flag_before_type_cast,       inclusion: { in: [true, false] }
+  validates :tweeted_at,              presence: true, numericality: { only_integer: true }
+  validates :tweet_id_reversed,       presence: true, numericality: { only_integer: true }
+  validates :tweeted_at_reversed,     presence: true, numericality: { only_integer: true }
 
   scope :not_private,               -> { where(private_flag: false) }
   scope :order_by_newest_to_oldest, -> { order(tweet_id_reversed: :asc) }
