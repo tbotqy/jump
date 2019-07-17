@@ -65,4 +65,11 @@ RSpec.configure do |config|
 
   OmniAuth.config.test_mode = true
   OmniAuth.config.mock_auth[:twitter] = auth_hash_mock
+
+  Shoulda::Matchers.configure do |conf|
+    conf.integrate do |with|
+      with.test_framework :rspec
+      with.library :rails
+    end
+  end
 end
