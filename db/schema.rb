@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_18_034644) do
+ActiveRecord::Schema.define(version: 2019_07_18_040233) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2019_07_18_034644) do
     t.string "rt_source"
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive", null: false
-    t.boolean "private_flag", default: false, null: false
+    t.boolean "private_flag", null: false
     t.bigint "tweet_id_reversed", null: false
     t.integer "tweeted_at_reversed", null: false
     t.datetime "created_at", null: false
