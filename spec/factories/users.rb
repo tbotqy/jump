@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user do
     sequence(:uid) { |n| "123456789#{n}" }
-    sequence(:twitter_id) { |n| "123456789#{n}".to_i }
+    sequence(:twitter_id) { uid.to_i }
     provider { "twitter" }
     name { "test_name" }
     screen_name { "test_screen_name" }
