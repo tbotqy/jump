@@ -31,7 +31,7 @@ describe Status do
     end
     describe "#text" do
       it { should validate_presence_of(:text) }
-      it { should validate_length_of(:text).is_at_most(255) }
+      it { should validate_length_of(:text).is_at_most(280) }
     end
     describe "#is_retweet" do
       include_examples "should validate before_type_cast is a boolean", :status, :is_retweet

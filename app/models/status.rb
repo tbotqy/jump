@@ -14,7 +14,7 @@ class Status < ApplicationRecord
   validates :place_full_name,         allow_nil: true, length: { maximum: 255 }
   validates :retweet_count,           allow_nil: true, numericality: { only_integer: true }
   validates :source,                  presence: true,  length: { maximum: 255 }
-  validates :text,                    presence: true,  length: { maximum: 255 }
+  validates :text,                    presence: true,  length: { maximum: 280 }
   validates :is_retweet_before_type_cast, inclusion: { in: [true, false] }
   validates :rt_name,                 allow_nil: true, length: { maximum: 255 }
   validates :rt_screen_name,          allow_nil: true, length: { maximum: 255 }
