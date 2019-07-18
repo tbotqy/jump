@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :tweet_import_job_progresses, dependent: :delete_all
 
   validates :uid,                 presence: true, uniqueness: true, length: { maximum: 255 }
-  validates :twitter_id,          presence: true, numericality: { only_integer: true }
+  validates :twitter_id,          presence: true, uniqueness: true, numericality: { only_integer: true }
   validates :provider,            presence: true, length: { maximum: 255 }
   validates :name,                presence: true, length: { maximum: 255 }
   validates :screen_name,         presence: true, length: { maximum: 255 }
