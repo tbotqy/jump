@@ -3,6 +3,57 @@
 require "rails_helper"
 
 describe User do
+  describe "validations" do
+    describe "#uid" do
+      before { create(:user) } # pre-register to validate uniqueness
+      it { should validate_presence_of(:uid) }
+      it { should validate_uniqueness_of(:uid).case_insensitive }
+      it { should validate_length_of(:uid).is_at_most(255) }
+    end
+    describe "#twitter_id" do
+      before { create(:user) } # pre-register to validate uniqueness
+      it { should validate_presence_of(:twitter_id) }
+      it { should validate_uniqueness_of(:twitter_id) }
+      it { should validate_numericality_of(:twitter_id).only_integer }
+    end
+    describe "#provider" do
+      it { should validate_presence_of(:provider) }
+      it { should validate_length_of(:provider).is_at_most(255) }
+    end
+    describe "#name" do
+      it { should validate_presence_of(:name) }
+      it { should validate_length_of(:name).is_at_most(255) }
+    end
+    describe "#screen_name" do
+      it { should validate_presence_of(:screen_name) }
+      it { should validate_length_of(:screen_name).is_at_most(255) }
+    end
+    describe "#protected_flag" do
+      include_examples "should validate before_type_cast is a boolean", :user, :protected_flag
+    end
+    describe "#avatar_url" do
+      it { should validate_presence_of(:avatar_url) }
+      it { should validate_length_of(:avatar_url).is_at_most(255) }
+    end
+    describe "#twitter_created_at" do
+      it { should validate_presence_of(:twitter_created_at) }
+      it { should validate_numericality_of(:twitter_created_at).only_integer }
+    end
+    describe "#access_token" do
+      it { should validate_presence_of(:access_token) }
+      it { should validate_length_of(:access_token).is_at_most(255) }
+    end
+    describe "#access_token_secret" do
+      it { should validate_presence_of(:access_token_secret) }
+      it { should validate_length_of(:access_token_secret).is_at_most(255) }
+    end
+    describe "#token_updated_at" do
+      it { should validate_numericality_of(:token_updated_at).only_integer.allow_nil }
+    end
+    describe "#statuses_updated_at" do
+      it { should validate_numericality_of(:statuses_updated_at).only_integer.allow_nil }
+    end
+  end
   describe ".register_or_update!" do
     subject { User.register_or_update!(params) }
     context "register new user" do
