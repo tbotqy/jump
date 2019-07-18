@@ -7,14 +7,14 @@ class User < ApplicationRecord
   has_many :followees,                   dependent: :delete_all
   has_many :tweet_import_job_progresses, dependent: :delete_all
 
-  validates :uid,                 uniqueness: true, presence: true, length: { maximum: 255 }
-  validates :twitter_id,          numericality: { only_integer: true }
+  validates :uid,                 presence: true, uniqueness: true, length: { maximum: 255 }
+  validates :twitter_id,          presence: true, numericality: { only_integer: true }
   validates :provider,            presence: true, length: { maximum: 255 }
   validates :name,                presence: true, length: { maximum: 255 }
   validates :screen_name,         presence: true, length: { maximum: 255 }
-  validates :protected_flag,      inclusion: { in: [true, false] }
-  validates :avatar_url,          length: { maximum: 255 }
-  validates :twitter_created_at,  numericality: { only_integer: true }
+  validates :protected_flag_before_type_cast, inclusion: { in: [true, false] }
+  validates :avatar_url,          presence: true, length: { maximum: 255 }
+  validates :twitter_created_at,  presence: true, numericality: { only_integer: true }
   validates :access_token,        presence: true, length: { maximum: 255 }
   validates :access_token_secret, presence: true, length: { maximum: 255 }
   validates :token_updated_at,    numericality: { only_integer: true }, allow_nil: true
