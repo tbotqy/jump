@@ -3,6 +3,77 @@
 require "rails_helper"
 
 describe Status do
+  describe "validations" do
+    describe "#tweet_id" do
+      before { create(:status) } # pre-resgiter to validate uniqueness
+      it { should validate_presence_of(:tweet_id) }
+      it { should validate_uniqueness_of(:tweet_id) }
+      it { should validate_numericality_of(:tweet_id).only_integer }
+    end
+    describe "#in_reply_to_tweet_id" do
+      it { should validate_numericality_of(:in_reply_to_tweet_id).only_integer.allow_nil }
+    end
+    describe "#in_reply_to_user_id_str" do
+      it { should validate_numericality_of(:in_reply_to_user_id_str).only_integer.allow_nil }
+    end
+    describe "#in_reply_to_screen_name" do
+      it { should validate_length_of(:in_reply_to_screen_name).is_at_most(255).allow_nil }
+    end
+    describe "#place_full_name" do
+      it { should validate_length_of(:place_full_name).is_at_most(255).allow_nil }
+    end
+    describe "#retweet_count" do
+      it { should validate_numericality_of(:retweet_count).only_integer.allow_nil }
+    end
+    describe "#source" do
+      it { should validate_presence_of(:source) }
+      it { should validate_length_of(:source).is_at_most(255) }
+    end
+    describe "#text" do
+      it { should validate_presence_of(:text) }
+      it { should validate_length_of(:text).is_at_most(255) }
+    end
+    describe "#is_retweet" do
+      include_examples "should validate before_type_cast is a boolean", :status, :is_retweet
+    end
+    describe "#rt_name" do
+      it { should validate_length_of(:rt_name).is_at_most(255).allow_nil }
+    end
+    describe "#rt_screen_name" do
+      it { should validate_length_of(:rt_screen_name).is_at_most(255).allow_nil }
+    end
+    describe "#rt_avatar_url" do
+      it { should validate_length_of(:rt_avatar_url).is_at_most(255).allow_nil }
+    end
+    describe "#rt_text" do
+      it { should validate_length_of(:rt_text).is_at_most(255).allow_nil }
+    end
+    describe "#rt_source" do
+      it { should validate_length_of(:rt_source).is_at_most(255).allow_nil }
+    end
+    describe "#rt_created_at" do
+      it { should validate_numericality_of(:rt_created_at).only_integer.allow_nil }
+    end
+    describe "#possibly_sensitive" do
+      include_examples "should validate before_type_cast is a boolean", :status, :possibly_sensitive
+    end
+    describe "#private_flag" do
+      include_examples "should validate before_type_cast is a boolean", :status, :private_flag
+    end
+    describe "#tweeted_at" do
+      it { should validate_presence_of(:tweeted_at) }
+      it { should validate_numericality_of(:tweeted_at).only_integer }
+    end
+    describe "#tweet_id_reversed" do
+      it { should validate_presence_of(:tweet_id_reversed) }
+      it { should validate_numericality_of(:tweet_id_reversed).only_integer }
+    end
+    describe "#tweeted_at_reversed" do
+      it { should validate_presence_of(:tweeted_at_reversed) }
+      it { should validate_numericality_of(:tweeted_at_reversed).only_integer }
+    end
+  end
+
   describe ".not_private" do
     subject { Status.not_private }
     context "no record matches" do

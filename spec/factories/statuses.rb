@@ -12,15 +12,15 @@ FactoryBot.define do
     sequence(:tweeted_at)
     source { "web" }
     text { "Hello, This is a tweet in factory." }
-    is_retweet { 0 }
+    is_retweet { false }
     rt_name { nil }
     rt_screen_name { nil }
     rt_avatar_url { nil }
     rt_text { nil }
     rt_source { nil }
     rt_created_at { nil }
-    possibly_sensitive { 0 }
-    private_flag { 0 }
+    possibly_sensitive { false }
+    private_flag { false }
     tweet_id_reversed { -1 * tweet_id }
     tweeted_at_reversed { -1 * tweeted_at }
   end
