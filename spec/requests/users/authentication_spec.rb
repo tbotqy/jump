@@ -37,7 +37,7 @@ RSpec.describe "User authentication", type: :request do
 
           describe "registration of new user" do
             let!(:existing_user) { create(:user) }
-            let!(:brand_new_uid) { existing_user.uid + "new" }
+            let!(:brand_new_uid) { existing_user.uid + "123" }
             before do
               # include brand-new uid in auth_hash_mock
               OmniAuth.config.mock_auth[:twitter] = auth_hash_mock.merge(uid: brand_new_uid)

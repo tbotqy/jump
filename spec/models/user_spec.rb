@@ -8,7 +8,7 @@ describe User do
     context "register new user" do
       let(:valid_params) do
         {
-          uid:                 "uid",
+          uid:                 "123456789",
           twitter_id:          123456789,
           provider:            "twitter",
           name:                "passed_name",
@@ -43,7 +43,7 @@ describe User do
       let!(:existing_user) { create(:user, **attrs_before_update) }
       let(:attrs_before_update) do
         {
-          uid:                 "uid",
+          uid:                 "123456789",
           twitter_id:          123456789,
           provider:            "twitter",
           name:                "name_before_update",
@@ -59,7 +59,7 @@ describe User do
       end
       let(:valid_params) do
         {
-          uid:                 "uid",
+          uid:                 "123456789",
           twitter_id:          123456789,
           provider:            "twitter",
           name:                "name_after_update",
