@@ -54,8 +54,7 @@ describe User do
           access_token:        "access_token_before_update",
           access_token_secret: "access_token_secret_before_update",
           token_updated_at:    1482676460,
-          statuses_updated_at: 1482676461,
-          closed_only:         false
+          statuses_updated_at: 1482676461
         }
       end
       let(:valid_params) do

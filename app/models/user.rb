@@ -19,7 +19,6 @@ class User < ApplicationRecord
   validates :access_token_secret, presence: true, length: { maximum: 255 }
   validates :token_updated_at,    numericality: { only_integer: true }, allow_nil: true
   validates :statuses_updated_at, numericality: { only_integer: true }, allow_nil: true
-  validates :closed_only,         inclusion: { in: [true, false] }, allow_nil: true
 
   class << self
     def register_or_update!(provider:, uid:, twitter_id:, twitter_created_at:, name:, screen_name:, protected_flag:, avatar_url:, access_token:, access_token_secret:)

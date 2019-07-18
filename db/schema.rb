@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_18_044739) do
+ActiveRecord::Schema.define(version: 2019_07_18_081117) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -126,7 +126,6 @@ ActiveRecord::Schema.define(version: 2019_07_18_044739) do
     t.string "access_token_secret", null: false
     t.integer "token_updated_at"
     t.integer "statuses_updated_at"
-    t.boolean "closed_only", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["twitter_id"], name: "index_users_on_twitter_id"
