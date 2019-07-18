@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :provider,            presence: true, length: { maximum: 255 }
   validates :name,                presence: true, length: { maximum: 255 }
   validates :screen_name,         presence: true, length: { maximum: 255 }
-  validates :protected_flag_before_type_cast, inclusion: { in: [true, false] }
+  validates :protected_flag_before_type_cast, inclusion: { in: [1, 0, true, false] }
   validates :avatar_url,          presence: true, length: { maximum: 255 }
   validates :twitter_created_at,  presence: true, numericality: { only_integer: true }
   validates :access_token,        presence: true, length: { maximum: 255 }
