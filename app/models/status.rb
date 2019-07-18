@@ -15,15 +15,15 @@ class Status < ApplicationRecord
   validates :retweet_count,           allow_nil: true, numericality: { only_integer: true }
   validates :source,                  presence: true,  length: { maximum: 255 }
   validates :text,                    presence: true,  length: { maximum: 280 }
-  validates :is_retweet_before_type_cast, inclusion: { in: [true, false] }
+  validates :is_retweet_before_type_cast, inclusion: { in: [1, 0, true, false] }
   validates :rt_name,                 allow_nil: true, length: { maximum: 255 }
   validates :rt_screen_name,          allow_nil: true, length: { maximum: 255 }
   validates :rt_avatar_url,           allow_nil: true, length: { maximum: 255 }
   validates :rt_text,                 allow_nil: true, length: { maximum: 255 }
   validates :rt_source,               allow_nil: true, length: { maximum: 255 }
   validates :rt_created_at,           allow_nil: true, numericality: { only_integer: true }
-  validates :possibly_sensitive_before_type_cast, inclusion: { in: [true, false] }
-  validates :private_flag_before_type_cast,       inclusion: { in: [true, false] }
+  validates :possibly_sensitive_before_type_cast, inclusion: { in: [1, 0, true, false] }
+  validates :private_flag_before_type_cast,       inclusion: { in: [1, 0, true, false] }
   validates :tweeted_at,              presence: true, numericality: { only_integer: true }
   validates :tweet_id_reversed,       presence: true, numericality: { only_integer: true }
   validates :tweeted_at_reversed,     presence: true, numericality: { only_integer: true }
