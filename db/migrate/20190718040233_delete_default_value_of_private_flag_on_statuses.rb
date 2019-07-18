@@ -1,4 +1,4 @@
-class DeleteDefualtValueOfPrivateFlagOnStatuses < ActiveRecord::Migration[5.2]
+class DeleteDefaultValueOfPrivateFlagOnStatuses < ActiveRecord::Migration[5.2]
   def up
     change_column_default(:statuses, :private_flag, nil)
   end
