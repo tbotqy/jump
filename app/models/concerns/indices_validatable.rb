@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module IndexValidations
+module IndicesValidatable
   extend ActiveSupport::Concern
   included do
     validates :index_f, numericality: { only_integer: true }

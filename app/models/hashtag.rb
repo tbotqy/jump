@@ -3,6 +3,6 @@
 class Hashtag < ApplicationRecord
   belongs_to :status
 
-  include IndexValidations
+  include IndicesValidatable
   validates :hashtag, presence: true, length: { maximum: 255 }
 end
