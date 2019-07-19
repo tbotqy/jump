@@ -3,6 +3,11 @@
 require "rails_helper"
 
 RSpec.describe TweetImportProgress, type: :model do
+  describe "associations" do
+    it { should belong_to(:user) }
+    it { should have_many(:statuses).through(:user) }
+  end
+
   describe "validations" do
     describe "#user_id" do
       before { create(:tweet_import_progress) }
