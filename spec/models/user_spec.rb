@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe User do
+RSpec.describe User, type: :model do
   describe "associations" do
     it { should have_many(:statuses).dependent(:destroy) }
     it { should have_many(:followees).dependent(:delete_all) }
