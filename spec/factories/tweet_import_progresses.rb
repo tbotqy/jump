@@ -5,6 +5,5 @@ FactoryBot.define do
     user
     count { 3200 }
     percentage_denominator { 3200 }
-    finished { false }
   end
 end

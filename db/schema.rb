@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_034519) do
+ActiveRecord::Schema.define(version: 2019_07_19_035329) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 2019_07_19_034519) do
     t.bigint "user_id", null: false
     t.integer "count", default: 0, null: false
     t.integer "percentage_denominator", null: false
-    t.boolean "finished", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "fk_rails_e62285fa61"
