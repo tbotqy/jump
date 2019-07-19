@@ -49,7 +49,7 @@ class ImportTweetsJob < ApplicationJob
     end
 
     def progress
-      @progress ||= TweetImportProgress.new(user_id: user_id, percentage_denominator: estimated_number_of_tweets_to_be_imported)
+      @progress ||= user.build_tweet_import_progress(percentage_denominator: estimated_number_of_tweets_to_be_imported)
     end
 
     def user
