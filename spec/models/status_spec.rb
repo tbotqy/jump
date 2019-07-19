@@ -8,13 +8,13 @@ describe Status do
       before { create(:status) } # pre-resgiter to validate uniqueness
       it { should validate_presence_of(:tweet_id) }
       it { should validate_uniqueness_of(:tweet_id) }
-      it { should validate_numericality_of(:tweet_id).only_integer }
+      it { should validate_numericality_of(:tweet_id).is_greater_than_or_equal_to(0).only_integer }
     end
     describe "#in_reply_to_tweet_id" do
-      it { should validate_numericality_of(:in_reply_to_tweet_id).only_integer.allow_nil }
+      it { should validate_numericality_of(:in_reply_to_tweet_id).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
     describe "#in_reply_to_user_id_str" do
-      it { should validate_numericality_of(:in_reply_to_user_id_str).only_integer.allow_nil }
+      it { should validate_numericality_of(:in_reply_to_user_id_str).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
     describe "#in_reply_to_screen_name" do
       it { should validate_length_of(:in_reply_to_screen_name).is_at_most(255).allow_nil }
@@ -23,7 +23,7 @@ describe Status do
       it { should validate_length_of(:place_full_name).is_at_most(255).allow_nil }
     end
     describe "#retweet_count" do
-      it { should validate_numericality_of(:retweet_count).only_integer.allow_nil }
+      it { should validate_numericality_of(:retweet_count).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
     describe "#source" do
       it { should validate_presence_of(:source) }
@@ -52,7 +52,7 @@ describe Status do
       it { should validate_length_of(:rt_source).is_at_most(255).allow_nil }
     end
     describe "#rt_created_at" do
-      it { should validate_numericality_of(:rt_created_at).only_integer.allow_nil }
+      it { should validate_numericality_of(:rt_created_at).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
     describe "#possibly_sensitive" do
       include_examples "should validate before_type_cast is a boolean", :status, :possibly_sensitive
@@ -62,15 +62,15 @@ describe Status do
     end
     describe "#tweeted_at" do
       it { should validate_presence_of(:tweeted_at) }
-      it { should validate_numericality_of(:tweeted_at).only_integer }
+      it { should validate_numericality_of(:tweeted_at).is_greater_than_or_equal_to(0).only_integer }
     end
     describe "#tweet_id_reversed" do
       it { should validate_presence_of(:tweet_id_reversed) }
-      it { should validate_numericality_of(:tweet_id_reversed).only_integer }
+      it { should validate_numericality_of(:tweet_id_reversed).is_less_than_or_equal_to(0).only_integer }
     end
     describe "#tweeted_at_reversed" do
       it { should validate_presence_of(:tweeted_at_reversed) }
-      it { should validate_numericality_of(:tweeted_at_reversed).only_integer }
+      it { should validate_numericality_of(:tweeted_at_reversed).is_less_than_or_equal_to(0).only_integer }
     end
   end
 
