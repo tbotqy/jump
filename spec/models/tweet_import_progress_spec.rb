@@ -3,27 +3,20 @@
 require "rails_helper"
 
 RSpec.describe TweetImportProgress, type: :model do
-  describe "validation" do
-    describe "on percentage_denominator" do
-      subject { -> { TweetImportProgress.create!(user: create(:user), percentage_denominator: percentage_denominator) } }
-      context "not specified" do
-        context "blank string" do
-          let(:percentage_denominator) { "" }
-          it { is_expected.to raise_error(ActiveRecord::RecordInvalid, /Percentage denominator can't be blank, Percentage denominator is not a number/) }
-        end
-        context "nil" do
-          let(:percentage_denominator) { nil }
-          it { is_expected.to raise_error(ActiveRecord::RecordInvalid, /Percentage denominator can't be blank, Percentage denominator is not a number/) }
-        end
-      end
-      context "zero" do
-        let(:percentage_denominator) { 0 }
-        it { is_expected.to raise_error(ActiveRecord::RecordInvalid, /Percentage denominator must be other than 0/) }
-      end
-      context "some number" do
-        let(:percentage_denominator) { 3200 }
-        it { is_expected.not_to raise_error }
-      end
+  describe "validations" do
+    describe "#user_id" do
+      before { create(:tweet_import_progress) }
+      it { should validate_presence_of(:user_id) }
+      it { should validate_uniqueness_of(:user_id) }
+      it { should validate_numericality_of(:user_id).only_integer }
+    end
+    describe "#count" do
+      it { should validate_presence_of(:count) }
+      it { should validate_numericality_of(:count).is_greater_than_or_equal_to(0).only_integer }
+    end
+    describe "#percentage_denominator" do
+      it { should validate_presence_of(:percentage_denominator) }
+      it { should validate_numericality_of(:percentage_denominator).is_greater_than(0).only_integer }
     end
   end
 
