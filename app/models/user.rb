@@ -3,10 +3,10 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i|twitter|
 
-  has_many :statuses,                    dependent: :destroy
-  has_many :followees,                   dependent: :delete_all
-  has_many :tweet_import_job_progresses, dependent: :delete_all
-  has_many :profile_update_fail_logs,    dependent: :delete_all
+  has_many :statuses,                 dependent: :destroy
+  has_many :followees,                dependent: :delete_all
+  has_one  :tweet_import_progress,    dependent: :destroy
+  has_many :profile_update_fail_logs, dependent: :delete_all
 
   validates :uid,                 presence: true, uniqueness: true, length: { maximum: 255 }
   validates :twitter_id,          presence: true, uniqueness: true, numericality: { only_integer: true }

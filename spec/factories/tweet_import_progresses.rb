@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :tweet_import_job_progress do
-    sequence(:job_id) { |n| "abcdefg#{n}" }
+  factory :tweet_import_progress do
     user
     count { 3200 }
     percentage_denominator { 3200 }
-    finished { false }
   end
 end

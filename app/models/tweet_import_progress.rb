@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-class TweetImportJobProgress < ApplicationRecord
+class TweetImportProgress < ApplicationRecord
   belongs_to :user
   has_many   :statuses, through: :user
 
+  validates :user_id,                presence: true, uniqueness: true, numericality: { only_integer: true }
   validates :percentage_denominator, presence: true, numericality: { only_integer: true, other_than: 0 }
-
-  scope :finished, -> { where(finished: true) }
-  scope :unfinished, -> { where(finished: false) }
 
   class << self
     def latest_by_user_id(user_id)
@@ -34,10 +32,5 @@ class TweetImportJobProgress < ApplicationRecord
     end
     calculation_result = ((count / percentage_denominator.to_f) * 100).floor
     [100, calculation_result].min
-  end
-
-  def mark_as_finished!
-    self.finished = true
-    save!
   end
 end

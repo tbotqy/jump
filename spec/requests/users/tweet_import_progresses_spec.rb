@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe "Users::ImportProgresses", type: :request do
-  describe "GET /users/:user_id/import_progress" do
-    subject { get user_import_progress_path(user_id: user_id) }
+RSpec.describe "Users::TweetImportProgresses", type: :request do
+  describe "GET /users/:user_id/tweet_import_progress" do
+    subject { get user_tweet_import_progress_path(user_id: user_id) }
 
     context "not authenticated" do
       let!(:user)    { create(:user) }
@@ -45,9 +45,9 @@ RSpec.describe "Users::ImportProgresses", type: :request do
           end
           context "user has some import progress records" do
             context "no status has been imported yet" do
-              let!(:user)                        { create(:user) }
-              let!(:user_id)                     { user.id }
-              let!(:tweet_import_job_progresses) { create_list(:tweet_import_job_progress, 3, user: user, count: 0, percentage_denominator: percentage_denominator) }
+              let!(:user)                  { create(:user) }
+              let!(:user_id)               { user.id }
+              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: 0, percentage_denominator: percentage_denominator) }
 
               let(:assumed_imported_status_count) { 0 }
               let(:percentage_denominator)        { 200 }
@@ -65,11 +65,11 @@ RSpec.describe "Users::ImportProgresses", type: :request do
               end
             end
             context "some statuses have been imported" do
-              let!(:user)                        { create(:user) }
-              let!(:user_id)                     { user.id }
-              let!(:statuses)                    { create_list(:status, assumed_imported_status_count, user: user) }
-              let!(:entities)                    { statuses.each { |status| create(:entity, status: status) } }
-              let!(:tweet_import_job_progresses) { create_list(:tweet_import_job_progress, 3, user: user, count: assumed_imported_status_count, percentage_denominator: percentage_denominator) }
+              let!(:user)                  { create(:user) }
+              let!(:user_id)               { user.id }
+              let!(:statuses)              { create_list(:status, assumed_imported_status_count, user: user) }
+              let!(:entities)              { statuses.each { |status| create(:entity, status: status) } }
+              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count, percentage_denominator: percentage_denominator) }
 
               let(:assumed_imported_status_count) { 3 }
               let(:percentage_denominator)        { 200 }

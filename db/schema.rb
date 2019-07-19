@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_18_100618) do
+ActiveRecord::Schema.define(version: 2019_07_19_035908) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -91,15 +91,13 @@ ActiveRecord::Schema.define(version: 2019_07_18_100618) do
     t.index ["user_id"], name: "index_statuses_on_user_id"
   end
 
-  create_table "tweet_import_job_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.string "job_id", limit: 36, null: false
+  create_table "tweet_import_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "count", default: 0, null: false
     t.integer "percentage_denominator", null: false
-    t.boolean "finished", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "fk_rails_e62285fa61"
+    t.index ["user_id"], name: "index_tweet_import_progresses_on_user_id", unique: true
   end
 
   create_table "urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -138,6 +136,6 @@ ActiveRecord::Schema.define(version: 2019_07_18_100618) do
   add_foreign_key "media", "statuses"
   add_foreign_key "profile_update_fail_logs", "users"
   add_foreign_key "statuses", "users"
-  add_foreign_key "tweet_import_job_progresses", "users"
+  add_foreign_key "tweet_import_progresses", "users"
   add_foreign_key "urls", "statuses"
 end

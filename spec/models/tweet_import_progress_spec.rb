@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe TweetImportJobProgress, type: :model do
+RSpec.describe TweetImportProgress, type: :model do
   describe "validation" do
     describe "on percentage_denominator" do
-      subject { -> { TweetImportJobProgress.create!(user: create(:user), job_id: "123", percentage_denominator: percentage_denominator) } }
+      subject { -> { TweetImportProgress.create!(user: create(:user), percentage_denominator: percentage_denominator) } }
       context "not specified" do
         context "blank string" do
           let(:percentage_denominator) { "" }
@@ -28,7 +28,7 @@ RSpec.describe TweetImportJobProgress, type: :model do
   end
 
   describe "#percentage" do
-    subject { create(:tweet_import_job_progress, count: count, percentage_denominator: percentage_denominator).percentage }
+    subject { create(:tweet_import_progress, count: count, percentage_denominator: percentage_denominator).percentage }
 
     shared_examples "raises custom error with expected message" do
       it { expect { subject }.to raise_error("Calculating with some negative value. (count: #{count}, percentage_denominator: #{percentage_denominator})") }
@@ -108,10 +108,10 @@ RSpec.describe TweetImportJobProgress, type: :model do
   end
 
   describe "#as_json" do
-    subject { tweet_import_job_progress.as_json }
+    subject { tweet_import_progress.as_json }
     context "no status has been imported" do
-      let(:user)                       { create(:user) }
-      let!(:tweet_import_job_progress) { create(:tweet_import_job_progress, count: 0, user: user) }
+      let(:user)                   { create(:user) }
+      let!(:tweet_import_progress) { create(:tweet_import_progress, count: 0, user: user) }
       it do
         is_expected.to include(
           percentage:  0,
@@ -121,10 +121,10 @@ RSpec.describe TweetImportJobProgress, type: :model do
       end
     end
     context "some status has been imported" do
-      let(:user)                      { create(:user) }
-      let!(:statuses)                 { create_list(:status, assumed_imported_status_count, user: user) }
-      let!(:entities)                 { statuses.each { |status| create(:entity, status: status) } }
-      let(:tweet_import_job_progress) { create(:tweet_import_job_progress, user: user, count: assumed_imported_status_count, percentage_denominator: percentage_denominator) }
+      let(:user)                  { create(:user) }
+      let!(:statuses)             { create_list(:status, assumed_imported_status_count, user: user) }
+      let!(:entities)             { statuses.each { |status| create(:entity, status: status) } }
+      let(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count, percentage_denominator: percentage_denominator) }
 
       let(:assumed_imported_status_count) { 3 }
       let(:percentage_denominator)        { 200 }
