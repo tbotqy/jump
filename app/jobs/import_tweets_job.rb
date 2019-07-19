@@ -33,11 +33,11 @@ class ImportTweetsJob < ApplicationJob
     end
 
     def record_progress!(tweet_count_additionally_imported)
-      job_progress.increment_count!(by: tweet_count_additionally_imported)
+      progress.increment_count!(by: tweet_count_additionally_imported)
     end
 
     def close_progress!
-      job_progress.mark_as_finished!
+      progress.mark_as_finished!
     end
 
     def record_timestamp!
@@ -45,11 +45,11 @@ class ImportTweetsJob < ApplicationJob
     end
 
     def update_summary
-      ActiveStatusCount.increment_by(job_progress.count)
+      ActiveStatusCount.increment_by(progress.count)
     end
 
-    def job_progress
-      @job_progress ||= TweetImportProgress.new(user_id: user_id, percentage_denominator: estimated_number_of_tweets_to_be_imported)
+    def progress
+      @progress ||= TweetImportProgress.new(user_id: user_id, percentage_denominator: estimated_number_of_tweets_to_be_imported)
     end
 
     def user
