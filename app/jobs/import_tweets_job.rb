@@ -23,9 +23,9 @@ class ImportTweetsJob < ApplicationJob
         # oldest_id_of_all_fetched_tweets gets smaller
         oldest_id_of_all_fetched_tweets = tweets.last.id
       end
-      close_progress!
       record_timestamp!
       update_summary
+      destroy_progress!
     end
 
     def save_tweets!(tweets)
@@ -36,8 +36,8 @@ class ImportTweetsJob < ApplicationJob
       progress.increment_count!(by: tweet_count_additionally_imported)
     end
 
-    def close_progress!
-      progress.mark_as_finished!
+    def destroy_progress!
+      progress.destroy!
     end
 
     def record_timestamp!
