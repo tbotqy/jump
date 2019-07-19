@@ -2,7 +2,14 @@
 
 require "rails_helper"
 
-describe User do
+RSpec.describe User, type: :model do
+  describe "associations" do
+    it { should have_many(:statuses).dependent(:destroy) }
+    it { should have_many(:followees).dependent(:delete_all) }
+    it { should have_one(:tweet_import_progress).dependent(:destroy) }
+    it { should have_many(:profile_update_fail_logs).dependent(:delete_all) }
+  end
+
   describe "validations" do
     describe "#uid" do
       before { create(:user) } # pre-register to validate uniqueness

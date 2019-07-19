@@ -2,7 +2,15 @@
 
 require "rails_helper"
 
-describe Status do
+RSpec.describe Status, type: :model do
+  describe "associations" do
+    it { should belong_to(:user) }
+    it { should have_many(:hashtags).dependent(:delete_all) }
+    it { should have_many(:urls).dependent(:delete_all) }
+    it { should have_many(:media).dependent(:delete_all) }
+    it { should have_many(:entities).dependent(:delete_all) }
+  end
+
   describe "validations" do
     describe "#tweet_id" do
       before { create(:status) } # pre-resgiter to validate uniqueness

@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe Followee, type: :model do
+  describe "associations" do
+    it { should belong_to(:user) }
+  end
+
   describe "validations" do
     describe "#twitter_id" do
       before { create(:followee) } # pre-register to validate uniqueness

@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe Medium, type: :model do
+  describe "associations" do
+    it { should belong_to(:status) }
+  end
+
   describe "validations" do
     describe "#url" do
       it { should validate_presence_of(:url) }
