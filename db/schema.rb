@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_035329) do
+ActiveRecord::Schema.define(version: 2019_07_19_035908) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_035329) do
     t.integer "percentage_denominator", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "fk_rails_e62285fa61"
+    t.index ["user_id"], name: "index_tweet_import_progresses_on_user_id", unique: true
   end
 
   create_table "urls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|

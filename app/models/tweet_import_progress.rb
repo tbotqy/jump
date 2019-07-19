@@ -4,6 +4,7 @@ class TweetImportProgress < ApplicationRecord
   belongs_to :user
   has_many   :statuses, through: :user
 
+  validates :user_id,                presence: true, uniqueness: true, numericality: { only_integer: true }
   validates :percentage_denominator, presence: true, numericality: { only_integer: true, other_than: 0 }
 
   class << self
