@@ -9,17 +9,17 @@ class User < ApplicationRecord
   has_many :profile_update_fail_logs, dependent: :delete_all
 
   validates :uid,                 presence: true, uniqueness: true, length: { maximum: 255 }
-  validates :twitter_id,          presence: true, uniqueness: true, numericality: { only_integer: true }
+  validates :twitter_id,          presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :provider,            presence: true, length: { maximum: 255 }
   validates :name,                presence: true, length: { maximum: 255 }
   validates :screen_name,         presence: true, length: { maximum: 255 }
   validates :protected_flag_before_type_cast, inclusion: { in: [1, 0, true, false] }
   validates :avatar_url,          presence: true, length: { maximum: 255 }
-  validates :twitter_created_at,  presence: true, numericality: { only_integer: true }
+  validates :twitter_created_at,  presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :access_token,        presence: true, length: { maximum: 255 }
   validates :access_token_secret, presence: true, length: { maximum: 255 }
-  validates :token_updated_at,    numericality: { only_integer: true }, allow_nil: true
-  validates :statuses_updated_at, numericality: { only_integer: true }, allow_nil: true
+  validates :token_updated_at,    numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :statuses_updated_at, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
   class << self
     def register_or_update!(provider:, uid:, twitter_id:, twitter_created_at:, name:, screen_name:, protected_flag:, avatar_url:, access_token:, access_token_secret:)

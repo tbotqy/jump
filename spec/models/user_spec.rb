@@ -14,7 +14,7 @@ describe User do
       before { create(:user) } # pre-register to validate uniqueness
       it { should validate_presence_of(:twitter_id) }
       it { should validate_uniqueness_of(:twitter_id) }
-      it { should validate_numericality_of(:twitter_id).only_integer }
+      it { should validate_numericality_of(:twitter_id).is_greater_than_or_equal_to(0).only_integer }
     end
     describe "#provider" do
       it { should validate_presence_of(:provider) }
@@ -37,7 +37,7 @@ describe User do
     end
     describe "#twitter_created_at" do
       it { should validate_presence_of(:twitter_created_at) }
-      it { should validate_numericality_of(:twitter_created_at).only_integer }
+      it { should validate_numericality_of(:twitter_created_at).is_greater_than_or_equal_to(0).only_integer }
     end
     describe "#access_token" do
       it { should validate_presence_of(:access_token) }
@@ -48,10 +48,10 @@ describe User do
       it { should validate_length_of(:access_token_secret).is_at_most(255) }
     end
     describe "#token_updated_at" do
-      it { should validate_numericality_of(:token_updated_at).only_integer.allow_nil }
+      it { should validate_numericality_of(:token_updated_at).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
     describe "#statuses_updated_at" do
-      it { should validate_numericality_of(:statuses_updated_at).only_integer.allow_nil }
+      it { should validate_numericality_of(:statuses_updated_at).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
   end
   describe ".register_or_update!" do

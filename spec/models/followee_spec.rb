@@ -8,7 +8,7 @@ RSpec.describe Followee, type: :model do
       before { create(:followee) } # pre-register to validate uniqueness
       it { should validate_presence_of(:twitter_id) }
       it { should validate_uniqueness_of(:twitter_id).scoped_to(:user_id) }
-      it { should validate_numericality_of(:twitter_id).only_integer }
+      it { should validate_numericality_of(:twitter_id).is_greater_than_or_equal_to(0).only_integer }
     end
   end
 end
