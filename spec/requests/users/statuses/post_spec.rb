@@ -40,24 +40,35 @@ RSpec.describe "Users::Statuses", type: :request do
         context "given id is an authenticated user's id" do
           let!(:user)   { create(:user) }
           let(:user_id) { user.id }
-          context "failed to kick the job" do
+          context "user has a working job" do
             before do
-              allow(ImportTweetsJob).to receive(:perform_later).and_raise(RuntimeError)
+              create(:tweet_import_progress, user: user)
               sign_in user
               subject
             end
             it_behaves_like "doesn't enqueue the job"
-            it_behaves_like "respond with status code", :internal_server_error
+            it_behaves_like "respond with status code", :too_many_requests
           end
-          context "succeeded to kick the job" do
-            before do
-              sign_in user
-              subject
+          context "user has no working job" do
+            context "failed to kick the job" do
+              before do
+                allow(ImportTweetsJob).to receive(:perform_later).and_raise(RuntimeError)
+                sign_in user
+                subject
+              end
+              it_behaves_like "doesn't enqueue the job"
+              it_behaves_like "respond with status code", :internal_server_error
             end
-            it "enqueues the job " do
-              expect(ImportTweetsJob).to have_been_enqueued.exactly(:once)
+            context "succeeded to kick the job" do
+              before do
+                sign_in user
+                subject
+              end
+              it "enqueues the job " do
+                expect(ImportTweetsJob).to have_been_enqueued.exactly(:once)
+              end
+              it_behaves_like "respond with status code", :accepted
             end
-            it_behaves_like "respond with status code", :accepted
           end
         end
       end

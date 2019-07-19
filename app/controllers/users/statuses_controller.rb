@@ -15,8 +15,13 @@ module Users
     def create
       user = User.find(params[:user_id])
       authorize_operation_for!(user)
-      ImportTweetsJob.perform_later(user_id: params[:user_id])
-      head :accepted
+
+      if user.tweet_import_progress.present?
+        head :too_many_requests
+      else
+        ImportTweetsJob.perform_later(user_id: params[:user_id])
+        head :accepted
+      end
     end
 
     private
