@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe TweetImportProgress, type: :model do
   describe "validation" do
     describe "on percentage_denominator" do
-      subject { -> { TweetImportProgress.create!(user: create(:user), job_id: "123", percentage_denominator: percentage_denominator) } }
+      subject { -> { TweetImportProgress.create!(user: create(:user), percentage_denominator: percentage_denominator) } }
       context "not specified" do
         context "blank string" do
           let(:percentage_denominator) { "" }
