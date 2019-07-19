@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Users
-  class ImportProgressesController < ApplicationController
+  class TweetImportProgressesController < ApplicationController
     before_action :authenticate_user!
 
-    # GET /users/:user_id/import_progress
+    # GET /users/:user_id/tweet_import_progress
     def show
       user = User.find(params[:user_id])
       authorize_operation_for!(user)

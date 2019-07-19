@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe "Users::ImportProgresses", type: :request do
-  describe "GET /users/:user_id/import_progress" do
-    subject { get user_import_progress_path(user_id: user_id) }
+RSpec.describe "Users::TweetImportProgresses", type: :request do
+  describe "GET /users/:user_id/tweet_import_progress" do
+    subject { get user_tweet_import_progress_path(user_id: user_id) }
 
     context "not authenticated" do
       let!(:user)    { create(:user) }
