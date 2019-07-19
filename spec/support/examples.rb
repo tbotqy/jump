@@ -56,3 +56,14 @@ shared_examples "should validate before_type_cast is a boolean" do |model_name, 
     end
   end
 end
+
+shared_examples "validation on indices" do
+  describe "#index_f" do
+    it { should validate_presence_of(:index_f) }
+    it { should validate_numericality_of(:index_f).only_integer }
+  end
+  describe "#index_l" do
+    it { should validate_presence_of(:index_l) }
+    it { should validate_numericality_of(:index_l).only_integer }
+  end
+end
