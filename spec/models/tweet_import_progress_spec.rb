@@ -39,12 +39,6 @@ RSpec.describe TweetImportProgress, type: :model do
         it { is_expected.to eq ((count / percentage_denominator.to_f) * 100).floor  }
       end
 
-      context "count < 0" do
-        let(:count) { -1 }
-        let(:percentage_denominator) { 3200 }
-        it_behaves_like "raises custom error with expected message"
-      end
-
       context "count == 0" do
         let(:count) { 0 }
         let(:percentage_denominator) { 3200 }
@@ -85,24 +79,6 @@ RSpec.describe TweetImportProgress, type: :model do
         let(:percentage_denominator) { 3200 }
         it { is_expected.to be_an(Integer) }
         it { is_expected.to eq 100 }
-      end
-    end
-
-    describe "invalid value handling" do
-      context "only count is a negative number" do
-        let(:count) { -1 }
-        let(:percentage_denominator) { 3200 }
-        it_behaves_like "raises custom error with expected message"
-      end
-      context "only percentage_denominator is a negative number" do
-        let(:count) { 1 }
-        let(:percentage_denominator) { -3200 }
-        it_behaves_like "raises custom error with expected message"
-      end
-      context "both of count and percentage_denominator is a negative number" do
-        let(:count) { -1 }
-        let(:percentage_denominator) { -3200 }
-        it_behaves_like "raises custom error with expected message"
       end
     end
   end
