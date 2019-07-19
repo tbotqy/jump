@@ -17,7 +17,7 @@ class ImportTweetsJob < ApplicationJob
         tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
         break if tweets.blank?
         save_tweets!(tweets)
-        record_progress!(tweets.count)
+        update_progress!(tweets.count)
 
         # specify for subsequent fetch
         # oldest_id_of_all_fetched_tweets gets smaller
@@ -32,7 +32,7 @@ class ImportTweetsJob < ApplicationJob
       tweets.each { |tweet| user.statuses.create_by_tweet!(tweet) unless Status.exists?(tweet_id: tweet.id) }
     end
 
-    def record_progress!(tweet_count_additionally_imported)
+    def update_progress!(tweet_count_additionally_imported)
       progress.increment_count!(by: tweet_count_additionally_imported)
     end
 
