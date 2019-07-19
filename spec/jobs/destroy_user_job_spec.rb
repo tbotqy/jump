@@ -10,7 +10,7 @@ RSpec.describe DestroyUserJob, type: :job do
     it { expect { subject.call rescue nil }.not_to change { Status.where(user_id: user_id).count }             .from(initial_user_status_count) }
     it { expect { subject.call rescue nil }.not_to change { Entity.where(status_id: user_status_ids).count }   .from(initial_user_entity_count) }
     it { expect { subject.call rescue nil }.not_to change { Followee.where(user_id: user_id).count }           .from(initial_user_followee_count) }
-    it { expect { subject.call rescue nil }.not_to change { TweetImportProgress.where(user_id: user_id).count }.from(initial_user_tweet_import_progress_count) }
+    it { expect { subject.call rescue nil }.not_to change { TweetImportProgress.exists?(user_id: user_id) }    .from(true) }
   end
 
   # register user and user's belongings
@@ -19,13 +19,12 @@ RSpec.describe DestroyUserJob, type: :job do
   let!(:user_status_ids)    { create_list(:status, 10, user: user).pluck(:id) }
   let!(:user_entity_ids)    { user_status_ids.map { |sid| create_list(:entity, 3, status_id: sid).pluck(:id) }.flatten }
   let!(:user_followee_ids)  { create_list(:followee, 10, user: user).pluck(:id) }
-  let!(:user_tweet_import_progress_ids) { create_list(:tweet_import_progress, 3, user: user).pluck(:id) }
+  let!(:user_tweet_import_progress) { create(:tweet_import_progress, user: user) }
 
   # save initial counts of each belongings
   let!(:initial_user_status_count)   { user_status_ids.count }
   let!(:initial_user_entity_count)   { user_entity_ids.count }
   let!(:initial_user_followee_count) { user_followee_ids.count }
-  let!(:initial_user_tweet_import_progress_count) { user_tweet_import_progress_ids.count }
 
   context "user_id is not given" do
     let(:user_id_passed_as_param) { "" }
