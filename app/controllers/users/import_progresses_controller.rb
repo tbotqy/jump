@@ -8,7 +8,7 @@ module Users
     def show
       user = User.find(params[:user_id])
       authorize_operation_for!(user)
-      latest_progress = user.tweet_import_job_progresses.last!
+      latest_progress = user.tweet_import_progresses.last!
 
       render json: latest_progress
     end

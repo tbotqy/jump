@@ -49,7 +49,7 @@ class ImportTweetsJob < ApplicationJob
     end
 
     def job_progress
-      @job_progress ||= TweetImportJobProgress.new(job_id: job_id, user_id: user_id, percentage_denominator: estimated_number_of_tweets_to_be_imported)
+      @job_progress ||= TweetImportProgress.new(job_id: job_id, user_id: user_id, percentage_denominator: estimated_number_of_tweets_to_be_imported)
     end
 
     def user

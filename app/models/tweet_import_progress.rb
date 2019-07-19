@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TweetImportJobProgress < ApplicationRecord
+class TweetImportProgress < ApplicationRecord
   belongs_to :user
   has_many   :statuses, through: :user
 
