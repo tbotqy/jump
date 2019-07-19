@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :statuses,                    dependent: :destroy
   has_many :followees,                   dependent: :delete_all
   has_many :tweet_import_job_progresses, dependent: :delete_all
+  has_many :profile_update_fail_logs,    dependent: :delete_all
 
   validates :uid,                 presence: true, uniqueness: true, length: { maximum: 255 }
   validates :twitter_id,          presence: true, uniqueness: true, numericality: { only_integer: true }
