@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 class ProfileUpdateFailLog < ApplicationRecord
-  class << self
-    def log!(user_id, error_message)
-      create!(
-        user_id: user_id,
-        error_message: error_message
-      )
-    end
-  end
+  belongs_to :user
+
+  validates :error_message, presence: true, length: { maximum: 255 }
 end
