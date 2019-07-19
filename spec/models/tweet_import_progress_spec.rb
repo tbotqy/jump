@@ -6,9 +6,7 @@ RSpec.describe TweetImportProgress, type: :model do
   describe "validations" do
     describe "#user_id" do
       before { create(:tweet_import_progress) }
-      it { should validate_presence_of(:user_id) }
       it { should validate_uniqueness_of(:user_id) }
-      it { should validate_numericality_of(:user_id).only_integer }
     end
     describe "#count" do
       it { should validate_presence_of(:count) }
