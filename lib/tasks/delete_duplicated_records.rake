@@ -1,9 +1,28 @@
 # frozen_string_literal: true
 
-namespace :delete_duplicated_followees do
-  desc "delete duplicated followees"
+namespace :delete_duplicated_records do
   task start: :environment do
+    puts "delete duplicated statuses"
     con    = ActiveRecord::Base.connection
+    result = con.select_all("select tweet_id, count(tweet_id) as count from statuses group by tweet_id having count(tweet_id) >= 2")
+    progress_bar = ProgressBar.create(total: result.count, format: "%t: |%B| %a %E  %c/%C %P%%")
+    ActiveRecord::Base.transaction do
+      result.each do |row|
+        tweet_id = row.fetch("tweet_id")
+        count    = row.fetch("count")
+        case count
+        when 2
+          Status.where(tweet_id: tweet_id).last.destroy!
+        when 3
+          Status.where(tweet_id: tweet_id).last(2).each(&:destroy!)
+        else
+          raise "unexpected case: count=#{count}"
+        end
+        progress_bar.increment
+      end
+    end
+
+    puts "delete duplicated followees"
     result = con.select_all("select user_id, twitter_id, count(twitter_id) as count from followees group by user_id, twitter_id having count(twitter_id) >= 2")
     progress_bar = ProgressBar.create(total: result.count, format: "%t: |%B| %a %E  %c/%C %P%%")
     ActiveRecord::Base.transaction do
