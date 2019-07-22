@@ -19,7 +19,7 @@ module Users
       if user.tweet_import_progress.present?
         head :too_many_requests
       else
-        ImportTweetsJob.perform_later(user_id: params[:user_id])
+        ImportUserTweetsJob.perform_later(user_id: params[:user_id])
         head :accepted
       end
     end
