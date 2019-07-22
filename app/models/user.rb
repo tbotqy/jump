@@ -8,6 +8,10 @@ class User < ApplicationRecord
   has_one  :tweet_import_progress,    dependent: :destroy
   has_many :profile_update_fail_logs, dependent: :delete_all
 
+  has_many :hashtags, through: :statuses
+  has_many :urls,     through: :statuses
+  has_many :media,    through: :statuses
+
   validates :uid,                 presence: true, uniqueness: true, length: { maximum: 255 }
   validates :twitter_id,          presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :provider,            presence: true, length: { maximum: 255 }
