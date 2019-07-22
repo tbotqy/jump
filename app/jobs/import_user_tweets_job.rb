@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ImportTweetsJob < ApplicationJob
+class ImportUserTweetsJob < ApplicationJob
   queue_as :default
 
   def perform(user_id:)

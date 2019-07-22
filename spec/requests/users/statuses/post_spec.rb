@@ -6,7 +6,7 @@ RSpec.describe "Users::Statuses", type: :request do
   describe "POST /users/:id/statuses" do
     subject { post user_statuses_path(user_id: user_id) }
     shared_examples "doesn't enqueue the job" do
-      it { expect(ImportTweetsJob).not_to have_been_enqueued }
+      it { expect(ImportUserTweetsJob).not_to have_been_enqueued }
     end
 
     context "user has not been authenticated" do
@@ -52,7 +52,7 @@ RSpec.describe "Users::Statuses", type: :request do
           context "user has no working job" do
             context "failed to kick the job" do
               before do
-                allow(ImportTweetsJob).to receive(:perform_later).and_raise(RuntimeError)
+                allow(ImportUserTweetsJob).to receive(:perform_later).and_raise(RuntimeError)
                 sign_in user
                 subject
               end
@@ -65,7 +65,7 @@ RSpec.describe "Users::Statuses", type: :request do
                 subject
               end
               it "enqueues the job " do
-                expect(ImportTweetsJob).to have_been_enqueued.exactly(:once)
+                expect(ImportUserTweetsJob).to have_been_enqueued.exactly(:once)
               end
               it_behaves_like "respond with status code", :accepted
             end
