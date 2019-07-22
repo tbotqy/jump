@@ -62,7 +62,7 @@ class RegisterTweetService
       def hashtag_params
         tweet_hashtags.map do |tweet_hashtag|
           {
-            hashtag: tweet_hashtag.text,
+            text:    tweet_hashtag.text,
             index_f: tweet_hashtag.indices.first,
             index_l: tweet_hashtag.indices.last
           }
