@@ -39,33 +39,6 @@ class Status < ApplicationRecord
     def most_recent_tweet_id!
       order_by_newest_to_oldest.first!.tweet_id
     end
-
-    def create_by_tweet!(tweet)
-      status          = new_by_tweet(tweet)
-      status.entities = Entity.bulk_new_by_tweet(tweet)
-      status.save!
-    end
-
-    private
-      def new_by_tweet(tweet)
-        ret = new(
-          tweet_id:                tweet.attrs[:id_str],
-          tweet_id_reversed:       -1 * tweet.attrs[:id_str].to_i,
-          in_reply_to_tweet_id:    tweet.attrs[:in_reply_to_status_id_str],
-          in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
-          in_reply_to_screen_name: tweet.in_reply_to_screen_name,
-          place_full_name:         tweet.place.try!(:full_name),
-          retweet_count:           tweet.retweet_count,
-          tweeted_at:              Time.parse(tweet.created_at.to_s).to_i,
-          tweeted_at_reversed:     -1 * Time.parse(tweet.created_at.to_s).to_i,
-          source:                  tweet.source,
-          text:                    tweet.text,
-          possibly_sensitive:      tweet.possibly_sensitive? || false,
-          private_flag:            tweet.user.protected?
-        )
-        ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
-        ret
-      end
   end
 
   def as_json(_options = {})
@@ -77,15 +50,5 @@ class Status < ApplicationRecord
       entities:   entities.as_json,
       user:       user.as_json
     }
-  end
-
-  def assign_retweeted_status(retweeted_status)
-    self.is_retweet     = true
-    self.rt_name        = retweeted_status.user.name
-    self.rt_screen_name = retweeted_status.user.screen_name
-    self.rt_avatar_url  = retweeted_status.user.profile_image_url_https.to_s
-    self.rt_text        = retweeted_status.text
-    self.rt_source      = retweeted_status.source
-    self.rt_created_at  = retweeted_status.created_at.to_i
   end
 end
