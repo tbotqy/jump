@@ -17,7 +17,7 @@ namespace :migrate_entities_to_others do
         hashtags = entity_hashtags.map do |entity_hashtag|
           Hashtag.new(
             status_id: entity_hashtag.status_id,
-            hashtag:   entity_hashtag.hashtag,
+            text:      entity_hashtag.hashtag,
             index_f:   entity_hashtag.indice_f,
             index_l:   entity_hashtag.indice_l
           )

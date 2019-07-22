@@ -56,7 +56,7 @@ describe RegisterTweetService do
       it { is_expected.to change { User.find(user.id).hashtags.count }.by(tweet.hashtags.count) }
       it do
         subject.call
-        testing_attrs = %i|hashtag index_f index_l|
+        testing_attrs = %i|text index_f index_l|
         expect(Status.find_by!(tweet_id: tweet.id).hashtags.pluck(*testing_attrs)).to contain_exactly(
           *tweet.hashtags.map do |tweet_hashtag|
             [

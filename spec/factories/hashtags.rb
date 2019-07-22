@@ -3,8 +3,8 @@
 FactoryBot.define do
   factory :hashtag do
     status
-    hashtag { "test" }
+    text { "test" }
     index_f { 1 }
-    index_l { index_f + hashtag.size + 1 } # 1 == "#".size
+    index_l { index_f + text.size + 1 } # 1 == "#".size
   end
 end

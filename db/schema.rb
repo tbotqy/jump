@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_19_035908) do
+ActiveRecord::Schema.define(version: 2019_07_22_085212) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_07_19_035908) do
 
   create_table "hashtags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
-    t.string "hashtag", null: false
+    t.string "text", null: false
     t.integer "index_f", null: false
     t.integer "index_l", null: false
     t.datetime "created_at", null: false
