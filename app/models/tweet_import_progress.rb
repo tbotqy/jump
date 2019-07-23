@@ -17,11 +17,6 @@ class TweetImportProgress < ApplicationRecord
     }
   end
 
-  def increment_count_by!(number)
-    self.count += number
-    save!
-  end
-
   def percentage
     calculation_result = ((count / percentage_denominator.to_f) * 100).floor
     [100, calculation_result].min

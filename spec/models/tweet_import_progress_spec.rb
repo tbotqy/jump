@@ -121,24 +121,4 @@ RSpec.describe TweetImportProgress, type: :model do
       is_expected.to change { tweet_import_progress.finished }.from(false).to(true)
     end
   end
-
-  describe "#increment_count_by!" do
-    subject { -> { tweet_import_progress.increment_count_by!(number) } }
-    let!(:tweet_import_progress) { create(:tweet_import_progress, count: 10) }
-
-    context "given number is a string" do
-      context "kana" do
-        let(:number) { "あ" }
-        it { is_expected.to raise_error(TypeError) }
-      end
-      context "like a number" do
-        let(:number) { "200" }
-        it { is_expected.to raise_error(TypeError) }
-      end
-    end
-    context "given number is a number" do
-      let(:number) { 200 }
-      it { is_expected.to change { tweet_import_progress.count }.by(number) }
-    end
-  end
 end
