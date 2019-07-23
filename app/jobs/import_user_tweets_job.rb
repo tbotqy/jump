@@ -5,16 +5,25 @@ class ImportUserTweetsJob < ApplicationJob
 
   def perform(user_id:)
     @user_id = user_id
+    initialize_parameter!
     import!
   end
 
   private
-    attr_reader :user_id
+    attr_reader :user_id, :tweeted_after_id
+
+    def initialize_parameter!
+      if user.statuses.exists?
+        @tweeted_after_id = user.statuses.most_recent_tweet_id!
+      else
+        @tweeted_after_id = nil
+      end
+    end
 
     def import!
       oldest_id_of_all_fetched_tweets = nil
       loop do
-        tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
+        tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: tweeted_after_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
         break if tweets.blank?
         register_unregistered_tweets!(fetched_tweets: tweets)
         update_progress!(fetched_tweets_count: tweets.count)
