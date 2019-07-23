@@ -23,16 +23,16 @@ class ImportUserTweetsJob < ApplicationJob
 
     def import!
       ActiveRecord::Base.transaction do
-        oldest_id_of_all_fetched_tweets = nil
+        tweeted_before_id = nil
         loop do
-          tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: tweeted_after_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
+          tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: tweeted_after_id, tweeted_before_id: tweeted_before_id)
           break if tweets.blank?
           register_tweets!(tweets)
           update_progress!(tweets.count)
 
           # specify for subsequent fetch
-          # oldest_id_of_all_fetched_tweets gets smaller
-          oldest_id_of_all_fetched_tweets = tweets.last.id
+          # tweeted_before_id gets smaller
+          tweeted_before_id = tweets.last.id
         end
       end
     end
