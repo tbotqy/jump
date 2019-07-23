@@ -21,6 +21,9 @@ RSpec.describe TweetImportProgress, type: :model do
       it { should validate_presence_of(:percentage_denominator) }
       it { should validate_numericality_of(:percentage_denominator).is_greater_than(0).only_integer }
     end
+    describe "#finished" do
+      include_examples "should validate before_type_cast is a boolean", :tweet_import_progress, :finished
+    end
   end
 
   describe "#percentage" do
