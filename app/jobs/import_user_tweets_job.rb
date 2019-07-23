@@ -26,7 +26,7 @@ class ImportUserTweetsJob < ApplicationJob
         loop do
           tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: tweeted_after_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
           break if tweets.blank?
-          register_unregistered_tweets!(fetched_tweets: tweets)
+          register_tweets!(tweets)
           update_progress!(fetched_tweets_count: tweets.count)
 
           # specify for subsequent fetch
@@ -39,8 +39,8 @@ class ImportUserTweetsJob < ApplicationJob
       close_progress!
     end
 
-    def register_unregistered_tweets!(fetched_tweets:)
-      fetched_tweets.each { |fetched_tweet| RegisterTweetService.call!(tweet: fetched_tweet) unless Status.exists?(tweet_id: fetched_tweet.id) }
+    def register_tweets!(tweets)
+      tweets.each { |tweet| RegisterTweetService.call!(tweet: tweet) }
     end
 
     def update_progress!(fetched_tweets_count:)
