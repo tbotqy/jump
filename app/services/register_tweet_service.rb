@@ -43,11 +43,11 @@ class RegisterTweetService
           source:                  tweet.source,
           text:                    tweet.text,
           possibly_sensitive:      tweet.possibly_sensitive?,
-          private_flag:            tweet.user.protected?
+          private_flag:            tweet.user.protected?,
+          is_retweet:              tweet.retweet?,
         }
         if tweet.retweet?
           ret.merge!(
-            is_retweet:     true,
             rt_name:        retweeted_tweet.user.name,
             rt_screen_name: retweeted_tweet.user.screen_name,
             rt_avatar_url:  retweeted_tweet.user.profile_image_url_https.to_s,
