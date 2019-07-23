@@ -27,7 +27,7 @@ class ImportUserTweetsJob < ApplicationJob
           tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: tweeted_after_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
           break if tweets.blank?
           register_tweets!(tweets)
-          update_progress!(fetched_tweets_count: tweets.count)
+          update_progress!(tweets.count)
 
           # specify for subsequent fetch
           # oldest_id_of_all_fetched_tweets gets smaller
@@ -43,8 +43,8 @@ class ImportUserTweetsJob < ApplicationJob
       tweets.each { |tweet| RegisterTweetService.call!(tweet: tweet) }
     end
 
-    def update_progress!(fetched_tweets_count:)
-      progress.increment!(:count, fetched_tweets_count)
+    def update_progress!(registered_tweet_count)
+      progress.increment!(:count, registered_tweet_count)
     end
 
     def record_timestamp!
