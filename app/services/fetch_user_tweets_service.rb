@@ -22,7 +22,7 @@ class FetchUserTweetsService
     attr_reader :user_id, :tweeted_after_id, :tweeted_before_id
 
     def call!
-      twitter_rest_client.user_timeline(twitter_id, api_params)
+      twitter_rest_client.user_timeline(api_params)
     end
 
     def api_params
@@ -38,10 +38,6 @@ class FetchUserTweetsService
         include_rts: true,
         count:       MAX_TWEETS_COUNT_PER_GET
       }
-    end
-
-    def twitter_id
-      @twitter_id ||= User.find(user_id).twitter_id
     end
 
     def twitter_rest_client
