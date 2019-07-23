@@ -9,12 +9,6 @@ class TweetImportProgress < ApplicationRecord
   validates :percentage_denominator,    presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :finished_before_type_cast, inclusion: { in: [1, 0, true, false] }
 
-  class << self
-    def latest_by_user_id(user_id)
-      where(user_id: user_id).last
-    end
-  end
-
   def as_json(_options = {})
     {
       percentage:  percentage,
