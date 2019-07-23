@@ -33,7 +33,7 @@ class ImportUserTweetsJob < ApplicationJob
     end
 
     def update_progress!(fetched_tweets_count:)
-      progress.increment_count!(by: fetched_tweets_count)
+      progress.increment_count_by!(fetched_tweets_count)
     end
 
     def record_timestamp!

@@ -17,8 +17,8 @@ class TweetImportProgress < ApplicationRecord
     }
   end
 
-  def increment_count!(by:)
-    self.count += by
+  def increment_count_by!(number)
+    self.count += number
     save!
   end
 

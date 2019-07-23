@@ -122,8 +122,8 @@ RSpec.describe TweetImportProgress, type: :model do
     end
   end
 
-  describe "#increment_count!" do
-    subject { -> { tweet_import_progress.increment_count!(by: number) } }
+  describe "#increment_count_by!" do
+    subject { -> { tweet_import_progress.increment_count_by!(number) } }
     let!(:tweet_import_progress) { create(:tweet_import_progress, count: 10) }
 
     context "given number is a string" do
