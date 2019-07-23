@@ -16,8 +16,8 @@ class ImportUserTweetsJob < ApplicationJob
       loop do
         tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
         break if tweets.blank?
-        register_unregistered_tweets!(tweets)
-        update_progress!(tweets.count)
+        register_unregistered_tweets!(fetched_tweets: tweets)
+        update_progress!(fetched_tweets_count: tweets.count)
 
         # specify for subsequent fetch
         # oldest_id_of_all_fetched_tweets gets smaller
@@ -28,14 +28,13 @@ class ImportUserTweetsJob < ApplicationJob
       progress.mark_as_finished!
     end
 
-    def register_unregistered_tweets!(tweets)
-      tweets.each { |tweet| RegisterTweetService.call!(tweet: tweet) unless Status.exists?(tweet_id: tweet.id) }
+    def register_unregistered_tweets!(fetched_tweets:)
+      fetched_tweets.each { |fetched_tweet| RegisterTweetService.call!(tweet: fetched_tweet) unless Status.exists?(tweet_id: fetched_tweet.id) }
     end
 
-    def update_progress!(tweet_count_additionally_imported)
-      progress.increment_count!(by: tweet_count_additionally_imported)
+    def update_progress!(fetched_tweets_count:)
+      progress.increment_count!(by: fetched_tweets_count)
     end
-
 
     def record_timestamp!
       user.update!(statuses_updated_at: Time.now.utc.to_i)
