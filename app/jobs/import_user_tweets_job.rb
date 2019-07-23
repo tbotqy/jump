@@ -7,6 +7,7 @@ class ImportUserTweetsJob < ApplicationJob
     @user_id = user_id
     initialize_parameter!
     import!
+    finalize!
   end
 
   private
@@ -34,9 +35,12 @@ class ImportUserTweetsJob < ApplicationJob
           oldest_id_of_all_fetched_tweets = tweets.last.id
         end
       end
-      record_timestamp!
-      update_summary
-      close_progress!
+    end
+
+    def finalize!
+      user.update!(statuses_updated_at: Time.now.utc.to_i)
+      ActiveStatusCount.increment_by(progress.count)
+      progress.mark_as_finished!
     end
 
     def register_tweets!(tweets)
@@ -45,18 +49,6 @@ class ImportUserTweetsJob < ApplicationJob
 
     def update_progress!(registered_tweet_count)
       progress.increment!(:count, registered_tweet_count)
-    end
-
-    def record_timestamp!
-      user.update!(statuses_updated_at: Time.now.utc.to_i)
-    end
-
-    def update_summary
-      ActiveStatusCount.increment_by(progress.count)
-    end
-
-    def close_progress!
-      progress.mark_as_finished!
     end
 
     def progress
