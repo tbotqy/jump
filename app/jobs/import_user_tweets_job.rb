@@ -25,7 +25,7 @@ class ImportUserTweetsJob < ApplicationJob
       end
       record_timestamp!
       update_summary
-      progress.mark_as_finished!
+      close_progress!
     end
 
     def register_unregistered_tweets!(fetched_tweets:)
@@ -42,6 +42,10 @@ class ImportUserTweetsJob < ApplicationJob
 
     def update_summary
       ActiveStatusCount.increment_by(progress.count)
+    end
+
+    def close_progress!
+      progress.mark_as_finished!
     end
 
     def progress
