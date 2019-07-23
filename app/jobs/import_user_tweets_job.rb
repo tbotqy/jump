@@ -25,7 +25,7 @@ class ImportUserTweetsJob < ApplicationJob
       end
       record_timestamp!
       update_summary
-      destroy_progress!
+      progress.mark_as_finished!
     end
 
     def register_unregistered_tweets!(tweets)
@@ -36,9 +36,6 @@ class ImportUserTweetsJob < ApplicationJob
       progress.increment_count!(by: tweet_count_additionally_imported)
     end
 
-    def destroy_progress!
-      progress.destroy!
-    end
 
     def record_timestamp!
       user.update!(statuses_updated_at: Time.now.utc.to_i)
