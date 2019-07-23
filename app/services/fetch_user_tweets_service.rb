@@ -7,7 +7,7 @@ class FetchUserTweetsService
   private_constant :MAX_TWEETS_COUNT_PER_GET
 
   class << self
-    def call!(user_id:, tweeted_after_id:, tweeted_before_id: nil)
+    def call!(user_id:, tweeted_after_id:, tweeted_before_id:)
       new(user_id, tweeted_after_id, tweeted_before_id).send(:call!)
     end
   end
