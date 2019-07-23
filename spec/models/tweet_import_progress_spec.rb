@@ -113,4 +113,12 @@ RSpec.describe TweetImportProgress, type: :model do
       end
     end
   end
+
+  describe "#mark_as_finished!" do
+    subject { -> { tweet_import_progress.mark_as_finished! } }
+    let!(:tweet_import_progress) { create(:tweet_import_progress, finished: false) }
+    it do
+      is_expected.to change { tweet_import_progress.finished }.from(false).to(true)
+    end
+  end
 end
