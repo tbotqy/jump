@@ -52,14 +52,10 @@ class ImportUserTweetsJob < ApplicationJob
     end
 
     def progress
-      @progress ||= user.build_tweet_import_progress(percentage_denominator: estimated_number_of_tweets_to_be_imported)
+      @progress ||= user.build_tweet_import_progress
     end
 
     def user
       @user ||= User.find(user_id)
-    end
-
-    def estimated_number_of_tweets_to_be_imported
-      CalculateAcquirableTweetCountService.call!(user_id: user_id)
     end
 end
