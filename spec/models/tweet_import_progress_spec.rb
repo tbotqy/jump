@@ -36,39 +36,42 @@ RSpec.describe TweetImportProgress, type: :model do
         it { is_expected.to eq ((count / traceable_tweet_count_limit.to_f) * 100).floor }
       end
 
-      context "count == 0" do
-        let(:count) { 0 }
-        it_behaves_like "returns an Integer, not a float"
-        it { is_expected.to eq 0 }
-      end
+      describe "around 0" do
+        context "count == 0" do
+          let(:count) { 0 }
+          it_behaves_like "returns an Integer, not a float"
+          it { is_expected.to eq 0 }
+        end
 
-      context "count == 0 + 1" do
-        let(:count) { 1 }
-        it_behaves_like "returns an Integer, not a float"
-        it_behaves_like "calculates as expected"
+        context "count == 0 + 1" do
+          let(:count) { 1 }
+          it_behaves_like "returns an Integer, not a float"
+          it_behaves_like "calculates as expected"
+        end
       end
+      describe "around traceable_tweet_count_limit" do
+        context "count == traceable_tweet_count_limit - 1" do
+          let(:count) { traceable_tweet_count_limit - 1 }
+          it_behaves_like "calculates as expected"
+        end
 
-      context "count == traceable_tweet_count_limit - 1" do
-        let(:count) { traceable_tweet_count_limit - 1 }
-        it_behaves_like "calculates as expected"
-      end
+        context "count == traceable_tweet_count_limit" do
+          let(:count) { traceable_tweet_count_limit }
+          it_behaves_like "returns an Integer, not a float"
+          it_behaves_like "calculates as expected"
+        end
 
-      context "count == traceable_tweet_count_limit" do
-        let(:count) { traceable_tweet_count_limit }
-        it_behaves_like "returns an Integer, not a float"
-        it_behaves_like "calculates as expected"
-      end
+        context "count == traceable_tweet_count_limit + 1" do
+          let(:count) { traceable_tweet_count_limit + 1 }
+          it_behaves_like "returns an Integer, not a float"
+          it { is_expected.to eq 100 }
+        end
 
-      context "count == traceable_tweet_count_limit + 1" do
-        let(:count) { traceable_tweet_count_limit + 1 }
-        it_behaves_like "returns an Integer, not a float"
-        it { is_expected.to eq 100 }
-      end
-
-      context "count >> traceable_tweet_count_limit" do
-        let(:count) { traceable_tweet_count_limit + 3300 }
-        it_behaves_like "returns an Integer, not a float"
-        it { is_expected.to eq 100 }
+        context "count >> traceable_tweet_count_limit" do
+          let(:count) { traceable_tweet_count_limit + 3300 }
+          it_behaves_like "returns an Integer, not a float"
+          it { is_expected.to eq 100 }
+        end
       end
     end
   end
