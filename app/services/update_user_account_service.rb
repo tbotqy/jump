@@ -13,21 +13,21 @@ class UpdateUserAccountService
   private
     def initialize(user_id)
       @user_id = user_id
-      fetch_fresh_data!
     end
 
     attr_reader :user_id
 
     def call!
+      fetch_fresh_data
       user.update!(
-        name:        @user_info.name,
-        screen_name: @user_info.screen_name,
+        name:           @user_info.name,
+        screen_name:    @user_info.screen_name,
         protected_flag: @user_info.protected?,
-        avatar_url: @user_info.profile_image_url_https.to_s
+        avatar_url:     @user_info.profile_image_url_https.to_s
       )
     end
 
-    def fetch_fresh_data!
+    def fetch_fresh_data
       @user_info    = user_twitter_client.twitter_user
       @setting_info = user_twitter_client.twitter_settings
     end
