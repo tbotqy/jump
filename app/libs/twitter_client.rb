@@ -2,7 +2,12 @@
 
 class TwitterClient
   TWEET_COUNT_PER_GET = 200
-  private_constant :TWEET_COUNT_PER_GET
+
+  FRIEND_API_INITIAL_CURSOR  = -1
+  FRIEND_API_TERMINAL_CURSOR = 0
+  # defined by the doc of twitter api. see: https://developer.twitter.com/en/docs/basics/cursoring
+
+  private_constant :TWEET_COUNT_PER_GET, :FRIEND_API_INITIAL_CURSOR, :FRIEND_API_TERMINAL_CURSOR
 
   def initialize(user_id:)
     @user_id = user_id
@@ -13,6 +18,14 @@ class TwitterClient
     return collection if tweets.blank?
     yield(tweets)     if block_given?
     collect_tweets_in_batches(collection + tweets, after_id: after_id, before_id: tweets.last.id, &block)
+  end
+
+  def collect_followee_ids(ids = [], cursor = FRIEND_API_INITIAL_CURSOR)
+    followees   = user_rest_client.friend_ids(cursor: cursor)
+    ids        += followees.attrs[:ids]
+    next_cursor = followees.attrs[:next_cursor]
+    return ids if next_cursor == FRIEND_API_TERMINAL_CURSOR
+    collect_followee_ids(ids, next_cursor)
   end
 
   private
