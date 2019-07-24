@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class RenewUserFolloweesService
+  include UserTwitterClient
   private_class_method :new
 
   class << self
@@ -28,7 +29,7 @@ class RenewUserFolloweesService
     end
 
     def fresh_twitter_ids
-      FetchUserFolloweesService.call!(user_id: user_id)
+      user_twitter_client.collect_followee_ids
     end
 
     def user
