@@ -47,10 +47,9 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
             context "no status has been imported yet" do
               let!(:user)                  { create(:user) }
               let!(:user_id)               { user.id }
-              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: 0, percentage_denominator: percentage_denominator) }
+              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: 0) }
 
               let(:assumed_imported_status_count) { 0 }
-              let(:percentage_denominator)        { 200 }
               before do
                 sign_in user
                 subject
@@ -69,11 +68,10 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               let!(:user_id)               { user.id }
               let!(:statuses)              { create_list(:status, assumed_imported_status_count, user: user) }
               let!(:entities)              { statuses.each { |status| create(:entity, status: status) } }
-              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count, percentage_denominator: percentage_denominator) }
+              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count) }
 
-              let(:assumed_imported_status_count) { 3 }
-              let(:percentage_denominator)        { 200 }
-              let(:expected_percentage)           { 1 } # (3/200.to_f).floor
+              let(:assumed_imported_status_count) { 33 }
+              let(:expected_percentage)           { 1 } # (33/3200(=Settings.twitter.traceable_tweet_count_limit).to_f).floor
               before do
                 sign_in user
                 subject
