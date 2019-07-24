@@ -27,7 +27,7 @@ describe RenewUserFolloweesService do
         context "failed to acquire the latest followees" do
           let!(:user)    { create(:user) }
           let!(:user_id) { user.id }
-          before { allow(FetchUserFolloweesService).to receive(:call!).and_raise(RuntimeError) }
+          before { allow_any_instance_of(TwitterClient).to receive(:collect_followee_ids).and_raise(RuntimeError) }
           it { is_expected.to raise_error(RuntimeError) }
           it_behaves_like "doesn't renew user's followees"
         end
@@ -50,7 +50,7 @@ describe RenewUserFolloweesService do
               let(:user_id) { user.id }
               before do
                 # stub API response
-                allow_any_instance_of(described_class).to receive(:fresh_twitter_ids).and_return(twitter_ids_after_renew)
+                allow_any_instance_of(TwitterClient).to receive(:collect_followee_ids).and_return(twitter_ids_after_renew)
               end
               it_behaves_like "updates user's followee"
             end
@@ -63,7 +63,7 @@ describe RenewUserFolloweesService do
                 # pre-register user's followee
                 twitter_ids_before_renew.each { |twitter_id| create(:followee, user: user, twitter_id: twitter_id) }
                 # stub API response
-                allow_any_instance_of(described_class).to receive(:fresh_twitter_ids).and_return(twitter_ids_after_renew)
+                allow_any_instance_of(TwitterClient).to receive(:collect_followee_ids).and_return(twitter_ids_after_renew)
               end
               it_behaves_like "updates user's followee"
             end
