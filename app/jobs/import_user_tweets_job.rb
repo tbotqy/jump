@@ -6,8 +6,10 @@ class ImportUserTweetsJob < ApplicationJob
   def perform(user_id:)
     @user_id = user_id
     initialize_parameter!
-    import!
-    finalize!
+    ActiveRecord::Base.transaction do
+      import!
+      finalize!
+    end
   end
 
   private
@@ -22,18 +24,16 @@ class ImportUserTweetsJob < ApplicationJob
     end
 
     def import!
-      ActiveRecord::Base.transaction do
-        tweeted_before_id = nil
-        loop do
-          tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: tweeted_after_id, tweeted_before_id: tweeted_before_id)
-          break if tweets.blank?
-          register_tweets!(tweets)
-          update_progress!(tweets.count)
+      tweeted_before_id = nil
+      loop do
+        tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_after_id: tweeted_after_id, tweeted_before_id: tweeted_before_id)
+        break if tweets.blank?
+        register_tweets!(tweets)
+        update_progress!(tweets.count)
 
-          # specify for subsequent fetch
-          # tweeted_before_id gets smaller
-          tweeted_before_id = tweets.last.id
-        end
+        # specify for subsequent fetch
+        # tweeted_before_id gets smaller
+        tweeted_before_id = tweets.last.id
       end
     end
 
