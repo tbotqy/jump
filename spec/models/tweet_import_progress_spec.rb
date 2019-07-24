@@ -25,10 +25,6 @@ RSpec.describe TweetImportProgress, type: :model do
   describe "#percentage" do
     subject { create(:tweet_import_progress, count: count).percentage }
 
-    shared_examples "raises custom error with expected message" do
-      it { expect { subject }.to raise_error("Calculating with some negative value. (count: #{count}, percentage_denominator: #{percentage_denominator})") }
-    end
-
     let(:traceable_tweet_count_limit) { Settings.twitter.traceable_tweet_count_limit }
 
     describe "boundary test on count around 0 and traceable_tweet_count_limit" do
