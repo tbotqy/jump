@@ -27,6 +27,10 @@ RSpec.describe TweetImportProgress, type: :model do
 
     let(:traceable_tweet_count_limit) { Settings.twitter.traceable_tweet_count_limit }
 
+    shared_examples "returns an Integer, not a float" do
+      it { is_expected.to be_an(Integer) }
+    end
+
     describe "boundary test on count around 0 and traceable_tweet_count_limit" do
       shared_examples "calculates as expected" do
         it { is_expected.to eq ((count / traceable_tweet_count_limit.to_f) * 100).floor }
@@ -34,13 +38,13 @@ RSpec.describe TweetImportProgress, type: :model do
 
       context "count == 0" do
         let(:count) { 0 }
-        it { is_expected.to be_an(Integer) }
+        it_behaves_like "returns an Integer, not a float"
         it { is_expected.to eq 0 }
       end
 
       context "count == 0 + 1" do
         let(:count) { 1 }
-        it { is_expected.to be_an(Integer) }
+        it_behaves_like "returns an Integer, not a float"
         it_behaves_like "calculates as expected"
       end
 
@@ -51,19 +55,19 @@ RSpec.describe TweetImportProgress, type: :model do
 
       context "count == traceable_tweet_count_limit" do
         let(:count) { traceable_tweet_count_limit }
-        it { is_expected.to be_an(Integer) }
+        it_behaves_like "returns an Integer, not a float"
         it_behaves_like "calculates as expected"
       end
 
       context "count == traceable_tweet_count_limit + 1" do
         let(:count) { traceable_tweet_count_limit + 1 }
-        it { is_expected.to be_an(Integer) }
+        it_behaves_like "returns an Integer, not a float"
         it { is_expected.to eq 100 }
       end
 
       context "count >> traceable_tweet_count_limit" do
         let(:count) { traceable_tweet_count_limit + 3300 }
-        it { is_expected.to be_an(Integer) }
+        it_behaves_like "returns an Integer, not a float"
         it { is_expected.to eq 100 }
       end
     end
