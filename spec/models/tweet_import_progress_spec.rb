@@ -23,55 +23,50 @@ RSpec.describe TweetImportProgress, type: :model do
   end
 
   describe "#percentage" do
-    subject { create(:tweet_import_progress, count: count, percentage_denominator: percentage_denominator).percentage }
+    subject { create(:tweet_import_progress, count: count).percentage }
 
     shared_examples "raises custom error with expected message" do
       it { expect { subject }.to raise_error("Calculating with some negative value. (count: #{count}, percentage_denominator: #{percentage_denominator})") }
     end
 
-    describe "boundary test on count around 0 and :percentage_denominator" do
+    let(:traceable_tweet_count_limit) { Settings.twitter.traceable_tweet_count_limit }
+
+    describe "boundary test on count around 0 and traceable_tweet_count_limit" do
       shared_examples "calculates as expected" do
-        it { is_expected.to eq ((count / percentage_denominator.to_f) * 100).floor  }
+        it { is_expected.to eq ((count / traceable_tweet_count_limit.to_f) * 100).floor }
       end
 
       context "count == 0" do
         let(:count) { 0 }
-        let(:percentage_denominator) { 3200 }
         it { is_expected.to be_an(Integer) }
         it { is_expected.to eq 0 }
       end
 
       context "count == 0 + 1" do
         let(:count) { 1 }
-        let(:percentage_denominator) { 3200 }
         it { is_expected.to be_an(Integer) }
         it_behaves_like "calculates as expected"
       end
 
-      context "count == percentage_denominator - 1" do
-        let(:count) { percentage_denominator - 1 }
-        let(:percentage_denominator) { 3200 }
+      context "count == traceable_tweet_count_limit - 1" do
+        let(:count) { traceable_tweet_count_limit - 1 }
+        it_behaves_like "calculates as expected"
+      end
+
+      context "count == traceable_tweet_count_limit" do
+        let(:count) { traceable_tweet_count_limit }
         it { is_expected.to be_an(Integer) }
         it_behaves_like "calculates as expected"
       end
 
-      context "count == percentage_denominator" do
-        let(:count) { percentage_denominator }
-        let(:percentage_denominator) { 3200 }
-        it { is_expected.to be_an(Integer) }
-        it_behaves_like "calculates as expected"
-      end
-
-      context "count == percentage_denominator + 1" do
-        let(:count) { percentage_denominator + 1 }
-        let(:percentage_denominator) { 3200 }
+      context "count == traceable_tweet_count_limit + 1" do
+        let(:count) { traceable_tweet_count_limit + 1 }
         it { is_expected.to be_an(Integer) }
         it { is_expected.to eq 100 }
       end
 
-      context "count >> percentage_denominator" do
-        let(:count) { percentage_denominator + 3300 }
-        let(:percentage_denominator) { 3200 }
+      context "count >> traceable_tweet_count_limit" do
+        let(:count) { traceable_tweet_count_limit + 3300 }
         it { is_expected.to be_an(Integer) }
         it { is_expected.to eq 100 }
       end
@@ -95,11 +90,10 @@ RSpec.describe TweetImportProgress, type: :model do
       let(:user)                  { create(:user) }
       let!(:statuses)             { create_list(:status, assumed_imported_status_count, user: user) }
       let!(:entities)             { statuses.each { |status| create(:entity, status: status) } }
-      let(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count, percentage_denominator: percentage_denominator) }
+      let(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count) }
 
-      let(:assumed_imported_status_count) { 3 }
-      let(:percentage_denominator)        { 200 }
-      let(:expected_percentage)           { 1 } # (3/200.to_f).floor
+      let(:assumed_imported_status_count) { 33 }
+      let(:expected_percentage)           { 1 } # (33/3200(=traceable_tweet_count_limit).to_f).floor
       it do
         is_expected.to include(
           percentage:  expected_percentage,

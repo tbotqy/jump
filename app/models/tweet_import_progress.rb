@@ -31,4 +31,9 @@ class TweetImportProgress < ApplicationRecord
     calculation_result = ((count / percentage_denominator.to_f) * 100).floor
     [100, calculation_result].min
   end
+
+  private
+    def percentage_denominator
+      Settings.twitter.traceable_tweet_count_limit
+    end
 end
