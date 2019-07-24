@@ -25,6 +25,24 @@ RSpec.describe TweetImportProgress, type: :model do
   describe "#percentage" do
     subject { create(:tweet_import_progress, count: count).percentage }
 
+    describe "the return value is floor-ed" do
+      # in this test, the denominator of percentage is expected to be 3200
+      # , which is defined by Settings.twitter.traceable_tweet_count_limit
+
+      context "real result must have been less than 1%" do
+        let(:count) { 31 }
+        it { is_expected.to eq 0 }
+      end
+      context "real result must have been eq to 1%" do
+        let(:count) { 32 }
+        it { is_expected.to eq 1 }
+      end
+      context "real result must have been bigger than 1%" do
+        let(:count) { 33 }
+        it { is_expected.to eq 1 }
+      end
+    end
+
     describe "boundary test on count around traceable_tweet_count_limit" do
       let(:traceable_tweet_count_limit) { Settings.twitter.traceable_tweet_count_limit } # = 3200
 
