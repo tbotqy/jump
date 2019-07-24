@@ -72,6 +72,11 @@ RSpec.describe TweetImportProgress, type: :model do
         it_behaves_like "it doesn't become bigger than 100"
       end
     end
+
+    describe "initial state" do
+      let(:count) { 0 }
+      it { is_expected.to eq 0 }
+    end
   end
 
   describe "#as_json" do
