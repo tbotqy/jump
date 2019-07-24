@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ImportUserTweetsJob < ApplicationJob
+  include UserTwitterClient
   queue_as :default
 
   def perform(user_id:)
@@ -12,16 +13,9 @@ class ImportUserTweetsJob < ApplicationJob
     attr_reader :user_id
 
     def import!
-      oldest_id_of_all_fetched_tweets = nil
-      loop do
-        tweets = FetchUserTweetsService.call!(user_id: user_id, tweeted_before_id: oldest_id_of_all_fetched_tweets)
-        break if tweets.blank?
+      user_twitter_client.collect_tweets_in_batches do |tweets|
         register_unregistered_tweets!(tweets)
         update_progress!(tweets.count)
-
-        # specify for subsequent fetch
-        # oldest_id_of_all_fetched_tweets gets smaller
-        oldest_id_of_all_fetched_tweets = tweets.last.id
       end
       record_timestamp!
       update_summary
