@@ -4,7 +4,6 @@ FactoryBot.define do
   factory :tweet_import_progress do
     user
     count { 3200 }
-    percentage_denominator { 3200 }
     finished { false }
   end
 end
