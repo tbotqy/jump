@@ -104,4 +104,11 @@ RSpec.describe TweetImportProgress, type: :model do
       end
     end
   end
+
+  describe "#percentage_denominator" do
+    subject { create(:tweet_import_progress).send(:percentage_denominator) }
+    it "should be eq with the limit of tweet count that is traceable via Twitter API" do
+      is_expected.to eq 3200
+    end
+  end
 end
