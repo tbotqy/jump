@@ -62,6 +62,7 @@ jobs:
     docker:
       - image: circleci/ruby:2.6.3-stretch
       - image: circleci/mysql:5.7
+      - image: circleci/redis:4
     working_directory: ~/repo
     steps:
       - checkout
