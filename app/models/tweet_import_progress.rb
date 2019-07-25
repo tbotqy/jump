@@ -5,7 +5,6 @@ class TweetImportProgress < ApplicationRecord
   has_many   :statuses, through: :user
 
   validates :user_id,                   uniqueness: true
-  validates :count,                     presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :finished_before_type_cast, inclusion: { in: [1, 0, true, false] }
 
   class << self

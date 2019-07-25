@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_24_030352) do
+ActiveRecord::Schema.define(version: 2019_07_25_053537) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -93,8 +93,7 @@ ActiveRecord::Schema.define(version: 2019_07_24_030352) do
 
   create_table "tweet_import_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.integer "count", default: 0, null: false
-    t.boolean "finished", default: false, null: false
+    t.boolean "finished", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_tweet_import_progresses_on_user_id", unique: true
