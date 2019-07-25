@@ -112,7 +112,8 @@ RSpec.configure do |config|
 =end
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
@@ -122,11 +123,10 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+
     if Bullet.enable?
-      config.after(:each) do
-        Bullet.perform_out_of_channel_notifications if Bullet.notification?
-        Bullet.end_request
-      end
+      Bullet.perform_out_of_channel_notifications if Bullet.notification?
+      Bullet.end_request
     end
   end
 end
