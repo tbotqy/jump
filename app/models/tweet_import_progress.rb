@@ -7,6 +7,9 @@ class TweetImportProgress < ApplicationRecord
   validates :user_id,                   uniqueness: true
   validates :finished_before_type_cast, inclusion: { in: [1, 0, true, false] }
 
+  include Redis::Objects
+  counter :current_count
+
   class << self
     def latest_by_user_id(user_id)
       where(user_id: user_id).last
@@ -21,9 +24,8 @@ class TweetImportProgress < ApplicationRecord
     }
   end
 
-  def increment_count!(by:)
-    self.count += by
-    save!
+  def increment_by(number)
+    current_count.increment(number)
   end
 
   def mark_as_finished!

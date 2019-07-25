@@ -27,7 +27,7 @@ class ImportUserTweetsJob < ApplicationJob
     end
 
     def update_progress!(tweet_count_additionally_imported)
-      progress.increment_count!(by: tweet_count_additionally_imported)
+      progress.increment_by(tweet_count_additionally_imported)
     end
 
     def close_progress!
