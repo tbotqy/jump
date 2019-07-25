@@ -26,6 +26,11 @@ class TweetImportProgress < ApplicationRecord
     save!
   end
 
+  def mark_as_finished!
+    self.finished = true
+    save!
+  end
+
   def percentage
     calculation_result = ((count / percentage_denominator.to_f) * 100).floor
     [100, calculation_result].min

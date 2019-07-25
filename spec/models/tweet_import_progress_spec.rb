@@ -106,6 +106,12 @@ RSpec.describe TweetImportProgress, type: :model do
     end
   end
 
+  describe "#mark_as_finished!" do
+    subject { -> { tweet_import_progress.mark_as_finished! } }
+    let!(:tweet_import_progress) { create(:tweet_import_progress, finished: false) }
+    it { is_expected.to change { tweet_import_progress.finished? }.from(false).to(true) }
+  end
+
   describe "#percentage_denominator" do
     subject { create(:tweet_import_progress).send(:percentage_denominator) }
     it "should be eq with the limit of tweet count that is traceable via Twitter API" do
