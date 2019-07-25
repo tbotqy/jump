@@ -18,6 +18,18 @@ RSpec.describe TweetImportProgress, type: :model do
     end
   end
 
+  describe "callbacks" do
+    context "after destroy" do
+      describe "deletes the data on Redis that is related to the record" do
+        subject { -> { record.destroy! } }
+        let!(:record)   { create(:tweet_import_progress) }
+        let(:redis_key) { record.current_count.key }
+        before { record.current_count.increment }
+        it { is_expected.to change { REDIS.get(redis_key) }.from("1").to(nil) }
+      end
+    end
+  end
+
   describe "#percentage" do
     subject { create(:tweet_import_progress, count: count).percentage }
 

@@ -7,6 +7,8 @@ class TweetImportProgress < ApplicationRecord
   validates :user_id,                   uniqueness: true
   validates :finished_before_type_cast, inclusion: { in: [1, 0, true, false] }
 
+  after_destroy { current_count.delete }
+
   include Redis::Objects
   counter :current_count
 
