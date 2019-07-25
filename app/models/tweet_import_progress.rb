@@ -36,7 +36,7 @@ class TweetImportProgress < ApplicationRecord
   end
 
   def percentage
-    calculation_result = ((count / percentage_denominator.to_f) * 100).floor
+    calculation_result = ((current_count.value / percentage_denominator.to_f) * 100).floor
     [100, calculation_result].min
   end
 

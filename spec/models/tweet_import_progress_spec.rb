@@ -31,7 +31,11 @@ RSpec.describe TweetImportProgress, type: :model do
   end
 
   describe "#percentage" do
-    subject { create(:tweet_import_progress, count: count).percentage }
+    subject do
+      record = create(:tweet_import_progress)
+      record.current_count.reset(count)
+      record.percentage
+    end
 
     describe "the return value is floor-ed" do
       # in this test, the denominator of percentage is expected to be 3200
@@ -91,7 +95,7 @@ RSpec.describe TweetImportProgress, type: :model do
     subject { tweet_import_progress.as_json }
     context "no status has been imported" do
       let(:user)                   { create(:user) }
-      let!(:tweet_import_progress) { create(:tweet_import_progress, count: 0, user: user) }
+      let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
       it do
         is_expected.to include(
           percentage:  0,
@@ -104,10 +108,11 @@ RSpec.describe TweetImportProgress, type: :model do
       let(:user)                  { create(:user) }
       let!(:statuses)             { create_list(:status, assumed_imported_status_count, user: user) }
       let!(:entities)             { statuses.each { |status| create(:entity, status: status) } }
-      let(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count) }
+      let(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
 
       let(:assumed_imported_status_count) { 33 }
       let(:expected_percentage)           { 1 } # (33/3200(=traceable_tweet_count_limit).to_f).floor
+      before { tweet_import_progress.current_count.reset(assumed_imported_status_count) }
       it do
         is_expected.to include(
           percentage:  expected_percentage,
