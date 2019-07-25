@@ -13,10 +13,6 @@ RSpec.describe TweetImportProgress, type: :model do
       before { create(:tweet_import_progress) }
       it { should validate_uniqueness_of(:user_id) }
     end
-    describe "#count" do
-      it { should validate_presence_of(:count) }
-      it { should validate_numericality_of(:count).is_greater_than_or_equal_to(0).only_integer }
-    end
     describe "#finished" do
       include_examples "should validate before_type_cast is a boolean", :tweet_import_progress, :finished
     end
