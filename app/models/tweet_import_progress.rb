@@ -5,8 +5,12 @@ class TweetImportProgress < ApplicationRecord
   has_many   :statuses, through: :user
 
   validates :user_id,                   uniqueness: true
-  validates :count,                     presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :finished_before_type_cast, inclusion: { in: [1, 0, true, false] }
+
+  after_destroy { current_count.delete }
+
+  include Redis::Objects
+  counter :current_count
 
   class << self
     def latest_by_user_id(user_id)
@@ -22,13 +26,17 @@ class TweetImportProgress < ApplicationRecord
     }
   end
 
-  def increment_count!(by:)
-    self.count += by
+  def increment_by(number)
+    current_count.increment(number)
+  end
+
+  def mark_as_finished!
+    self.finished = true
     save!
   end
 
   def percentage
-    calculation_result = ((count / percentage_denominator.to_f) * 100).floor
+    calculation_result = ((current_count.value / percentage_denominator.to_f) * 100).floor
     [100, calculation_result].min
   end
 

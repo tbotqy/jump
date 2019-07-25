@@ -20,6 +20,7 @@ gem "turnout"
 gem "sidekiq"
 gem "sidekiq-cron", "~> 1.1"
 gem "redis-namespace"
+gem "redis-objects"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "activerecord-import"
 gem "devise"

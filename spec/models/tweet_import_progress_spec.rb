@@ -13,17 +13,29 @@ RSpec.describe TweetImportProgress, type: :model do
       before { create(:tweet_import_progress) }
       it { should validate_uniqueness_of(:user_id) }
     end
-    describe "#count" do
-      it { should validate_presence_of(:count) }
-      it { should validate_numericality_of(:count).is_greater_than_or_equal_to(0).only_integer }
-    end
     describe "#finished" do
       include_examples "should validate before_type_cast is a boolean", :tweet_import_progress, :finished
     end
   end
 
+  describe "callbacks" do
+    context "after destroy" do
+      describe "deletes the data on Redis that is related to the record" do
+        subject { -> { record.destroy! } }
+        let!(:record)   { create(:tweet_import_progress) }
+        let(:redis_key) { record.current_count.key }
+        before { record.current_count.increment }
+        it { is_expected.to change { REDIS.get(redis_key) }.from("1").to(nil) }
+      end
+    end
+  end
+
   describe "#percentage" do
-    subject { create(:tweet_import_progress, count: count).percentage }
+    subject do
+      record = create(:tweet_import_progress)
+      record.current_count.reset(count)
+      record.percentage
+    end
 
     describe "the return value is floor-ed" do
       # in this test, the denominator of percentage is expected to be 3200
@@ -83,7 +95,7 @@ RSpec.describe TweetImportProgress, type: :model do
     subject { tweet_import_progress.as_json }
     context "no status has been imported" do
       let(:user)                   { create(:user) }
-      let!(:tweet_import_progress) { create(:tweet_import_progress, count: 0, user: user) }
+      let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
       it do
         is_expected.to include(
           percentage:  0,
@@ -96,10 +108,11 @@ RSpec.describe TweetImportProgress, type: :model do
       let(:user)                  { create(:user) }
       let!(:statuses)             { create_list(:status, assumed_imported_status_count, user: user) }
       let!(:entities)             { statuses.each { |status| create(:entity, status: status) } }
-      let(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count) }
+      let(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
 
       let(:assumed_imported_status_count) { 33 }
       let(:expected_percentage)           { 1 } # (33/3200(=traceable_tweet_count_limit).to_f).floor
+      before { tweet_import_progress.current_count.reset(assumed_imported_status_count) }
       it do
         is_expected.to include(
           percentage:  expected_percentage,
@@ -110,10 +123,23 @@ RSpec.describe TweetImportProgress, type: :model do
     end
   end
 
+  describe "#mark_as_finished!" do
+    subject { -> { tweet_import_progress.mark_as_finished! } }
+    let!(:tweet_import_progress) { create(:tweet_import_progress, finished: false) }
+    it { is_expected.to change { tweet_import_progress.finished? }.from(false).to(true) }
+  end
+
   describe "#percentage_denominator" do
     subject { create(:tweet_import_progress).send(:percentage_denominator) }
     it "should be eq with the limit of tweet count that is traceable via Twitter API" do
       is_expected.to eq 3200
     end
+  end
+
+  describe "#increment_by" do
+    subject { -> { tweet_import_progress.increment_by(number) } }
+    let!(:tweet_import_progress) { create(:tweet_import_progress) }
+    let(:number) { 10 }
+    it { is_expected.to change { tweet_import_progress.current_count.value }.by(number) }
   end
 end

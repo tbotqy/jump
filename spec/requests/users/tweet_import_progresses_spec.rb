@@ -47,7 +47,7 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
             context "no status has been imported yet" do
               let!(:user)                  { create(:user) }
               let!(:user_id)               { user.id }
-              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: 0) }
+              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
 
               let(:assumed_imported_status_count) { 0 }
               before do
@@ -68,12 +68,13 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               let!(:user_id)               { user.id }
               let!(:statuses)              { create_list(:status, assumed_imported_status_count, user: user) }
               let!(:entities)              { statuses.each { |status| create(:entity, status: status) } }
-              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user, count: assumed_imported_status_count) }
+              let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
 
               let(:assumed_imported_status_count) { 33 }
               let(:expected_percentage)           { 1 } # (33/3200(=Settings.twitter.traceable_tweet_count_limit).to_f).floor
               before do
                 sign_in user
+                tweet_import_progress.current_count.reset(assumed_imported_status_count)
                 subject
               end
               it_behaves_like "respond with status code", :ok
