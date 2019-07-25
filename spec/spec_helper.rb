@@ -114,6 +114,8 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner[:redis].db = URI.parse(Settings.redis.endpoint)
+    DatabaseCleaner[:redis].strategy = :truncation, { only: ["#{Settings.redis.namespace}:*"] }
   end
 
   config.before(:each) do
@@ -122,6 +124,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
+    DatabaseCleaner[:redis].clean
     DatabaseCleaner.clean
 
     if Bullet.enable?
