@@ -3,6 +3,9 @@ site_name: <%= ENV.fetch('SITE_NAME') %>
 redis:
   namespace: <%= [Rails.application.class.parent_name, Rails.env].join(":") %>
 
+sidekiq:
+  namespace: <%= [Rails.application.class.parent_name, Rails.env, "sidekiq"].join(":") %>
+
 twitter:
   consumer_key: <%= ENV.fetch('TWITTER_CONSUMER_KEY') %>
   consumer_secret: <%= ENV.fetch('TWITTER_CONSUMER_SECRET') %>
