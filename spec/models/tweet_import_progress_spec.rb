@@ -118,4 +118,11 @@ RSpec.describe TweetImportProgress, type: :model do
       is_expected.to eq 3200
     end
   end
+
+  describe "#increment_by" do
+    subject { -> { tweet_import_progress.increment_by(number) } }
+    let!(:tweet_import_progress) { create(:tweet_import_progress) }
+    let(:number) { 10 }
+    it { is_expected.to change { tweet_import_progress.current_count.value }.by(number) }
+  end
 end
