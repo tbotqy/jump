@@ -18,7 +18,7 @@ class MakeAdditionalTweetImportJob < ApplicationJob
     attr_reader :user_id, :most_recent_tweet_id, :imported_tweets
 
     def ensure_additional_import!
-      unless user.statuses.exists?
+      unless user.has_any_status?
         raise "This job is intended to be called for additional import, but user has no status."
       end
     end
