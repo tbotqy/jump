@@ -1,24 +1,12 @@
 # frozen_string_literal: true
 
 class ActiveStatusCount
-  REDIS_KEY_NAME = "active_status_count_#{Rails.env}"
+  REDIS_KEY_NAME = "active_status_count"
   private_constant :REDIS_KEY_NAME
 
   class << self
-    def increment
-      REDIS.incr(REDIS_KEY_NAME)
-    end
-
     def increment_by(count)
       REDIS.incrby(REDIS_KEY_NAME, count)
-    end
-
-    def decrement
-      REDIS.decr(REDIS_KEY_NAME)
-    end
-
-    def decrement_by(count)
-      REDIS.decrby(REDIS_KEY_NAME, count)
     end
 
     def current_count
