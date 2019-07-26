@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProfileUpdateFailLog < ApplicationRecord
+class UserUpdateFailLog < ApplicationRecord
   belongs_to :user
 
   validates :error_message, presence: true, length: { maximum: 255 }

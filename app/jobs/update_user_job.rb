@@ -8,7 +8,7 @@ class UpdateUserJob < ApplicationJob
       UpdateUserService.call!(user_id: user_id)
     rescue Twitter::Error => twitter_error
       # TODO: include to service class
-      ProfileUpdateFailLog.create!(user_id: user_id, error_message: twitter_error.message)
+      UserUpdateFailLog.create!(user_id: user_id, error_message: twitter_error.message)
       next
     end
   end

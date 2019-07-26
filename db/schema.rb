@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_25_053537) do
+ActiveRecord::Schema.define(version: 2019_07_26_140155) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -53,14 +53,6 @@ ActiveRecord::Schema.define(version: 2019_07_25_053537) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["status_id"], name: "index_media_on_status_id"
-  end
-
-  create_table "profile_update_fail_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "error_message", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "fk_rails_daeb5deee9"
   end
 
   create_table "statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
@@ -110,6 +102,14 @@ ActiveRecord::Schema.define(version: 2019_07_25_053537) do
     t.index ["status_id"], name: "index_urls_on_status_id"
   end
 
+  create_table "user_update_fail_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "error_message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "fk_rails_daeb5deee9"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "uid", null: false
     t.bigint "twitter_id", null: false
@@ -133,8 +133,8 @@ ActiveRecord::Schema.define(version: 2019_07_25_053537) do
   add_foreign_key "followees", "users"
   add_foreign_key "hashtags", "statuses"
   add_foreign_key "media", "statuses"
-  add_foreign_key "profile_update_fail_logs", "users"
   add_foreign_key "statuses", "users"
   add_foreign_key "tweet_import_progresses", "users"
   add_foreign_key "urls", "statuses"
+  add_foreign_key "user_update_fail_logs", "users"
 end
