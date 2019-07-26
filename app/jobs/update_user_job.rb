@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProfileUpdateJob < ApplicationJob
+class UpdateUserJob < ApplicationJob
   queue_as :default
 
   def perform
