@@ -5,7 +5,7 @@ class Status < ApplicationRecord
   has_many   :hashtags, dependent: :delete_all
   has_many   :urls,     dependent: :delete_all
   has_many   :media,    dependent: :delete_all
-  has_many   :entities, dependent: :delete_all
+  has_many   :entities, dependent: :delete_all # deprecated
 
   validates :tweet_id,                presence: true,  uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :in_reply_to_tweet_id,    allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -47,7 +47,7 @@ class Status < ApplicationRecord
       text:       text,
       tweeted_at: Time.at(tweeted_at).in_time_zone.iso8601,
       is_retweet: is_retweet,
-      entities:   entities.as_json,
+      entities:   entities.as_json, # TODO: replace with urls.
       user:       user.as_json
     }
   end
