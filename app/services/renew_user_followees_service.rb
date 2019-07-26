@@ -35,8 +35,4 @@ class RenewUserFolloweesService
     def user
       @user ||= User.find(user_id)
     end
-
-    def now
-      Time.now.utc.to_i
-    end
 end
