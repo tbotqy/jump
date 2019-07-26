@@ -3,10 +3,10 @@
 class User < ApplicationRecord
   devise :omniauthable, omniauth_providers: %i|twitter|
 
-  has_many :statuses,                 dependent: :destroy
-  has_many :followees,                dependent: :delete_all
-  has_one  :tweet_import_progress,    dependent: :destroy
-  has_many :profile_update_fail_logs, dependent: :delete_all
+  has_many :statuses,              dependent: :destroy
+  has_many :followees,             dependent: :delete_all
+  has_one  :tweet_import_progress, dependent: :destroy
+  has_many :user_update_fail_logs, dependent: :delete_all
 
   has_many :hashtags, through: :statuses
   has_many :urls,     through: :statuses
