@@ -5,7 +5,7 @@ class UpdateUserJob < ApplicationJob
 
   def perform
     target_user_ids.each do |user_id|
-      UpdateUserAccountService.call!(user_id: user_id)
+      UpdateUserService.call!(user_id: user_id)
     rescue Twitter::Error => twitter_error
       # TODO: include to service class
       ProfileUpdateFailLog.create!(user_id: user_id, error_message: twitter_error.message)
