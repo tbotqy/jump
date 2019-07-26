@@ -15,7 +15,7 @@ class MakeInitialTweetImportJob < ApplicationJob
     attr_reader :user_id, :progress
 
     def ensure_initial_import!
-      if user.statuses.exists?
+      if user.has_any_status?
         raise "This job is intended to be called for initial import, but user already have some statuses."
       end
     end
