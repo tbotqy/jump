@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Entity < ApplicationRecord
+  # deprecated
+
   belongs_to :status
 
   def as_json(_options = {})
