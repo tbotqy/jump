@@ -11,8 +11,9 @@ class TwitterClient
 
   delegate :user, :settings, to: :user_rest_client, prefix: :twitter
 
-  def initialize(user_id:)
-    @user_id = user_id
+  def initialize(access_token:, access_token_secret:)
+    @access_token        = access_token
+    @access_token_secret = access_token_secret
   end
 
   def collect_tweets_in_batches(collection = [], after_id: nil, before_id: nil, &block)
@@ -31,7 +32,7 @@ class TwitterClient
   end
 
   private
-    attr_reader :user_id
+    attr_reader :access_token, :access_token_secret
 
     def timeline_api_params(after_id:, before_id:)
       max_id = before_id.present? ? before_id - 1 : nil
@@ -47,12 +48,8 @@ class TwitterClient
       @user_rest_client ||= Twitter::REST::Client.new do |config|
         config.consumer_key        = Settings.twitter.consumer_key
         config.consumer_secret     = Settings.twitter.consumer_secret
-        config.access_token        = user.access_token
-        config.access_token_secret = user.access_token_secret
+        config.access_token        = access_token
+        config.access_token_secret = access_token_secret
       end
-    end
-
-    def user
-      @user ||= User.find(user_id)
     end
 end
