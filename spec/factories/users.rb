@@ -12,8 +12,8 @@ FactoryBot.define do
     twitter_created_at { 1342689117 }
     access_token { "test_access_token" }
     access_token_secret { "test_access_token_secret" }
-    token_updated_at { 1482676460 }
-    statuses_updated_at { 1482676461 }
+    token_updated_at { nil }
+    statuses_updated_at { nil }
 
     trait(:with_statuses_and_followees) do
       transient do
