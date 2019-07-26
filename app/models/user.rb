@@ -53,10 +53,6 @@ class User < ApplicationRecord
     }
   end
 
-  def status_newest_in_tweeted_time
-    statuses.newest_in_tweeted_time
-  end
-
   def has_any_status?
     statuses.exists?
   end
