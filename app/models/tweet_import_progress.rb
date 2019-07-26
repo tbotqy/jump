@@ -12,12 +12,6 @@ class TweetImportProgress < ApplicationRecord
   include Redis::Objects
   counter :current_count
 
-  class << self
-    def latest_by_user_id(user_id)
-      where(user_id: user_id).last
-    end
-  end
-
   def as_json(_options = {})
     {
       percentage:  percentage,
