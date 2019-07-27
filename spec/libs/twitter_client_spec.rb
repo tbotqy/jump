@@ -185,4 +185,60 @@ RSpec.describe TwitterClient do
       end
     end
   end
+
+  describe "#collect_followee_ids" do
+    let(:user) { create(:user) }
+    subject { described_class.new(access_token: user.access_token, access_token_secret: user.access_token_secret).collect_followee_ids }
+    let(:user_rest_client) { instance_double("Twitter::REST::Client") }
+    let(:friend_api_initial_cursor)  { -1 }
+    let(:friend_api_terminal_cursor) { 0 }
+    context "user has no followee" do
+      before do
+        allow(user_rest_client).to receive_message_chain(:friend_ids).with(cursor: friend_api_initial_cursor).and_return(
+          instance_double("Twitter::Cursor", attrs: { ids: [], next_cursor: friend_api_terminal_cursor })
+        )
+        allow_any_instance_of(described_class).to receive(:user_rest_client).and_return(user_rest_client)
+      end
+      it "it builds the 1st API request correctly" do
+        subject
+        expect(user_rest_client).to have_received(:friend_ids).with(cursor: friend_api_initial_cursor).once
+      end
+      it "doesn't make the 2nd API request" do
+        subject
+        expect(user_rest_client).to have_received(:friend_ids).with(anything).once
+      end
+      it { is_expected.to eq [] }
+    end
+    context "user has some followees" do
+      describe "recursive collection" do
+        let(:first_responses)  { [1, 2, 3] }
+        let(:second_responses) { [4, 5, 6] }
+        before do
+          # emulate the 1st API request
+          allow(user_rest_client).to receive_message_chain(:friend_ids).with(cursor: friend_api_initial_cursor).and_return(
+            instance_double("Twitter::Cursor", attrs: { ids: first_responses, next_cursor: first_responses.last + 1 })
+          )
+          # emulate the 2nd(last) API request
+          cursor = first_responses.last + 1
+          allow(user_rest_client).to receive_message_chain(:friend_ids).with(cursor: cursor).and_return(
+            instance_double("Twitter::Cursor", attrs: { ids: second_responses, next_cursor: friend_api_terminal_cursor })
+          )
+          allow_any_instance_of(described_class).to receive(:user_rest_client).and_return(user_rest_client)
+        end
+        it "it builds the 1st API request correctly" do
+          subject
+          expect(user_rest_client).to have_received(:friend_ids).with(cursor: friend_api_initial_cursor).once
+        end
+        it "it builds the 2nd API request correctly" do
+          subject
+          expect(user_rest_client).to have_received(:friend_ids).with(cursor: first_responses.last + 1).once
+        end
+        it "doesn't make the 3rd API request" do
+          subject
+          expect(user_rest_client).to have_received(:friend_ids).with(anything).twice
+        end
+        it { is_expected.to contain_exactly(*first_responses, *second_responses) }
+      end
+    end
+  end
 end
