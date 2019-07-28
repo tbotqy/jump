@@ -9,7 +9,7 @@ class TwitterClient
 
   private_constant :TWEET_COUNT_PER_GET, :FRIEND_API_INITIAL_CURSOR, :FRIEND_API_TERMINAL_CURSOR
 
-  delegate :user, :settings, to: :user_rest_client, prefix: :twitter
+  delegate :user, to: :user_rest_client, prefix: :twitter
 
   def initialize(access_token:, access_token_secret:)
     @access_token        = access_token
