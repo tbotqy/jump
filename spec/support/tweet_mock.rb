@@ -92,7 +92,7 @@ module TweetMock
     def retweeted_tweet_user_mock
       twitter_user_mock(
         name: "rt name",
-        screen_name: "rs_screen_name"
+        screen_name: "rt_screen_name"
       )
     end
 end

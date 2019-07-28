@@ -51,7 +51,7 @@ describe TweetMock do
           it do
             expect(subject.retweeted_tweet.user).to have_attributes(
               name: "rt name",
-              screen_name: "rs_screen_name"
+              screen_name: "rt_screen_name"
             )
           end
         end
