@@ -167,8 +167,8 @@ describe CollectUserStatusesService do
         describe "user scope should be applied" do
           let(:targeted_user)     { create(:user) }
           let(:non_targeted_user) { create(:user) }
-          let!(:non_targeted_user_statuses) { create_list(:status, 2, user: non_targeted_user) }
           let!(:targeted_user_statuses)     { create_list(:status, 2, user: targeted_user) }
+          let!(:non_targeted_user_statuses) { create_list(:status, 2, user: non_targeted_user) }
 
           let(:user_id) { targeted_user.id }
           let(:year)    { nil }
@@ -176,6 +176,23 @@ describe CollectUserStatusesService do
           let(:day)     { nil }
           let(:page)    { 1 }
           it { is_expected.to contain_exactly(*targeted_user_statuses) }
+        end
+
+        describe "both public and private statuses are collected" do
+          let!(:user)   { create(:user) }
+          let(:user_id) { user.id }
+          let(:year)    { nil }
+          let(:month)   { nil }
+          let(:day)     { nil }
+          let(:page)    { nil }
+          context "user's statuses are public" do
+            let!(:public_statuses) { create_list(:status, 2, private_flag: false, user: user) }
+            it { is_expected.to contain_exactly(*public_statuses) }
+          end
+          context "user's statuses are private" do
+            let!(:private_statuses) { create_list(:status, 2, private_flag: true, user: user) }
+            it { is_expected.to contain_exactly(*private_statuses) }
+          end
         end
       end
     end
