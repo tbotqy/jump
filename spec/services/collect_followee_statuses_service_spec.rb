@@ -246,6 +246,8 @@ describe CollectFolloweeStatusesService do
           end
 
           describe "with no params specified" do
+            let!(:user)   { create(:user) }
+            let(:user_id) { user.id }
             let(:year)  { nil }
             let(:month) { nil }
             let(:day)   { nil }
@@ -253,8 +255,6 @@ describe CollectFolloweeStatusesService do
 
             let(:expected_per_page) { 10 }
 
-            let!(:user)   { create(:user) }
-            let(:user_id) { user.id }
             let!(:followee) do
               followee = create(:user)
               create(:followee, user: user, twitter_id: followee.twitter_id)
