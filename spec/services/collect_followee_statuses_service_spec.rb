@@ -6,22 +6,12 @@ describe CollectFolloweeStatusesService do
   describe ".call!" do
     subject { CollectFolloweeStatusesService.call!(user_id: user_id, year: year, month: month, day: day, page: page) }
 
-    before do
-      # pre-register a user's followee and its status whose user_id is other than the one to be passed as parameter
-      dummy_user             = create(:user, name: "dummy user")
-      followee_of_dummy_user = create(:user, name: "followee of dummy user")
-      create(:followee, user: dummy_user, twitter_id: followee_of_dummy_user.twitter_id)
-
-      time = [year, month, day].any?(&:present?) ? Time.local(year, month, day) : Time.current
-      create(:status, user: followee_of_dummy_user, tweeted_at: time.to_i)
-    end
-
     shared_examples "raises Errors::NotFound error" do
       it { expect { subject }.to raise_error(Errors::NotFound, "No status found.") }
     end
 
     context "targeting user was not found" do
-      # set params
+      let!(:user)   { create(:user) }
       let(:user_id) { User.maximum(:id) + 1 } # set not to point the existing user
       let(:year)    { 2019 }
       let(:month)   { 10 }
@@ -77,28 +67,6 @@ describe CollectFolloweeStatusesService do
 
           shared_examples "only includes those statuses that are tweeted at or before boundary time" do
             it { is_expected.to contain_exactly(status_tweeted_before_boundary, status_tweeted_at_boundary) }
-          end
-
-          describe "search with no date specified" do
-            let(:user) { create(:user) }
-            let!(:followee) do
-              followee = create(:user)
-              create(:followee, user: user, twitter_id: followee.twitter_id)
-              followee
-            end
-            # pre-register user's followee's statuses
-            let(:boundary_time) { Time.current.end_of_year }
-            include_context "user's followee has 3 statuses tweeted around the boundary_time"
-
-            let(:user_id) { user.id }
-            let(:year)    { nil }
-            let(:month)   { nil }
-            let(:day)     { nil }
-            let(:page)    { 1 }
-
-            it "includes all the statuses" do
-              is_expected.to contain_exactly(status_tweeted_before_boundary, status_tweeted_at_boundary, status_tweeted_after_boundary)
-            end
           end
 
           describe "boundary test on date-search" do
@@ -250,6 +218,38 @@ describe CollectFolloweeStatusesService do
 
             it "only returns user's followee's statuses" do
               expect(subject.pluck(:text)).to contain_exactly(*user_folowee_statuses.pluck(:text))
+            end
+          end
+
+          describe "with no params specified" do
+            let(:year)  { nil }
+            let(:month) { nil }
+            let(:day)   { nil }
+            let(:page)  { nil }
+
+            let(:expected_per_page) { 10 }
+
+            let!(:user)   { create(:user) }
+            let(:user_id) { user.id }
+            let!(:followee) do
+              followee = create(:user)
+              create(:followee, user: user, twitter_id: followee.twitter_id)
+              followee
+            end
+
+            let!(:followee_statuses) do
+              # register statuses from newest to oldest
+              (0..).first(expected_per_page + 1).map do |seconds_ago|
+                tweeted_at = Time.now.utc - seconds_ago.seconds
+                create(:status, user: followee, tweeted_at: tweeted_at.to_i)
+              end
+            end
+
+            before { travel_to(Time.now.utc) }
+            after  { travel_back }
+
+            it "returns at most 10 of the statuses tweeted before or eq to Time.now" do
+              is_expected.to contain_exactly(*followee_statuses.first(expected_per_page))
             end
           end
         end
