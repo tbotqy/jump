@@ -5,7 +5,6 @@ include TwitterUserMock
 
 module TweetMock
   def tweet_mock(twitter_account_id:, **attrs)
-    # set user_mock to :user attribute
     tweet_attrs = default_tweet_attrs.merge(user: twitter_user_mock(id: twitter_account_id))
     tweet_attrs.merge!(attrs)
     instance_double("Twitter::Tweet", tweet_attrs)
