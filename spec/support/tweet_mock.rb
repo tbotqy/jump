@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+require_relative "./twitter_user_mock"
+include TwitterUserMock
+
 module TweetMock
   def tweet_mock(twitter_account_id:, **attrs)
     # set user_mock to :user attribute
-    tweet_attrs = default_tweet_attrs.merge(user: user_mock(id: twitter_account_id))
+    tweet_attrs = default_tweet_attrs.merge(user: twitter_user_mock(id: twitter_account_id))
     # overwrite attributes with given ones if given
     tweet_attrs = tweet_attrs.merge(attrs) if attrs.present?
     instance_double("Twitter::Tweet", tweet_attrs)
@@ -77,10 +80,6 @@ module TweetMock
       instance_double("Twitter::Place", full_name: "place full name")
     end
 
-    def user_mock(id:)
-      instance_double("Twitter::User", id: id, protected?: false)
-    end
-
     def retweeted_tweet_mock
       instance_double("Twitter::Tweet",
         text: "rt text",
@@ -91,7 +90,7 @@ module TweetMock
     end
 
     def retweeted_tweet_user_mock
-      instance_double("Twitter::User",
+      twitter_user_mock(
         name: "rt name",
         screen_name: "rs_screen_name",
         profile_image_url_https: "https://profile_image/url.jpg"
