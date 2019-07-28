@@ -221,6 +221,30 @@ describe CollectFolloweeStatusesService do
             end
           end
 
+          describe "both public and private statuses are collected" do
+            let!(:user)   { create(:user) }
+            let(:user_id) { user.id }
+            let(:year)    { nil }
+            let(:month)   { nil }
+            let(:day)     { nil }
+            let(:page)    { nil }
+
+            let!(:followee) do
+              followee = create(:user)
+              create(:followee, user: user, twitter_id: followee.twitter_id)
+              followee
+            end
+
+            context "user's followee's statuses are public" do
+              let!(:public_followee_statuses) { create_list(:status, 2, private_flag: false, user: followee) }
+              it { is_expected.to contain_exactly(*public_followee_statuses) }
+            end
+            context "user's followee's statuses are private" do
+              let!(:private_followee_statuses) { create_list(:status, 2, private_flag: true, user: followee) }
+              it { is_expected.to contain_exactly(*private_followee_statuses) }
+            end
+          end
+
           describe "with no params specified" do
             let(:year)  { nil }
             let(:month) { nil }
