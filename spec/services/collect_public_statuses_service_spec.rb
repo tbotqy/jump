@@ -155,6 +155,30 @@ describe CollectPublicStatusesService do
           is_expected.to contain_exactly(*public_statuses)
         end
       end
+
+      context "with no params specified" do
+        let(:year)    { nil }
+        let(:month)   { nil }
+        let(:day)     { nil }
+        let(:page)    { nil }
+
+        before { travel_to(Time.now.utc) }
+        after  { travel_back }
+
+        let(:expected_per_page) { 10 }
+
+        let!(:statuses) do
+          # register statuses from newest to oldest
+          (0..).first(expected_per_page + 1).map do |seconds_ago|
+            tweeted_at = Time.now.utc - seconds_ago.seconds
+            create(:status, tweeted_at: tweeted_at.to_i)
+          end
+        end
+
+        it "returns at most 10 of the statuses tweeted before or eq to Time.now" do
+          is_expected.to contain_exactly(*statuses.first(expected_per_page))
+        end
+      end
     end
   end
 end
