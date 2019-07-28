@@ -92,8 +92,7 @@ module TweetMock
     def retweeted_tweet_user_mock
       twitter_user_mock(
         name: "rt name",
-        screen_name: "rs_screen_name",
-        profile_image_url_https: "https://profile_image/url.jpg"
+        screen_name: "rs_screen_name"
       )
     end
 end
