@@ -28,8 +28,7 @@ class UpdateUserService
     end
 
     def fetch_fresh_data
-      @user_info    = user_twitter_client.twitter_user
-      @setting_info = user_twitter_client.twitter_settings
+      @user_info = user_twitter_client.twitter_user
     end
 
     def user
