@@ -6,17 +6,13 @@ describe CollectUserStatusesService do
   describe ".call!" do
     subject { CollectUserStatusesService.call!(user_id: user_id, year: year, month: month, day: day, page: page) }
 
-    before do
-      # pre-register a user and its status whose user_id is not equal with params[:id]
-      create(:status, user: create(:user), tweeted_at: Time.local(year, month, day).to_i)
-    end
-
     shared_examples "raises Errors::NotFound error" do
       it { expect { subject }.to raise_error(Errors::NotFound, "No status found.") }
     end
 
     context "targeting user was not found" do
       # set params
+      let!(:user)   { create(:user) }
       let(:user_id) { User.maximum(:id) + 1 } # set not to point the existing user
       let(:year)    { 2019 }
       let(:month)   { 10 }
@@ -166,6 +162,20 @@ describe CollectUserStatusesService do
               it_behaves_like "raises Errors::NotFound error"
             end
           end
+        end
+
+        describe "user scope should be applied" do
+          let(:targeted_user)     { create(:user) }
+          let(:non_targeted_user) { create(:user) }
+          let!(:non_targeted_user_statuses) { create_list(:status, 2, user: non_targeted_user) }
+          let!(:targeted_user_statuses)     { create_list(:status, 2, user: targeted_user) }
+
+          let(:user_id) { targeted_user.id }
+          let(:year)    { nil }
+          let(:month)   { nil }
+          let(:day)     { nil }
+          let(:page)    { 1 }
+          it { is_expected.to contain_exactly(*targeted_user_statuses) }
         end
       end
     end
