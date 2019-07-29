@@ -368,6 +368,38 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                 end
               end
 
+              describe "both public and private statuses are collected" do
+                let!(:user)   { create(:user) }
+                let(:user_id) { user.id }
+                let(:year)    { nil }
+                let(:month)   { nil }
+                let(:day)     { nil }
+                let(:page)    { nil }
+
+                let!(:followee) do
+                  followee = create(:user)
+                  create(:followee, user: user, twitter_id: followee.twitter_id)
+                  followee
+                end
+
+                before { sign_in user }
+
+                context "user's followee's statuses are public" do
+                  let!(:public_followee_statuses) { create_list(:status, 2, private_flag: false, user: followee) }
+                  it do
+                    subject
+                    expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*public_followee_statuses.map(&:as_json))
+                  end
+                end
+                context "user's followee's statuses are private" do
+                  let!(:private_followee_statuses) { create_list(:status, 2, private_flag: true, user: followee) }
+                  it do
+                    subject
+                    expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*private_followee_statuses.map(&:as_json))
+                  end
+                end
+              end
+
               describe "with no params specified" do
                 let!(:user)   { create(:user) }
                 let(:user_id) { user.id }
