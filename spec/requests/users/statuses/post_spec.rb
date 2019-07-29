@@ -50,7 +50,7 @@ RSpec.describe "Users::Statuses", type: :request do
             it_behaves_like "respond with status code", :too_many_requests
           end
           context "user has no working job" do
-            context "failed to kick the job" do
+            context "fails to kick the job" do
               before do
                 allow(MakeInitialTweetImportJob).to receive(:perform_later).and_raise(RuntimeError)
                 sign_in user
@@ -59,7 +59,7 @@ RSpec.describe "Users::Statuses", type: :request do
               it_behaves_like "doesn't enqueue the job"
               it_behaves_like "respond with status code", :internal_server_error
             end
-            context "succeeded to kick the job" do
+            context "succeeds to kick the job" do
               before do
                 sign_in user
                 subject
