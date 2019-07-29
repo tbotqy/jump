@@ -214,10 +214,10 @@ RSpec.describe "Statuses", type: :request do
       end
 
       describe "only public statuses are collected" do
-        let(:year)    { nil }
-        let(:month)   { nil }
-        let(:day)     { nil }
-        let(:page)    { nil }
+        let(:year)  { nil }
+        let(:month) { nil }
+        let(:day)   { nil }
+        let(:page)  { nil }
 
         let!(:public_statuses)  { create_list(:status, 2, private_flag: false) }
         let!(:private_statuses) { create_list(:status, 2, private_flag: true) }
@@ -229,10 +229,10 @@ RSpec.describe "Statuses", type: :request do
       end
 
       context "with no params specified" do
-        let(:year)    { nil }
-        let(:month)   { nil }
-        let(:day)     { nil }
-        let(:page)    { nil }
+        let(:year)  { nil }
+        let(:month) { nil }
+        let(:day)   { nil }
+        let(:page)  { nil }
 
         before { travel_to(Time.now.utc) }
         after  { travel_back }

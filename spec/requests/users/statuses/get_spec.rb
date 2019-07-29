@@ -236,7 +236,7 @@ RSpec.describe "Users::Statuses", type: :request do
             end
 
             describe "keys and values" do
-              let!(:user)    { create(:user) }
+              let!(:user)   { create(:user) }
               let(:user_id) { user.id }
               let(:year)    { nil }
               let(:month)   { nil }
@@ -312,7 +312,7 @@ RSpec.describe "Users::Statuses", type: :request do
                 sign_in user
                 travel_to(Time.now.utc)
               end
-              after  { travel_back }
+              after { travel_back }
 
               let(:expected_per_page) { 10 }
 

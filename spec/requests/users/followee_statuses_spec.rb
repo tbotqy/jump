@@ -7,7 +7,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
     subject { get user_followee_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page) }
 
     context "not authenticated" do
-      let!(:user) { create(:user) }
+      let!(:user)    { create(:user) }
       let!(:user_id) { user.id }
       let(:year)     { nil }
       let(:month)    { nil }
@@ -18,7 +18,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
     end
     context "authenticated" do
       context "user not found" do
-        let!(:user) { create(:user) }
+        let!(:user)    { create(:user) }
         let!(:user_id) { User.maximum(:id) + 1 }
         let(:year)     { nil }
         let(:month)    { nil }
@@ -388,10 +388,10 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
               describe "with no params specified" do
                 let!(:user)   { create(:user) }
                 let(:user_id) { user.id }
-                let(:year)  { nil }
-                let(:month) { nil }
-                let(:day)   { nil }
-                let(:page)  { nil }
+                let(:year)    { nil }
+                let(:month)   { nil }
+                let(:day)     { nil }
+                let(:page)    { nil }
 
                 let(:expected_per_page) { 10 }
 
