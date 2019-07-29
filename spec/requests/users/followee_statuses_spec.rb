@@ -252,7 +252,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                   create(:followee, user: user, twitter_id: followee.twitter_id)
                   followee
                 end
-                let!(:user_folowee_statuses) { create_list(:status, 2, user: user_followee) }
+                let!(:user_followee_statuses) { create_list(:status, 2, user: user_followee) }
 
                 # register a user whose id is other than the one to be passed as parameter
                 let!(:another_user) { create(:user) }
@@ -273,7 +273,7 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
 
                 it "only returns user's followee's statuses" do
                   subject
-                  expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*user_folowee_statuses.map(&:as_json))
+                  expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*user_followee_statuses.map(&:as_json))
                 end
               end
 
