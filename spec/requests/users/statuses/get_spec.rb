@@ -18,14 +18,13 @@ RSpec.describe "Users::Statuses", type: :request do
     context "authenticated" do
       context "user not found" do
         let!(:user) { create(:user) }
-        let!(:user_id) { user.id }
+        let!(:user_id) { User.maximum(:id) + 1 }
         let(:year)     { nil }
         let(:month)    { nil }
         let(:day)      { nil }
         let(:page)     { nil }
         before do
           sign_in user
-          User.find(user_id).destroy!
           subject
         end
         it_behaves_like "respond with status code", :not_found
