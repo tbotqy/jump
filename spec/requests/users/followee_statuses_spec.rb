@@ -107,32 +107,6 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                 end
               end
 
-              describe "search with no date specified" do
-                let!(:user) { create(:user) }
-                let!(:followee) do
-                  followee = create(:user)
-                  create(:followee, user: user, twitter_id: followee.twitter_id)
-                  followee
-                end
-                # pre-register user's followee's statuses
-                let(:boundary_time) { Time.current.end_of_year }
-                include_context "user's followee has 3 statuses tweeted around the boundary_time"
-
-                let(:user_id) { user.id }
-                let(:year)    { nil }
-                let(:month)   { nil }
-                let(:day)     { nil }
-                let(:page)    { 1 }
-
-                before do
-                  sign_in user
-                  subject
-                end
-                it "includes all the statuses" do
-                  expect(response.parsed_body.map { |item| item["text"] }).to contain_exactly(*[status_tweeted_before_boundary, status_tweeted_at_boundary, status_tweeted_after_boundary].map(&:text))
-                end
-              end
-
               describe "boundary test on date-search" do
                 describe "yearly search" do
                   describe "it only returns the statuses that have been tweeted at or before the end of specified year" do
