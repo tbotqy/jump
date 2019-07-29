@@ -174,7 +174,7 @@ describe CollectUserStatusesService do
           let(:year)    { nil }
           let(:month)   { nil }
           let(:day)     { nil }
-          let(:page)    { 1 }
+          let(:page)    { nil }
           it { is_expected.to contain_exactly(*targeted_user_statuses) }
         end
 
