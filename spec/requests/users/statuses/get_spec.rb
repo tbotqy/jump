@@ -6,11 +6,6 @@ RSpec.describe "Users::Statuses", type: :request do
   describe "GET /users/:id/statuses" do
     subject { get user_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page) }
 
-    before do
-      # pre-register a user and its status whose user_id is not equal with params[:id]
-      create(:status, user: create(:user), tweeted_at: Time.local(year, month, day).to_i)
-    end
-
     context "not authenticated" do
       let!(:user) { create(:user) }
       let!(:user_id) { user.id }
@@ -215,6 +210,36 @@ RSpec.describe "Users::Statuses", type: :request do
 
                   include_examples "examples"
                 end
+              end
+            end
+
+            context "with no params specified" do
+              let!(:user)   { create(:user) }
+              let(:user_id) { user.id }
+              let(:year)    { nil }
+              let(:month)   { nil }
+              let(:day)     { nil }
+              let(:page)    { nil }
+
+              before do
+                sign_in user
+                travel_to(Time.now.utc)
+              end
+              after  { travel_back }
+
+              let(:expected_per_page) { 10 }
+
+              let!(:user_statuses) do
+                # register statuses from newest to oldest
+                (0..).first(expected_per_page + 1).map do |seconds_ago|
+                  tweeted_at = Time.now.utc - seconds_ago.seconds
+                  create(:status, user: user, tweeted_at: tweeted_at.to_i)
+                end
+              end
+
+              it "returns at most 10 of the statuses tweeted before or eq to Time.now" do
+                subject
+                expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*user_statuses.first(expected_per_page).map(&:as_json))
               end
             end
           end
