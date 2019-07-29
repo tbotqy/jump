@@ -6,16 +6,6 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
   describe "GET /users/:id/followee_statuses" do
     subject { get user_followee_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page) }
 
-    before do
-      # pre-register a user's followee and its status whose user_id is other than the one to be passed as parameter
-      dummy_user             = create(:user, name: "dummy user")
-      followee_of_dummy_user = create(:user, name: "followee of dummy user")
-      create(:followee, user: dummy_user, twitter_id: followee_of_dummy_user.twitter_id)
-
-      time = [year, month, day].any?(&:present?) ? Time.local(year, month, day) : Time.current
-      create(:status, user: followee_of_dummy_user, tweeted_at: time.to_i)
-    end
-
     context "not authenticated" do
       let!(:user) { create(:user) }
       let!(:user_id) { user.id }
@@ -375,6 +365,42 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                       user:       status_tweeted_before_boundary.user.as_json
                     )
                   end
+                end
+              end
+
+              describe "with no params specified" do
+                let!(:user)   { create(:user) }
+                let(:user_id) { user.id }
+                let(:year)  { nil }
+                let(:month) { nil }
+                let(:day)   { nil }
+                let(:page)  { nil }
+
+                let(:expected_per_page) { 10 }
+
+                let!(:followee) do
+                  followee = create(:user)
+                  create(:followee, user: user, twitter_id: followee.twitter_id)
+                  followee
+                end
+
+                let!(:followee_statuses) do
+                  # register statuses from newest to oldest
+                  (0..).first(expected_per_page + 1).map do |seconds_ago|
+                    tweeted_at = Time.now.utc - seconds_ago.seconds
+                    create(:status, user: followee, tweeted_at: tweeted_at.to_i)
+                  end
+                end
+
+                before do
+                  sign_in user
+                  travel_to(Time.now.utc)
+                end
+                after  { travel_back }
+
+                it "returns at most 10 of the statuses tweeted before or eq to Time.now" do
+                  subject
+                  expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*followee_statuses.first(expected_per_page).map(&:as_json))
                 end
               end
             end

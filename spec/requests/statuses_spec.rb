@@ -178,6 +178,31 @@ RSpec.describe "Statuses", type: :request do
           expect(response.parsed_body.map { |item| item["text"] }).to contain_exactly(*texts_in_public_statuses)
         end
       end
+
+      context "with no params specified" do
+        let(:year)    { nil }
+        let(:month)   { nil }
+        let(:day)     { nil }
+        let(:page)    { nil }
+
+        before { travel_to(Time.now.utc) }
+        after  { travel_back }
+
+        let(:expected_per_page) { 10 }
+
+        let!(:statuses) do
+          # register statuses from newest to oldest
+          (0..).first(expected_per_page + 1).map do |seconds_ago|
+            tweeted_at = Time.now.utc - seconds_ago.seconds
+            create(:status, tweeted_at: tweeted_at.to_i)
+          end
+        end
+
+        it "returns at most 10 of the statuses tweeted before or eq to Time.now" do
+          subject
+          expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*statuses.first(expected_per_page).map(&:as_json))
+        end
+      end
     end
   end
 end
