@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :statuses,              dependent: :destroy
   has_many :followees,             dependent: :delete_all
   has_one  :tweet_import_progress, dependent: :destroy
+  has_one  :tweet_import_lock,     dependent: :destroy
   has_many :user_update_fail_logs, dependent: :delete_all
 
   has_many :hashtags, through: :statuses
