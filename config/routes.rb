@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :users, only: %i|show destroy| do
     scope module: :users do
       resources :statuses,              only: %i|index create|
+      put "statuses",                   to: "statuses#update"
       resources :followees,             only: %i|create|
       resources :followee_statuses,     only: %i|index|
       resource  :tweet_import_progress, only: %i|show|

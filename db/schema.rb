@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_26_140155) do
+ActiveRecord::Schema.define(version: 2019_07_29_092507) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -83,6 +83,13 @@ ActiveRecord::Schema.define(version: 2019_07_26_140155) do
     t.index ["user_id"], name: "index_statuses_on_user_id"
   end
 
+  create_table "tweet_import_locks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tweet_import_locks_on_user_id", unique: true
+  end
+
   create_table "tweet_import_progresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.boolean "finished", null: false
@@ -134,6 +141,7 @@ ActiveRecord::Schema.define(version: 2019_07_26_140155) do
   add_foreign_key "hashtags", "statuses"
   add_foreign_key "media", "statuses"
   add_foreign_key "statuses", "users"
+  add_foreign_key "tweet_import_locks", "users"
   add_foreign_key "tweet_import_progresses", "users"
   add_foreign_key "urls", "statuses"
   add_foreign_key "user_update_fail_logs", "users"

@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:statuses).dependent(:destroy) }
     it { should have_many(:followees).dependent(:delete_all) }
     it { should have_one(:tweet_import_progress).dependent(:destroy) }
+    it { should have_one(:tweet_import_lock).dependent(:destroy) }
     it { should have_many(:user_update_fail_logs).dependent(:delete_all) }
     it { should have_many(:hashtags).through(:statuses) }
     it { should have_many(:urls).through(:statuses) }

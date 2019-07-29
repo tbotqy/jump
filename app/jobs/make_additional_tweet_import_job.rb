@@ -5,13 +5,17 @@ class MakeAdditionalTweetImportJob < ApplicationJob
   queue_as :default
 
   def perform(user_id:)
-    @user_id              = user_id
+    @user_id = user_id
     @most_recent_tweet_id = nil
     @imported_tweets      = []
-
-    ensure_additional_import!
-    fetch_most_recent_tweet_id!
-    operate!
+    acquire_job_lock!
+    begin
+      ensure_additional_import!
+      fetch_most_recent_tweet_id!
+      operate!
+    ensure
+      release_job_lock!
+    end
   end
 
   private
@@ -43,6 +47,18 @@ class MakeAdditionalTweetImportJob < ApplicationJob
     def finalize!
       user.update!(statuses_updated_at: Time.now.utc.to_i)
       ActiveStatusCount.increment_by(imported_tweets.count)
+    end
+
+    def acquire_job_lock!
+      if user.tweet_import_lock.present?
+        raise "The job has been locked."
+      else
+        user.create_tweet_import_lock!
+      end
+    end
+
+    def release_job_lock!
+      user.tweet_import_lock.destroy!
     end
 
     def user
