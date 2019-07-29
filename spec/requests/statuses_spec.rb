@@ -13,7 +13,7 @@ RSpec.describe "Statuses", type: :request do
         let(:day)   { nil }
         let(:page)  { nil }
         before do
-          3.times { |i| create(:status, private_flag: false, tweet_id: i, tweeted_at: Time.now.utc.end_of_day.to_i) }
+          create_list(:status, 2, private_flag: false)
           subject
         end
         it_behaves_like "respond with status code", :ok
