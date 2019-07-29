@@ -52,7 +52,7 @@ RSpec.describe "Users::Statuses", type: :request do
           context "user has no working job" do
             context "fails to kick the job" do
               before do
-                allow(MakeInitialTweetImportJob).to receive(:perform_later).and_raise(RuntimeError)
+                allow(MakeInitialTweetImportJob).to receive(:perform_later).with(user_id: user_id.to_s).and_raise(RuntimeError)
                 sign_in user
                 subject
               end
@@ -65,7 +65,7 @@ RSpec.describe "Users::Statuses", type: :request do
                 subject
               end
               it "enqueues the job " do
-                expect(MakeInitialTweetImportJob).to have_been_enqueued.exactly(:once)
+                expect(MakeInitialTweetImportJob).to have_been_enqueued.with(user_id: user_id.to_s).exactly(:once)
               end
               it_behaves_like "respond with status code", :accepted
             end
