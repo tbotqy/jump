@@ -51,63 +51,9 @@ RSpec.describe "Statuses", type: :request do
           end
         end
 
-        # shared examples that are shared between yearly, monthly, and daily search descriptions
-        shared_examples "examples" do
-          describe "normal response code" do
-            it_behaves_like "respond with status code", :ok
-          end
-          describe "keys" do
-            it "has all the expected keys" do
-              expect(response.parsed_body.map(&:keys)).to all(
-                contain_exactly(
-                  "tweet_id", "text", "tweeted_at", "is_retweet", "entities", "user"
-                )
-              )
-            end
-          end
-          describe "values" do
-            it "contains actual registered values in each item" do
-              expect(response.parsed_body.first.deep_symbolize_keys).to include(
-                tweet_id:   status_tweeted_at_boundary.tweet_id,
-                text:       status_tweeted_at_boundary.text,
-                tweeted_at: Time.at(status_tweeted_at_boundary.tweeted_at).in_time_zone.iso8601,
-                is_retweet: status_tweeted_at_boundary.is_retweet,
-                entities:   status_tweeted_at_boundary.entities.as_json,
-                user:       status_tweeted_at_boundary.user.as_json
-              )
-              expect(response.parsed_body.last.deep_symbolize_keys).to include(
-                tweet_id:   status_tweeted_before_boundary.tweet_id,
-                text:       status_tweeted_before_boundary.text,
-                tweeted_at: Time.at(status_tweeted_before_boundary.tweeted_at).in_time_zone.iso8601,
-                is_retweet: status_tweeted_before_boundary.is_retweet,
-                entities:   status_tweeted_before_boundary.entities.as_json,
-                user:       status_tweeted_before_boundary.user.as_json
-              )
-            end
-          end
-          describe "sort" do
-            it "lists the newest tweet as its first item" do
-              expect(response.parsed_body.first["text"]).to eq(status_tweeted_at_boundary.text)
-            end
-            it "lists the oldest tweet as its last item" do
-              expect(response.parsed_body.last["text"]).to  eq(status_tweeted_before_boundary.text)
-            end
-          end
-          describe "filtering" do
-            it "is filtered by given date" do
-              expect(response.parsed_body.map { |b| b["text"] }).to contain_exactly(status_tweeted_at_boundary.text, status_tweeted_before_boundary.text)
-            end
-          end
-          describe "pagination" do
-            context "something to show exists" do
-              let(:page) { 1 }
-              it_behaves_like "respond with status code", :ok
-              it { expect(response.body).not_to be_blank }
-            end
-            context "nothing to show" do
-              let(:page) { 2 }
-              it_behaves_like "respond with status code", :not_found
-            end
+        shared_examples "only includes those statuses that are tweeted at or before boundary time" do
+          it do
+            expect(response.parsed_body.map { |item| item["text"] }).to contain_exactly(*[status_tweeted_before_boundary, status_tweeted_at_boundary].map(&:text))
           end
         end
 
@@ -124,7 +70,7 @@ RSpec.describe "Statuses", type: :request do
 
             before { subject }
 
-            include_examples "examples"
+            include_examples "only includes those statuses that are tweeted at or before boundary time"
           end
         end
 
@@ -141,7 +87,7 @@ RSpec.describe "Statuses", type: :request do
 
             before { subject }
 
-            include_examples "examples"
+            include_examples "only includes those statuses that are tweeted at or before boundary time"
           end
         end
 
@@ -158,24 +104,127 @@ RSpec.describe "Statuses", type: :request do
 
             before { subject }
 
-            include_examples "examples"
+            include_examples "only includes those statuses that are tweeted at or before boundary time"
           end
         end
       end
 
-      describe "filtering by private flag" do
-        let(:year)  { 2019 }
-        let(:month) { 7 }
-        let(:day)   { 4 }
-        let(:page)  { 1 }
+      describe "pagination and order" do
+        before do
+          # Register the statuses tweeted in ending of the specified date.
+          # To test if the sort is applied, registering in random order, by using #shuffle.
+          (1..15).to_a.shuffle.map do |seconds_ago|
+            tweeted_at = Time.now.utc.end_of_day - seconds_ago.seconds
+            create(:status, text: "#{seconds_ago}th-new status", tweeted_at: tweeted_at.to_i)
+          end
+          subject
+        end
 
-        let(:specified_time)    { Time.local(year, month, day).end_of_day }
-        let!(:public_statuses)  { (1..3).to_a.map { |i| create(:status, private_flag: false, text: "public  status", tweeted_at: specified_time.to_i, tweet_id: i) } }
-        let!(:private_statuses) { (4..6).to_a.map { |i| create(:status, private_flag: true,  text: "private status", tweeted_at: specified_time.to_i, tweet_id: i) } }
+        let(:year)  { nil }
+        let(:month) { nil }
+        let(:day)   { nil }
+
+        context "paging to non-blank page" do
+          context "page 1" do
+            let(:page) { 1 }
+            describe "number of return values" do
+              it "returns as much as 10 (the maximum number for a page) statuses" do
+                expect(response.parsed_body.count).to eq 10
+              end
+            end
+            describe "sort under the pagination" do
+              it "includes first 10 statuses, ordered in new-tweet-first" do
+                expected_status_texts_with_expected_order = (1..10).map { |nth| "#{nth}th-new status" }
+                expect(response.parsed_body.map { |item| item["text"] }).to eq expected_status_texts_with_expected_order
+              end
+            end
+          end
+          context "page 2" do
+            let(:page) { 2 }
+            describe "number of return values" do
+              it "returns as much as 5 (the number of statuses in 2nd page) statuses" do
+                expect(response.parsed_body.count).to eq 5
+              end
+            end
+            describe "sort under the pagination" do
+              it "includes last 5 statuses, ordered in new-tweet-first" do
+                expected_status_texts_with_expected_order = (11..15).map { |nth| "#{nth}th-new status" }
+                expect(response.parsed_body.map { |item| item["text"] }).to eq expected_status_texts_with_expected_order
+              end
+            end
+          end
+        end
+        context "paging to a blank page" do
+          context "page 3" do
+            let(:page) { 3 }
+            it_behaves_like "respond with status code", :not_found
+          end
+        end
+      end
+
+      describe "should not be scoped by user" do
+        let(:alice) { create(:user) }
+        let(:bob)   { create(:user) }
+        let!(:alice_status) { create(:status, user: alice) }
+        let!(:bob_status)   { create(:status, user: bob) }
+
+        let(:year)  { nil }
+        let(:month) { nil }
+        let(:day)   { nil }
+        let(:page)  { nil }
+
+        it do
+          subject
+          expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*[alice_status, bob_status].map(&:as_json))
+        end
+      end
+
+      describe "keys and values" do
+        let(:year)  { nil }
+        let(:month) { nil }
+        let(:day)   { nil }
+        let(:page)  { nil }
+
+        let!(:status) { create(:status) }
+
         before { subject }
-        it "only returns public statuses" do
-          texts_in_public_statuses = public_statuses.map(&:text)
-          expect(response.parsed_body.map { |item| item["text"] }).to contain_exactly(*texts_in_public_statuses)
+
+        describe "keys" do
+          it do
+            expect(response.parsed_body.first.keys).to contain_exactly(
+              "tweet_id", "text", "tweeted_at", "is_retweet", "entities", "user"
+            )
+          end
+        end
+        describe "value of attr 'entities'" do
+          xit "TODO: implement"
+        end
+        describe "values" do
+          it do
+            expect(response.parsed_body.first.deep_symbolize_keys).to include(
+              tweet_id:   status.tweet_id,
+              text:       status.text,
+              tweeted_at: Time.at(status.tweeted_at).in_time_zone.iso8601,
+              is_retweet: status.is_retweet,
+              entities:   status.entities.as_json,
+              user:       status.user.as_json
+            )
+          end
+        end
+      end
+
+      describe "only public statuses are collected" do
+        let(:year)    { nil }
+        let(:month)   { nil }
+        let(:day)     { nil }
+        let(:page)    { nil }
+
+        let!(:public_statuses)  { create_list(:status, 2, private_flag: false) }
+        let!(:private_statuses) { create_list(:status, 2, private_flag: true) }
+
+        it do
+          subject
+          expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*public_statuses.map(&:as_json))
         end
       end
 
