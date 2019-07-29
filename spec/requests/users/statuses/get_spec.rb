@@ -213,6 +213,52 @@ RSpec.describe "Users::Statuses", type: :request do
               end
             end
 
+            describe "user scope should be applied" do
+              let(:targeted_user)     { create(:user) }
+              let(:non_targeted_user) { create(:user) }
+              let!(:targeted_user_statuses)     { create_list(:status, 2, user: targeted_user) }
+              let!(:non_targeted_user_statuses) { create_list(:status, 2, user: non_targeted_user) }
+
+              let(:user_id) { targeted_user.id }
+              let(:year)    { nil }
+              let(:month)   { nil }
+              let(:day)     { nil }
+              let(:page)    { nil }
+
+              before { sign_in targeted_user }
+
+              it do
+                subject
+                expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*targeted_user_statuses.map(&:as_json))
+              end
+            end
+
+            describe "both public and private statuses are collected" do
+              let!(:user)   { create(:user) }
+              let(:user_id) { user.id }
+              let(:year)    { nil }
+              let(:month)   { nil }
+              let(:day)     { nil }
+              let(:page)    { nil }
+
+              before { sign_in user }
+
+              context "user's statuses are public" do
+                let!(:public_statuses) { create_list(:status, 2, private_flag: false, user: user) }
+                it do
+                  subject
+                  expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*public_statuses.map(&:as_json))
+                end
+              end
+              context "user's statuses are private" do
+                let!(:private_statuses) { create_list(:status, 2, private_flag: true, user: user) }
+                it do
+                  subject
+                  expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*private_statuses.map(&:as_json))
+                end
+              end
+            end
+
             context "with no params specified" do
               let!(:user)   { create(:user) }
               let(:user_id) { user.id }
