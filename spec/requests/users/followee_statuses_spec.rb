@@ -9,10 +9,10 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
     context "not authenticated" do
       let!(:user) { create(:user) }
       let!(:user_id) { user.id }
-      let(:year)  { 2019 }
-      let(:month) { 3 }
-      let(:day)   { 2 }
-      let(:page)  { 1 }
+      let(:year)     { nil }
+      let(:month)    { nil }
+      let(:day)      { nil }
+      let(:page)     { nil }
       before { subject }
       it_behaves_like "unauthenticated request"
     end
@@ -20,10 +20,10 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
       context "user not found" do
         let!(:user) { create(:user) }
         let!(:user_id) { user.id }
-        let(:year)  { 2019 }
-        let(:month) { 3 }
-        let(:day)   { 2 }
-        let(:page)  { 1 }
+        let(:year)     { nil }
+        let(:month)    { nil }
+        let(:day)      { nil }
+        let(:page)     { nil }
         before do
           sign_in user
           User.find(user_id).destroy!
@@ -36,10 +36,10 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
           let!(:signed_in_user) { create(:user) }
           let!(:another_user)   { create(:user) }
           let!(:user_id)        { another_user.id }
-          let(:year)  { 2019 }
-          let(:month) { 3 }
-          let(:day)   { 2 }
-          let(:page)  { 1 }
+          let(:year)  { nil }
+          let(:month) { nil }
+          let(:day)   { nil }
+          let(:page)  { nil }
           before do
             sign_in signed_in_user
             subject
@@ -50,10 +50,10 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
           context "user has no followee" do
             let(:user)    { create(:user) }
             let(:user_id) { user.id }
-            let(:year)    { 2019 }
-            let(:month)   { 10 }
-            let(:day)     { 1 }
-            let(:page)    { 1 }
+            let(:year)    { nil }
+            let(:month)   { nil }
+            let(:day)     { nil }
+            let(:page)    { nil }
             before do
               sign_in user
               subject
@@ -68,11 +68,11 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                 create(:followee, user: user, twitter_id: followee.twitter_id)
                 followee
               end
-              let(:user_id) { user.id } # set the id of the user who has no status
-              let(:year)    { 2019 }
-              let(:month)   { 10 }
-              let(:day)     { 1 }
-              let(:page)    { 1 }
+              let(:user_id) { user.id }
+              let(:year)    { nil }
+              let(:month)   { nil }
+              let(:day)     { nil }
+              let(:page)    { nil }
               before do
                 sign_in user
                 subject

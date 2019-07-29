@@ -8,12 +8,12 @@ RSpec.describe "Statuses", type: :request do
 
     describe "no authentication needed" do
       context "not authenticated" do
-        let(:year)  { 2019 }
-        let(:month) { 7 }
-        let(:day)   { 4 }
-        let(:page)  { 1 }
+        let(:year)  { nil }
+        let(:month) { nil }
+        let(:day)   { nil }
+        let(:page)  { nil }
         before do
-          3.times { |i| create(:status, private_flag: false, tweet_id: i, tweeted_at: Time.local(year, month, day).end_of_day.to_i) }
+          3.times { |i| create(:status, private_flag: false, tweet_id: i, tweeted_at: Time.now.utc.end_of_day.to_i) }
           subject
         end
         it_behaves_like "respond with status code", :ok
@@ -21,10 +21,10 @@ RSpec.describe "Statuses", type: :request do
     end
 
     context "no status exists" do
-      let(:year)  { 2019 }
-      let(:month) { 7 }
-      let(:day)   { 4 }
-      let(:page)  { 1 }
+      let(:year)  { nil }
+      let(:month) { nil }
+      let(:day)   { nil }
+      let(:page)  { nil }
       before { subject }
       it_behaves_like "respond with status code", :not_found
     end

@@ -7,12 +7,11 @@ RSpec.describe "Users::Statuses", type: :request do
     subject { get user_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page) }
 
     context "not authenticated" do
-      let!(:user) { create(:user) }
-      let!(:user_id) { user.id }
-      let(:year)  { 2019 }
-      let(:month) { 3 }
-      let(:day)   { 2 }
-      let(:page)  { 1 }
+      let!(:user_id) { create(:user).id }
+      let(:year)     { nil }
+      let(:month)    { nil }
+      let(:day)      { nil }
+      let(:page)     { nil }
       before { subject }
       it_behaves_like "unauthenticated request"
     end
@@ -20,10 +19,10 @@ RSpec.describe "Users::Statuses", type: :request do
       context "user not found" do
         let!(:user) { create(:user) }
         let!(:user_id) { user.id }
-        let(:year)  { 2019 }
-        let(:month) { 3 }
-        let(:day)   { 2 }
-        let(:page)  { 1 }
+        let(:year)     { nil }
+        let(:month)    { nil }
+        let(:day)      { nil }
+        let(:page)     { nil }
         before do
           sign_in user
           User.find(user_id).destroy!
@@ -50,10 +49,10 @@ RSpec.describe "Users::Statuses", type: :request do
           context "user has no status" do
             let!(:user)    { create(:user) }
             let!(:user_id) { user.id }
-            let(:year)  { 2019 }
-            let(:month) { 3 }
-            let(:day)   { 2 }
-            let(:page)  { 1 }
+            let(:year)     { nil }
+            let(:month)    { nil }
+            let(:day)      { nil }
+            let(:page)     { nil }
             before do
               sign_in user
               subject
