@@ -77,9 +77,11 @@ ActiveRecord::Schema.define(version: 2019_07_29_134839) do
     t.integer "tweeted_at", null: false
     t.bigint "tweet_id_reversed", null: false
     t.integer "tweeted_at_reversed", null: false
+    t.date "tweeted_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tweet_id"], name: "index_statuses_on_tweet_id", unique: true
+    t.index ["tweeted_on"], name: "index_statuses_on_tweeted_on"
     t.index ["user_id"], name: "index_statuses_on_user_id"
   end
 
