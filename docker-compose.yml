@@ -5,6 +5,8 @@ services:
     command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     restart: always
     env_file: .env
+    environment:
+      TZ: Asia/Tokyo
     stdin_open: true
     ports:
       - 3000:3000
@@ -20,6 +22,8 @@ services:
     command: bundle exec sidekiq -e development
     restart: always
     env_file: .env
+    environment:
+      TZ: Asia/Tokyo
     stdin_open: true
     volumes:
       - .:/app
@@ -33,14 +37,18 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
     ports:
       - 3306:3306
     volumes:
+      - ./docker-compose/mysql:/etc/mysql/conf.d
       - mysql-store:/var/lib/mysql
 
   cache:
     restart: always
     image: redis:4
+    environment:
+      TZ: Asia/Tokyo
     ports:
       - 6379:6379
 
