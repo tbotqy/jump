@@ -80,6 +80,9 @@ RSpec.describe Status, type: :model do
       it { should validate_presence_of(:tweeted_at_reversed) }
       it { should validate_numericality_of(:tweeted_at_reversed).is_less_than_or_equal_to(0).only_integer }
     end
+    describe "#tweeted_on" do
+      it { should validate_presence_of(:tweeted_on) }
+    end
   end
 
   describe ".not_private" do

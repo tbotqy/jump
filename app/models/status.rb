@@ -27,6 +27,7 @@ class Status < ApplicationRecord
   validates :tweeted_at,              presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :tweet_id_reversed,       presence: true, numericality: { only_integer: true, less_than_or_equal_to: 0 }
   validates :tweeted_at_reversed,     presence: true, numericality: { only_integer: true, less_than_or_equal_to: 0 }
+  validates :tweeted_on,              presence: true
 
   scope :not_private,               -> { where(private_flag: false) }
   scope :order_by_newest_to_oldest, -> { order(tweet_id_reversed: :asc) }
