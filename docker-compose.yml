@@ -41,6 +41,7 @@ services:
     ports:
       - 3306:3306
     volumes:
+      - ./docker-compose/mysql:/etc/mysql/conf.d
       - mysql-store:/var/lib/mysql
 
   cache:
