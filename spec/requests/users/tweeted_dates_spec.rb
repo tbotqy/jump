@@ -80,6 +80,8 @@ RSpec.describe "Users::TweetedDates", type: :request do
                   create(:status, tweeted_at: Time.zone.local(year, 12, 31).to_i, user: user)
                   create(:status, tweeted_at: Time.zone.local(year, 12, 1).to_i,  user: user)
                   create(:status, tweeted_at: Time.zone.local(year, 12, 3).to_i,  user: user)
+                  create(:status, tweeted_at: Time.zone.local(year, 11, 30).to_i, user: user)
+                  create(:status, tweeted_at: Time.zone.local(year, 11, 29).to_i, user: user)
                 end
               end
               it "is sorted by date in desc" do
@@ -88,12 +90,14 @@ RSpec.describe "Users::TweetedDates", type: :request do
                   [
                     {
                       "2019": [
-                        { "12": ["31", "3", "1"] }
+                        { "12": ["31", "3", "1"] },
+                        { "11": ["30", "29"] }
                       ]
                     },
                     {
                       "2018": [
-                        { "12": ["31", "3", "1"] }
+                        { "12": ["31", "3", "1"] },
+                        { "11": ["30", "29"] }
                       ]
                     }
                   ]
