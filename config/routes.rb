@@ -17,9 +17,7 @@ Rails.application.routes.draw do
 
   resources :statuses, only: %i|index|
 
-  namespace :statuses do
-    resources :dates, only: %i|index|
-  end
+  resources :tweeted_dates, only: %i|index|
 
   resources :users, only: %i|show destroy| do
     scope module: :users do
