@@ -232,7 +232,7 @@ RSpec.describe "Users::Followees::TweetedDates", type: :request do
                 end
               end
 
-              describe "both public and private followee's statuses are included" do
+              describe "both public and private followee's tweeted dates are included" do
                 let!(:followee) do
                   followee = create(:user)
                   create(:followee, user: user, twitter_id: followee.twitter_id)
