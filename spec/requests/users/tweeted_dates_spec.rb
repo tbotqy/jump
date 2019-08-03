@@ -14,7 +14,7 @@ RSpec.describe "Users::TweetedDates", type: :request do
     context "authenticated" do
       context "user with given id doesn't exist" do
         let!(:user)   { create(:user) }
-        let(:user_id) { user.id }
+        let(:user_id) { User.maximum(:id) + 1 }
         before do
           sign_in user
           subject
