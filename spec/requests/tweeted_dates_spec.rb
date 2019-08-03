@@ -19,10 +19,11 @@ RSpec.describe "TweetedDates", type: :request do
       it_behaves_like "respond with status code", :not_found
     end
     context "status exists" do
-      describe "structure" do
+      describe "response is well structured" do
         before do
           create(:status, tweeted_at: Time.zone.local(2019, 12, 2).to_i)
           create(:status, tweeted_at: Time.zone.local(2019, 12, 1).to_i)
+          create(:status, tweeted_at: Time.zone.local(2019, 11, 1).to_i)
           create(:status, tweeted_at: Time.zone.local(2018, 12, 1).to_i)
         end
         it "is grouped by year and month"  do
@@ -31,7 +32,8 @@ RSpec.describe "TweetedDates", type: :request do
             [
               {
                 "2019": [
-                  { "12": ["2", "1"] }
+                  { "12": ["2", "1"] },
+                  { "11": ["1"] }
                 ]
               },
               {
@@ -46,9 +48,11 @@ RSpec.describe "TweetedDates", type: :request do
 
       describe "sort" do
         before do
-          create(:status, tweeted_at: Time.zone.local(2019, 12, 31).to_i)
-          create(:status, tweeted_at: Time.zone.local(2019, 12, 1).to_i)
-          create(:status, tweeted_at: Time.zone.local(2019, 12, 3).to_i)
+          [2019, 2018].each do |year|
+            create(:status, tweeted_at: Time.zone.local(year, 12, 31).to_i)
+            create(:status, tweeted_at: Time.zone.local(year, 12, 1).to_i)
+            create(:status, tweeted_at: Time.zone.local(year, 12, 3).to_i)
+          end
         end
         it "is sorted by date in desc" do
           subject
@@ -56,6 +60,11 @@ RSpec.describe "TweetedDates", type: :request do
             [
               {
                 "2019": [
+                  { "12": ["31", "3", "1"] }
+                ]
+              },
+              {
+                "2018": [
                   { "12": ["31", "3", "1"] }
                 ]
               }
@@ -70,7 +79,6 @@ RSpec.describe "TweetedDates", type: :request do
           create(:status, tweeted_at: Time.zone.local(2019, 12, 31).to_i, tweet_id: 2)
           create(:status, tweeted_at: Time.zone.local(2019, 12, 30).to_i, tweet_id: 3)
           create(:status, tweeted_at: Time.zone.local(2019, 12, 30).to_i, tweet_id: 4)
-          create(:status, tweeted_at: Time.zone.local(2019, 11, 30).to_i, tweet_id: 5)
         end
         it "treats duplicating dates as one" do
           subject
@@ -78,8 +86,26 @@ RSpec.describe "TweetedDates", type: :request do
             [
               {
                 "2019": [
-                  { "12": ["31", "30"] },
-                  { "11": ["30"] }
+                  { "12": ["31", "30"] }
+                ]
+              }
+            ]
+          )
+        end
+      end
+
+      describe "only public statuses are included" do
+        before do
+          create(:status, private_flag: true,  tweeted_at: Time.zone.local(2019, 12, 31).to_i)
+          create(:status, private_flag: false, tweeted_at: Time.zone.local(2019, 12, 30).to_i)
+        end
+        it do
+          subject
+          expect(response.parsed_body.map(&:deep_symbolize_keys)).to eq(
+            [
+              {
+                "2019": [
+                  { "12": ["30"] }
                 ]
               }
             ]
