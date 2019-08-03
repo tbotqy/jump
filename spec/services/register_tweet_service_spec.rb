@@ -37,7 +37,7 @@ describe RegisterTweetService do
           retweet_count:           tweet.retweet_count,
           tweeted_at:              tweeted_at,
           tweeted_at_reversed:     -1 * tweeted_at,
-          tweeted_on:              Time.at(tweet.created_at.to_i).utc.to_date,
+          tweeted_on:              Time.zone.at(tweet.created_at.to_i).to_date,
           source:                  tweet.source,
           text:                    tweet.text,
           possibly_sensitive:      tweet.possibly_sensitive?,

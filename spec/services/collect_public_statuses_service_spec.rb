@@ -47,7 +47,7 @@ describe CollectPublicStatusesService do
         describe "yearly search" do
           describe "it only returns the statuses that have been tweeted at or before the end of specified year" do
             # pre-register user's statuses
-            let(:boundary_time) { Time.local(year).end_of_year }
+            let(:boundary_time) { Time.zone.local(year).end_of_year }
             include_context "there are 3 public statuses tweeted around the boundary_time"
 
             let(:year)  { 2019 }
@@ -62,7 +62,7 @@ describe CollectPublicStatusesService do
         describe "monthly search" do
           describe "it only returns the statuses that have been tweeted (at or before) the end of specified month" do
             # pre-register user's statuses
-            let(:boundary_time) { Time.local(year, month).end_of_month }
+            let(:boundary_time) { Time.zone.local(year, month).end_of_month }
             include_context "there are 3 public statuses tweeted around the boundary_time"
 
             let(:year)  { 2019 }
@@ -77,7 +77,7 @@ describe CollectPublicStatusesService do
         describe "daily search" do
           describe "it only returns the statuses that have been tweeted (at or before) the end of specified day" do
             # pre-register user's statuses
-            let(:boundary_time) { Time.local(year, month, day).end_of_day }
+            let(:boundary_time) { Time.zone.local(year, month, day).end_of_day }
             include_context "there are 3 public statuses tweeted around the boundary_time"
 
             let(:year)  { 2019 }
@@ -95,7 +95,7 @@ describe CollectPublicStatusesService do
           # Register the statuses tweeted in ending of the specified date.
           # To test if the sort is applied, registering in random order, by using #shuffle.
           (1..15).to_a.shuffle.each do |seconds_ago|
-            tweeted_at = (Time.local(year, month, day).end_of_day - seconds_ago.seconds).to_i
+            tweeted_at = (Time.zone.local(year, month, day).end_of_day - seconds_ago.seconds).to_i
             create(:status, text: "#{seconds_ago}th-new status", private_flag: false, tweeted_at: tweeted_at)
           end
         end
@@ -147,7 +147,7 @@ describe CollectPublicStatusesService do
         let(:day)   { 20 }
         let(:page)  { 1 }
 
-        let(:specified_time)    { Time.local(year, month, day).end_of_day }
+        let(:specified_time)    { Time.zone.local(year, month, day).end_of_day }
         let!(:public_statuses)  { (1..3).to_a.map { |i| create(:status, private_flag: false, tweeted_at: specified_time.to_i, tweet_id: i) } }
         let!(:private_statuses) { (4..6).to_a.map { |i| create(:status, private_flag: true,  tweeted_at: specified_time.to_i, tweet_id: i) } }
 
@@ -162,7 +162,7 @@ describe CollectPublicStatusesService do
         let(:day)     { nil }
         let(:page)    { nil }
 
-        before { travel_to(Time.now.utc) }
+        before { travel_to(Time.current) }
         after  { travel_back }
 
         let(:expected_per_page) { 10 }
@@ -170,12 +170,12 @@ describe CollectPublicStatusesService do
         let!(:statuses) do
           # register statuses from newest to oldest
           (0..).first(expected_per_page + 1).map do |seconds_ago|
-            tweeted_at = Time.now.utc - seconds_ago.seconds
+            tweeted_at = Time.current - seconds_ago.seconds
             create(:status, tweeted_at: tweeted_at.to_i)
           end
         end
 
-        it "returns at most 10 of the statuses tweeted before or eq to Time.now" do
+        it "returns at most 10 of the statuses tweeted before or eq to Time.current" do
           is_expected.to contain_exactly(*statuses.first(expected_per_page))
         end
       end
