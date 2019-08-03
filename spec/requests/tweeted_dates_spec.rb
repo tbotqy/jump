@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe "Statuses::Dates", type: :request do
-  describe "GET /statuses/dates" do
-    subject { get statuses_dates_path }
+RSpec.describe "TweetedDates", type: :request do
+  describe "GET /tweeted_dates" do
+    subject { get tweeted_dates_path }
 
     describe "no authentication required" do
       before do
