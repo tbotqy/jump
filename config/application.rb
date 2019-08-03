@@ -46,6 +46,7 @@ module Jump
       g.javascripts     false
       g.stylesheets     false
       g.helper          false
+      g.decorator       false
       g.test_framework  :rspec,
         fixtures:            true,
         fixture_replacement: :factory_bot,
