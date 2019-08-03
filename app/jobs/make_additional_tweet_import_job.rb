@@ -45,7 +45,7 @@ class MakeAdditionalTweetImportJob < ApplicationJob
     end
 
     def finalize!
-      user.update!(statuses_updated_at: Time.now.utc.to_i)
+      user.update!(statuses_updated_at: Time.current.to_i)
       ActiveStatusCount.increment_by(imported_tweets.count)
     end
 

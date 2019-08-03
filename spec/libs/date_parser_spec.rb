@@ -79,15 +79,15 @@ describe DateParser do
     end
 
     shared_examples "returns end of given day" do
-      it { is_expected.to eq Time.local(year, month, day).end_of_day }
+      it { is_expected.to eq Time.zone.local(year, month, day).end_of_day }
     end
 
     shared_examples "returns end of given month" do
-      it { is_expected.to eq Time.local(year, month).end_of_month }
+      it { is_expected.to eq Time.zone.local(year, month).end_of_month }
     end
 
     shared_examples "returns end of given year" do
-      it { is_expected.to eq Time.local(year).end_of_year }
+      it { is_expected.to eq Time.zone.local(year).end_of_year }
     end
 
     context "year: 2019" do

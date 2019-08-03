@@ -92,7 +92,7 @@ RSpec.describe "Users::Statuses", type: :request do
                   let(:user) { create(:user) }
 
                   # pre-register user's statuses
-                  let(:boundary_time) { Time.local(year).end_of_year }
+                  let(:boundary_time) { Time.zone.local(year).end_of_year }
                   include_context "user has 3 statuses tweeted around the boundary_time"
 
                   let(:user_id) { user.id }
@@ -115,7 +115,7 @@ RSpec.describe "Users::Statuses", type: :request do
                   let(:user) { create(:user) }
 
                   # pre-register user's statuses
-                  let(:boundary_time) { Time.local(year, month).end_of_month }
+                  let(:boundary_time) { Time.zone.local(year, month).end_of_month }
                   include_context "user has 3 statuses tweeted around the boundary_time"
 
                   let(:user_id) { user.id }
@@ -138,7 +138,7 @@ RSpec.describe "Users::Statuses", type: :request do
                   let(:user) { create(:user) }
 
                   # pre-register user's statuses
-                  let(:boundary_time) { Time.local(year, month, day).end_of_day }
+                  let(:boundary_time) { Time.zone.local(year, month, day).end_of_day }
                   include_context "user has 3 statuses tweeted around the boundary_time"
 
                   let(:user_id) { user.id }
@@ -164,7 +164,7 @@ RSpec.describe "Users::Statuses", type: :request do
                 # Register the statuses tweeted in ending of the specified date.
                 # To test if the sort is applied, registering in random order, by using #shuffle.
                 (1..15).to_a.shuffle.map do |seconds_ago|
-                  tweeted_at = Time.now.utc.end_of_day - seconds_ago.seconds
+                  tweeted_at = Time.current.end_of_day - seconds_ago.seconds
                   create(:status, user: user, text: "#{seconds_ago}th-new status", tweeted_at: tweeted_at.to_i)
                 end
 
@@ -265,7 +265,7 @@ RSpec.describe "Users::Statuses", type: :request do
                   expect(response.parsed_body.first.deep_symbolize_keys).to include(
                     tweet_id:   user_status.tweet_id,
                     text:       user_status.text,
-                    tweeted_at: Time.at(user_status.tweeted_at).in_time_zone.iso8601,
+                    tweeted_at: Time.zone.at(user_status.tweeted_at).iso8601,
                     is_retweet: user_status.is_retweet,
                     entities:   user_status.entities.as_json,
                     user:       user_status.user.as_json
@@ -310,7 +310,7 @@ RSpec.describe "Users::Statuses", type: :request do
 
               before do
                 sign_in user
-                travel_to(Time.now.utc)
+                travel_to(Time.current)
               end
               after { travel_back }
 
@@ -319,12 +319,12 @@ RSpec.describe "Users::Statuses", type: :request do
               let!(:user_statuses) do
                 # register statuses from newest to oldest
                 (0..).first(expected_per_page + 1).map do |seconds_ago|
-                  tweeted_at = Time.now.utc - seconds_ago.seconds
+                  tweeted_at = Time.current - seconds_ago.seconds
                   create(:status, user: user, tweeted_at: tweeted_at.to_i)
                 end
               end
 
-              it "returns at most 10 of the statuses tweeted before or eq to Time.now" do
+              it "returns at most 10 of the statuses tweeted before or eq to Time.current" do
                 subject
                 expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*user_statuses.first(expected_per_page).map(&:as_json))
               end

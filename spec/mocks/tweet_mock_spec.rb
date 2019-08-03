@@ -8,7 +8,7 @@ describe TweetMock do
   describe "tweet_mock" do
     subject { tweet_mock(twitter_account_id: twitter_account_id, **attrs) }
 
-    before { travel_to(Time.now.utc) }
+    before { travel_to(Time.current) }
     after  { travel_back }
 
     describe "default state" do

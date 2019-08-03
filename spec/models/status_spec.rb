@@ -109,7 +109,7 @@ RSpec.describe Status, type: :model do
 
     context "statuses are tweeted at the different times" do
       before do
-        now = Time.now.utc.to_i
+        now = Time.current.to_i
         create(:status, tweet_id: 1, tweeted_at: now - 4.seconds)
         create(:status, tweet_id: 2, tweeted_at: now - 3.seconds)
         create(:status, tweet_id: 3, tweeted_at: now - 2.seconds)
@@ -121,7 +121,7 @@ RSpec.describe Status, type: :model do
     end
     context "statuses are tweeted at the same time" do
       before do
-        now = Time.now.utc.to_i
+        now = Time.current.to_i
         [2, 4, 1, 5, 3].each do |tweet_id|
           create(:status, tweet_id: tweet_id, tweeted_at: now)
         end
@@ -134,13 +134,13 @@ RSpec.describe Status, type: :model do
   describe ".tweeted_at_or_before" do
     subject { Status.tweeted_at_or_before(targeting_time) }
     context "no record matches" do
-      let(:targeting_time)                { Time.local(2019, 3, 1).beginning_of_day }
+      let(:targeting_time)                { Time.zone.local(2019, 3, 1).beginning_of_day }
       let!(:tweeted_after_targeting_time) { create(:status, tweeted_at: targeting_time.to_i + 1) }
       it { is_expected.to be_none }
       it_behaves_like "a scope"
     end
     context "some records match" do
-      let(:targeting_time)                 { Time.local(2019, 3, 1).beginning_of_day }
+      let(:targeting_time)                 { Time.zone.local(2019, 3, 1).beginning_of_day }
       let!(:tweeted_before_targeting_time) { create(:status, tweeted_at: targeting_time.to_i - 1) }
       let!(:tweeted_at_targeting_time)     { create(:status, tweeted_at: targeting_time.to_i) }
       let!(:tweeted_after_targeting_time)  { create(:status, tweeted_at: targeting_time.to_i + 1) }
@@ -160,13 +160,13 @@ RSpec.describe Status, type: :model do
       end
       describe "black box test" do
         context "there are some statuses tweeted at the different times" do
-          let!(:now) { Time.now.utc.to_i }
+          let!(:now) { Time.current.to_i }
           let!(:status_with_bigger_tweet_id)  { create(:status, tweet_id: 2, tweeted_at: now) }
           let!(:status_with_smaller_tweet_id) { create(:status, tweet_id: 1, tweeted_at: now - 1.seconds) }
           it_behaves_like "returns the tweet_id of the status whose tweet_id is bigger than the other's"
         end
         context "there are some statuses tweeted at the same time" do
-          let!(:now) { Time.now.utc.to_i }
+          let!(:now) { Time.current.to_i }
           let!(:status_with_bigger_tweet_id)  { create(:status, tweet_id: 2, tweeted_at: now) }
           let!(:status_with_smaller_tweet_id) { create(:status, tweet_id: 1, tweeted_at: now) }
           it_behaves_like "returns the tweet_id of the status whose tweet_id is bigger than the other's"
@@ -175,7 +175,7 @@ RSpec.describe Status, type: :model do
     end
 
     describe "user scope can be applied" do
-      let!(:now) { Time.now.utc.to_i }
+      let!(:now) { Time.current.to_i }
       let!(:user_with_some_statuses)       { create(:user) }
       let!(:the_most_recent_status)        { create(:status, user: user_with_some_statuses, tweeted_at: now,            tweet_id: 2) }
       let!(:second_the_most_recent_status) { create(:status, user: user_with_some_statuses, tweeted_at: now - 1.second, tweet_id: 1) }
@@ -197,7 +197,7 @@ RSpec.describe Status, type: :model do
     subject { status.as_json }
     let(:tweet_id)   { 12345 }
     let(:text)       { "text" }
-    let(:tweeted_at) { Time.local(2019, 3, 1).to_i }
+    let(:tweeted_at) { Time.zone.local(2019, 3, 1).to_i }
     let(:is_retweet) { false }
 
     let!(:status) { create(:status, tweet_id: tweet_id, text: text, tweeted_at: tweeted_at, is_retweet: is_retweet) }
@@ -207,7 +207,7 @@ RSpec.describe Status, type: :model do
         is_expected.to include(
           tweet_id:   tweet_id,
           text:       text,
-          tweeted_at: Time.at(tweeted_at),
+          tweeted_at: Time.zone.at(tweeted_at),
           is_retweet: is_retweet,
           entities:   [],
           user:       status.user.as_json
@@ -221,7 +221,7 @@ RSpec.describe Status, type: :model do
         is_expected.to include(
           tweet_id:   tweet_id,
           text:       text,
-          tweeted_at: Time.at(tweeted_at),
+          tweeted_at: Time.zone.at(tweeted_at),
           is_retweet: is_retweet,
           entities:   status.entities.as_json,
           user:       status.user.as_json

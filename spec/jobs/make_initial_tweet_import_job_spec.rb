@@ -133,9 +133,9 @@ RSpec.describe MakeInitialTweetImportJob, type: :job do
                         is_expected.to change { ActiveStatusCount.current_count }.by(tweet_mocks.count)
                       end
                       describe "updates timestamp" do
-                        before { travel_to(Time.now.utc) }
+                        before { travel_to(Time.current) }
                         after  { travel_back }
-                        it { is_expected.to change { User.find(user_id).statuses_updated_at }.from(nil).to(Time.now.utc.to_i) }
+                        it { is_expected.to change { User.find(user_id).statuses_updated_at }.from(nil).to(Time.current.to_i) }
                       end
                     end
 

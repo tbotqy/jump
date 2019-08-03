@@ -127,8 +127,8 @@ RSpec.describe MakeAdditionalTweetImportJob, type: :job do
               context "fails to update timestamp" do
                 include_context "user has 2 registered tweets and 10 unregistered tweets"
                 before do
-                  travel_to(Time.now.utc)
-                  allow_any_instance_of(User).to receive(:update!).with(statuses_updated_at: Time.now.utc.to_i).and_raise(ActiveRecord::RecordInvalid)
+                  travel_to(Time.current)
+                  allow_any_instance_of(User).to receive(:update!).with(statuses_updated_at: Time.current.to_i).and_raise(ActiveRecord::RecordInvalid)
                 end
                 after { travel_back }
                 it { is_expected.to raise_error(ActiveRecord::RecordInvalid) }
@@ -158,9 +158,9 @@ RSpec.describe MakeAdditionalTweetImportJob, type: :job do
                     is_expected.to change { ActiveStatusCount.current_count }.by(unregistered_tweets_count)
                   end
                   describe "updates timestamp" do
-                    before { travel_to(Time.now.utc) }
+                    before { travel_to(Time.current) }
                     after  { travel_back }
-                    it { is_expected.to change { User.find(user_id).statuses_updated_at }.to(Time.now.utc.to_i) }
+                    it { is_expected.to change { User.find(user_id).statuses_updated_at }.to(Time.current.to_i) }
                   end
                   it_behaves_like "the job lock is once acquired"
                   it_behaves_like "doesn't leave the job locked"

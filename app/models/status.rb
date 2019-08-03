@@ -46,7 +46,7 @@ class Status < ApplicationRecord
     {
       tweet_id:   tweet_id,
       text:       text,
-      tweeted_at: Time.at(tweeted_at).in_time_zone.iso8601,
+      tweeted_at: Time.zone.at(tweeted_at).iso8601,
       is_retweet: is_retweet,
       entities:   entities.as_json, # TODO: replace with urls.
       user:       user.as_json
