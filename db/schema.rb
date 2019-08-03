@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_03_223053) do
+ActiveRecord::Schema.define(version: 2019_08_03_230129) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2019_08_03_223053) do
     t.bigint "user_id", null: false
     t.bigint "twitter_id", null: false
     t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id", "twitter_id"], name: "index_followees_on_user_id_and_twitter_id", unique: true
   end
 
