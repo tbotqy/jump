@@ -27,6 +27,7 @@ gem "devise"
 gem "sentry-raven"
 gem "kaminari"
 gem "ruby-progressbar"
+gem "draper"
 
 group :development do
   gem "rails-erd"
