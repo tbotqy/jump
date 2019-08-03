@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     scope module: :users do
       resources :statuses,              only: %i|index create|
       put "statuses",                   to: "statuses#update"
+      resources :tweeted_dates,         only: %i|index|
       resources :followees,             only: %i|create|
       resources :followee_statuses,     only: %i|index|
       resource  :tweet_import_progress, only: %i|show|
