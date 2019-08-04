@@ -135,12 +135,12 @@ jobs:
 
 workflows:
   version: 2
-  #frontend:
-    #jobs:
-      #- lint_frontend
-      #- build_frontend:
-          #requires:
-            #- lint_frontend
+  frontend:
+    jobs:
+      - lint_frontend
+      - build_frontend:
+          requires:
+            - lint_frontend
   backend:
     jobs:
       - lint_backend
