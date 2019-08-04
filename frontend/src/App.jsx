@@ -9,7 +9,13 @@ import Timeline from "./components/Timeline.jsx";
 import DataManagement from "./components/DataManagement";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
 
-const theme = responsiveFontSizes(createMuiTheme());
+const theme = responsiveFontSizes(createMuiTheme({
+  palette:{
+    background:{
+      default: "white"
+    }
+  }
+}));
 
 class App extends React.Component {
   render() {
