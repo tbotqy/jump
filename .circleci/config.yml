@@ -135,21 +135,9 @@ jobs:
 
 workflows:
   version: 2
-  #frontend:
-    #jobs:
-      #- lint_frontend
-      #- build_frontend:
-          #requires:
-            #- lint_frontend
-  backend:
+  frontend:
     jobs:
-      - lint_backend
-      - build_backend:
+      - lint_frontend
+      - build_frontend:
           requires:
-            - lint_backend
-      - deploy:
-          requires:
-            - build_backend
-          filters:
-            branches:
-              only: master
+            - lint_frontend
