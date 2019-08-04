@@ -32,7 +32,7 @@ const styles = (theme) => ({
 class TweetCard extends React.Component {
   render() {
     return (
-      <Card>
+      <Card elevation={ 0 }>
         <CardHeader
           avatar={
             <IconButton href="https://twitter.com/TwitterJP" target="_blank">
