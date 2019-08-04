@@ -1,7 +1,10 @@
 import React from "react";
 import {
   Grid,
-  Container
+  Container,
+  List,
+  ListItem,
+  ListSubheader
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import HeadNav from "./HeadNav";
@@ -10,7 +13,9 @@ import Selector from "./timeline/Selector";
 
 const styles = theme => ({
   container: {
-    paddingTop: theme.spacing(3)
+    paddingTop:   theme.spacing(3),
+    paddingLeft:  theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   dateSelectorContainer: {
     position: "sticky",
@@ -37,13 +42,13 @@ class Timeline extends React.Component {
         <Container className={ this.classes.container }>
           <Grid container justify="center">
             <Grid item lg={ 8 }>
-              <Grid container direction="column" spacing={ 3 }>
+              <List subheader={ <ListSubheader disableSticky>2019年8月10日頃のあなたのツイート</ListSubheader> }>
                 { this.tweets.map((tweet, index) => (
-                  <Grid item key={ index }>
+                  <ListItem divider disableGutters key={ index }>
                     <TweetCard key={ index } tweet={ tweet } />
-                  </Grid>
+                  </ListItem>
                 )) }
-              </Grid>
+              </List>
             </Grid>
           </Grid>
 
