@@ -28,6 +28,7 @@ gem "sentry-raven"
 gem "kaminari"
 gem "ruby-progressbar"
 gem "draper"
+gem "rack-cors"
 
 group :development do
   gem "rails-erd"
