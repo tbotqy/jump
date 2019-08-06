@@ -7,7 +7,6 @@ import {
 
 function Selector(props) {
   const [ anchorEl, setAnchorEl ] = React.useState(null);
-  const [ value, setValue ] = React.useState(props.initialValue);
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);
@@ -19,19 +18,13 @@ function Selector(props) {
 
   function handleSelect(value) {
     setAnchorEl(null);
-    setValue(value);
+    props.otherSelectorUpdater(value);
   }
 
   return (
     <React.Fragment>
-      <Fab variant="extended" color="primary" onClick={ handleClick }>{ value || "-" }</Fab>
+      <Fab variant="extended" color="primary" onClick={ handleClick }>{ props.selectedValue }</Fab>
       <Menu anchorEl={ anchorEl } open={ Boolean(anchorEl) } onClose={ handleClose }>
-        {
-          !props.disableNullValue &&
-          <MenuItem onClick={ () => handleSelect(null) }>
-            <em>未指定</em>
-          </MenuItem>
-        }
         { props.selections.map((selection, i) => (
           <MenuItem key={ i } onClick={ () => handleSelect(selection) } >
             { selection }

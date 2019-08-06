@@ -5,9 +5,9 @@ import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import Top from "./components/Top";
 import Import from "./components/Import";
-import Timeline from "./components/Timeline.jsx";
 import DataManagement from "./components/DataManagement";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
+import PublicTimeline from "./components/PublicTimeline";
 
 const theme = responsiveFontSizes(createMuiTheme({
   palette:{
@@ -29,9 +29,9 @@ class App extends React.Component {
             path="/statuses/import"
             render={ () => <Import screenName="screen_name" /> }
           />
-          <Route exact path="/public_timeline" component={ Timeline } />
-          <Route exact path="/user_timeline" component={ Timeline } />
-          <Route exact path="/home_timeline" component={ Timeline } />
+          <Route exact path="/public_timeline" component={ PublicTimeline } />
+          <Route exact path="/user_timeline" component={ PublicTimeline } />
+          <Route exact path="/home_timeline" component={ PublicTimeline } />
           <Route exact path="/data" component={ DataManagement } />
           <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
         </ThemeProvider>
