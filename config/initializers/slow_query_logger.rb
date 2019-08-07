@@ -1,5 +1,5 @@
 class SlowQueryLogger
-  MAX_DURATION = 0.0
+  MAX_DURATION = 1.0
 
   def self.initialize!
     ActiveSupport::Notifications.subscribe('sql.active_record') do |name, start, finish, id, payload|
