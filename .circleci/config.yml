@@ -22,7 +22,7 @@ anchors:
   save_backend_cache: &save_backend_cache
     - save_cache:
         paths:
-          - ./vendor/bundle
+          - vendor/bundle
         key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
   # for frontend
@@ -42,7 +42,7 @@ anchors:
   save_frontend_cache: &save_frontend_cache
     - save_cache:
         paths:
-          - ./frontend/node_modules
+          - frontend/node_modules
         key: v1-dependencies-{{ checksum "frontend/yarn.lock" }}
 
 jobs:
