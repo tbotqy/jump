@@ -308,23 +308,20 @@ RSpec.describe "Users::Statuses", type: :request do
               let(:day)     { nil }
               let(:page)    { nil }
 
-              before do
-                sign_in user
-                travel_to(Time.current)
-              end
-              after { travel_back }
+              before { sign_in user }
 
               let(:expected_per_page) { 10 }
 
               let!(:user_statuses) do
                 # register statuses from newest to oldest
+                now = Time.current
                 (0..).first(expected_per_page + 1).map do |seconds_ago|
-                  tweeted_at = Time.current - seconds_ago.seconds
+                  tweeted_at = now - seconds_ago.seconds
                   create(:status, user: user, tweeted_at: tweeted_at.to_i)
                 end
               end
 
-              it "returns at most 10 of the statuses tweeted before or eq to Time.current" do
+              it "returns at most 10 of the statuses" do
                 subject
                 expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*user_statuses.first(expected_per_page).map(&:as_json))
               end
