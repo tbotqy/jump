@@ -63,7 +63,6 @@ jobs:
       - image: circleci/ruby:2.6.3-stretch
       - image: circleci/mysql:5.7
       - image: circleci/redis:4
-    working_directory: ~/repo
     steps:
       - checkout
       - <<: *restore_backend_cache
@@ -91,7 +90,6 @@ jobs:
   lint_frontend:
     docker:
       - <<: *frontend_docker_env
-    working_directory: ~/repo
     steps:
       - checkout
       - <<: *restore_frontend_cache
@@ -104,7 +102,6 @@ jobs:
   build_frontend:
     docker:
       - <<: *frontend_docker_env
-    working_directory: ~/repo
     steps:
       - checkout
       - <<: *restore_frontend_cache
@@ -117,7 +114,6 @@ jobs:
   deploy:
     docker:
       - image: circleci/ruby:2.6.3-stretch
-    working_directory: ~/repo
     steps:
       - checkout
       - add_ssh_keys:
