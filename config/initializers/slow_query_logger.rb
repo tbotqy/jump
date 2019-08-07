@@ -6,7 +6,7 @@ class SlowQueryLogger
       duration = finish.to_f - start.to_f
 
       if duration >= MAX_DURATION
-        message = "slow query detected: #{payload[:sql]}, duration: #{duration}, env: #{Rails.env}"
+        message = "env: `#{Rails.env}`, duration: `#{duration.floor(2)} sec`\n```#{payload[:sql]}```"
         NotifySlowQueryToSlackJob.perform_later(message: message)
       end
     end
