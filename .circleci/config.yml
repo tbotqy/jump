@@ -136,7 +136,9 @@ workflows:
       - lint_frontend:
           filters:
             branches:
-              ignore: master
+              ignore:
+                - master
+                - rebuild-frontend
       - build_frontend:
           requires:
             - lint_frontend
@@ -145,7 +147,9 @@ workflows:
       - lint_backend:
           filters:
             branches:
-              ignore: master
+              ignore:
+                - master
+                - rebuild-frontend
       - build_backend:
           requires:
             - lint_backend
