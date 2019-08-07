@@ -85,6 +85,7 @@ jobs:
                             $TEST_FILES
       - codecov/upload:
           file: /tmp/test-results/rspec.xml
+          flags: backend
 
   # for frontend
   lint_frontend:
