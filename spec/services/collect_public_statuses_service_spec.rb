@@ -162,20 +162,18 @@ describe CollectPublicStatusesService do
         let(:day)     { nil }
         let(:page)    { nil }
 
-        before { travel_to(Time.current) }
-        after  { travel_back }
-
         let(:expected_per_page) { 10 }
 
         let!(:statuses) do
           # register statuses from newest to oldest
+          now = Time.current
           (0..).first(expected_per_page + 1).map do |seconds_ago|
-            tweeted_at = Time.current - seconds_ago.seconds
+            tweeted_at = now - seconds_ago.seconds
             create(:status, tweeted_at: tweeted_at.to_i)
           end
         end
 
-        it "returns at most 10 of the statuses tweeted before or eq to Time.current" do
+        it "returns at most 10 of the statuses" do
           is_expected.to contain_exactly(*statuses.first(expected_per_page))
         end
       end

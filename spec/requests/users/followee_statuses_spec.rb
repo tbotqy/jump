@@ -403,19 +403,16 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
 
                 let!(:followee_statuses) do
                   # register statuses from newest to oldest
+                  now = Time.current
                   (0..).first(expected_per_page + 1).map do |seconds_ago|
-                    tweeted_at = Time.current - seconds_ago.seconds
+                    tweeted_at = now - seconds_ago.seconds
                     create(:status, user: followee, tweeted_at: tweeted_at.to_i)
                   end
                 end
 
-                before do
-                  sign_in user
-                  travel_to(Time.current)
-                end
-                after  { travel_back }
+                before { sign_in user }
 
-                it "returns at most 10 of the statuses tweeted before or eq to Time.current" do
+                it "returns at most 10 of the statuses" do
                   subject
                   expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*followee_statuses.first(expected_per_page).map(&:as_json))
                 end
