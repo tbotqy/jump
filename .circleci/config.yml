@@ -133,13 +133,19 @@ workflows:
   version: 2
   frontend:
     jobs:
-      - lint_frontend
+      - lint_frontend:
+          filters:
+            branches:
+              ignore: master
       - build_frontend:
           requires:
             - lint_frontend
   backend:
     jobs:
-      - lint_backend
+      - lint_backend:
+          filters:
+            branches:
+              ignore: master
       - build_backend:
           requires:
             - lint_backend
