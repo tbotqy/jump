@@ -38,8 +38,7 @@ module Jump
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
 
-    config.active_job.queue_adapter     = :sidekiq
-    config.active_job.queue_name_prefix = Rails.env
+    config.active_job.queue_adapter = :sidekiq
 
     config.generators do |g|
       g.template_engine false
