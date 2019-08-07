@@ -139,9 +139,7 @@ workflows:
               ignore:
                 - master
                 - rebuild-frontend
-      - build_frontend:
-          requires:
-            - lint_frontend
+      - build_frontend
   backend:
     jobs:
       - lint_backend:
@@ -150,9 +148,7 @@ workflows:
               ignore:
                 - master
                 - rebuild-frontend
-      - build_backend:
-          requires:
-            - lint_backend
+      - build_backend
       - deploy:
           requires:
             - build_backend
