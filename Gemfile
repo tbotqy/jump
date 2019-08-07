@@ -29,6 +29,7 @@ gem "kaminari"
 gem "ruby-progressbar"
 gem "draper"
 gem "rack-cors"
+gem "slack-notifier"
 
 group :development do
   gem "rails-erd"
