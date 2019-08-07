@@ -1,4 +1,4 @@
-class SlowQueryLogger
+class SlowQueryNotifier
   MAX_DURATION = 1.0
 
   def self.initialize!
@@ -13,4 +13,4 @@ class SlowQueryLogger
   end
 end
 
-SlowQueryLogger.initialize!
+SlowQueryNotifier.initialize!
