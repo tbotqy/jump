@@ -19,8 +19,7 @@ class PublicTimeline extends React.Component {
     super(props);
     this.state = {
       dates:  [],
-      tweets: [],
-      datesLoaded: false
+      tweets: []
     };
   }
 
@@ -28,7 +27,13 @@ class PublicTimeline extends React.Component {
     fetch("http://localhost:3000/tweeted_dates")
       .then( response => response.json() )
       .then( json => {
-        this.setState({ dates: json, datesLoaded: true });
+        this.setState({ dates: json });
+      });
+
+    fetch("http://localhost:3000/statuses")
+      .then( response => response.json() )
+      .then( json => {
+        this.setState({ tweets: json });
       });
   }
 
@@ -38,7 +43,7 @@ class PublicTimeline extends React.Component {
         <HeadNav />
         <Container className={ this.props.classes.container }>
           <TweetList tweets={ this.state.tweets } />
-          { this.state.datesLoaded && <DateSelectors dates={ this.state.dates } /> }
+          { this.state.dates.length > 0 && <DateSelectors dates={ this.state.dates } /> }
         </Container>
       </>
     );
