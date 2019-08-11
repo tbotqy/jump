@@ -195,37 +195,94 @@ RSpec.describe Status, type: :model do
 
   describe "#as_json" do
     subject { status.as_json }
-    let(:tweet_id)   { 12345 }
-    let(:text)       { "text" }
-    let(:tweeted_at) { Time.zone.local(2019, 3, 1).to_i }
-    let(:is_retweet) { false }
+    describe "top level attributes" do
+      context "status is not a retweet" do
+        let(:tweet_id)    { 12345 }
+        let(:text)        { "text" }
+        let!(:tweeted_at) { Time.current.to_i }
+        let(:is_retweet)  { false }
+        let!(:status) do
+          create(:status,
+            tweet_id:       tweet_id,
+            text:           text,
+            tweeted_at:     tweeted_at,
+            is_retweet:     is_retweet,
+            rt_avatar_url:  nil,
+            rt_name:        nil,
+            rt_screen_name: nil,
+            rt_text:        nil,
+            rt_source:      nil,
+            rt_created_at:  nil
+          )
+        end
 
-    let!(:status) { create(:status, tweet_id: tweet_id, text: text, tweeted_at: tweeted_at, is_retweet: is_retweet) }
-
-    context "status has no entity" do
-      it do
-        is_expected.to include(
-          tweet_id:   tweet_id,
-          text:       text,
-          tweeted_at: Time.zone.at(tweeted_at),
-          is_retweet: is_retweet,
-          entities:   [],
-          user:       status.user.as_json
-        )
+        it do
+          is_expected.to include(
+            tweet_id:       tweet_id,
+            text:           text,
+            tweeted_at:     Time.zone.at(tweeted_at).iso8601,
+            is_retweet:     is_retweet,
+          )
+        end
+        it do
+          is_expected.not_to include(
+            rt_name:        nil,
+            rt_screen_name: nil,
+            rt_text:        nil,
+            rt_source:      nil,
+            rt_created_at:  nil
+          )
+        end
+      end
+      context "status is a retweet" do
+        let(:tweet_id)       { 12345 }
+        let(:text)           { "text" }
+        let!(:tweeted_at)    { Time.current.to_i }
+        let(:is_retweet)     { true }
+        let(:rt_avatar_url)  { "rt_avatar_url" }
+        let(:rt_name)        { "rt_name" }
+        let(:rt_screen_name) { "rt_screen_name" }
+        let(:rt_text)        { "rt_text" }
+        let(:rt_source)      { "rt_source" }
+        let!(:rt_created_at) { (Time.current - 1.day).to_i }
+        let!(:status) do
+          create(:status,
+            tweet_id:       tweet_id,
+            text:           text,
+            tweeted_at:     tweeted_at,
+            is_retweet:     is_retweet,
+            rt_avatar_url:  rt_avatar_url,
+            rt_name:        rt_name,
+            rt_screen_name: rt_screen_name,
+            rt_text:        rt_text,
+            rt_source:      rt_source,
+            rt_created_at:  rt_created_at
+          )
+        end
+        it do
+          is_expected.to include(
+            tweet_id:       tweet_id,
+            text:           text,
+            tweeted_at:     Time.zone.at(tweeted_at).iso8601,
+            is_retweet:     is_retweet,
+            rt_name:        rt_name,
+            rt_screen_name: rt_screen_name,
+            rt_text:        rt_text,
+            rt_source:      rt_source,
+            rt_created_at:  Time.zone.at(rt_created_at).iso8601
+          )
+        end
       end
     end
 
-    context "status has some entities" do
-      let!(:entities) { create_list(:entity, 3, status: status) }
-      it do
-        is_expected.to include(
-          tweet_id:   tweet_id,
-          text:       text,
-          tweeted_at: Time.zone.at(tweeted_at),
-          is_retweet: is_retweet,
-          entities:   status.entities.as_json,
-          user:       status.user.as_json
-        )
+    describe "associations" do
+      describe "user" do
+        let!(:user)   { create(:user) }
+        let!(:status) { create(:status, user: user) }
+        it { is_expected.to include(user: user.as_json) }
+      end
+      describe "entities" do
+        pending "TODO: specify"
       end
     end
   end

@@ -43,13 +43,24 @@ class Status < ApplicationRecord
   end
 
   def as_json(_options = {})
-    {
-      tweet_id:   tweet_id,
-      text:       text,
-      tweeted_at: Time.zone.at(tweeted_at).iso8601,
-      is_retweet: is_retweet,
-      entities:   entities.as_json, # TODO: replace with urls.
-      user:       user.as_json
+    ret = {
+      tweet_id:       tweet_id,
+      text:           text,
+      tweeted_at:     Time.zone.at(tweeted_at).iso8601,
+      is_retweet:     is_retweet,
+      entities:       entities.as_json, # TODO: replace with urls.
+      user:           user.as_json
     }
+    if is_retweet?
+      ret.merge!(
+        rt_avatar_url:  rt_avatar_url,
+        rt_name:        rt_name,
+        rt_screen_name: rt_screen_name,
+        rt_text:        rt_text,
+        rt_source:      rt_source,
+        rt_created_at:  Time.zone.at(rt_created_at).iso8601,
+      )
+    end
+    ret
   end
 end
