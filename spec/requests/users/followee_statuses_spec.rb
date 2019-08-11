@@ -322,33 +322,101 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                   create(:followee, user: user, twitter_id: followee.twitter_id)
                   followee
                 end
-                let!(:followee_status) { create(:status, user: followee) }
+                before { sign_in user }
+                describe "top level attribute" do
+                  context "status is not a retweet" do
+                    let(:tweet_id)    { 12345 }
+                    let(:text)        { "text" }
+                    let!(:tweeted_at) { Time.current.to_i }
+                    let(:is_retweet)  { false }
+                    let!(:status) do
+                      create(:status,
+                        user:           followee,
+                        tweet_id:       tweet_id,
+                        text:           text,
+                        tweeted_at:     tweeted_at,
+                        is_retweet:     is_retweet,
+                        rt_avatar_url:  nil,
+                        rt_name:        nil,
+                        rt_screen_name: nil,
+                        rt_text:        nil,
+                        rt_source:      nil,
+                        rt_created_at:  nil
+                      )
+                    end
 
-                before do
-                  sign_in user
-                  subject
-                end
-
-                describe "keys" do
-                  it do
-                    expect(response.parsed_body.first.keys).to contain_exactly(
-                      "tweet_id", "text", "tweeted_at", "is_retweet", "entities", "user"
-                    )
+                    it do
+                      subject
+                      expect(response.parsed_body.first.deep_symbolize_keys).to include(
+                        tweet_id:       tweet_id,
+                        text:           text,
+                        tweeted_at:     Time.zone.at(tweeted_at).iso8601,
+                        is_retweet:     is_retweet,
+                      )
+                    end
+                    it do
+                      subject
+                      expect(response.parsed_body.first.deep_symbolize_keys).not_to include(
+                        rt_name:        nil,
+                        rt_screen_name: nil,
+                        rt_text:        nil,
+                        rt_source:      nil,
+                        rt_created_at:  nil
+                      )
+                    end
+                  end
+                  context "status is a retweet" do
+                    let(:tweet_id)       { 12345 }
+                    let(:text)           { "text" }
+                    let!(:tweeted_at)    { Time.current.to_i }
+                    let(:is_retweet)     { true }
+                    let(:rt_avatar_url)  { "rt_avatar_url" }
+                    let(:rt_name)        { "rt_name" }
+                    let(:rt_screen_name) { "rt_screen_name" }
+                    let(:rt_text)        { "rt_text" }
+                    let(:rt_source)      { "rt_source" }
+                    let!(:rt_created_at) { (Time.current - 1.day).to_i }
+                    let!(:status) do
+                      create(:status,
+                        user:           followee,
+                        tweet_id:       tweet_id,
+                        text:           text,
+                        tweeted_at:     tweeted_at,
+                        is_retweet:     is_retweet,
+                        rt_avatar_url:  rt_avatar_url,
+                        rt_name:        rt_name,
+                        rt_screen_name: rt_screen_name,
+                        rt_text:        rt_text,
+                        rt_source:      rt_source,
+                        rt_created_at:  rt_created_at
+                      )
+                    end
+                    it do
+                      subject
+                      expect(response.parsed_body.first.deep_symbolize_keys).to include(
+                        tweet_id:       tweet_id,
+                        text:           text,
+                        tweeted_at:     Time.zone.at(tweeted_at).iso8601,
+                        is_retweet:     is_retweet,
+                        rt_name:        rt_name,
+                        rt_screen_name: rt_screen_name,
+                        rt_text:        rt_text,
+                        rt_source:      rt_source,
+                        rt_created_at:  Time.zone.at(rt_created_at).iso8601
+                      )
+                    end
                   end
                 end
-                describe "value of attr 'entities'" do
-                  xit "TODO: implement"
-                end
-                describe "values" do
-                  it do
-                    expect(response.parsed_body.first.deep_symbolize_keys).to include(
-                      tweet_id:   followee_status.tweet_id,
-                      text:       followee_status.text,
-                      tweeted_at: Time.zone.at(followee_status.tweeted_at).iso8601,
-                      is_retweet: followee_status.is_retweet,
-                      entities:   followee_status.entities.as_json,
-                      user:       followee_status.user.as_json
-                    )
+                describe "associations" do
+                  describe "user" do
+                    let!(:status) { create(:status, user: followee) }
+                    it do
+                      subject
+                      expect(response.parsed_body.first.deep_symbolize_keys).to include(user: followee.as_json)
+                    end
+                  end
+                  describe "entities" do
+                    pending "TODO: specify"
                   end
                 end
               end
