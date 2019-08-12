@@ -15,7 +15,8 @@ RSpec.describe TwitterClient do
         since_id:    since_id,
         max_id:      max_id,
         include_rts: true,
-        count:       200
+        count:       200,
+        tweet_mode:  :extended
       }.compact
     end
 
