@@ -44,7 +44,7 @@ class Status < ApplicationRecord
 
   def as_json(_options = {})
     ret = {
-      tweet_id:       tweet_id,
+      tweet_id:       tweet_id.to_s,
       text:           text,
       tweeted_at:     Time.zone.at(tweeted_at).iso8601,
       is_retweet:     is_retweet,

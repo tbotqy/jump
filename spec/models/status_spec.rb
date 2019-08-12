@@ -218,7 +218,7 @@ RSpec.describe Status, type: :model do
 
         it do
           is_expected.to include(
-            tweet_id:       tweet_id,
+            tweet_id:       tweet_id.to_s,
             text:           text,
             tweeted_at:     Time.zone.at(tweeted_at).iso8601,
             is_retweet:     is_retweet,
@@ -261,7 +261,7 @@ RSpec.describe Status, type: :model do
         end
         it do
           is_expected.to include(
-            tweet_id:       tweet_id,
+            tweet_id:       tweet_id.to_s,
             text:           text,
             tweeted_at:     Time.zone.at(tweeted_at).iso8601,
             is_retweet:     is_retweet,

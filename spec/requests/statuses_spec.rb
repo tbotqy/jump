@@ -208,7 +208,7 @@ RSpec.describe "Statuses", type: :request do
             it do
               subject
               expect(response.parsed_body.first.deep_symbolize_keys).to include(
-                tweet_id:       tweet_id,
+                tweet_id:       tweet_id.to_s,
                 text:           text,
                 tweeted_at:     Time.zone.at(tweeted_at).iso8601,
                 is_retweet:     is_retweet,
@@ -253,7 +253,7 @@ RSpec.describe "Statuses", type: :request do
             it do
               subject
               expect(response.parsed_body.first.deep_symbolize_keys).to include(
-                tweet_id:       tweet_id,
+                tweet_id:       tweet_id.to_s,
                 text:           text,
                 tweeted_at:     Time.zone.at(tweeted_at).iso8601,
                 is_retweet:     is_retweet,
