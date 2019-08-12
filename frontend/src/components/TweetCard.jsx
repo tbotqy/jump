@@ -16,6 +16,7 @@ import {
   Favorite
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
+import formatDateString from "../../src/utils/DateFormatter";
 import TwitterLogo from "./../assets/twitter/logo.svg";
 
 const styles = (theme) => ({
@@ -47,7 +48,7 @@ function TweetCard(props) {
   const screenName  = props.screenName;
   const avatarUrl   = props.avatarUrl;
   const text        = props.text;
-  const tweetedAt   = props.tweetedAt;
+  const tweetedAt   = formatDateString(props.tweetedAt);
   const user        = props.user;
 
   return (
