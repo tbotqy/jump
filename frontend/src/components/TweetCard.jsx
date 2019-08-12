@@ -40,16 +40,16 @@ const styles = (theme) => ({
 
 
 function TweetCard(props) {
-  const classes     = props.classes;
+  const classes    = props.classes;
 
-  const isRetweet   = props.isRetweet;
-  const tweetId     = props.tweetId;
-  const name        = props.name;
-  const screenName  = props.screenName;
-  const avatarUrl   = props.avatarUrl;
-  const text        = props.text;
-  const tweetedAt   = formatDateString(props.tweetedAt);
-  const user        = props.user;
+  const isRetweet  = props.isRetweet;
+  const tweetId    = props.tweetId;
+  const name       = props.name;
+  const screenName = props.screenName;
+  const avatarUrl  = props.avatarUrl;
+  const text       = props.text;
+  const tweetedAt  = formatDateString(props.tweetedAt);
+  const user       = props.user;
 
   return (
     <Card elevation={ 0 } className={ classes.card } >
