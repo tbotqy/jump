@@ -40,7 +40,8 @@ class TwitterClient
         since_id:    after_id,
         max_id:      max_id,
         include_rts: true,
-        count:       TWEET_COUNT_PER_GET
+        count:       TWEET_COUNT_PER_GET,
+        tweet_mode:  :extended
       }.compact
     end
 

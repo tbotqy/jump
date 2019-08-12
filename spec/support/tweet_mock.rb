@@ -32,7 +32,7 @@ module TweetMock
         retweet_count:           10,
         created_at:              Time.now.utc,
         source:                  "rspec",
-        text:                    "default text",
+        attrs:                   { full_text: "default text" },
         possibly_sensitive?:     false,
         retweet?:                true,
         place:                   place_mock,
@@ -80,7 +80,7 @@ module TweetMock
 
     def retweeted_tweet_mock
       instance_double("Twitter::Tweet",
-        text: "rt text",
+        attrs: { full_text: "rt text" },
         source: "rt source",
         created_at: Time.now.utc,
         user: retweeted_tweet_user_mock

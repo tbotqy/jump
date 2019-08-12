@@ -24,7 +24,7 @@ describe TweetMock do
             retweet_count:           10,
             created_at:              Time.now.utc,
             source:                  "rspec",
-            text:                    "default text",
+            attrs:                   { full_text: "default text" },
             possibly_sensitive?:     false,
             retweet?:                true
           )
@@ -43,7 +43,7 @@ describe TweetMock do
         describe "#retweeted_tweet" do
           it do
             expect(subject.retweeted_tweet).to have_attributes(
-              text: "rt text",
+              attrs: { full_text: "rt text" },
               source: "rt source",
               created_at: Time.now.utc
             )
@@ -98,11 +98,11 @@ describe TweetMock do
     end
 
     describe "ability to overwrite attributes" do
-      context "tweet.text is being overwritten" do
+      context "tweet.attrs[:full_text] is being overwritten" do
         let(:twitter_account_id) { 8888 }
         let(:text) { "text to overwrite with" }
-        let(:attrs) { { text: text } }
-        it "exactly overwrites tweet.text" do
+        let(:attrs) { { attrs: { full_text: text } } }
+        it "exactly overwrites tweet.attrs[:text]" do
           is_expected.to have_attributes(
             id:                      100,
             in_reply_to_tweet_id:    1,
@@ -111,7 +111,7 @@ describe TweetMock do
             retweet_count:           10,
             created_at:              Time.now.utc,
             source:                  "rspec",
-            text:                    text,
+            attrs:                   { full_text: text },
             possibly_sensitive?:     false,
             retweet?:                true
           )

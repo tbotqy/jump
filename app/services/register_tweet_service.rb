@@ -42,7 +42,7 @@ class RegisterTweetService
           tweeted_at_reversed:     -1 * tweeted_at,
           tweeted_on:              tweet.created_at.to_date,
           source:                  tweet.source,
-          text:                    tweet.text,
+          text:                    tweet.attrs[:full_text],
           possibly_sensitive:      tweet.possibly_sensitive?,
           private_flag:            tweet.user.protected?,
           is_retweet:              tweet.retweet?
@@ -52,7 +52,7 @@ class RegisterTweetService
             rt_name:        retweeted_tweet.user.name,
             rt_screen_name: retweeted_tweet.user.screen_name,
             rt_avatar_url:  retweeted_tweet.user.profile_image_url_https.to_s,
-            rt_text:        retweeted_tweet.text,
+            rt_text:        retweeted_tweet.attrs[:full_text],
             rt_source:      retweeted_tweet.source,
             rt_created_at:  retweeted_tweet.created_at.to_i
           )

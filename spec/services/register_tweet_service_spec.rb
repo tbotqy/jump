@@ -39,14 +39,14 @@ describe RegisterTweetService do
           tweeted_at_reversed:     -1 * tweeted_at,
           tweeted_on:              Time.zone.at(tweet.created_at.to_i).to_date,
           source:                  tweet.source,
-          text:                    tweet.text,
+          text:                    tweet.attrs[:full_text],
           possibly_sensitive:      tweet.possibly_sensitive?,
           private_flag:            tweet.user.protected?,
           is_retweet:              tweet.retweet?,
           rt_name:                 retweeted_tweet.user.name,
           rt_screen_name:          retweeted_tweet.user.screen_name,
           rt_avatar_url:           retweeted_tweet.user.profile_image_url_https.to_s,
-          rt_text:                 retweeted_tweet.text,
+          rt_text:                 retweeted_tweet.attrs[:full_text],
           rt_source:               retweeted_tweet.source,
           rt_created_at:           retweeted_tweet.created_at.to_i
         )
@@ -128,7 +128,7 @@ describe RegisterTweetService do
     context "succeeds to identify the user with given tweet" do
       context "fails to create a status" do
         let!(:user) { create(:user) }
-        let(:tweet) { tweet_mock(twitter_account_id: user.twitter_id, text: "") }
+        let(:tweet) { tweet_mock(twitter_account_id: user.twitter_id, attrs: { full_text: "" }) }
         it_behaves_like "should raise RecordInvalid error"
         it_behaves_like "shouldn't create any record"
       end
