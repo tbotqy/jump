@@ -415,8 +415,22 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                       expect(response.parsed_body.first.deep_symbolize_keys).to include(user: followee.as_json)
                     end
                   end
-                  describe "entities" do
-                    pending "TODO: specify"
+                  describe "urls" do
+                    context "status has no url" do
+                      let!(:status) { create(:status, user: followee) }
+                      it do
+                        subject
+                        expect(response.parsed_body.first.deep_symbolize_keys).to include(urls: [])
+                      end
+                    end
+                    context "status has some urls" do
+                      let!(:status) { create(:status, user: followee) }
+                      let!(:urls)   { create_list(:url, 2, status: status) }
+                      it do
+                        subject
+                        expect(response.parsed_body.first.deep_symbolize_keys).to include(urls: urls.as_json)
+                      end
+                    end
                   end
                 end
               end

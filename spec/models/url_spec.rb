@@ -18,4 +18,20 @@ RSpec.describe Url, type: :model do
     end
     include_examples "validation on indices"
   end
+
+  describe "#as_json" do
+    subject { record.as_json }
+    let!(:record)     { create(:url, url: url, display_url: display_url, index_f: index_f, index_l: index_l) }
+    let(:url)         { "url" }
+    let(:display_url) { "display_url" }
+    let(:index_f)    { 1 }
+    let(:index_l)    { 10 }
+    it do
+      is_expected.to include(
+        url:         url,
+        display_url: display_url,
+        indices:     [index_f, index_l]
+      )
+    end
+  end
 end
