@@ -1,5 +1,8 @@
-import React          from "react";
-import { Container }  from "@material-ui/core";
+import React from "react";
+import {
+  Container,
+  LinearProgress
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import HeadNav       from "./HeadNav";
@@ -11,6 +14,9 @@ const styles = theme => ({
     paddingTop:   theme.spacing(3),
     paddingLeft:  theme.spacing(1),
     paddingRight: theme.spacing(1)
+  },
+  tweetListContainer: {
+    minHeight: "100vh"
   }
 });
 
@@ -42,7 +48,9 @@ class PublicTimeline extends React.Component {
       <>
         <HeadNav />
         <Container className={ this.props.classes.container }>
-          <TweetList tweets={ this.state.tweets } />
+          <div className={ this.props.classes.tweetListContainer }>
+            { this.state.tweets.length <= 0 ? <LinearProgress /> : <TweetList tweets={ this.state.tweets } /> }
+          </div>
           { this.state.dates.length > 0 && <DateSelectors dates={ this.state.dates } /> }
         </Container>
       </>
