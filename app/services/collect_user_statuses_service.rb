@@ -32,7 +32,7 @@ class CollectUserStatusesService
     end
 
     def fetch_user_statuses_all!
-      @collection = User.find(user_id).statuses.includes(:entities)
+      @collection = User.find(user_id).statuses.includes(:urls)
     end
 
     def scope_by_date

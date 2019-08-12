@@ -34,7 +34,7 @@ class CollectFolloweeStatusesService
     def fetch_followee_statuses_all!
       followees = User.where(twitter_id: User.find(user_id).followees.pluck(:twitter_id))
       raise Errors::NotFound, "User has no followee." unless followees.exists?
-      @collection = Status.where(user: followees).includes(:user, :entities)
+      @collection = Status.where(user: followees).includes(:user, :urls)
     end
 
     def scope_by_date

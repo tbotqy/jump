@@ -31,7 +31,7 @@ class CollectPublicStatusesService
     end
 
     def fetch_public_statuses_all
-      @collection = Status.not_private.includes(:user, :entities)
+      @collection = Status.not_private.includes(:user, :urls)
     end
 
     def scope_by_date
