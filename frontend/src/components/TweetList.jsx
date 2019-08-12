@@ -2,38 +2,49 @@ import React from "react";
 import {
   Grid,
   List,
-  ListItem,
-  LinearProgress
+  ListItem
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 import TweetCard from "./TweetCard";
 
-const styles = () => ({
-  container: {
-    minHeight: "100vh"
+const tweetCardPropsByTweet = tweet => {
+  const ret = {
+    tweetId:   tweet.tweet_id,
+    isRetweet: tweet.is_retweet,
+    tweetedAt: tweet.tweeted_at,
+    user:      tweet.user
+  };
+
+  if(tweet.is_retweet) {
+    return ({
+      ...ret,
+      name:       tweet.rt_name,
+      screenName: tweet.rt_screen_name,
+      avatarUrl:  tweet.rt_avatar_url,
+      text:       tweet.rt_text
+    });
+  }else{
+    return ({
+      ...ret,
+      name:       tweet.user.name,
+      screenName: tweet.user.screen_name,
+      avatarUrl:  tweet.user.avatar_url,
+      text:       tweet.text
+    });
   }
-});
-
-const loader = () => (
-  <LinearProgress />
-);
-
-const list = tweets => (
-  <List>
-    { tweets.map((tweet, index) => (
-      <ListItem divider disableGutters key={ index }>
-        <TweetCard key={ index } tweet={ tweet } />
-      </ListItem>
-    )) }
-  </List>
-);
+};
 
 const TweetList = props => (
-  <Grid container justify="center" className={ props.classes.container }>
+  <Grid container justify="center">
     <Grid item lg={ 8 }>
-      { props.tweets.length <= 0 ? loader() : list(props.tweets) }
+      <List>
+        { props.tweets.map((tweet, index) => (
+          <ListItem divider disableGutters key={ index }>
+            <TweetCard key={ index } { ...tweetCardPropsByTweet(tweet) } />
+          </ListItem>
+        )) }
+      </List>
     </Grid>
   </Grid>
 );
 
-export default withStyles(styles)(TweetList);
+export default TweetList;
