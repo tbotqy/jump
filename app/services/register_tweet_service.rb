@@ -24,8 +24,7 @@ class RegisterTweetService
 
     concerning :ParameterGeneration do
       attr_reader :tweet
-      delegate :hashtags, :urls, :media, to: :tweet, prefix: true
-      delegate :retweeted_tweet,         to: :tweet
+      delegate :retweeted_tweet, to: :tweet
 
       def status_params
         tweet_id   = tweet.id
@@ -61,6 +60,7 @@ class RegisterTweetService
       end
 
       def hashtag_params
+        tweet_hashtags = (tweet.retweet? ? retweeted_tweet : tweet).hashtags
         tweet_hashtags.map do |tweet_hashtag|
           {
             text:    tweet_hashtag.text,
@@ -71,6 +71,7 @@ class RegisterTweetService
       end
 
       def url_params
+        tweet_urls = (tweet.retweet? ? retweeted_tweet : tweet).urls
         tweet_urls.map do |tweet_url|
           {
             url:         tweet_url.url,
@@ -82,6 +83,7 @@ class RegisterTweetService
       end
 
       def medium_params
+        tweet_media = (tweet.retweet? ? retweeted_tweet : tweet).media
         tweet_media.map do |tweet_medium|
           {
             url:         tweet_medium.url,

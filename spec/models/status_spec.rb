@@ -44,23 +44,55 @@ RSpec.describe Status, type: :model do
     describe "#is_retweet" do
       include_examples "should validate before_type_cast is a boolean", :status, :is_retweet
     end
-    describe "#rt_name" do
-      it { should validate_length_of(:rt_name).is_at_most(255).allow_nil }
-    end
-    describe "#rt_screen_name" do
-      it { should validate_length_of(:rt_screen_name).is_at_most(255).allow_nil }
-    end
-    describe "#rt_avatar_url" do
-      it { should validate_length_of(:rt_avatar_url).is_at_most(255).allow_nil }
-    end
-    describe "#rt_text" do
-      it { should validate_length_of(:rt_text).is_at_most(255).allow_nil }
-    end
-    describe "#rt_source" do
-      it { should validate_length_of(:rt_source).is_at_most(255).allow_nil }
-    end
-    describe "#rt_created_at" do
-      it { should validate_numericality_of(:rt_created_at).is_greater_than_or_equal_to(0).only_integer.allow_nil }
+    describe "#rt_*" do
+      context "a retweet" do
+        before { allow(subject).to receive(:is_retweet?).and_return(true) }
+        describe "#rt_name" do
+          it { should validate_presence_of(:rt_name) }
+          it { should validate_length_of(:rt_name).is_at_most(280) }
+        end
+        describe "#rt_screen_name" do
+          it { should validate_presence_of(:rt_screen_name) }
+          it { should validate_length_of(:rt_screen_name).is_at_most(255) }
+        end
+        describe "#rt_avatar_url" do
+          it { should validate_presence_of(:rt_avatar_url) }
+          it { should validate_length_of(:rt_avatar_url).is_at_most(255) }
+        end
+        describe "#rt_text" do
+          it { should validate_presence_of(:rt_text) }
+          it { should validate_length_of(:rt_text).is_at_most(255) }
+        end
+        describe "#rt_source" do
+          it { should validate_presence_of(:rt_source) }
+          it { should validate_length_of(:rt_source).is_at_most(255) }
+        end
+        describe "#rt_created_at" do
+          it { should validate_presence_of(:rt_created_at) }
+          it { should validate_numericality_of(:rt_created_at).is_greater_than_or_equal_to(0).only_integer }
+        end
+      end
+      context "a non-retweet" do
+        before { allow(subject).to receive(:is_retweet?).and_return(false) }
+        describe "#rt_name" do
+          it { should validate_absence_of(:rt_name) }
+        end
+        describe "#rt_screen_name" do
+          it { should validate_absence_of(:rt_screen_name) }
+        end
+        describe "#rt_avatar_url" do
+          it { should validate_absence_of(:rt_avatar_url) }
+        end
+        describe "#rt_text" do
+          it { should validate_absence_of(:rt_text) }
+        end
+        describe "#rt_source" do
+          it { should validate_absence_of(:rt_source) }
+        end
+        describe "#rt_created_at" do
+          it { should validate_absence_of(:rt_created_at) }
+        end
+      end
     end
     describe "#possibly_sensitive" do
       include_examples "should validate before_type_cast is a boolean", :status, :possibly_sensitive

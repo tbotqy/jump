@@ -10,6 +10,27 @@ module TweetMock
     instance_double("Twitter::Tweet", tweet_attrs)
   end
 
+  def retweeting_tweet_mock(twitter_account_id:, retweeted_tweet: retweeted_tweet_mock)
+    attrs = {
+      retweet?:      true,
+      retweet_count: 10,
+      hashtags:      [],
+      urls:          [],
+      media:         [],
+      retweeted_tweet: retweeted_tweet
+    }
+    tweet_mock(twitter_account_id: twitter_account_id, **attrs)
+  end
+
+  def retweeted_tweet_mock(**attrs)
+    _attrs = default_retweeted_tweet_attrs.merge(attrs)
+    instance_double("Twitter::Tweet", _attrs)
+  end
+
+  def incomplete_retweeted_tweet_mock
+    retweeted_tweet_mock(attrs: { full_text: "" })
+  end
+
   def incomplete_hashtag_mock
     hashtag_mock(text: "")
   end
@@ -29,18 +50,30 @@ module TweetMock
         in_reply_to_tweet_id:    1,
         in_reply_to_user_id:     2,
         in_reply_to_screen_name: "in_reply_to_screen_name",
-        retweet_count:           10,
+        retweet_count:           0,
         created_at:              Time.now.utc,
         source:                  "rspec",
         attrs:                   { full_text: "default text" },
         possibly_sensitive?:     false,
-        retweet?:                true,
+        retweet?:                false,
         place:                   place_mock,
-        user:                    nil,
-        retweeted_tweet:         retweeted_tweet_mock,
+        user:                    twitter_user_mock,
+        retweeted_tweet:         nil,
         hashtags:                hashtag_mocks,
         urls:                    url_mocks,
         media:                   medium_mocks
+      }
+    end
+
+    def default_retweeted_tweet_attrs
+      {
+        attrs:      { full_text: "rt full text" },
+        source:     "rt source",
+        created_at: Time.now.utc,
+        user:       retweeted_tweet_user_mock,
+        hashtags:   hashtag_mocks,
+        urls:       url_mocks,
+        media:      medium_mocks
       }
     end
 
@@ -76,15 +109,6 @@ module TweetMock
 
     def place_mock
       instance_double("Twitter::Place", full_name: "place full name")
-    end
-
-    def retweeted_tweet_mock
-      instance_double("Twitter::Tweet",
-        attrs: { full_text: "rt text" },
-        source: "rt source",
-        created_at: Time.now.utc,
-        user: retweeted_tweet_user_mock
-      )
     end
 
     def retweeted_tweet_user_mock

@@ -16,12 +16,22 @@ class Status < ApplicationRecord
   validates :source,                  presence: true,  length: { maximum: 255 }
   validates :text,                    presence: true,  length: { maximum: 280 }
   validates :is_retweet_before_type_cast, inclusion: { in: [1, 0, true, false] }
-  validates :rt_name,                 allow_nil: true, length: { maximum: 255 }
-  validates :rt_screen_name,          allow_nil: true, length: { maximum: 255 }
-  validates :rt_avatar_url,           allow_nil: true, length: { maximum: 255 }
-  validates :rt_text,                 allow_nil: true, length: { maximum: 255 }
-  validates :rt_source,               allow_nil: true, length: { maximum: 255 }
-  validates :rt_created_at,           allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  with_options if: :is_retweet? do |retweet|
+    retweet.validates :rt_name,        presence: true, length: { maximum: 280 }
+    retweet.validates :rt_screen_name, presence: true, length: { maximum: 255 }
+    retweet.validates :rt_avatar_url,  presence: true, length: { maximum: 255 }
+    retweet.validates :rt_text,        presence: true, length: { maximum: 255 }
+    retweet.validates :rt_source,      presence: true, length: { maximum: 255 }
+    retweet.validates :rt_created_at,  presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  end
+  with_options unless: :is_retweet? do |tweet|
+    tweet.validates :rt_name,        absence: true
+    tweet.validates :rt_screen_name, absence: true
+    tweet.validates :rt_avatar_url,  absence: true
+    tweet.validates :rt_text,        absence: true
+    tweet.validates :rt_source,      absence: true
+    tweet.validates :rt_created_at,  absence: true
+  end
   validates :possibly_sensitive_before_type_cast, inclusion: { in: [1, 0, true, false] }
   validates :private_flag_before_type_cast,       inclusion: { in: [1, 0, true, false] }
   validates :tweeted_at,              presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

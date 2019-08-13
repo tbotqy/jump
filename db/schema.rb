@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_10_013700) do
+ActiveRecord::Schema.define(version: 2019_08_13_185020) do
 
   create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "status_id", null: false
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2019_08_10_013700) do
     t.string "rt_name"
     t.string "rt_screen_name"
     t.string "rt_avatar_url"
-    t.string "rt_text"
+    t.string "rt_text", limit: 280
     t.string "rt_source"
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive", null: false
