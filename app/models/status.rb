@@ -17,7 +17,7 @@ class Status < ApplicationRecord
   validates :text,                    presence: true,  length: { maximum: 280 }
   validates :is_retweet_before_type_cast, inclusion: { in: [1, 0, true, false] }
   with_options if: :is_retweet? do |retweet|
-    retweet.validates :rt_name,        presence: true, length: { maximum: 255 }
+    retweet.validates :rt_name,        presence: true, length: { maximum: 280 }
     retweet.validates :rt_screen_name, presence: true, length: { maximum: 255 }
     retweet.validates :rt_avatar_url,  presence: true, length: { maximum: 255 }
     retweet.validates :rt_text,        presence: true, length: { maximum: 255 }

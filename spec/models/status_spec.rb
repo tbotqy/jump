@@ -49,7 +49,7 @@ RSpec.describe Status, type: :model do
         before { allow(subject).to receive(:is_retweet?).and_return(true) }
         describe "#rt_name" do
           it { should validate_presence_of(:rt_name) }
-          it { should validate_length_of(:rt_name).is_at_most(255) }
+          it { should validate_length_of(:rt_name).is_at_most(280) }
         end
         describe "#rt_screen_name" do
           it { should validate_presence_of(:rt_screen_name) }
