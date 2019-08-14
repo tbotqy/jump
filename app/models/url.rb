@@ -7,14 +7,5 @@ class Url < ApplicationRecord
   validates :url,         presence: true, length: { maximum: 255 }
   validates :display_url, presence: true, length: { maximum: 255 }
 
-  def as_json(options = {})
-    {
-      url:         url,
-      display_url: display_url,
-      indices: [
-        index_f,
-        index_l
-      ]
-    }
-  end
+  include UrlEntityPresentable
 end

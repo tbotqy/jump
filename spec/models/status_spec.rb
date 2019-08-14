@@ -313,8 +313,11 @@ RSpec.describe Status, type: :model do
         let!(:status) { create(:status, user: user) }
         it { is_expected.to include(user: user.as_json) }
       end
-      describe "entities" do
-        pending "TODO: specify"
+      describe "urls" do
+        let!(:status) { create(:status) }
+        let!(:urls)   { create_list(:url,    2, status: status) }
+        let!(:media)  { create_list(:medium, 2, status: status) }
+        it { expect(subject.fetch(:urls)).to contain_exactly(*(urls + media).as_json) }
       end
     end
   end
