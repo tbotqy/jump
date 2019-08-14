@@ -27,6 +27,7 @@ class DateSelectors extends React.Component {
     };
 
     this.classes = props.classes;
+    this.selectedDateUpdater = props.selectedDateUpdater;
   }
 
   onYearChange(selectedYear) {
@@ -41,6 +42,8 @@ class DateSelectors extends React.Component {
       months:        months,
       days:          days
     });
+
+    this.selectedDateUpdater(selectedYear, null, null);
   }
 
   onMonthChange(selectedMonth) {
@@ -51,12 +54,16 @@ class DateSelectors extends React.Component {
       selectedDay:   daysOfMonth[0],
       days:          daysOfMonth
     });
+
+    this.selectedDateUpdater(this.state.selectedYear, selectedMonth, null);
   }
 
   onDayChange(selectedDay) {
     this.setState({
       selectedDay: selectedDay
     });
+
+    this.selectedDateUpdater(this.state.selectedYear, this.state.selectedMonth, selectedDay);
   }
 
   render() {

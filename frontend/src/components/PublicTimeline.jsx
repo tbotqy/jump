@@ -4,6 +4,7 @@ import {
   LinearProgress
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 import HeadNav       from "./HeadNav";
 import DateSelectors from "./timeline/DateSelectors";
@@ -51,10 +52,17 @@ class PublicTimeline extends React.Component {
           <div className={ this.props.classes.tweetListContainer }>
             { this.state.tweets.length <= 0 ? <LinearProgress /> : <TweetList tweets={ this.state.tweets } /> }
           </div>
-          { this.state.dates.length > 0 && <DateSelectors dates={ this.state.dates } /> }
+          { this.state.dates.length > 0 && <DateSelectors dates={ this.state.dates } selectedDateUpdater= { this.onSelectedDateChange.bind(this) } /> }
         </Container>
       </>
     );
+  }
+
+  onSelectedDateChange(year, month, day) {
+    const params = { year: year, month: month, day: day };
+    axios.get("http://localhost:3000/statuses", { params: params })
+      .then( response => response.data )
+      .then ( tweets => this.setState({ tweets: tweets }) );
   }
 }
 
