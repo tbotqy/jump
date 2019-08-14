@@ -416,19 +416,20 @@ RSpec.describe "Users::FolloweeStatuses", type: :request do
                     end
                   end
                   describe "urls" do
-                    context "status has no url" do
+                    context "status has neither of urls and media" do
                       let!(:status) { create(:status, user: followee) }
                       it do
                         subject
                         expect(response.parsed_body.first.deep_symbolize_keys).to include(urls: [])
                       end
                     end
-                    context "status has some urls" do
+                    context "status has some urls and media" do
                       let!(:status) { create(:status, user: followee) }
-                      let!(:urls)   { create_list(:url, 2, status: status) }
+                      let!(:urls)   { create_list(:url,    2, status: status) }
+                      let!(:media)  { create_list(:medium, 2, status: status) }
                       it do
                         subject
-                        expect(response.parsed_body.first.deep_symbolize_keys).to include(urls: urls.as_json)
+                        expect(response.parsed_body.first.deep_symbolize_keys.fetch(:urls)).to contain_exactly(*(urls + media).as_json)
                       end
                     end
                   end
