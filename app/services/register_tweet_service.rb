@@ -39,7 +39,7 @@ class RegisterTweetService
           retweet_count:           tweet.retweet_count,
           tweeted_at:              tweeted_at,
           tweeted_at_reversed:     -1 * tweeted_at,
-          tweeted_on:              tweet.created_at.to_date,
+          tweeted_on:              tweet.created_at.in_time_zone.to_date,
           source:                  tweet.source,
           text:                    tweet.attrs[:full_text],
           possibly_sensitive:      tweet.possibly_sensitive?,
