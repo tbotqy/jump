@@ -16,7 +16,8 @@ import {
   Favorite
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
-import formatDateString from "../../src/utils/DateFormatter";
+import formatDateString from "../utils/formatDateString";
+import linkifyTweetText from "../utils/linkifyTweetText";
 import TwitterLogo from "./../assets/twitter/logo.svg";
 
 const styles = (theme) => ({
@@ -28,6 +29,9 @@ const styles = (theme) => ({
   },
   tweetText: {
     wordBreak: "break-all"
+  },
+  tweetTextWrapper: {
+    whiteSpace: "pre-line"
   },
   logo: {
     marginTop: theme.spacing(1)
@@ -47,7 +51,7 @@ function TweetCard(props) {
   const name       = props.name;
   const screenName = props.screenName;
   const avatarUrl  = props.avatarUrl;
-  const text       = props.text;
+  const text       = linkifyTweetText(props.text, props.urlEntities);
   const tweetedAt  = formatDateString(props.tweetedAt);
   const user       = props.user;
 
@@ -88,7 +92,9 @@ function TweetCard(props) {
       />
 
       <CardContent>
-        <Typography component="p" className={ classes.tweetText }>{ text }</Typography>
+        <Typography component="p" className={ classes.tweetText }>
+          <span className={ classes.tweetTextWrapper } dangerouslySetInnerHTML={ { __html: text } } />
+        </Typography>
       </CardContent>
 
       <CardActions>
