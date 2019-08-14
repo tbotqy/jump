@@ -8,10 +8,11 @@ import TweetCard from "./TweetCard";
 
 const tweetCardPropsByTweet = tweet => {
   const ret = {
-    tweetId:   tweet.tweet_id,
-    isRetweet: tweet.is_retweet,
-    tweetedAt: tweet.tweeted_at,
-    user:      tweet.user
+    tweetId:     tweet.tweet_id,
+    isRetweet:   tweet.is_retweet,
+    tweetedAt:   tweet.tweeted_at,
+    user:        tweet.user,
+    urlEntities: tweet.urls
   };
 
   if(tweet.is_retweet) {
