@@ -29,7 +29,7 @@ class PublicTimeline extends React.Component {
     };
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     fetch("http://localhost:3000/tweeted_dates")
       .then( response => response.json() )
       .then( json => {
