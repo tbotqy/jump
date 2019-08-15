@@ -85,7 +85,6 @@ jobs:
                             $TEST_FILES
       - codecov/upload:
           file: /tmp/test-results/rspec.xml
-          flags: backend
 
   # for frontend
   lint_frontend:
@@ -111,9 +110,6 @@ jobs:
       - run:
           working_directory: "frontend"
           command: yarn test --coverage
-      - codecov/upload:
-          file: frontend/coverage/clover.xml
-          flags: frontend
 
   build_frontend:
     docker:
