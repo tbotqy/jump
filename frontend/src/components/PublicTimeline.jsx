@@ -10,6 +10,8 @@ import HeadNav       from "./HeadNav";
 import DateSelectors from "./timeline/DateSelectors";
 import TweetList     from "./TweetList";
 
+const apiOrigin = process.env.REACT_APP_API_ORIGIN;
+
 const styles = theme => ({
   container: {
     paddingTop:   theme.spacing(3),
@@ -31,13 +33,13 @@ class PublicTimeline extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/tweeted_dates")
+    fetch(`${apiOrigin}/tweeted_dates`)
       .then( response => response.json() )
       .then( json => {
         this.setState({ dates: json });
       });
 
-    fetch("http://localhost:3000/statuses")
+    fetch(`${apiOrigin}/statuses`)
       .then( response => response.json() )
       .then( json => {
         this.setState({ tweets: json });
@@ -60,7 +62,7 @@ class PublicTimeline extends React.Component {
 
   onSelectedDateChange(year, month, day) {
     const params = { year: year, month: month, day: day };
-    axios.get("http://localhost:3000/statuses", { params: params })
+    axios.get(`${apiOrigin}/statuses`, { params: params })
       .then( response => response.data )
       .then ( tweets => this.setState({ tweets: tweets }) );
   }
