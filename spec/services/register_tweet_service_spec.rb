@@ -45,7 +45,8 @@ describe RegisterTweetService do
           it do
             subject.call
             tweet_id        = tweet.id
-            tweeted_at      = tweet.created_at.to_i
+            tweeted_at      = tweet.created_at
+            tweeted_at_int  = tweeted_at.to_i
             retweeted_tweet = tweet.retweeted_tweet
             expect(Status.find_by!(tweet_id: tweet.id)).to have_attributes(
               tweet_id:                tweet_id,
@@ -55,9 +56,9 @@ describe RegisterTweetService do
               in_reply_to_screen_name: tweet.in_reply_to_screen_name,
               place_full_name:         tweet.place.full_name,
               retweet_count:           tweet.retweet_count,
-              tweeted_at:              tweeted_at,
-              tweeted_at_reversed:     -1 * tweeted_at,
-              tweeted_on:              Time.zone.at(tweet.created_at.to_i).to_date,
+              tweeted_at:              tweeted_at_int,
+              tweeted_at_reversed:     -1 * tweeted_at_int,
+              tweeted_on:              tweeted_at.in_time_zone.beginning_of_day,
               source:                  tweet.source,
               text:                    tweet.attrs[:full_text],
               possibly_sensitive:      tweet.possibly_sensitive?,
@@ -215,7 +216,8 @@ describe RegisterTweetService do
           it do
             subject.call
             tweet_id        = tweet.id
-            tweeted_at      = tweet.created_at.to_i
+            tweeted_at      = tweet.created_at
+            tweeted_at_int  = tweeted_at.to_i
             expect(Status.find_by!(tweet_id: tweet.id)).to have_attributes(
               tweet_id:                tweet_id,
               tweet_id_reversed:       -1 * tweet_id,
@@ -224,9 +226,9 @@ describe RegisterTweetService do
               in_reply_to_screen_name: tweet.in_reply_to_screen_name,
               place_full_name:         tweet.place.full_name,
               retweet_count:           tweet.retweet_count,
-              tweeted_at:              tweeted_at,
-              tweeted_at_reversed:     -1 * tweeted_at,
-              tweeted_on:              Time.zone.at(tweet.created_at.to_i).to_date,
+              tweeted_at:              tweeted_at_int,
+              tweeted_at_reversed:     -1 * tweeted_at_int,
+              tweeted_on:              tweeted_at.in_time_zone.beginning_of_day,
               source:                  tweet.source,
               text:                    tweet.attrs[:full_text],
               possibly_sensitive:      tweet.possibly_sensitive?,
