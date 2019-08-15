@@ -21,9 +21,9 @@ class DateSelectors extends React.Component {
       years:         this.dateCollection.years(),
       months:        this.dateCollection.latestMonths(),
       days:          this.dateCollection.latestDays(),
-      selectedYear:  this.dateCollection.latestYear(),
-      selectedMonth: this.dateCollection.latestMonth(),
-      selectedDay:   this.dateCollection.latestDay()
+      selectedYear:  props.selectedYear  || this.dateCollection.latestYear(),
+      selectedMonth: props.selectedMonth || this.dateCollection.latestMonth(),
+      selectedDay:   props.selectedDay   || this.dateCollection.latestDay()
     };
 
     this.classes = props.classes;

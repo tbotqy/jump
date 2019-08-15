@@ -29,7 +29,7 @@ class App extends React.Component {
             path="/statuses/import"
             render={ () => <Import screenName="screen_name" /> }
           />
-          <Route exact path="/public_timeline" component={ PublicTimeline } />
+          <Route exact path="/public_timeline/:year?/:month?/:day?" component={ PublicTimeline } />
           <Route exact path="/user_timeline" component={ PublicTimeline } />
           <Route exact path="/home_timeline" component={ PublicTimeline } />
           <Route exact path="/data" component={ DataManagement } />
