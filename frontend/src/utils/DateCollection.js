@@ -32,6 +32,16 @@ class DateCollection {
     return this.daysByYearAndMonth(year, month);
   }
 
+  latestMonthByYear(year) {
+    const months = this.monthsByYear(year);
+    return months[0];
+  }
+
+  latestDayByYearAndMonth(year, month) {
+    const days = this.daysByYearAndMonth(year, month);
+    return days[0];
+  }
+
   monthsByYear(year) {
     const monthsAndDays = this.monthsAndDaysByYear(year);
     return this.keysOf(monthsAndDays);

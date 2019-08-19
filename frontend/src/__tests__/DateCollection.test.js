@@ -47,6 +47,18 @@ describe("#latestDays", () => {
   });
 });
 
+describe("#latestMonthByYear", () => {
+  it("returns the latest month of given year from collection", () => {
+    expect(instance.latestMonthByYear("2018")).toEqual("10");
+  });
+});
+
+describe("#latestDayByYearAndMonth", () => {
+  it("returns the latest month of given year from collection", () => {
+    expect(instance.latestDayByYearAndMonth("2018", "9")).toEqual("26");
+  });
+});
+
 describe("#monthsByYear", () => {
   it("returns the months of given year", () => {
     expect(instance.monthsByYear("2018")).toEqual([ "10", "9" ]);

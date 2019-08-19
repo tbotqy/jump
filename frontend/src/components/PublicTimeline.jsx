@@ -1,17 +1,12 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import {
   Container,
   LinearProgress
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import axios from "axios";
-
 import HeadNav       from "./HeadNav";
-import DateSelectors from "./timeline/DateSelectors";
-import TweetList     from "./TweetList";
-
-const apiOrigin = process.env.REACT_APP_API_ORIGIN;
+import DateSelectors from "../containers/DateSelectorsContainer";
+import TweetList     from "../containers/TweetListContainer";
 
 const styles = theme => ({
   container: {
@@ -25,44 +20,9 @@ const styles = theme => ({
 });
 
 class PublicTimeline extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const { params } = props.match;
-
-    this.state = {
-      dates:  [],
-      tweets: [],
-      selectedYear:  params.year,
-      selectedMonth: params.month,
-      selectedDay:   params.day
-    };
-
-    this.props = props;
-  }
-
   componentDidMount() {
-    fetch(`${apiOrigin}/tweeted_dates`)
-      .then( response => response.json() )
-      .then( json => {
-        this.setState({ dates: json });
-      });
-
-    const params = { year: this.state.selectedYear, month: this.state.selectedMonth, day: this.state.selectedDay };
-    axios.get(`${apiOrigin}/statuses`, { params: params })
-      .then( response => response.data )
-      .then( tweets => {
-        this.setState({ tweets: tweets });
-      });
-
-    window.onpopstate = (e) => {
-      const [year, month, day] = window.location.pathname.split("/").slice(2).filter(function(e){return e});
-      this.setState({
-        selectedYear:  year,
-        selectedMonth: month,
-        selectedDay:   day
-      });
-    }
+    this.props.fetchPublicTweets();
+    this.props.fetchPublicSelectableDates();
   }
 
   render() {
@@ -71,28 +31,13 @@ class PublicTimeline extends React.Component {
         <HeadNav />
         <Container className={ this.props.classes.container }>
           <div className={ this.props.classes.tweetListContainer }>
-            { this.state.tweets.length <= 0 ? <LinearProgress /> : <TweetList tweets={ this.state.tweets } /> }
+            { this.props.fetchingTweets ? <LinearProgress /> : <TweetList tweets={ this.props.tweets } /> }
           </div>
-          { this.state.dates.length > 0 && <DateSelectors { ...this.selectedDate() } dates={ this.state.dates } selectedDateUpdater= { this.onSelectedDateChange.bind(this) } /> }
+          { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } tweetsFetcher={ this.props.fetchPublicTweets } /> }
         </Container>
       </>
     );
   }
-
-  selectedDate() {
-    return { selectedYear: this.state.selectedYear, selectedMonth: this.state.selectedMonth, selectedDay: this.state.selectedDay };
-  }
-
-  onSelectedDateChange(year, month, day) {
-    const params = { year: year, month: month, day: day };
-    axios.get(`${apiOrigin}/statuses`, { params: params })
-      .then( response => response.data )
-      .then( tweets => this.setState({ tweets: tweets }) )
-      .then( () =>{
-        const path = [year, month, day].filter(function(e){return e}).join("/");
-        this.props.history.push(`/public_timeline/${path}`);
-    });
-  }
 }
 
-export default withRouter(withStyles(styles)(PublicTimeline));
+export default withStyles(styles)(PublicTimeline);
