@@ -16,9 +16,9 @@ function Selector(props) {
     setAnchorEl(null);
   }
 
-  function handleSelect(value) {
+  function handleItemSelect(value) {
     setAnchorEl(null);
-    props.otherSelectorUpdater(value);
+    props.selectedValueUpdater(value);
   }
 
   return (
@@ -26,7 +26,7 @@ function Selector(props) {
       <Fab variant="extended" color="primary" onClick={ handleClick }>{ props.selectedValue }</Fab>
       <Menu anchorEl={ anchorEl } open={ Boolean(anchorEl) } onClose={ handleClose }>
         { props.selections.map((selection, i) => (
-          <MenuItem key={ i } onClick={ () => handleSelect(selection) } >
+          <MenuItem key={ i } onClick={ () => handleItemSelect(selection) } >
             { selection }
           </MenuItem>
         )) }

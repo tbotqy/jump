@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+
 import Top from "./components/Top";
 import Import from "./components/Import";
 import DataManagement from "./components/DataManagement";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
-import PublicTimeline from "./components/PublicTimeline";
+import PublicTimelineContainer from "./containers/PublicTimelineContainer";
 
 const theme = responsiveFontSizes(createMuiTheme({
   palette:{
@@ -29,9 +30,9 @@ class App extends React.Component {
             path="/statuses/import"
             render={ () => <Import screenName="screen_name" /> }
           />
-          <Route exact path="/public_timeline/:year?/:month?/:day?" component={ PublicTimeline } />
-          <Route exact path="/user_timeline" component={ PublicTimeline } />
-          <Route exact path="/home_timeline" component={ PublicTimeline } />
+          <Route exact path="/public_timeline/:year?/:month?/:day?" component={ PublicTimelineContainer } />
+          <Route exact path="/user_timeline" component={ PublicTimelineContainer } />
+          <Route exact path="/home_timeline" component={ PublicTimelineContainer } />
           <Route exact path="/data" component={ DataManagement } />
           <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
         </ThemeProvider>

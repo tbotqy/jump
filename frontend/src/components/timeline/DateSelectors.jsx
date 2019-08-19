@@ -1,7 +1,8 @@
 import React          from "react";
+import scrollToTop    from "../../utils/scrollToTop";
 import { Grid }       from "@material-ui/core";
-import Selector       from "./date_selectors/Selector";
 import { withStyles } from "@material-ui/core/styles";
+import Selector       from "./date_selectors/Selector";
 
 import DateCollection from "../../utils/DateCollection";
 
@@ -15,68 +16,63 @@ const styles = theme => ({
 class DateSelectors extends React.Component {
   constructor(props) {
     super(props);
-    this.dateCollection = new DateCollection(props.dates);
-
-    this.state = {
-      years:         this.dateCollection.years(),
-      months:        this.dateCollection.latestMonths(),
-      days:          this.dateCollection.latestDays(),
-      selectedYear:  props.selectedYear  || this.dateCollection.latestYear(),
-      selectedMonth: props.selectedMonth || this.dateCollection.latestMonth(),
-      selectedDay:   props.selectedDay   || this.dateCollection.latestDay()
-    };
-
-    this.classes = props.classes;
-    this.selectedDateUpdater = props.selectedDateUpdater;
+    this.dateParser = new DateCollection(props.selectableDates); // TODO: Rename class
   }
 
-  onYearChange(selectedYear) {
-    const months            = this.dateCollection.monthsByYear(selectedYear);
-    const latestMonthOfYear = months[0];
-    const days              = this.dateCollection.daysByYearAndMonth(selectedYear, latestMonthOfYear);
-
-    this.setState({
-      selectedYear:  selectedYear,
-      selectedMonth: latestMonthOfYear,
-      selectedDay:   days[0],
-      months:        months,
-      days:          days
-    });
-
-    this.selectedDateUpdater(selectedYear, null, null);
+  handleYearChange(year) {
+    this.props.setSelectedYear(year);
+    // reset other selectors
+    const month = this.dateParser.latestMonthByYear(year);
+    const day   = this.dateParser.latestDayByYearAndMonth(year, month);
+    this.props.setSelectedMonth(month);
+    this.props.setSelectedDay(day);
+    // fetch tweets with currently selected values
+    this.props.tweetsFetcher(year, month, day);
+    scrollToTop();
   }
 
-  onMonthChange(selectedMonth) {
-    const daysOfMonth = this.dateCollection.daysByYearAndMonth(this.state.selectedYear, selectedMonth);
-
-    this.setState({
-      selectedMonth: selectedMonth,
-      selectedDay:   daysOfMonth[0],
-      days:          daysOfMonth
-    });
-
-    this.selectedDateUpdater(this.state.selectedYear, selectedMonth, null);
+  handleMonthChange(month) {
+    const year = this.props.selectedYear;
+    this.props.setSelectedMonth(month);
+    // reset day selector
+    const day = this.dateParser.latestDayByYearAndMonth(year, month);
+    this.props.setSelectedDay(day);
+    // fetch tweets with currently selected values
+    this.props.tweetsFetcher(year, month, day);
+    scrollToTop();
   }
 
-  onDayChange(selectedDay) {
-    this.setState({
-      selectedDay: selectedDay
-    });
-
-    this.selectedDateUpdater(this.state.selectedYear, this.state.selectedMonth, selectedDay);
+  handleDayChange(day) {
+    this.props.setSelectedDay(day);
+    // fetch tweets with currently selected values
+    this.props.tweetsFetcher(this.props.selectedYear, this.props.selectedMonth, day);
+    scrollToTop();
   }
 
   render() {
+    const props = this.props;
     return(
-      <Grid container justify="flex-end" spacing={ 1 } className={ this.classes.container }>
+      <Grid container justify="flex-end" spacing={ 1 } className={ props.classes.container }>
         <Grid item>
-          <Selector selections={ this.state.years } selectedValue={ this.state.selectedYear } otherSelectorUpdater={ this.onYearChange.bind(this) } />
+          <Selector
+            selections={ this.dateParser.years() }
+            selectedValue={ props.selectedYear }
+            selectedValueUpdater={ this.handleYearChange.bind(this) }
+          />
         </Grid>
         <Grid item>
-          <Selector selections={ this.state.months } selectedValue={ this.state.selectedMonth } otherSelectorUpdater={ this.onMonthChange.bind(this) } />
+          <Selector
+            selections={ this.dateParser.monthsByYear(props.selectedYear) }
+            selectedValue={ props.selectedMonth }
+            selectedValueUpdater={ this.handleMonthChange.bind(this) }
+          />
         </Grid>
         <Grid item>
-          <Selector selections={ this.state.days } selectedValue={ this.state.selectedDay } otherSelectorUpdater={ this.onDayChange.bind(this) } />
+          <Selector
+            selections={ this.dateParser.daysByYearAndMonth(props.selectedYear, props.selectedMonth) }
+            selectedValue={ props.selectedDay }
+            selectedValueUpdater={ this.handleDayChange.bind(this) }
+          />
         </Grid>
       </Grid>
     );
