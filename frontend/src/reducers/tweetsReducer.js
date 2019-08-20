@@ -10,12 +10,12 @@ export default function tweetsReducer(state = initialState, action) {
       ...state,
       tweets: action.tweets
     };
-  case "START_TO_FETCH_TWEETS":
+  case "STARTED_TO_FETCH_TWEETS":
     return {
       ...state,
       isFetching: action.isFetching
     };
-  case "FINISH_TO_FETCH_TWEETS":
+  case "FINISHED_TO_FETCH_TWEETS":
     return {
       ...state,
       isFetching: action.isFetching
