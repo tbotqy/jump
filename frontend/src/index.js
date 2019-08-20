@@ -6,13 +6,14 @@ import thunk from "redux-thunk";
 
 import selectableDatesReducer from "./reducers/selectableDatesReducer";
 import tweetsReducer from "./reducers/tweetsReducer";
+import timelinePathReducer from "./reducers/timelinePathReducer";
 
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-const reducers = combineReducers({ tweets: tweetsReducer, selectableDates: selectableDatesReducer });
+const reducers = combineReducers({ tweets: tweetsReducer, selectableDates: selectableDatesReducer, timelinePath: timelinePathReducer });
 const store    = createStore(reducers, applyMiddleware(thunk));
-store.subscribe(() => console.log(store.getState()));
+//store.subscribe(() => console.log(store.getState()));
 
 ReactDOM.render(
   <Provider store={ store }>

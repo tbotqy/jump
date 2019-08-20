@@ -9,11 +9,12 @@ import {
 import DateSelectors from "../components/timeline/DateSelectors";
 
 const mapStateToProps = state => ({
-  selectableDates: state.selectableDates.selectableDates,
-  selectedYear:    state.selectableDates.selectedYear,
-  selectedMonth:   state.selectableDates.selectedMonth,
-  selectedDay:     state.selectableDates.selectedDay,
-  loaded:          state.selectableDates.loaded
+  selectableDates:  state.selectableDates.selectableDates,
+  selectedYear:     state.selectableDates.selectedYear,
+  selectedMonth:    state.selectableDates.selectedMonth,
+  selectedDay:      state.selectableDates.selectedDay,
+  loaded:           state.selectableDates.loaded,
+  timelineBasePath: state.timelinePath.timelineBasePath
 });
 
 const mapDispatchToProps = dispatch => ({

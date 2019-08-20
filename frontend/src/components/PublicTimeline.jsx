@@ -20,6 +20,11 @@ const styles = theme => ({
 });
 
 class PublicTimeline extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.setTimelineBasePath("/public_timeline/");
+  }
+
   componentDidMount() {
     const { year, month, day } = this.props.match.params;
     this.props.fetchPublicTweets(year, month, day);
