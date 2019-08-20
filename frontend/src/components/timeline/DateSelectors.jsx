@@ -35,6 +35,7 @@ class DateSelectors extends React.Component {
 
         this.props.finishedToFetchSelectableDates();
       });
+    window.onpopstate = this.onBackOrForwardButtonEvent.bind(this);
   }
 
   handleYearChange(year) {
@@ -46,6 +47,7 @@ class DateSelectors extends React.Component {
     this.props.setSelectedDay(day);
     // fetch tweets with currently selected values
     this.props.tweetsFetcher(year, month, day);
+    this.updateDatePath(year);
     scrollToTop();
   }
 
@@ -57,14 +59,36 @@ class DateSelectors extends React.Component {
     this.props.setSelectedDay(day);
     // fetch tweets with currently selected values
     this.props.tweetsFetcher(year, month, day);
+    this.updateDatePath(`${year}/${month}`);
     scrollToTop();
   }
 
   handleDayChange(day) {
     this.props.setSelectedDay(day);
     // fetch tweets with currently selected values
-    this.props.tweetsFetcher(this.props.selectedYear, this.props.selectedMonth, day);
+    const { selectedYear, selectedMonth } = this.props;
+    this.props.tweetsFetcher(selectedYear, selectedMonth, day);
+    this.updateDatePath(`${selectedYear}/${selectedMonth}/${day}`);
     scrollToTop();
+  }
+
+  updateDatePath(datePath) {
+    const path = `${this.props.timelineBasePath}${datePath}`;
+    this.props.history.push(path);
+  }
+
+  onBackOrForwardButtonEvent(e) {
+    e.preventDefault();
+    const { year, month, day } = this.props.match.params;
+    this.props.tweetsFetcher(year, month, day);
+
+    const selectedYear  = year  || this.dateParser.latestYear();
+    const selectedMonth = month || this.dateParser.latestMonthByYear(selectedYear);
+    const selectedDay   = day   || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+    this.props.setSelectedYear(selectedYear);
+    this.props.setSelectedMonth(selectedMonth);
+    this.props.setSelectedDay(selectedDay);
+
   }
 
   render() {
