@@ -5,9 +5,7 @@ import { setTimelineBasePath } from "../actions/timelinePathActions";
 import PublicTimeline from "../components/PublicTimeline";
 
 const mapStateToProps = state => ({
-  tweets:                  state.tweets.tweets,
   selectableDates:         state.selectableDates.selectableDates,
-  fetchingTweets:          state.tweets.isFetching,
   fetchingSelectableDates: state.selectableDates.isFetching
 });
 
