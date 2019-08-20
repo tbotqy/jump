@@ -36,7 +36,7 @@ class PublicTimeline extends React.Component {
         <HeadNav />
         <Container className={ this.props.classes.container }>
           <div className={ this.props.classes.tweetListContainer }>
-            { this.props.fetchingTweets ? <LinearProgress /> : <TweetList tweets={ this.props.tweets } /> }
+            { this.props.fetchingTweets ? <LinearProgress /> : <TweetList /> }
           </div>
           <DateSelectors selectableDatesFetcher={ this.props.fetchPublicSelectableDates } tweetsFetcher={ this.props.fetchPublicTweets } />
         </Container>
