@@ -3,7 +3,7 @@ const initialState = {
   selectedMonth:   null,
   selectedDay:     null,
   selectableDates: [],
-  isFetching:      false
+  loaded:         false
 };
 
 export default function selectableDatesReducer(state = initialState, action) {
@@ -28,20 +28,10 @@ export default function selectableDatesReducer(state = initialState, action) {
       ...state,
       selectedDay: action.selectedDay
     };
-  case "START_TO_FETCH_SELECTABLE_DATES":
+  case "FINISHED_TO_FETCH_SELECTABLE_DATES":
     return {
       ...state,
-      isFetching: action.isFetching
-    };
-  case "FINISH_TO_FETCH_SELECTABLE_DATES":
-    return {
-      ...state,
-      isFetching: action.isFetching
-    };
-  case "FAILED_TO_FETCH_SELECTABLE_DATES":
-    return {
-      ...state,
-      isFetching: action.isFetching
+      loaded: action.loaded
     };
   default:
     return state;

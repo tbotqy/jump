@@ -21,8 +21,8 @@ const styles = theme => ({
 
 class PublicTimeline extends React.Component {
   componentDidMount() {
-    this.props.fetchPublicTweets();
-    this.props.fetchPublicSelectableDates();
+    const { year, month, day } = this.props.match.params;
+    this.props.fetchPublicTweets(year, month, day);
   }
 
   render() {
@@ -33,7 +33,7 @@ class PublicTimeline extends React.Component {
           <div className={ this.props.classes.tweetListContainer }>
             { this.props.fetchingTweets ? <LinearProgress /> : <TweetList tweets={ this.props.tweets } /> }
           </div>
-          { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } tweetsFetcher={ this.props.fetchPublicTweets } /> }
+          <DateSelectors selectableDatesFetcher={ this.props.fetchPublicSelectableDates } tweetsFetcher={ this.props.fetchPublicTweets } />
         </Container>
       </>
     );

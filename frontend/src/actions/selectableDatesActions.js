@@ -1,18 +1,7 @@
 import api from "../utils/api";
 
 export function fetchPublicSelectableDates() {
-  return dispatch => {
-    dispatch(startToFetchSelectableDates());
-    api.get("/tweeted_dates")
-      .then(response => response.data)
-      .then(selectableDates => {
-        dispatch(setSelectedYear("2019"));
-        dispatch(setSelectedMonth("8"));
-        dispatch(setSelectedDay("16"));
-        dispatch(setSelectableDates(selectableDates));
-        dispatch(finishToFetchSelectableDates());
-      });
-  };
+  return () => api.get("/tweeted_dates").then(response => response.data);
 }
 
 export function setSelectableDates(selectableDates) {
@@ -43,23 +32,9 @@ export function setSelectedDay(selectedDay) {
   };
 }
 
-export function startToFetchSelectableDates() {
+export function finishedToFetchSelectableDates() {
   return {
-    type: "START_TO_FETCH_SELECTABLE_DATES",
-    isFetching: true
-  };
-}
-
-export function finishToFetchSelectableDates() {
-  return {
-    type: "FINISH_TO_FETCH_SELECTABLE_DATES",
-    isFetching: false
-  };
-}
-
-export function failedToFetchSelectableDates() {
-  return {
-    type: "FAILED_TO_FETCH_SELECTABLE_DATES",
-    isFetching: false
+    type: "FINISHED_TO_FETCH_SELECTABLE_DATES",
+    loaded: true
   };
 }
