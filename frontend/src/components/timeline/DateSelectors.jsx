@@ -1,4 +1,5 @@
 import React          from "react";
+import { withRouter } from "react-router-dom";
 import scrollToTop    from "../../utils/scrollToTop";
 import { Grid }       from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -14,9 +15,26 @@ const styles = theme => ({
 });
 
 class DateSelectors extends React.Component {
-  constructor(props) {
-    super(props);
-    this.dateParser = new DateCollection(props.selectableDates); // TODO: Rename class
+  componentDidMount() {
+    this.props.selectableDatesFetcher()
+      .then( selectableDates => {
+        this.props.setSelectableDates(selectableDates);
+        return selectableDates;
+      }).then( selectableDates => {
+        const { params }    = this.props.match;
+        const dateParser    = new DateCollection(selectableDates);
+
+        const selectedYear  = params.year  || dateParser.latestYear();
+        const selectedMonth = params.month || dateParser.latestMonthByYear(selectedYear);
+        const selectedDay   = params.day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+
+        this.props.setSelectedYear(selectedYear);
+        this.props.setSelectedMonth(selectedMonth);
+        this.props.setSelectedDay(selectedDay);
+        this.dateParser = dateParser;
+
+        this.props.finishedToFetchSelectableDates();
+      });
   }
 
   handleYearChange(year) {
@@ -50,33 +68,36 @@ class DateSelectors extends React.Component {
   }
 
   render() {
-    const props = this.props;
-    return(
-      <Grid container justify="flex-end" spacing={ 1 } className={ props.classes.container }>
-        <Grid item>
-          <Selector
-            selections={ this.dateParser.years() }
-            selectedValue={ props.selectedYear }
-            selectedValueUpdater={ this.handleYearChange.bind(this) }
-          />
+    if (!this.props.loaded) {
+      return <></>;
+    }else{
+      return(
+        <Grid container justify="flex-end" spacing={ 1 } className={ this.props.classes.container }>
+          <Grid item>
+            <Selector
+              selections={ this.dateParser.years() }
+              selectedValue={ this.props.selectedYear }
+              selectedValueUpdater={ this.handleYearChange.bind(this) }
+            />
+          </Grid>
+          <Grid item>
+            <Selector
+              selections={ this.dateParser.monthsByYear(this.props.selectedYear) }
+              selectedValue={ this.props.selectedMonth }
+              selectedValueUpdater={ this.handleMonthChange.bind(this) }
+            />
+          </Grid>
+          <Grid item>
+            <Selector
+              selections={ this.dateParser.daysByYearAndMonth(this.props.selectedYear, this.props.selectedMonth) }
+              selectedValue={ this.props.selectedDay }
+              selectedValueUpdater={ this.handleDayChange.bind(this) }
+            />
+          </Grid>
         </Grid>
-        <Grid item>
-          <Selector
-            selections={ this.dateParser.monthsByYear(props.selectedYear) }
-            selectedValue={ props.selectedMonth }
-            selectedValueUpdater={ this.handleMonthChange.bind(this) }
-          />
-        </Grid>
-        <Grid item>
-          <Selector
-            selections={ this.dateParser.daysByYearAndMonth(props.selectedYear, props.selectedMonth) }
-            selectedValue={ props.selectedDay }
-            selectedValueUpdater={ this.handleDayChange.bind(this) }
-          />
-        </Grid>
-      </Grid>
-    );
+      );
+    }
   }
 }
 
-export default withStyles(styles)(DateSelectors);
+export default withRouter(withStyles(styles)(DateSelectors));
