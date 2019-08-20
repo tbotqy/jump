@@ -3,12 +3,12 @@ import api from "../utils/api";
 export function fetchPublicTweets(year, month, day) {
   const params = { year: year, month: month, day: day };
   return dispatch => {
-    dispatch(startToFetchTweets());
+    dispatch(startedToFetchTweets());
     return api.get("/statuses", params)
       .then(response => response.data)
       .then(tweets => {
         dispatch(setTweets(tweets));
-        dispatch(finishToFetchTweets());
+        dispatch(finishedToFetchTweets());
       });
   };
 }
@@ -20,16 +20,16 @@ export function setTweets(tweets) {
   };
 }
 
-export function startToFetchTweets() {
+export function startedToFetchTweets() {
   return {
-    type: "START_TO_FETCH_TWEETS",
+    type: "STARTED_TO_FETCH_TWEETS",
     isFetching: true
   };
 }
 
-export function finishToFetchTweets() {
+export function finishedToFetchTweets() {
   return {
-    type: "FINISH_TO_FETCH_TWEETS",
+    type: "FINISHED_TO_FETCH_TWEETS",
     isFetching: false
   };
 }
