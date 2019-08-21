@@ -1,6 +1,7 @@
 const initialState = {
   tweets: [],
-  isFetching: false
+  isFetching: false,
+  isFetchingMore: false
 };
 
 export default function tweetsReducer(state = initialState, action) {
@@ -10,15 +11,20 @@ export default function tweetsReducer(state = initialState, action) {
       ...state,
       tweets: action.tweets
     };
-  case "STARTED_TO_FETCH_TWEETS":
+  case "APPEND_TWEETS":
     return {
       ...state,
-      isFetching: action.isFetching
+      tweets: state.tweets.concat(action.tweets)
     };
-  case "FINISHED_TO_FETCH_TWEETS":
+  case "SET_IS_FETCHING":
     return {
       ...state,
-      isFetching: action.isFetching
+      isFetching: action.flag
+    };
+  case "SET_IS_FETCHING_MORE":
+    return {
+      ...state,
+      isFetchingMore: action.flag
     };
   case "FAILED_TO_FETCH_TWEETS":
     return {

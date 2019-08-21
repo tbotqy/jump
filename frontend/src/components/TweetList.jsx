@@ -34,18 +34,24 @@ const tweetCardPropsByTweet = tweet => {
   }
 };
 
-const TweetList = props => (
-  <Grid container justify="center">
-    <Grid item lg={ 8 }>
-      <List>
-        { props.tweets.map((tweet, index) => (
-          <ListItem divider disableGutters key={ index }>
-            <TweetCard key={ index } { ...tweetCardPropsByTweet(tweet) } />
-          </ListItem>
-        )) }
-      </List>
-    </Grid>
-  </Grid>
-);
+const TweetList = props => {
+  if(props.tweets.length > 0) {
+    return(
+      <Grid container justify="center">
+        <Grid item lg={ 8 }>
+          <List>
+            { props.tweets.map((tweet) => (
+              <ListItem divider disableGutters key={ tweet.tweet_id }>
+                <TweetCard key={ tweet.tweet_id } { ...tweetCardPropsByTweet(tweet) } />
+              </ListItem>
+            )) }
+          </List>
+        </Grid>
+      </Grid>
+    );
+  }else{
+    return <p>ツイートが存在しません</p>;
+  }
+};
 
 export default TweetList;

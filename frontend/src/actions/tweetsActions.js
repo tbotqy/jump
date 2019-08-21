@@ -1,16 +1,8 @@
 import api from "../utils/api";
 
-export function fetchPublicTweets(year, month, day) {
-  const params = { year: year, month: month, day: day };
-  return dispatch => {
-    dispatch(startedToFetchTweets());
-    return api.get("/statuses", params)
-      .then(response => response.data)
-      .then(tweets => {
-        dispatch(setTweets(tweets));
-        dispatch(finishedToFetchTweets());
-      });
-  };
+export function fetchPublicTweets(year, month, day, page) {
+  const params = { year: year, month: month, day: day, page: page };
+  return () => api.get("/statuses", params);
 }
 
 export function setTweets(tweets) {
@@ -20,23 +12,23 @@ export function setTweets(tweets) {
   };
 }
 
-export function startedToFetchTweets() {
+export function appendTweets(tweets) {
   return {
-    type: "STARTED_TO_FETCH_TWEETS",
-    isFetching: true
+    type: "APPEND_TWEETS",
+    tweets
   };
 }
 
-export function finishedToFetchTweets() {
+export function setIsFetching(flag) {
   return {
-    type: "FINISHED_TO_FETCH_TWEETS",
-    isFetching: false
+    type: "SET_IS_FETCHING",
+    flag
   };
 }
 
-export function failedToFetchTweets() {
+export function setIsFetchingMore(flag) {
   return {
-    type: "FAILED_TO_FETCH_TWEETS",
-    isFetching: false
+    type: "SET_IS_FETCHING_MORE",
+    flag
   };
 }
