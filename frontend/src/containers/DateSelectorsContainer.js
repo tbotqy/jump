@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
   selectedMonth:    state.selectableDates.selectedMonth,
   selectedDay:      state.selectableDates.selectedDay,
   loaded:           state.selectableDates.loaded,
-  timelineBasePath: state.timelinePath.timelineBasePath
+  timelineBasePath: state.timeline.timelineBasePath
 });
 
 const mapDispatchToProps = dispatch => ({

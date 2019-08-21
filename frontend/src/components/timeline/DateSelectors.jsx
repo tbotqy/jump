@@ -88,7 +88,6 @@ class DateSelectors extends React.Component {
     this.props.setSelectedYear(selectedYear);
     this.props.setSelectedMonth(selectedMonth);
     this.props.setSelectedDay(selectedDay);
-
   }
 
   render() {
