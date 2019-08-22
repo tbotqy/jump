@@ -3,6 +3,9 @@ class DateCollection {
     dates: [{"2019": [{"3": ["31", "29"]}]}]
   */
   constructor(dates) {
+    if(dates.length === 0) {
+      throw Error("Given dates is empty.");
+    }
     this.dates = dates;
   }
 

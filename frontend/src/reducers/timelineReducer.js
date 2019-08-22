@@ -1,7 +1,5 @@
 const initialState = {
-  timelineBasePath: null,
-  currentPage: 1,
-  noMoreTweets: false
+  timelineBasePath: null
 };
 
 export default function timelineReducer(state = initialState, action) {
@@ -10,16 +8,6 @@ export default function timelineReducer(state = initialState, action) {
     return {
       ...state,
       timelineBasePath: action.path
-    };
-  case "SET_CURRENT_PAGE":
-    return {
-      ...state,
-      currentPage: action.page
-    };
-  case "SET_NO_MORE_TWEETS":
-    return {
-      ...state,
-      noMoreTweets: action.flag
     };
   default:
     return state;

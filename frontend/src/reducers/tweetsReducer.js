@@ -1,7 +1,7 @@
 const initialState = {
   tweets: [],
   isFetching: false,
-  isFetchingMore: false
+  hasMore: true
 };
 
 export default function tweetsReducer(state = initialState, action) {
@@ -21,16 +21,11 @@ export default function tweetsReducer(state = initialState, action) {
       ...state,
       isFetching: action.flag
     };
-  case "SET_IS_FETCHING_MORE":
+  case "SET_HAS_MORE":
     return {
       ...state,
-      isFetchingMore: action.flag
-    };
-  case "FAILED_TO_FETCH_TWEETS":
-    return {
-      ...state,
-      isFetching: action.isFetching
-    };
+      hasMore: action.flag
+    }
   default:
     return state;
   }

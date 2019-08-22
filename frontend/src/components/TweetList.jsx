@@ -1,8 +1,12 @@
 import React from "react";
+import shortid from "shortid";
+import InfiniteScroll from "react-infinite-scroller";
 import {
   Grid,
   List,
-  ListItem
+  ListItem,
+  Box,
+  CircularProgress
 } from "@material-ui/core";
 import TweetCard from "./TweetCard";
 
@@ -34,23 +38,54 @@ const tweetCardPropsByTweet = tweet => {
   }
 };
 
-const TweetList = props => {
-  if(props.tweets.length > 0) {
-    return(
-      <Grid container justify="center">
-        <Grid item lg={ 8 }>
-          <List>
-            { props.tweets.map((tweet) => (
-              <ListItem divider disableGutters key={ tweet.tweet_id }>
-                <TweetCard key={ tweet.tweet_id } { ...tweetCardPropsByTweet(tweet) } />
-              </ListItem>
-            )) }
-          </List>
+const loader = (
+  <Box key={ shortid.generate() } display="flex" justifyContent="center" p={ 3 }>
+      <CircularProgress />
+  </Box>
+);
+
+class TweetList extends React.Component {
+  loadMore(nextPage) {
+    const { selectedYear, selectedMonth, selectedDay } = this.props;
+    this.props.tweetsFetcher(selectedYear, selectedMonth, selectedDay, nextPage)
+      .then( response => {
+        this.props.appendTweets(response.data);
+      }).catch( error => {
+        switch(error.response.status) {
+        case 404:
+          this.props.setHasMore(false);
+          break;
+        default:
+          alert("error!"); // TODO: implement
+        }
+      })
+  }
+
+  render() {
+    if(this.props.tweets.length > 0) {
+      return(
+        <Grid container justify="center">
+          <Grid item lg={ 8 }>
+            <List>
+              <InfiniteScroll
+                hasMore={ this.props.hasMore }
+                loadMore={ this.loadMore.bind(this) }
+                loader={ loader }
+                pageStart={ 1 }
+              >
+                { this.props.tweets.map( tweet => (
+                  <ListItem divider disableGutters key={ tweet.tweet_id }>
+                    <TweetCard { ...tweetCardPropsByTweet(tweet) } />
+                  </ListItem>
+                )) }
+              </InfiniteScroll>
+            </List>
+          </Grid>
         </Grid>
-      </Grid>
-    );
-  }else{
-    return <p>ツイートが存在しません</p>;
+      );
+    }else{
+      return <p>ツイートが存在しません</p>;
+    }
   }
 };
 

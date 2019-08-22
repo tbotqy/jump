@@ -26,9 +26,9 @@ export function setIsFetching(flag) {
   };
 }
 
-export function setIsFetchingMore(flag) {
+export function setHasMore(flag) {
   return {
-    type: "SET_IS_FETCHING_MORE",
+    type: "SET_HAS_MORE",
     flag
   };
 }
