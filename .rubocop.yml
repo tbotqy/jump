@@ -6,3 +6,5 @@ AllCops:
   TargetRubyVersion: 2.6.3
 FactoryBot/AttributeDefinedStatically:
   Enabled: true
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
