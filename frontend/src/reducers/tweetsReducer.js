@@ -25,7 +25,7 @@ export default function tweetsReducer(state = initialState, action) {
     return {
       ...state,
       hasMore: action.flag
-    }
+    };
   default:
     return state;
   }

@@ -40,7 +40,7 @@ const tweetCardPropsByTweet = tweet => {
 
 const loader = (
   <Box key={ shortid.generate() } display="flex" justifyContent="center" p={ 3 }>
-      <CircularProgress />
+    <CircularProgress />
   </Box>
 );
 
@@ -58,7 +58,7 @@ class TweetList extends React.Component {
         default:
           alert("error!"); // TODO: implement
         }
-      })
+      });
   }
 
   render() {
@@ -87,6 +87,6 @@ class TweetList extends React.Component {
       return <p>ツイートが存在しません</p>;
     }
   }
-};
+}
 
 export default TweetList;

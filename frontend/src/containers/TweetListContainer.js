@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   appendTweets: tweets => dispatch(appendTweets(tweets)),
   setHasMore:   flag => dispatch(setHasMore(flag))
-})
+});
 
 export default connect(
   mapStateToProps,
