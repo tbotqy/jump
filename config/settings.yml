@@ -1,11 +1,11 @@
 site_name: <%= ENV.fetch('SITE_NAME') %>
 
 redis:
-  namespace: <%= [Rails.application.class.parent_name, Rails.env].join(":") %>
+  namespace: <%= [Rails.application.class.module_parent_name, Rails.env].join(":") %>
   endpoint:  redis://<%= ENV.fetch("JUMP_CACHE_HOST") %>:<%= ENV.fetch("JUMP_CACHE_PORT") %>/0
 
 sidekiq:
-  namespace: <%= [Rails.application.class.parent_name, Rails.env, "sidekiq"].join(":") %>
+  namespace: <%= [Rails.application.class.module_parent_name, Rails.env, "sidekiq"].join(":") %>
 
 twitter:
   consumer_key: <%= ENV.fetch('TWITTER_CONSUMER_KEY') %>
