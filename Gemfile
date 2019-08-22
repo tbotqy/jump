@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem "dotenv-rails"
-gem "rails", "~> 5.2.0"
+gem "rails", "~> 6.0.0"
 gem "mysql2"
 gem "puma"
 gem "config"
