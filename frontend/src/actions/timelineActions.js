@@ -11,10 +11,3 @@ export function setCurrentPage(page) {
     page
   };
 }
-
-export function setNoMoreTweets(flag) {
-  return {
-    type: "SET_NO_MORE_TWEETS",
-    flag
-  };
-}
