@@ -51,41 +51,36 @@ class TweetList extends React.Component {
       .then( response => {
         this.props.appendTweets(response.data);
       }).catch( error => {
-        switch(error.response.status) {
-        case 404:
-          this.props.setHasMore(false);
-          break;
-        default:
-          alert("error!"); // TODO: implement
+        this.props.setHasMore(false);
+        const statusCode = error.response.status;
+        if(statusCode !== 404) {
+          this.props.setApiErrorCode(statusCode);
         }
       });
   }
 
   render() {
-    if(this.props.tweets.length > 0) {
-      return(
-        <Grid container justify="center">
-          <Grid item lg={ 8 }>
-            <List>
-              <InfiniteScroll
-                hasMore={ this.props.hasMore }
-                loadMore={ this.loadMore.bind(this) }
-                loader={ loader }
-                pageStart={ 1 }
-              >
-                { this.props.tweets.map( tweet => (
-                  <ListItem divider disableGutters key={ tweet.tweet_id }>
-                    <TweetCard { ...tweetCardPropsByTweet(tweet) } />
-                  </ListItem>
-                )) }
-              </InfiniteScroll>
-            </List>
-          </Grid>
+    return(
+      <Grid container justify="center">
+        <Grid item lg={ 8 }>
+          <List>
+            <InfiniteScroll
+              initialLoad={ false }
+              hasMore={ this.props.hasMore }
+              loadMore={ this.loadMore.bind(this) }
+              loader={ loader }
+              pageStart={ 1 }
+            >
+              { this.props.tweets.map( tweet => (
+                <ListItem divider disableGutters key={ tweet.tweet_id }>
+                  <TweetCard { ...tweetCardPropsByTweet(tweet) } />
+                </ListItem>
+              )) }
+            </InfiniteScroll>
+          </List>
         </Grid>
-      );
-    }else{
-      return <p>ツイートが存在しません</p>;
-    }
+      </Grid>
+    );
   }
 }
 

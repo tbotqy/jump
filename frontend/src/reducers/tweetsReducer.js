@@ -1,7 +1,8 @@
 const initialState = {
   tweets: [],
   isFetching: false,
-  hasMore: true
+  hasMore: true,
+  noTweetFound: false
 };
 
 export default function tweetsReducer(state = initialState, action) {

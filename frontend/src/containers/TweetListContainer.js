@@ -3,6 +3,7 @@ import {
   appendTweets,
   setHasMore
 } from "../actions/tweetsActions";
+import { setApiErrorCode } from "../actions/apiErrorActions";
 import TweetList from "../components/TweetList";
 
 const mapStateToProps = state => ({
@@ -15,7 +16,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   appendTweets: tweets => dispatch(appendTweets(tweets)),
-  setHasMore:   flag => dispatch(setHasMore(flag))
+  setHasMore:   flag => dispatch(setHasMore(flag)),
+  setApiErrorCode: code => dispatch(setApiErrorCode(code))
 });
 
 export default connect(

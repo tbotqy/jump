@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import HeadNav       from "./HeadNav";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import TweetList     from "../containers/TweetListContainer";
+import Error         from "./Error";
 
 const styles = theme => ({
   container: {
@@ -30,15 +31,27 @@ class PublicTimeline extends React.Component {
     this.fetchTweetsToReset(year, month, day);
   }
 
+  content() {
+    if(this.props.apiErrorCode) {
+      return <Error apiErrorCode={ this.props.apiErrorCode } />
+    }else{
+      return(
+        <>
+          <div className={ this.props.classes.tweetListContainer }>
+            { this.props.isFetching ? <LinearProgress /> : <TweetList tweetsFetcher={ this.props.fetchPublicTweets } /> }
+          </div>
+          { this.props.tweets.length > 0 && <DateSelectors selectableDatesFetcher={ this.props.fetchPublicSelectableDates } tweetsFetcher={ this.fetchTweetsToReset.bind(this) } /> }
+        </>
+      );
+    }
+  }
+
   render() {
     return(
       <>
         <HeadNav />
         <Container className={ this.props.classes.container }>
-          <div className={ this.props.classes.tweetListContainer }>
-            { this.props.isFetching ? <LinearProgress /> : <TweetList tweetsFetcher={ this.props.fetchPublicTweets } /> }
-          </div>
-          { this.props.tweets.length > 0 && <DateSelectors selectableDatesFetcher={ this.props.fetchPublicSelectableDates } tweetsFetcher={ this.fetchTweetsToReset.bind(this) } /> }
+          { this.content() }
         </Container>
       </>
     );
@@ -49,8 +62,8 @@ class PublicTimeline extends React.Component {
     this.props.fetchPublicTweets(year, month, day)
       .then( response => {
         this.props.setTweets(response.data);
-      }).catch( () => {
-
+      }).catch( error => {
+        this.props.setApiErrorCode(error.response.status);
       }).then( () => {
         this.props.setIsFetching(false);
       });
