@@ -34,7 +34,8 @@ class Footer extends React.Component {
               © 2012-{ new Date().getFullYear() }
               <Link
                 color="inherit"
-                href="/"
+                component={ RouterLink }
+                to="/"
                 className={ this.props.classes.link }
               >
                 twitjump.me
