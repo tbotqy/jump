@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   Menu,
@@ -59,7 +60,7 @@ class TimelineSwitch extends React.Component {
 
   MyMenuItem(icon, primaryText, secondaryText, href) {
     return (
-      <MenuItem component="a" href={ href }>
+      <MenuItem component={ Link } to={ href }>
         <ListItemIcon>
           { icon }
         </ListItemIcon>

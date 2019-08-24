@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Menu,
   MenuItem,
@@ -50,7 +51,7 @@ class UserMenu extends React.Component {
 
   MyMenuItem(icon, text, href) {
     return (
-      <MenuItem component="a" href={ href }>
+      <MenuItem component={ Link } to={ href }>
         <ListItemIcon>
           { icon }
         </ListItemIcon>

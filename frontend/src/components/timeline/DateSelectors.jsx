@@ -15,27 +15,41 @@ const styles = theme => ({
 });
 
 class DateSelectors extends React.Component {
+  constructor(props) {
+    super(props);
+
+    if(this.props.selectableDates.length > 0) {
+      this.dateParser = new DateCollection(this.props.selectableDates);
+    }
+  }
+
   componentDidMount() {
-    this.props.selectableDatesFetcher()
-      .then( selectableDates => {
-        this.props.setSelectableDates(selectableDates);
-        const { params }    = this.props.match;
-        const dateParser    = new DateCollection(selectableDates);
+    if(this.props.selectableDates.length <= 0) {
+      this.props.selectableDatesFetcher()
+        .then( selectableDates => {
+          this.props.setSelectableDates(selectableDates);
+          const { params }    = this.props.match;
+          const dateParser    = new DateCollection(selectableDates);
 
-        const selectedYear  = params.year  || dateParser.latestYear();
-        const selectedMonth = params.month || dateParser.latestMonthByYear(selectedYear);
-        const selectedDay   = params.day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+          const selectedYear  = params.year  || dateParser.latestYear();
+          const selectedMonth = params.month || dateParser.latestMonthByYear(selectedYear);
+          const selectedDay   = params.day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
 
-        this.props.setSelectedYear(selectedYear);
-        this.props.setSelectedMonth(selectedMonth);
-        this.props.setSelectedDay(selectedDay);
-        this.dateParser = dateParser;
+          this.props.setSelectedYear(selectedYear);
+          this.props.setSelectedMonth(selectedMonth);
+          this.props.setSelectedDay(selectedDay);
+          this.dateParser = dateParser;
 
-        this.props.finishedToFetchSelectableDates();
-      }).catch( error => {
-        this.props.setApiErrorCode(error.response.status);
-      });
+          this.props.finishedToFetchSelectableDates();
+        }).catch( error => {
+          this.props.setApiErrorCode(error.response.status);
+        });
+    }
     window.onpopstate = this.onBackOrForwardButtonEvent.bind(this);
+  }
+
+  componentWillUnmount() {
+    window.onpopstate = () => {};
   }
 
   handleYearChange(year) {
@@ -79,6 +93,10 @@ class DateSelectors extends React.Component {
 
   onBackOrForwardButtonEvent(e) {
     e.preventDefault();
+    if(this.props.tweetsAreBeingFetched) {
+      return;
+    }
+
     const { year, month, day } = this.props.match.params;
     this.props.tweetsFetcher(year, month, day);
 

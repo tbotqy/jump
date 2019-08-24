@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -62,7 +63,8 @@ class Top extends React.Component {
                         fullWidth
                         variant="contained"
                         color="primary"
-                        href="/public_timeline"
+                        component={ Link }
+                        to="/public_timeline"
                       >
                         公開タイムラインを見てみる
                         <InputIcon
