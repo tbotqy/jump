@@ -19,8 +19,6 @@ class DateSelectors extends React.Component {
     this.props.selectableDatesFetcher()
       .then( selectableDates => {
         this.props.setSelectableDates(selectableDates);
-        return selectableDates;
-      }).then( selectableDates => {
         const { params }    = this.props.match;
         const dateParser    = new DateCollection(selectableDates);
 
@@ -34,7 +32,9 @@ class DateSelectors extends React.Component {
         this.dateParser = dateParser;
 
         this.props.finishedToFetchSelectableDates();
-      });
+    }).catch( error => {
+      this.props.setApiErrorCode(error.response.status)
+    });
     window.onpopstate = this.onBackOrForwardButtonEvent.bind(this);
   }
 

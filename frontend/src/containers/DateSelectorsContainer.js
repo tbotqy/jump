@@ -6,6 +6,7 @@ import {
   setSelectedDay,
   finishedToFetchSelectableDates
 } from "../actions/selectableDatesActions";
+import { setApiErrorCode } from "../actions/apiErrorActions";
 import DateSelectors from "../components/timeline/DateSelectors";
 
 const mapStateToProps = state => ({
@@ -22,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   setSelectedYear:     year  => dispatch(setSelectedYear(year)),
   setSelectedMonth:    month => dispatch(setSelectedMonth(month)),
   setSelectedDay:      day   => dispatch(setSelectedDay(day)),
+  setApiErrorCode:     code  => dispatch(setApiErrorCode(code)),
   finishedToFetchSelectableDates: () => dispatch(finishedToFetchSelectableDates())
 });
 
