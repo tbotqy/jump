@@ -32,9 +32,9 @@ class DateSelectors extends React.Component {
         this.dateParser = dateParser;
 
         this.props.finishedToFetchSelectableDates();
-    }).catch( error => {
-      this.props.setApiErrorCode(error.response.status)
-    });
+      }).catch( error => {
+        this.props.setApiErrorCode(error.response.status);
+      });
     window.onpopstate = this.onBackOrForwardButtonEvent.bind(this);
   }
 

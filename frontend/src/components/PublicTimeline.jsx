@@ -33,7 +33,7 @@ class PublicTimeline extends React.Component {
 
   content() {
     if(this.props.apiErrorCode) {
-      return <Error apiErrorCode={ this.props.apiErrorCode } />
+      return <Error apiErrorCode={ this.props.apiErrorCode } />;
     }else{
       return(
         <>
