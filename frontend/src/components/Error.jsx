@@ -24,7 +24,7 @@ const errorMessage = apiErrorCode => {
   case 404:
     return "ツイートが見つかりませんでした :-(";
   default:
-    return "サーバーエラーが発生しました";
+    return "サーバーエラーが発生しました。時間をおいて再度お試し願います。";
   }
 }
 
