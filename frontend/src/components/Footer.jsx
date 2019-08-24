@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Container,
   Grid,
@@ -44,7 +45,8 @@ class Footer extends React.Component {
             <Typography color="textSecondary">
               <Link
                 color="inherit"
-                href="/terms_and_privacy"
+                component={ RouterLink }
+                to="/terms_and_privacy"
               >
                 利用規約・プライバシーポリシー
               </Link>
