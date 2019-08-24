@@ -40,7 +40,7 @@ class Status < ApplicationRecord
   validates :tweeted_on,              presence: true
 
   scope :not_private,               -> { where(private_flag: false) }
-  scope :order_by_newest_to_oldest, -> { order(tweet_id_reversed: :asc) }
+  scope :order_by_newest_to_oldest, -> { order(tweeted_at_reversed: :asc, tweet_id_reversed: :asc) }
   scope :tweeted_at_or_before,      -> (time) do
     boundary = time.to_i
     where("tweeted_at_reversed >= ?", -1 * boundary)
@@ -58,7 +58,7 @@ class Status < ApplicationRecord
       text:       text,
       tweeted_at: Time.zone.at(tweeted_at).iso8601,
       is_retweet: is_retweet,
-      urls:       urls.as_json,
+      urls:       (urls + media).as_json,
       user:       user.as_json
     }
     if is_retweet?

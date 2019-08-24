@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2019_08_14_204703) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["private_flag", "tweet_id_reversed"], name: "index_statuses_on_private_flag_and_tweet_id_reversed"
+    t.index ["private_flag", "tweeted_at_reversed", "tweet_id_reversed"], name: "index_statuses_for_public_timeline"
     t.index ["tweet_id"], name: "index_statuses_on_tweet_id", unique: true
     t.index ["tweeted_on", "private_flag"], name: "index_statuses_on_tweeted_on_and_private_flag"
     t.index ["tweeted_on"], name: "index_statuses_on_tweeted_on"
