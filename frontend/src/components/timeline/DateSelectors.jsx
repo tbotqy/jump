@@ -18,126 +18,110 @@ class DateSelectors extends React.Component {
   constructor(props) {
     super(props);
 
-    if(this.props.selectableDates.length > 0) {
-      this.dateParser = new DateCollection(this.props.selectableDates);
-    }
-  }
+    const dateParser = new DateCollection(props.selectableDates);
+    this.dateParser  = dateParser;
 
-  componentDidMount() {
-    if(this.props.selectableDates.length <= 0) {
-      this.props.selectableDatesFetcher()
-        .then( selectableDates => {
-          this.props.setSelectableDates(selectableDates);
-          const { params }    = this.props.match;
-          const dateParser    = new DateCollection(selectableDates);
+    const { year, month, day } = props.match.params;
+    const selectedYear  = year  || dateParser.latestYear();
+    const selectedMonth = month || dateParser.latestMonthByYear(selectedYear);
+    const selectedDay   = day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
 
-          const selectedYear  = params.year  || dateParser.latestYear();
-          const selectedMonth = params.month || dateParser.latestMonthByYear(selectedYear);
-          const selectedDay   = params.day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+    this.state = { selectedYear, selectedMonth, selectedDay };
 
-          this.props.setSelectedYear(selectedYear);
-          this.props.setSelectedMonth(selectedMonth);
-          this.props.setSelectedDay(selectedDay);
-          this.dateParser = dateParser;
-
-          this.props.finishedToFetchSelectableDates();
-        }).catch( error => {
-          this.props.setApiErrorCode(error.response.status);
-        });
-    }
-    window.onpopstate = this.onBackOrForwardButtonEvent.bind(this);
-  }
-
-  componentWillUnmount() {
-    window.onpopstate = () => {};
+    this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
+    window.addEventListener("popstate", this.onPopStateFunc);
   }
 
   handleYearChange(year) {
-    this.props.setSelectedYear(year);
-    // reset other selectors
     const month = this.dateParser.latestMonthByYear(year);
     const day   = this.dateParser.latestDayByYearAndMonth(year, month);
-    this.props.setSelectedMonth(month);
-    this.props.setSelectedDay(day);
-    // fetch tweets with currently selected values
-    this.props.tweetsFetcher(year, month, day);
+    this.setState({
+      selectedYear:  year,
+      selectedMonth: month,
+      selectedDay:   day
+    });
+
+    this.fetchTweets(year, month, day);
     this.updateDatePath(year);
+    this.props.resetPage();
     scrollToTop();
   }
 
   handleMonthChange(month) {
-    const year = this.props.selectedYear;
-    this.props.setSelectedMonth(month);
-    // reset day selector
-    const day = this.dateParser.latestDayByYearAndMonth(year, month);
-    this.props.setSelectedDay(day);
-    // fetch tweets with currently selected values
-    this.props.tweetsFetcher(year, month, day);
+    const year = this.state.selectedYear;
+    const day  = this.dateParser.latestDayByYearAndMonth(year, month);
+    this.setState({
+      selectedMonth: month,
+      selectedDay:   day
+    });
+
+    this.fetchTweets(year, month, day);
     this.updateDatePath(`${year}/${month}`);
+    this.props.resetPage();
     scrollToTop();
   }
 
   handleDayChange(day) {
-    this.props.setSelectedDay(day);
-    // fetch tweets with currently selected values
-    const { selectedYear, selectedMonth } = this.props;
-    this.props.tweetsFetcher(selectedYear, selectedMonth, day);
+    this.setState({ selectedDay: day });
+
+    const { selectedYear, selectedMonth } = this.state;
+    this.fetchTweets(selectedYear, selectedMonth, day);
     this.updateDatePath(`${selectedYear}/${selectedMonth}/${day}`);
+    this.props.resetPage();
     scrollToTop();
   }
 
   updateDatePath(datePath) {
-    const path = `${this.props.timelineBasePath}${datePath}`;
-    this.props.history.push(path);
+    const timelineType = this.props.match.path.split("/")[1]; // e.g public_timeline
+    const newPath = `/${timelineType}/${datePath}`;
+    this.props.history.push(newPath);
   }
 
   onBackOrForwardButtonEvent(e) {
     e.preventDefault();
-    if(this.props.tweetsAreBeingFetched) {
-      return;
-    }
 
     const { year, month, day } = this.props.match.params;
-    this.props.tweetsFetcher(year, month, day);
-
     const selectedYear  = year  || this.dateParser.latestYear();
     const selectedMonth = month || this.dateParser.latestMonthByYear(selectedYear);
     const selectedDay   = day   || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
-    this.props.setSelectedYear(selectedYear);
-    this.props.setSelectedMonth(selectedMonth);
-    this.props.setSelectedDay(selectedDay);
+    this.setState({ selectedYear, selectedMonth, selectedDay });
   }
 
   render() {
-    if (!this.props.loaded) {
-      return <></>;
-    }else{
-      return(
-        <Grid container justify="flex-end" spacing={ 1 } className={ this.props.classes.container }>
-          <Grid item>
-            <Selector
-              selections={ this.dateParser.years() }
-              selectedValue={ this.props.selectedYear }
-              selectedValueUpdater={ this.handleYearChange.bind(this) }
-            />
-          </Grid>
-          <Grid item>
-            <Selector
-              selections={ this.dateParser.monthsByYear(this.props.selectedYear) }
-              selectedValue={ this.props.selectedMonth }
-              selectedValueUpdater={ this.handleMonthChange.bind(this) }
-            />
-          </Grid>
-          <Grid item>
-            <Selector
-              selections={ this.dateParser.daysByYearAndMonth(this.props.selectedYear, this.props.selectedMonth) }
-              selectedValue={ this.props.selectedDay }
-              selectedValueUpdater={ this.handleDayChange.bind(this) }
-            />
-          </Grid>
+    return(
+      <Grid container justify="flex-end" spacing={ 1 } className={ this.props.classes.container }>
+        <Grid item>
+          <Selector
+            selections={ this.dateParser.years() }
+            selectedValue={ this.state.selectedYear }
+            selectedValueUpdater={ this.handleYearChange.bind(this) }
+          />
         </Grid>
-      );
-    }
+        <Grid item>
+          <Selector
+            selections={ this.dateParser.monthsByYear(this.state.selectedYear) }
+            selectedValue={ this.state.selectedMonth }
+            selectedValueUpdater={ this.handleMonthChange.bind(this) }
+          />
+        </Grid>
+        <Grid item>
+          <Selector
+            selections={ this.dateParser.daysByYearAndMonth(this.state.selectedYear, this.state.selectedMonth) }
+            selectedValue={ this.state.selectedDay }
+            selectedValueUpdater={ this.handleDayChange.bind(this) }
+          />
+        </Grid>
+      </Grid>
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.onPopStateFunc);
+  }
+
+  fetchTweets(year, month, day) {
+    this.props.onSelectionChangeTweetsFetchFunc(year, month, day)
+      .then( response => this.props.setTweets(response.data));
   }
 }
 

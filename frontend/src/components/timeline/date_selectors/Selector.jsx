@@ -22,16 +22,19 @@ function Selector(props) {
   }
 
   return (
-    <React.Fragment>
+    props.selections.length > 0 &&
+    <>
       <Fab variant="extended" color="primary" onClick={ handleClick }>{ props.selectedValue }</Fab>
       <Menu anchorEl={ anchorEl } open={ Boolean(anchorEl) } onClose={ handleClose }>
-        { props.selections.map((selection, i) => (
-          <MenuItem key={ i } onClick={ () => handleItemSelect(selection) } >
-            { selection }
-          </MenuItem>
-        )) }
+        {
+          props.selections.map((selection, i) => (
+            <MenuItem key={ i } onClick={ () => handleItemSelect(selection) } >
+              { selection }
+            </MenuItem>
+          ))
+        }
       </Menu>
-    </React.Fragment>
+    </>
   );
 }
 
