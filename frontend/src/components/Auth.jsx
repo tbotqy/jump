@@ -13,10 +13,10 @@ class Auth extends React.Component {
 
   render() {
     return this.state.isAuthenticated ? (
-      <Route children={this.props.children} />
+      <Route>{ this.props.children }</Route>
     ) : (
-      <Redirect to={"/"} />
-    )
+      <Redirect to={ "/" } />
+    );
   }
 }
 
