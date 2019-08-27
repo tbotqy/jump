@@ -15,6 +15,10 @@ Rails.application.routes.draw do
     "#{Settings.frontend_host}/statuses/import"
   end
 
+  direct :service_top do
+    Settings.frontend_host
+  end
+
   resources :statuses, only: %i|index|
 
   resources :tweeted_dates, only: %i|index|
