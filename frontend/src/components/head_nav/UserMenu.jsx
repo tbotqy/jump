@@ -41,22 +41,21 @@ class UserMenu extends React.Component {
           </Box>
           <Divider />
           <MenuList>
-            { this.MyMenuItem(<AutorenewIcon />, "データ管理", "/data") }
-            { this.MyMenuItem(<ExitToAppIcon />, "ログアウト", "/") }
+            <MenuItem component={ Link } to="/data">
+              <ListItemIcon>
+                <AutorenewIcon />
+              </ListItemIcon>
+              <ListItemText primary="データ管理" />
+            </MenuItem>
+            <MenuItem component="a" href={ `${process.env.REACT_APP_AUTH_ORIGIN}/sign_out` }>
+              <ListItemIcon>
+                <ExitToAppIcon />
+              </ListItemIcon>
+              <ListItemText primary="ログアウト" />
+            </MenuItem>
           </MenuList>
         </Menu>
       </React.Fragment>
-    );
-  }
-
-  MyMenuItem(icon, text, href) {
-    return (
-      <MenuItem component={ Link } to={ href }>
-        <ListItemIcon>
-          { icon }
-        </ListItemIcon>
-        <ListItemText primary={ text } />
-      </MenuItem>
     );
   }
 

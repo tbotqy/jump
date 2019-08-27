@@ -1,12 +1,12 @@
 import api from "../utils/api";
-import Cookie from "js-cookie";
+import getUserIdFromCookie from "../utils/getUserIdFromCookie";
 
 export function fetchPublicSelectableDates() {
   return () => api.get("/tweeted_dates");
 }
 
 export function fetchUserSelectableDates() {
-  const userId = Cookie.get("user_id");
+  const userId = getUserIdFromCookie();
   return () => api.get(`/users/${userId}/tweeted_dates`);
 }
 
