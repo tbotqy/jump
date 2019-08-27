@@ -8,6 +8,7 @@ import {
   setSelectableDates,
   fetchUserSelectableDates
 } from "../actions/selectableDatesActions";
+import { setApiErrorCode } from "../actions/apiErrorActions";
 import UserTimeline from "../components/UserTimeline";
 
 const mapDispatchToProps = dispatch => ({
@@ -15,7 +16,8 @@ const mapDispatchToProps = dispatch => ({
   setIsFetching:            flag => dispatch(setIsFetching(flag)),
   setSelectableDates:       dates => dispatch(setSelectableDates(dates)),
   fetchUserTweets:          (year, month, day, page) => dispatch(fetchUserTweets(year, month, day, page)),
-  fetchUserSelectableDates: () => dispatch(fetchUserSelectableDates())
+  fetchUserSelectableDates: () => dispatch(fetchUserSelectableDates()),
+  setApiErrorCode:          code => dispatch(setApiErrorCode(code))
 });
 
 export default connect(null, mapDispatchToProps)(UserTimeline);
