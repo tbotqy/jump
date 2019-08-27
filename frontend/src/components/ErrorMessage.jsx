@@ -28,7 +28,7 @@ const errorMessage = apiErrorCode => {
   }
 };
 
-const Error = props => {
+const ErrorMessage = props => {
   return(
     <Grid container direction="row" spacing={ 5 } className={ props.classes.container } >
       <Grid item xs={ 12 } className={ props.classes.item } >
@@ -41,4 +41,4 @@ const Error = props => {
   );
 };
 
-export default withRouter(withStyles(styles)(Error));
+export default withRouter(withStyles(styles)(ErrorMessage));

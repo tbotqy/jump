@@ -9,7 +9,7 @@ import scrollToTop   from "./../utils/scrollToTop";
 import HeadNav       from "./HeadNav";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import TweetList     from "../containers/TweetListContainer";
-import Error         from "./Error";
+import ErrorMessage  from "./ErrorMessage";
 
 const styles = theme => ({
   container: {
@@ -47,7 +47,7 @@ class Timeline extends React.Component {
 
   content() {
     if(this.props.apiErrorCode) {
-      return <Error apiErrorCode={ this.props.apiErrorCode } />;
+      return <ErrorMessage apiErrorCode={ this.props.apiErrorCode } />;
     }else{
       return(
         <>

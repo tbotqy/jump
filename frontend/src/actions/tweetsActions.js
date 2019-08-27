@@ -2,13 +2,13 @@ import api from "../utils/api";
 import Cookie from "js-cookie";
 
 export function fetchPublicTweets(year, month, day, page) {
-  const params = { year: year, month: month, day: day, page: page };
+  const params = { year, month, day, page };
   return () => api.get("/statuses", params);
 }
 
 export function fetchUserTweets(year, month, day, page) {
   const userId = Cookie.get("user_id");
-  const params = { year: year, month: month, day: day, page: page };
+  const params = { year, month, day, page };
   return () => api.get(`/users/${userId}/statuses`, params);
 }
 
