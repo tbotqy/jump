@@ -8,11 +8,11 @@ Rails.application.routes.draw do
   end
 
   direct :user_timeline do
-    "/user_timeline"
+    "#{Settings.frontend_host}/user_timeline"
   end
 
   direct :status_import do
-    "/statuses/import"
+    "#{Settings.frontend_host}/statuses/import"
   end
 
   resources :statuses, only: %i|index|
