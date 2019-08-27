@@ -75,7 +75,7 @@ RSpec.describe "User authentication", type: :request do
 
             context "the user has never imported its own tweets yet" do
               let!(:authenticating_user) { create(:user) }
-              it { expect(response).to redirect_to status_import_path }
+              it { expect(response).to redirect_to status_import_url }
               it_behaves_like "includes user_id as a value of Set-Cookie attr in response header"
             end
             context "the user has already imported its own tweets" do
@@ -84,7 +84,7 @@ RSpec.describe "User authentication", type: :request do
                 create_list(:status, 3, user: user)
                 user
               end
-              it { expect(response).to redirect_to user_timeline_path }
+              it { expect(response).to redirect_to user_timeline_url }
               it_behaves_like "includes user_id as a value of Set-Cookie attr in response header"
             end
           end
