@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import shortid from "shortid";
 import InfiniteScroll from "react-infinite-scroller";
 import {
@@ -45,11 +46,13 @@ const loader = (
 );
 
 class TweetList extends React.Component {
-  loadMore(nextPage) {
-    const { selectedYear, selectedMonth, selectedDay } = this.props;
-    this.props.tweetsFetcher(selectedYear, selectedMonth, selectedDay, nextPage)
+  loadMore() {
+    const { year, month, day } = this.props.match.params;
+    const nextPage = this.props.page + 1;
+    this.props.onLoadMoreTweetsFetchFunc(year, month, day, nextPage)
       .then( response => {
         this.props.appendTweets(response.data);
+        this.props.setPage(nextPage);
       }).catch( error => {
         this.props.setHasMore(false);
         const statusCode = error.response.status;
@@ -57,6 +60,10 @@ class TweetList extends React.Component {
           this.props.setApiErrorCode(statusCode);
         }
       });
+  }
+
+  componentDidMount() {
+    this.props.resetPage();
   }
 
   render() {
@@ -69,7 +76,6 @@ class TweetList extends React.Component {
               hasMore={ this.props.hasMore }
               loadMore={ this.loadMore.bind(this) }
               loader={ loader }
-              pageStart={ 1 }
             >
               { this.props.tweets.map( tweet => (
                 <ListItem divider disableGutters key={ tweet.tweet_id }>
@@ -84,4 +90,4 @@ class TweetList extends React.Component {
   }
 }
 
-export default TweetList;
+export default withRouter(TweetList);

@@ -1,17 +1,17 @@
 import React from "react";
 import Timeline from "../containers/TimelineContainer";
 
-class PublicTimeline extends React.Component {
+class UserTimeline extends React.Component {
   fetchTweets(year, month, day) {
     this.props.setIsFetching(true);
-    this.props.fetchPublicTweets(year, month, day)
+    this.props.fetchUserTweets(year, month, day)
       .then( response => this.props.setTweets(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) )
       .finally( () => this.props.setIsFetching(false) );
   }
 
   fetchSelectableDates(year, month, day) {
-    this.props.fetchPublicSelectableDates(year, month, day)
+    this.props.fetchUserSelectableDates(year, month, day)
       .then( response => this.props.setSelectableDates(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) );
   }
@@ -24,8 +24,8 @@ class PublicTimeline extends React.Component {
   }
 
   render() {
-    return <Timeline tweetsFetchFunc={ this.props.fetchPublicTweets.bind(this) } />;
+    return <Timeline tweetsFetchFunc={ this.props.fetchUserTweets.bind(this) } />;
   }
 }
 
-export default PublicTimeline;
+export default UserTimeline;

@@ -52,13 +52,21 @@ class DateCollection {
 
   monthsAndDaysByYear(year) {
     const hash = this.dates.find( yearAndMonths => Object.keys(yearAndMonths)[0] === year );
-    return hash[year];
+    if(!hash) {
+      return [];
+    }else{
+      return hash[year];
+    }
   }
 
   daysByYearAndMonth(year, month) {
     const monthsAndDays = this.monthsAndDaysByYear(year);
     const monthAndDays  = monthsAndDays.find( monthAndDays => Object.keys(monthAndDays)[0] === month );
-    return monthAndDays[month];
+    if(!monthAndDays) {
+      return [];
+    }else{
+      return monthAndDays[month];
+    }
   }
 
   keysOf(collectionOfHash) {

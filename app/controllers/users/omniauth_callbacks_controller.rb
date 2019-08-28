@@ -6,9 +6,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in user
 
     if user.has_any_status?
-      redirect_to user_timeline_path
+      redirect_to user_timeline_url
     else
-      redirect_to status_import_path
+      redirect_to status_import_url
     end
   rescue => e
     # rescue the exception explicitly to unify the behavior between the environments

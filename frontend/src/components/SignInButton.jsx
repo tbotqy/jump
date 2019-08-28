@@ -5,6 +5,8 @@ import blue from "@material-ui/core/colors/blue";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
+const authUrl = `${process.env.REACT_APP_AUTH_ORIGIN}/users/auth/twitter`;
+
 const styles = theme => ({
   button: {
     backgroundColor: blue["400"],
@@ -21,9 +23,8 @@ const styles = theme => ({
 
 function SignInButton(props) {
   const { classes, ...others } = props;
-
   return (
-    <Button { ...others } className={ classes.button } href="/statuses/import">
+    <Button { ...others } className={ classes.button } href={ authUrl }>
       <FontAwesomeIcon icon={ faTwitter } className={ classes.icon } />
       { props.text }
     </Button>

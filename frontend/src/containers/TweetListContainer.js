@@ -3,20 +3,24 @@ import {
   appendTweets,
   setHasMore
 } from "../actions/tweetsActions";
+import {
+  setPage,
+  resetPage
+} from "../actions/pageActions";
 import { setApiErrorCode } from "../actions/apiErrorActions";
 import TweetList from "../components/TweetList";
 
 const mapStateToProps = state => ({
-  tweets:        state.tweets.tweets,
-  hasMore:       state.tweets.hasMore,
-  selectedYear:  state.selectableDates.selectedYear,
-  selectedMonth: state.selectableDates.selectedMonth,
-  selectedDay:   state.selectableDates.selectedDay
+  tweets:  state.tweets.tweets,
+  hasMore: state.tweets.hasMore,
+  page:    state.page.page
 });
 
 const mapDispatchToProps = dispatch => ({
-  appendTweets: tweets => dispatch(appendTweets(tweets)),
-  setHasMore:   flag => dispatch(setHasMore(flag)),
+  appendTweets:    tweets => dispatch(appendTweets(tweets)),
+  setHasMore:      flag => dispatch(setHasMore(flag)),
+  setPage:         page => dispatch(setPage(page)),
+  resetPage:       () => dispatch(resetPage()),
   setApiErrorCode: code => dispatch(setApiErrorCode(code))
 });
 

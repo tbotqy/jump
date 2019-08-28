@@ -1,9 +1,5 @@
 const initialState = {
-  selectedYear:    null,
-  selectedMonth:   null,
-  selectedDay:     null,
-  selectableDates: [],
-  loaded:         false
+  selectableDates: []
 };
 
 export default function selectableDatesReducer(state = initialState, action) {
@@ -12,26 +8,6 @@ export default function selectableDatesReducer(state = initialState, action) {
     return {
       ...state,
       selectableDates: action.selectableDates
-    };
-  case "SET_SELECTED_YEAR":
-    return {
-      ...state,
-      selectedYear: action.selectedYear
-    };
-  case "SET_SELECTED_MONTH":
-    return {
-      ...state,
-      selectedMonth: action.selectedMonth
-    };
-  case "SET_SELECTED_DAY":
-    return {
-      ...state,
-      selectedDay: action.selectedDay
-    };
-  case "FINISHED_TO_FETCH_SELECTABLE_DATES":
-    return {
-      ...state,
-      loaded: action.loaded
     };
   default:
     return state;
