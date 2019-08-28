@@ -34,7 +34,7 @@ class HeadNav extends React.Component {
                 <TimelineSwitch />
                 <UserMenu />
               </>
-            ) : ( <SignInButton variant="contained" text="登録" /> )
+            ) : ( <SignInButton variant="contained" text="利用する" /> )
           }
         </Toolbar>
       </AppBar>
