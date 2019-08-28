@@ -92,4 +92,22 @@ RSpec.describe "User authentication", type: :request do
       end
     end
   end
+
+  describe "GET /sign_out" do
+    let!(:user) { create(:user) }
+    context "user is signed in" do
+      before do
+        sign_in user
+        get sign_out_path
+      end
+      it "gets the user signed out" do
+        expect(controller.current_user).to eq nil
+      end
+      it { expect(response).to redirect_to service_top_url }
+    end
+    context "without any signing in" do
+      before { get sign_out_path }
+      it { expect(response).to redirect_to service_top_url }
+    end
+  end
 end
