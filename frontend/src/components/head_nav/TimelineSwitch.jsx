@@ -50,7 +50,7 @@ class TimelineSwitch extends React.Component {
         >
           <MenuList>
             { this.MyMenuItem(<PersonIcon />, "あなた", "あなたのツイートを表示します", "/user_timeline") }
-            { this.MyMenuItem(<PeopleIcon />, "友達", "あなたがフォローしている人のツイートを表示します", "/home_timeline") }
+            { this.MyMenuItem(<PeopleIcon />, "ホーム", "あなたがフォローしている人のツイートを表示します", "/home_timeline") }
             { this.MyMenuItem(<PublicIcon />, "パブリック", "みんなのツイートを表示します", "/public_timeline") }
           </MenuList>
         </Menu>

@@ -11,6 +11,7 @@ import DataManagement from "./components/DataManagement";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
 import PublicTimelineContainer from "./containers/PublicTimelineContainer";
 import UserTimelineContainer from "./containers/UserTimelineContainer";
+import HomeTimelineContainer from "./containers/HomeTimelineContainer";
 
 const theme = responsiveFontSizes(createMuiTheme({
   palette:{
@@ -36,7 +37,7 @@ class App extends React.Component {
               render={ () => <Import screenName="screen_name" /> }
             />
             <Route exact path="/user_timeline/:year?/:month?/:day?" component={ UserTimelineContainer } />
-            <Route exact path="/home_timeline" component={ PublicTimelineContainer } />
+            <Route exact path="/home_timeline/:year?/:month?/:day?" component={ HomeTimelineContainer } />
             <Route exact path="/data" component={ DataManagement } />
           </Auth>
         </ThemeProvider>
