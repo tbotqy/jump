@@ -74,12 +74,13 @@ class TimelineSwitch extends React.Component {
   }
 
   timelineType() {
-    switch(window.location.pathname) {
-    case "/user_timeline":
+    const timelineType = window.location.pathname.split("/")[1];
+    switch(timelineType) {
+    case "user_timeline":
       return "あなたのタイムライン";
-    case "/home_timeline":
+    case "home_timeline":
       return "ホームタイムライン";
-    case "/public_timeline":
+    case "public_timeline":
       return "パブリックタイムライン";
     default:
       return "タイムラインを選択";

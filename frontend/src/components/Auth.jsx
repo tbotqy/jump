@@ -8,11 +8,12 @@ import getUserIdFromCookie from "../utils/getUserIdFromCookie";
 class Auth extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isAuthenticated: !!getUserIdFromCookie() };
+    this.isAuthenticated = !!getUserIdFromCookie();
+    props.setIsAuthenticated(this.isAuthenticated);
   }
 
   render() {
-    return this.state.isAuthenticated ? (
+    return this.isAuthenticated ? (
       <Route>{ this.props.children }</Route>
     ) : (
       <Redirect to={ "/" } />

@@ -4,7 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
-import Auth from "./components/Auth";
+import Auth from "./containers/AuthContainer";
 import Top from "./components/Top";
 import Import from "./components/Import";
 import DataManagement from "./components/DataManagement";
