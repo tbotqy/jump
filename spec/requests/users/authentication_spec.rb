@@ -63,6 +63,15 @@ RSpec.describe "User authentication", type: :request do
             end
           end
 
+          describe "sign in" do
+            let!(:user) { create(:user) }
+            before do
+              OmniAuth.config.mock_auth[:twitter] = auth_hash_mock.merge(uid: user.uid)
+              get user_twitter_omniauth_callback_path
+            end
+            it { expect(controller.current_user).to eq user }
+          end
+
           describe "redirection and its response header" do
             shared_examples "includes user_id as a value of Set-Cookie attr in response header" do
               it { expect(response.header.fetch("Set-Cookie")).to include("user_id=#{authenticating_user.id}") }
