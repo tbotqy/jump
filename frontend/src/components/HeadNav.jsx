@@ -35,9 +35,14 @@ class HeadNav extends React.Component {
           <Typography variant="h6" className={ this.props.classes.typography }>
             <BrandLogo />
           </Typography>
-          { this.state.auth && <TimelineSwitch /> }
-          { this.state.auth && <UserMenu /> }
-          { !this.state.auth && <SignInButton variant="contained" text="登録" /> }
+          {
+            this.props.isAuthenticated ? (
+              <>
+                <TimelineSwitch />
+                <UserMenu />
+              </>
+            ) : ( <SignInButton variant="contained" text="登録" /> )
+          }
         </Toolbar>
       </AppBar>
     );

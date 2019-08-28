@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import scrollToTop   from "./../utils/scrollToTop";
-import HeadNav       from "./HeadNav";
+import HeadNav       from "../containers/HeadNavContainer";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import TweetList     from "../containers/TweetListContainer";
 import ErrorMessage  from "./ErrorMessage";
