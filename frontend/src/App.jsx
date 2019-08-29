@@ -31,11 +31,7 @@ class App extends React.Component {
           <Route exact path="/public_timeline/:year?/:month?/:day?" component={ PublicTimelineContainer } />
           <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
           <Auth>
-            <Route
-              exact
-              path="/import"
-              render={ () => <Import screenName="screen_name" /> }
-            />
+            <Route exact path="/import" component={ Import } />
             <Route exact path="/user_timeline/:year?/:month?/:day?" component={ UserTimelineContainer } />
             <Route exact path="/home_timeline/:year?/:month?/:day?" component={ HomeTimelineContainer } />
             <Route exact path="/data" component={ DataManagement } />
