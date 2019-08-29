@@ -58,12 +58,13 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
                   percentage:  0,
+                  finished:    false,
                   last_status: {},
                   user:        user.as_json
                 )
               end
             end
-            context "some statuses have been imported" do
+            context "statuses are being imported" do
               let!(:user)                  { create(:user) }
               let!(:user_id)               { user.id }
               let!(:statuses)              { create_list(:status, assumed_imported_status_count, user: user) }
@@ -81,6 +82,31 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
                   percentage:  expected_percentage,
+                  finished:    false,
+                  last_status: statuses.last.as_json,
+                  user:        user.as_json
+                )
+              end
+            end
+            context "status import has been finished" do
+              let!(:user)                  { create(:user) }
+              let!(:user_id)               { user.id }
+              let!(:statuses)              { create_list(:status, total_imported_count, user: user) }
+              let!(:entities)              { statuses.each { |status| create(:entity, status: status) } }
+              let!(:tweet_import_progress) { create(:tweet_import_progress, finished: true, user: user) }
+
+              let(:total_imported_count) { 33 }
+              let(:expected_percentage)  { 1 } # (33/3200(=Settings.twitter.traceable_tweet_count_limit).to_f).floor
+              before do
+                sign_in user
+                tweet_import_progress.current_count.reset(total_imported_count)
+                subject
+              end
+              it_behaves_like "respond with status code", :ok
+              it do
+                expect(response.parsed_body.deep_symbolize_keys).to include(
+                  percentage:  expected_percentage,
+                  finished:    true,
                   last_status: statuses.last.as_json,
                   user:        user.as_json
                 )
