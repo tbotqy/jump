@@ -10,7 +10,7 @@ import {
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import TweetEmbed from "react-tweet-embed";
-import HeadNav from "./HeadNav";
+import HeadAppBar from "./HeadAppBar";
 import Footer from "./Footer";
 
 class Import extends React.Component {
@@ -25,13 +25,21 @@ class Import extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.fetchUser()
+      .then( response => this.props.setUser(response.data) )
+      .catch( error => this.props.setApiErrorCode(error.response.status) );
+  }
+
   render() {
     return (
       <React.Fragment>
-        <HeadNav />
+        <HeadAppBar>
+          <p>foo</p>
+        </HeadAppBar>
         <Grid container direction="column" alignItems="center" style={ { padding: "24px" } }>
           <Grid item style={ { paddingTop: "48px" } }>
-            <Typography variant="h5" component="h1">@{ this.props.screenName } のツイートを取り込む</Typography>
+            { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screen_name } のツイートを取り込む</Typography> }
           </Grid>
           <Grid item style={ { paddingTop: "48px" } }>
             <Button

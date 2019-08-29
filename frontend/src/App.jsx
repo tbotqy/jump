@@ -6,7 +6,7 @@ import { ThemeProvider } from "@material-ui/styles";
 
 import Auth from "./containers/AuthContainer";
 import Top from "./components/Top";
-import Import from "./components/Import";
+import ImportContainer from "./containers/ImportContainer";
 import DataManagement from "./components/DataManagement";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
 import PublicTimelineContainer from "./containers/PublicTimelineContainer";
@@ -31,7 +31,7 @@ class App extends React.Component {
           <Route exact path="/public_timeline/:year?/:month?/:day?" component={ PublicTimelineContainer } />
           <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
           <Auth>
-            <Route exact path="/import" component={ Import } />
+            <Route exact path="/import" component={ ImportContainer } />
             <Route exact path="/user_timeline/:year?/:month?/:day?" component={ UserTimelineContainer } />
             <Route exact path="/home_timeline/:year?/:month?/:day?" component={ HomeTimelineContainer } />
             <Route exact path="/data" component={ DataManagement } />
