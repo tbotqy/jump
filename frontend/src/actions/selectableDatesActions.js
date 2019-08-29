@@ -10,6 +10,11 @@ export function fetchUserSelectableDates() {
   return () => api.get(`/users/${userId}/tweeted_dates`);
 }
 
+export function fetchFolloweeSelectableDates() {
+  const userId = getUserIdFromCookie();
+  return () => api.get(`/users/${userId}/followees/tweeted_dates`);
+}
+
 export function setSelectableDates(selectableDates) {
   return {
     type: "SET_SELECTABLE_DATES",
