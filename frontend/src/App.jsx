@@ -33,7 +33,7 @@ class App extends React.Component {
           <Auth>
             <Route
               exact
-              path="/statuses/import"
+              path="/import"
               render={ () => <Import screenName="screen_name" /> }
             />
             <Route exact path="/user_timeline/:year?/:month?/:day?" component={ UserTimelineContainer } />
