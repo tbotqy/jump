@@ -7,16 +7,20 @@ class TweetImportProgress < ApplicationRecord
   validates :user_id,                   uniqueness: true
   validates :finished_before_type_cast, inclusion: { in: [1, 0, true, false] }
 
-  after_destroy { current_count.delete }
+  after_destroy do
+    current_count.delete
+    last_tweet_id.delete
+  end
 
   include Redis::Objects
   counter :current_count
+  value   :last_tweet_id
 
   def as_json(_options = {})
     {
-      percentage:  percentage,
-      last_status: statuses.last.as_json || {},
-      user:        user.as_json
+      percentage:    percentage,
+      last_tweet_id: last_tweet_id.value,
+      user:          user.as_json
     }
   end
 

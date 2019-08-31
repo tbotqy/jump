@@ -123,11 +123,13 @@ RSpec.describe MakeInitialTweetImportJob, type: :job do
                       end
                       it "leaves a tweet_import_progress with an expected state" do
                         subject.call
-                        expect(TweetImportProgress.find_by!(user: user)).to have_attributes(
-                          user_id:       user.id,
-                          current_count: tweet_mocks.count,
-                          finished:      true
+                        tweet_import_progress = TweetImportProgress.find_by!(user: user)
+                        expect(tweet_import_progress).to have_attributes(
+                          user_id:  user.id,
+                          finished: true
                         )
+                        expect(tweet_import_progress.current_count.value).to eq tweet_mocks.count
+                        expect(tweet_import_progress.last_tweet_id.value).to eq tweet_mocks.last.id.to_s
                       end
                       it "increments ActiveStatusCount by the number of tweets" do
                         is_expected.to change { ActiveStatusCount.current_count }.by(tweet_mocks.count)
