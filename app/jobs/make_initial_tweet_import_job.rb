@@ -39,6 +39,7 @@ class MakeInitialTweetImportJob < ApplicationJob
       user_twitter_client.collect_tweets_in_batches do |tweets|
         tweets.each { |tweet| RegisterTweetService.call!(tweet: tweet) }
         progress.increment_by(tweets.count)
+        progress.last_tweet_id = tweets.last.id
       end
     end
 

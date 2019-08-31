@@ -57,10 +57,10 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               it_behaves_like "respond with status code", :ok
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
-                  percentage:  0,
-                  finished:    false,
-                  last_status: {},
-                  user:        user.as_json
+                  percentage:    0,
+                  finished:      false,
+                  last_tweet_id: nil,
+                  user:          user.as_json
                 )
               end
             end
@@ -73,18 +73,20 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
 
               let(:assumed_imported_status_count) { 33 }
               let(:expected_percentage)           { 1 } # (33/3200(=Settings.twitter.traceable_tweet_count_limit).to_f).floor
+              let(:last_tweet_id) { "12345" }
               before do
                 sign_in user
                 tweet_import_progress.current_count.reset(assumed_imported_status_count)
+                tweet_import_progress.last_tweet_id = last_tweet_id
                 subject
               end
               it_behaves_like "respond with status code", :ok
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
-                  percentage:  expected_percentage,
-                  finished:    false,
-                  last_status: statuses.last.as_json,
-                  user:        user.as_json
+                  percentage:    expected_percentage,
+                  finished:      false,
+                  last_tweet_id: last_tweet_id,
+                  user:          user.as_json
                 )
               end
             end
@@ -97,18 +99,20 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
 
               let(:total_imported_count) { 33 }
               let(:expected_percentage)  { 1 } # (33/3200(=Settings.twitter.traceable_tweet_count_limit).to_f).floor
+              let(:last_tweet_id) { "12345" }
               before do
                 sign_in user
                 tweet_import_progress.current_count.reset(total_imported_count)
+                tweet_import_progress.last_tweet_id = last_tweet_id
                 subject
               end
               it_behaves_like "respond with status code", :ok
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
-                  percentage:  expected_percentage,
-                  finished:    true,
-                  last_status: statuses.last.as_json,
-                  user:        user.as_json
+                  percentage:    expected_percentage,
+                  finished:      true,
+                  last_tweet_id: last_tweet_id,
+                  user:          user.as_json
                 )
               end
             end

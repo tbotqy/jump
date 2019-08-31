@@ -22,10 +22,19 @@ RSpec.describe TweetImportProgress, type: :model do
     context "after destroy" do
       describe "deletes the data on Redis that is related to the record" do
         subject { -> { record.destroy! } }
-        let!(:record)   { create(:tweet_import_progress) }
-        let(:redis_key) { record.current_count.key }
-        before { record.current_count.increment }
-        it { is_expected.to change { REDIS.get(redis_key) }.from("1").to(nil) }
+        let!(:record) { create(:tweet_import_progress) }
+
+        describe "#current_count" do
+          let(:redis_key) { record.current_count.key }
+          before { record.current_count.increment }
+          it { is_expected.to change { REDIS.get(redis_key) }.from("1").to(nil) }
+        end
+
+        describe "#last_tweet_id" do
+          let(:redis_key) { record.last_tweet_id.key }
+          before { record.last_tweet_id = "12345" }
+          it { is_expected.to change { REDIS.get(redis_key) }.from("12345").to(nil) }
+        end
       end
     end
   end
@@ -98,10 +107,10 @@ RSpec.describe TweetImportProgress, type: :model do
       let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
       it do
         is_expected.to include(
-          percentage:  0,
-          finished:    false,
-          last_status: {},
-          user:        user.as_json
+          percentage:    0,
+          finished:      false,
+          last_tweet_id: nil,
+          user:          user.as_json
         )
       end
     end
@@ -113,13 +122,17 @@ RSpec.describe TweetImportProgress, type: :model do
 
       let(:assumed_imported_status_count) { 33 }
       let(:expected_percentage)           { 1 } # (33/3200(=traceable_tweet_count_limit).to_f).floor
-      before { tweet_import_progress.current_count.reset(assumed_imported_status_count) }
+      let(:last_tweet_id) { "12345" }
+      before do
+        tweet_import_progress.current_count.reset(assumed_imported_status_count)
+        tweet_import_progress.last_tweet_id = last_tweet_id
+      end
       it do
         is_expected.to include(
-          percentage:  expected_percentage,
-          finished:    false,
-          last_status: statuses.last.as_json,
-          user:        user.as_json
+          percentage:    expected_percentage,
+          finished:      false,
+          last_tweet_id: last_tweet_id,
+          user:          user.as_json
         )
       end
     end
@@ -131,13 +144,17 @@ RSpec.describe TweetImportProgress, type: :model do
 
       let(:total_imported_count) { 33 }
       let(:expected_percentage)  { 1 } # (33/3200(=traceable_tweet_count_limit).to_f).floor
-      before { tweet_import_progress.current_count.reset(total_imported_count) }
+      let(:last_tweet_id) { "12345" }
+      before do
+        tweet_import_progress.current_count.reset(total_imported_count)
+        tweet_import_progress.last_tweet_id = last_tweet_id
+      end
       it do
         is_expected.to include(
-          percentage:  expected_percentage,
-          finished:    true,
-          last_status: statuses.last.as_json,
-          user:        user.as_json
+          percentage:    expected_percentage,
+          finished:      true,
+          last_tweet_id: last_tweet_id,
+          user:          user.as_json
         )
       end
     end
