@@ -22,10 +22,19 @@ RSpec.describe TweetImportProgress, type: :model do
     context "after destroy" do
       describe "deletes the data on Redis that is related to the record" do
         subject { -> { record.destroy! } }
-        let!(:record)   { create(:tweet_import_progress) }
-        let(:redis_key) { record.current_count.key }
-        before { record.current_count.increment }
-        it { is_expected.to change { REDIS.get(redis_key) }.from("1").to(nil) }
+        let!(:record) { create(:tweet_import_progress) }
+
+        describe "#current_count" do
+          let(:redis_key) { record.current_count.key }
+          before { record.current_count.increment }
+          it { is_expected.to change { REDIS.get(redis_key) }.from("1").to(nil) }
+        end
+
+        describe "#last_tweet_id" do
+          let(:redis_key) { record.last_tweet_id.key }
+          before { record.last_tweet_id = "12345" }
+          it { is_expected.to change { REDIS.get(redis_key) }.from("12345").to(nil) }
+        end
       end
     end
   end
