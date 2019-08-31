@@ -126,6 +126,7 @@ RSpec.describe MakeInitialTweetImportJob, type: :job do
                         expect(TweetImportProgress.find_by!(user: user)).to have_attributes(
                           user_id:       user.id,
                           current_count: tweet_mocks.count,
+                          last_tweet_id: tweet_mocks.last.id,
                           finished:      true
                         )
                       end
