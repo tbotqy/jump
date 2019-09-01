@@ -16,7 +16,6 @@ import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import HeadAppBar from "./HeadAppBar";
 import UserMenu from "./head_nav/UserMenu";
-import Footer from "./Footer";
 import ErrorMessage from "./ErrorMessage";
 
 const styles = theme => ({
@@ -45,7 +44,6 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   tweetWrapper: {
-    minHeight: "500px",
     width: "100%"
   }
 });
@@ -107,7 +105,6 @@ class Import extends React.Component {
             </div>
           )
         }
-        <Footer bgCaramel />
       </React.Fragment>
     );
   }
