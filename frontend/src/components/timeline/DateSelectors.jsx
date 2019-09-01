@@ -123,8 +123,10 @@ class DateSelectors extends React.Component {
   }
 
   fetchTweets(year, month, day) {
+    this.props.setIsFetching(true);
     this.props.onSelectionChangeTweetsFetchFunc(year, month, day)
-      .then( response => this.props.setTweets(response.data));
+      .then( response => this.props.setTweets(response.data))
+      .then( () => this.props.setIsFetching(false) );
   }
 }
 
