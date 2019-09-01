@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -33,15 +33,17 @@ class App extends React.Component {
       <Router>
         <ThemeProvider theme={ theme }>
           <CssBaseline />
-          <Route exact path="/" component={ Top } />
-          <Route exact path={ `${PUBLIC_TIMELINE_PATH}/:year?/:month?/:day?` } component={ PublicTimelineContainer } />
-          <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
-          <Auth>
-            <Route exact path="/import" component={ ImportContainer } />
-            <Route exact path={ `${USER_TIMELINE_PATH}/:year?/:month?/:day?` } component={ UserTimelineContainer } />
-            <Route exact path={ `${HOME_TIMELINE_PATH}/:year?/:month?/:day?` } component={ HomeTimelineContainer } />
-            <Route exact path="/data" component={ DataManagement } />
-          </Auth>
+          <Switch>
+            <Route exact path="/" component={ Top } />
+            <Route exact path={ `${PUBLIC_TIMELINE_PATH}/:year?/:month?/:day?` } component={ PublicTimelineContainer } />
+            <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
+            <Auth>
+              <Route exact path="/import" component={ ImportContainer } />
+              <Route exact path={ `${USER_TIMELINE_PATH}/:year?/:month?/:day?` } component={ UserTimelineContainer } />
+              <Route exact path={ `${HOME_TIMELINE_PATH}/:year?/:month?/:day?` } component={ HomeTimelineContainer } />
+              <Route exact path="/data" component={ DataManagement } />
+            </Auth>
+          </Switch>
         </ThemeProvider>
       </Router>
     );
