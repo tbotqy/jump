@@ -40,6 +40,9 @@ const styles = theme => ({
   },
   checkIcon: {
     marginRight: theme.spacing(1)
+  },
+  tweetWrapper: {
+    minHeight: "500px"
   }
 });
 
@@ -92,7 +95,7 @@ class Import extends React.Component {
               <Grid item className={ this.props.classes.progressContainer }>
                 { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
               </Grid>
-              <Grid item style={ { minHeight: "500px" } }>
+              <Grid item className={ this.props.classes.tweetWrapper }>
                 { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } /> }
               </Grid>
             </Grid>
