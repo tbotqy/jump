@@ -45,7 +45,8 @@ const styles = theme => ({
     marginRight: theme.spacing(1)
   },
   tweetWrapper: {
-    minHeight: "500px"
+    minHeight: "500px",
+    width: "100%"
   }
 });
 
