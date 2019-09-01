@@ -5,7 +5,8 @@ import {
   Typography,
   Button,
   LinearProgress,
-  CircularProgress
+  CircularProgress,
+  Fade
 } from "@material-ui/core";
 import clsx from "clsx";
 import TweetEmbed from "react-tweet-embed";
@@ -56,7 +57,8 @@ class Import extends React.Component {
       hasFinished:     false,
       showProgressBar: false,
       progress:        0,
-      apiErrorCode:    null
+      apiErrorCode:    null,
+      showTweet:       false
     };
   }
 
@@ -98,9 +100,11 @@ class Import extends React.Component {
                 <Grid item className={ this.props.classes.progressContainer }>
                   { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
                 </Grid>
-                <Grid item className={ this.props.classes.tweetWrapper }>
-                  { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } /> }
-                </Grid>
+                <Fade in={ this.state.showTweet }>
+                  <Grid item className={ this.props.classes.tweetWrapper }>
+                    { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } /> }
+                  </Grid>
+                </Fade>
               </Grid>
             </div>
           )
@@ -122,6 +126,7 @@ class Import extends React.Component {
 
     // check for the import progress once per 2 seconds.
     const interval = setInterval( () => {
+      this.setState({ showTweet: false });
       this.fetchImportProgress()
         .then( response => {
           const progress = response.data;
@@ -131,13 +136,15 @@ class Import extends React.Component {
               isInProgress:  false,
               hasFinished:   true,
               progress:      progress.percentage,
-              last_tweet_id: progress.last_tweet_id
+              last_tweet_id: progress.last_tweet_id,
+              showTweet:     true
             });
             setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, 3000 );
           }else{
             this.setState({
               progress:      progress.percentage,
-              last_tweet_id: progress.last_tweet_id
+              last_tweet_id: progress.last_tweet_id,
+              showTweet:     true
             });
           }
         }).catch( error => {
