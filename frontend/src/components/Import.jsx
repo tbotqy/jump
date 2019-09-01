@@ -1,92 +1,178 @@
 import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Typography,
   Button,
   LinearProgress,
   CircularProgress,
-  Fab
+  Fade
 } from "@material-ui/core";
+import clsx from "clsx";
+import TweetEmbed from "react-tweet-embed";
+import api, { API_ERROR_CODE_TOO_MANY_REQUESTS } from "../utils/api";
+import { USER_TIMELINE_PATH } from "../utils/paths";
+import getUserIdFromCookie from "../utils/getUserIdFromCookie.js";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
-import TweetEmbed from "react-tweet-embed";
-import HeadNav from "./HeadNav";
-import Footer from "./Footer";
+import HeadAppBar from "./HeadAppBar";
+import UserMenu from "../containers/userMenuContainer";
+import ErrorMessage from "./ErrorMessage";
+
+const styles = theme => ({
+  gridContainerWrapper: {
+    padding:   theme.spacing(3),
+    marginTop: theme.spacing(4)
+  },
+  progressContainer: {
+    width: "100%"
+  },
+  buttonWrapper: {
+    position: "relative"
+  },
+  circularProgress: {
+    position: "absolute",
+    top: "6px",
+    left: "20px"
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    "&:hover": {
+      backgroundColor: green[700],
+    }
+  },
+  checkIcon: {
+    marginRight: theme.spacing(1)
+  },
+  tweetWrapper: {
+    width: "100%"
+  }
+});
 
 class Import extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonHasBeenClicked: false,
-      completed:            false,
-      buttonText:           "開始",
-      circularDisplayValue: "none",
-      progress:             0
+      isInProgress:    false,
+      hasFinished:     false,
+      showProgressBar: false,
+      progress:        0,
+      apiErrorCode:    null,
+      showTweet:       false
     };
   }
 
   render() {
     return (
       <React.Fragment>
-        <HeadNav />
-        <Grid container direction="column" alignItems="center" style={ { padding: "24px" } }>
-          <Grid item style={ { paddingTop: "48px" } }>
-            <Typography variant="h5" component="h1">@{ this.props.screenName } のツイートを取り込む</Typography>
-          </Grid>
-          <Grid item style={ { paddingTop: "48px" } }>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={ this.state.buttonHasBeenClicked }
-              onClick={ this.handleClick.bind(this) }
-            >
-              { this.state.buttonText }
-            </Button>
-          </Grid>
-          <Grid item style={ { paddingTop: "48px", width: "100%" } }>
-            <Grid item align="right" style={ { paddingBottom: "20px", minHeight: "80px" } }>
-              { this.state.buttonHasBeenClicked && this.state.progress < 100 && <CircularProgress style={ { display: this.state.circularDisplayValue } } /> }
-              { this.state.progress === 100 && <Fab style={ { backgroundColor: green["500"], color: "white" } } ><CheckIcon /></Fab> }
-            </Grid>
-            <Grid item>
-              <LinearProgress variant="determinate" value={ this.state.progress } />
-            </Grid>
-          </Grid>
-          <Grid item style={ { marginTop: "48px", minHeight: "500px" } }>
-            { this.state.importedTweetId && <TweetEmbed id={ this.state.importedTweetId } options={ { width: 300, align: "center" } } /> }
-          </Grid>
-        </Grid>
-        <Footer bgCaramel />
+        <HeadAppBar>
+          <UserMenu user={ this.props.user } hideLinkToData />
+        </HeadAppBar>
+        {
+          this.state.apiErrorCode ? (
+            <ErrorMessage apiErrorCode={ this.state.apiErrorCode } />
+          ) : (
+            <div className={ this.props.classes.gridContainerWrapper }>
+              <Grid container direction="column" alignItems="center" spacing={ 6 }>
+                <Grid item>
+                  { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screen_name } のツイートを取り込む</Typography> }
+                </Grid>
+                <Grid item>
+                  <div className={ this.props.classes.buttonWrapper }>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={ this.state.isInProgress }
+                      onClick={ this.handleClick.bind(this) }
+                      className={ clsx({ [this.props.classes.buttonSuccess]: this.state.hasFinished }) }
+                    >
+                      { this.state.hasFinished ? <><CheckIcon className={ this.props.classes.checkIcon } /> 完了! リダイレクトします ...</> : "開始" }
+                    </Button>
+                    { this.state.isInProgress && <CircularProgress size={ 24 } className={ this.props.classes.circularProgress } /> }
+                  </div>
+                </Grid>
+                <Grid item className={ this.props.classes.progressContainer }>
+                  { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
+                </Grid>
+                <Fade in={ this.state.showTweet }>
+                  <Grid item className={ this.props.classes.tweetWrapper }>
+                    { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } options={ { align: "center" } } /> }
+                  </Grid>
+                </Fade>
+              </Grid>
+            </div>
+          )
+        }
       </React.Fragment>
     );
   }
 
   handleClick() {
-    if ( this.state.buttonHasBeenClicked ) return;
+    if ( this.state.isInProgress || this.state.hasFinished ) return;
+
+    // kick the import job on the server
+    this.requestImport();
 
     this.setState({
-      buttonText: "取り込み中",
-      circularDisplayValue: "block",
-      buttonHasBeenClicked: true,
-      importedTweetId: "692527862369357824"
+      isInProgress:    true,
+      showProgressBar: true
     });
 
+    // check for the import progress once per 2 seconds.
+    const redirectInterval      = 3000;
+    const progressCheckInterval = 2000;
     const interval = setInterval( () => {
-      if ( this.state.progress < 100 ) {
-        this.setState( {
-          progress: this.state.progress + 25,
-          importedTweetId: "692527862369357824"
+      this.setState({ showTweet: false });
+      this.fetchImportProgress()
+        .then( response => {
+          const progress = response.data;
+          if(progress.finished) {
+            clearInterval(interval);
+            this.setState({
+              isInProgress:  false,
+              hasFinished:   true,
+              progress:      progress.percentage,
+              last_tweet_id: progress.last_tweet_id,
+              showTweet:     true
+            });
+            setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, redirectInterval );
+          }else{
+            this.setState({
+              progress:      progress.percentage,
+              last_tweet_id: progress.last_tweet_id,
+              showTweet:     true
+            });
+          }
+        }).catch( error => {
+          clearInterval(interval);
+          this.setState({
+            isInProgress: false,
+            apiErrorCode: error.response.status
+          });
         });
-      } else {
-        clearInterval(interval);
-        this.setState({
-          circularDisplayValue: "none",
-          buttonText: "完了！リダイレクトします..."
-        });
-        setTimeout( () => { document.location.href = "/user_timeline"; }, 3000 );
-      }
-    }, 2000 );
+    }, progressCheckInterval );
+  }
+
+  requestImport() {
+    const userId = getUserIdFromCookie();
+    api.post(`/users/${userId}/statuses`)
+      .catch( error => {
+        if(!error.response) return console.log(error);
+        if(error.response.status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
+          // A job is already kicked working.
+          // Do nothing.
+        }else{
+          this.setState({
+            apiErrorCode: error.response.status
+          });
+        }
+      });
+  }
+
+  fetchImportProgress() {
+    const userId = getUserIdFromCookie();
+    return api.get(`/users/${userId}/tweet_import_progress`);
   }
 }
 
-export default Import;
+export default withStyles(styles)(Import);

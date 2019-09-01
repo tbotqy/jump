@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   direct :status_import do
-    "#{Settings.frontend_host}/statuses/import"
+    "#{Settings.frontend_host}/import"
   end
 
   direct :service_top do

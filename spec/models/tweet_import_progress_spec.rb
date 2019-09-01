@@ -103,17 +103,16 @@ RSpec.describe TweetImportProgress, type: :model do
   describe "#as_json" do
     subject { tweet_import_progress.as_json }
     context "no status has been imported" do
-      let(:user)                   { create(:user) }
-      let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
+      let!(:tweet_import_progress) { create(:tweet_import_progress) }
       it do
         is_expected.to include(
           percentage:    0,
-          last_tweet_id: nil,
-          user:          user.as_json
+          finished:      false,
+          last_tweet_id: nil
         )
       end
     end
-    context "some status has been imported" do
+    context "statuses are being imported" do
       let(:user)                  { create(:user) }
       let!(:statuses)             { create_list(:status, assumed_imported_status_count, user: user) }
       let!(:entities)             { statuses.each { |status| create(:entity, status: status) } }
@@ -129,8 +128,29 @@ RSpec.describe TweetImportProgress, type: :model do
       it do
         is_expected.to include(
           percentage:    expected_percentage,
-          last_tweet_id: last_tweet_id,
-          user:          user.as_json
+          finished:      false,
+          last_tweet_id: last_tweet_id
+        )
+      end
+    end
+    context "status import has been finished" do
+      let(:user)                  { create(:user) }
+      let!(:statuses)             { create_list(:status, total_imported_count, user: user) }
+      let!(:entities)             { statuses.each { |status| create(:entity, status: status) } }
+      let(:tweet_import_progress) { create(:tweet_import_progress, finished: true, user: user) }
+
+      let(:total_imported_count) { 33 }
+      let(:expected_percentage)  { 1 } # (33/3200(=traceable_tweet_count_limit).to_f).floor
+      let(:last_tweet_id) { "12345" }
+      before do
+        tweet_import_progress.current_count.reset(total_imported_count)
+        tweet_import_progress.last_tweet_id = last_tweet_id
+      end
+      it do
+        is_expected.to include(
+          percentage:    expected_percentage,
+          finished:      true,
+          last_tweet_id: last_tweet_id
         )
       end
     end

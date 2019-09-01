@@ -9,6 +9,7 @@ import {
   Container,
   Hidden
 } from "@material-ui/core";
+import { PUBLIC_TIMELINE_PATH } from "../utils/paths";
 import { Input as InputIcon } from "@material-ui/icons";
 import BrandLogo from "./BrandLogo";
 import SignInButton from "./SignInButton";
@@ -64,7 +65,7 @@ class Top extends React.Component {
                         variant="contained"
                         color="primary"
                         component={ Link }
-                        to="/public_timeline"
+                        to={ PUBLIC_TIMELINE_PATH }
                       >
                         公開タイムラインを見てみる
                         <InputIcon

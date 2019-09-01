@@ -4,9 +4,15 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
+import {
+  PUBLIC_TIMELINE_PATH,
+  USER_TIMELINE_PATH,
+  HOME_TIMELINE_PATH
+} from "./utils/paths";
+
 import Auth from "./containers/AuthContainer";
 import Top from "./components/Top";
-import Import from "./components/Import";
+import ImportContainer from "./containers/ImportContainer";
 import DataManagement from "./components/DataManagement";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
 import PublicTimelineContainer from "./containers/PublicTimelineContainer";
@@ -28,16 +34,12 @@ class App extends React.Component {
         <ThemeProvider theme={ theme }>
           <CssBaseline />
           <Route exact path="/" component={ Top } />
-          <Route exact path="/public_timeline/:year?/:month?/:day?" component={ PublicTimelineContainer } />
+          <Route exact path={ `${PUBLIC_TIMELINE_PATH}/:year?/:month?/:day?` } component={ PublicTimelineContainer } />
           <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
           <Auth>
-            <Route
-              exact
-              path="/statuses/import"
-              render={ () => <Import screenName="screen_name" /> }
-            />
-            <Route exact path="/user_timeline/:year?/:month?/:day?" component={ UserTimelineContainer } />
-            <Route exact path="/home_timeline/:year?/:month?/:day?" component={ HomeTimelineContainer } />
+            <Route exact path="/import" component={ ImportContainer } />
+            <Route exact path={ `${USER_TIMELINE_PATH}/:year?/:month?/:day?` } component={ UserTimelineContainer } />
+            <Route exact path={ `${HOME_TIMELINE_PATH}/:year?/:month?/:day?` } component={ HomeTimelineContainer } />
             <Route exact path="/data" component={ DataManagement } />
           </Auth>
         </ThemeProvider>
