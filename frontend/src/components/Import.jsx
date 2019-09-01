@@ -8,6 +8,7 @@ import {
   CircularProgress
 } from "@material-ui/core";
 import clsx from "clsx";
+import TweetEmbed from "react-tweet-embed";
 import api, { API_ERROR_CODE_TOO_MANY_REQUESTS } from "../utils/api";
 import getUserIdFromCookie from "../utils/getUserIdFromCookie.js";
 import green from "@material-ui/core/colors/green";
@@ -92,7 +93,7 @@ class Import extends React.Component {
                 { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
               </Grid>
               <Grid item style={ { minHeight: "500px" } }>
-
+                { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } /> }
               </Grid>
             </Grid>
           )
@@ -121,14 +122,16 @@ class Import extends React.Component {
           if(progress.finished) {
             clearInterval(interval);
             this.setState({
-              isInProgress: false,
-              hasFinished:  true,
-              progress:     progress.percentage
+              isInProgress:  false,
+              hasFinished:   true,
+              progress:      progress.percentage,
+              last_tweet_id: progress.last_tweet_id
             });
             setTimeout( () => { document.location.href = "/user_timeline"; }, 3000 );
           }else{
             this.setState({
-              progress: progress.percentage
+              progress:      progress.percentage,
+              last_tweet_id: progress.last_tweet_id
             });
           }
         }).catch( error => {
