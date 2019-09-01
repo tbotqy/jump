@@ -119,6 +119,8 @@ class Import extends React.Component {
     });
 
     // check for the import progress once per 2 seconds.
+    const redirectInterval      = 3000;
+    const progressCheckInterval = 2000;
     const interval = setInterval( () => {
       this.setState({ showTweet: false });
       this.fetchImportProgress()
@@ -133,7 +135,7 @@ class Import extends React.Component {
               last_tweet_id: progress.last_tweet_id,
               showTweet:     true
             });
-            setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, 3000 );
+            setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, redirectInterval );
           }else{
             this.setState({
               progress:      progress.percentage,
@@ -148,7 +150,7 @@ class Import extends React.Component {
             apiErrorCode: error.response.status
           });
         });
-    }, 2000 );
+    }, progressCheckInterval );
   }
 
   requestImport() {
