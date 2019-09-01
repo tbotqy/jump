@@ -54,12 +54,14 @@ class UserMenu extends React.Component {
             </Box>
             <Divider />
             <MenuList>
-              <MenuItem component={ Link } to="/data">
-                <ListItemIcon>
-                  <AutorenewIcon />
-                </ListItemIcon>
-                <ListItemText primary="データ管理" />
-              </MenuItem>
+              { !this.props.hideLinkToData &&
+                <MenuItem component={ Link } to="/data">
+                  <ListItemIcon>
+                    <AutorenewIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="データ管理" />
+                </MenuItem>
+              }
               <MenuItem component="a" href={ `${process.env.REACT_APP_AUTH_ORIGIN}/sign_out` }>
                 <ListItemIcon>
                   <ExitToAppIcon />

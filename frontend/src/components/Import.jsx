@@ -15,6 +15,7 @@ import getUserIdFromCookie from "../utils/getUserIdFromCookie.js";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import HeadAppBar from "./HeadAppBar";
+import UserMenu from "./head_nav/UserMenu";
 import Footer from "./Footer";
 import ErrorMessage from "./ErrorMessage";
 
@@ -69,7 +70,7 @@ class Import extends React.Component {
     return (
       <React.Fragment>
         <HeadAppBar>
-          <p>foo</p>
+          { this.props.user && <UserMenu user={ this.props.user } hideLinkToData /> }
         </HeadAppBar>
         {
           this.state.apiErrorCode ? (
