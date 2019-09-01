@@ -44,6 +44,7 @@ class DateSelectors extends React.Component {
     this.fetchTweets(year, month, day);
     this.updateDatePath(year);
     this.props.resetPage();
+    this.props.resetHasMore();
     scrollToTop();
   }
 
@@ -58,6 +59,7 @@ class DateSelectors extends React.Component {
     this.fetchTweets(year, month, day);
     this.updateDatePath(`${year}/${month}`);
     this.props.resetPage();
+    this.props.resetHasMore();
     scrollToTop();
   }
 
@@ -68,6 +70,7 @@ class DateSelectors extends React.Component {
     this.fetchTweets(selectedYear, selectedMonth, day);
     this.updateDatePath(`${selectedYear}/${selectedMonth}/${day}`);
     this.props.resetPage();
+    this.props.resetHasMore();
     scrollToTop();
   }
 

@@ -27,6 +27,11 @@ export default function tweetsReducer(state = initialState, action) {
       ...state,
       hasMore: action.flag
     };
+  case "RESET_HAS_MORE":
+    return {
+      ...state,
+      hasMore: initialState.hasMore
+    };
   default:
     return state;
   }
