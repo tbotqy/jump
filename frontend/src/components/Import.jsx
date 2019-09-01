@@ -96,7 +96,7 @@ class Import extends React.Component {
                 </Grid>
                 <Fade in={ this.state.showTweet }>
                   <Grid item className={ this.props.classes.tweetWrapper }>
-                    { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } /> }
+                    { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } options={ { align: "center" } } /> }
                   </Grid>
                 </Fade>
               </Grid>
