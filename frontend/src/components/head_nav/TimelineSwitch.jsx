@@ -15,6 +15,11 @@ import {
   People as PeopleIcon,
   Person as PersonIcon
 } from "@material-ui/icons";
+import {
+  USER_TIMELINE_PATH,
+  HOME_TIMELINE_PATH,
+  PUBLIC_TIMELINE_PATH
+} from "../../utils/paths";
 
 const styles = () => ({
   button:{
@@ -49,9 +54,9 @@ class TimelineSwitch extends React.Component {
           onClose={ () => this.setState( { anchorEl: null } ) }
         >
           <MenuList>
-            { this.MyMenuItem(<PersonIcon />, "あなた", "あなたのツイートを表示します", "/user_timeline") }
-            { this.MyMenuItem(<PeopleIcon />, "ホーム", "あなたがフォローしている人のツイートを表示します", "/home_timeline") }
-            { this.MyMenuItem(<PublicIcon />, "パブリック", "みんなのツイートを表示します", "/public_timeline") }
+            { this.MyMenuItem(<PersonIcon />, "あなた", "あなたのツイートを表示します", USER_TIMELINE_PATH) }
+            { this.MyMenuItem(<PeopleIcon />, "ホーム", "あなたがフォローしている人のツイートを表示します", HOME_TIMELINE_PATH) }
+            { this.MyMenuItem(<PublicIcon />, "パブリック", "みんなのツイートを表示します", PUBLIC_TIMELINE_PATH) }
           </MenuList>
         </Menu>
       </React.Fragment>
@@ -74,15 +79,14 @@ class TimelineSwitch extends React.Component {
   }
 
   timelineType() {
-    const timelineType = window.location.pathname.split("/")[1];
-    switch(timelineType) {
-    case "user_timeline":
+    const currentPath = window.location.pathname;
+    if(currentPath.includes(USER_TIMELINE_PATH)) {
       return "あなたのタイムライン";
-    case "home_timeline":
+    }else if(currentPath.includes(HOME_TIMELINE_PATH)) {
       return "ホームタイムライン";
-    case "public_timeline":
+    }else if(currentPath.includes(PUBLIC_TIMELINE_PATH)) {
       return "パブリックタイムライン";
-    default:
+    }else{
       return "タイムラインを選択";
     }
   }

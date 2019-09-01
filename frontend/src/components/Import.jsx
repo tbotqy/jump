@@ -10,6 +10,7 @@ import {
 import clsx from "clsx";
 import TweetEmbed from "react-tweet-embed";
 import api, { API_ERROR_CODE_TOO_MANY_REQUESTS } from "../utils/api";
+import { USER_TIMELINE_PATH } from "../utils/paths";
 import getUserIdFromCookie from "../utils/getUserIdFromCookie.js";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
@@ -130,7 +131,7 @@ class Import extends React.Component {
               progress:      progress.percentage,
               last_tweet_id: progress.last_tweet_id
             });
-            setTimeout( () => { document.location.href = "/user_timeline"; }, 3000 );
+            setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, 3000 );
           }else{
             this.setState({
               progress:      progress.percentage,
