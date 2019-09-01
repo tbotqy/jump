@@ -59,8 +59,7 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
                   percentage:    0,
                   finished:      false,
-                  last_tweet_id: nil,
-                  user:          user.as_json
+                  last_tweet_id: nil
                 )
               end
             end
@@ -85,8 +84,7 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
                   percentage:    expected_percentage,
                   finished:      false,
-                  last_tweet_id: last_tweet_id,
-                  user:          user.as_json
+                  last_tweet_id: last_tweet_id
                 )
               end
             end
@@ -111,8 +109,7 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
                   percentage:    expected_percentage,
                   finished:      true,
-                  last_tweet_id: last_tweet_id,
-                  user:          user.as_json
+                  last_tweet_id: last_tweet_id
                 )
               end
             end

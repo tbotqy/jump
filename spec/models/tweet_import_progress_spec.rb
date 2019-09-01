@@ -103,14 +103,12 @@ RSpec.describe TweetImportProgress, type: :model do
   describe "#as_json" do
     subject { tweet_import_progress.as_json }
     context "no status has been imported" do
-      let(:user)                   { create(:user) }
-      let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
+      let!(:tweet_import_progress) { create(:tweet_import_progress) }
       it do
         is_expected.to include(
           percentage:    0,
           finished:      false,
-          last_tweet_id: nil,
-          user:          user.as_json
+          last_tweet_id: nil
         )
       end
     end
@@ -131,8 +129,7 @@ RSpec.describe TweetImportProgress, type: :model do
         is_expected.to include(
           percentage:    expected_percentage,
           finished:      false,
-          last_tweet_id: last_tweet_id,
-          user:          user.as_json
+          last_tweet_id: last_tweet_id
         )
       end
     end
@@ -153,8 +150,7 @@ RSpec.describe TweetImportProgress, type: :model do
         is_expected.to include(
           percentage:    expected_percentage,
           finished:      true,
-          last_tweet_id: last_tweet_id,
-          user:          user.as_json
+          last_tweet_id: last_tweet_id
         )
       end
     end

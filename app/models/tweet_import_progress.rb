@@ -20,8 +20,7 @@ class TweetImportProgress < ApplicationRecord
     {
       percentage:    percentage,
       finished:      finished,
-      last_tweet_id: last_tweet_id.value,
-      user:          user.as_json
+      last_tweet_id: last_tweet_id.value
     }
   end
 
