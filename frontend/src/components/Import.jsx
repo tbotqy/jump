@@ -20,8 +20,9 @@ import Footer from "./Footer";
 import ErrorMessage from "./ErrorMessage";
 
 const styles = theme => ({
-  container: {
-    padding: "24px"
+  gridContainerWrapper: {
+    padding:   theme.spacing(3),
+    marginTop: theme.spacing(4)
   },
   progressContainer: {
     width: "100%"
@@ -76,31 +77,33 @@ class Import extends React.Component {
           this.state.apiErrorCode ? (
             <ErrorMessage apiErrorCode={ this.state.apiErrorCode } />
           ) : (
-            <Grid container direction="column" alignItems="center" spacing={ 6 } className={ this.props.classes.container } >
-              <Grid item>
-                { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screen_name } のツイートを取り込む</Typography> }
+            <div className={ this.props.classes.gridContainerWrapper }>
+              <Grid container direction="column" alignItems="center" spacing={ 6 }>
+                <Grid item>
+                  { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screen_name } のツイートを取り込む</Typography> }
+                </Grid>
+                <Grid item>
+                  <div className={ this.props.classes.buttonWrapper }>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      disabled={ this.state.isInProgress }
+                      onClick={ this.handleClick.bind(this) }
+                      className={ clsx({ [this.props.classes.buttonSuccess]: this.state.hasFinished }) }
+                    >
+                      { this.state.hasFinished ? <><CheckIcon className={ this.props.classes.checkIcon } /> 完了! リダイレクトします ...</> : "開始" }
+                    </Button>
+                    { this.state.isInProgress && <CircularProgress size={ 24 } className={ this.props.classes.circularProgress } /> }
+                  </div>
+                </Grid>
+                <Grid item className={ this.props.classes.progressContainer }>
+                  { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
+                </Grid>
+                <Grid item className={ this.props.classes.tweetWrapper }>
+                  { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } /> }
+                </Grid>
               </Grid>
-              <Grid item>
-                <div className={ this.props.classes.buttonWrapper }>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disabled={ this.state.isInProgress }
-                    onClick={ this.handleClick.bind(this) }
-                    className={ clsx({ [this.props.classes.buttonSuccess]: this.state.hasFinished }) }
-                  >
-                    { this.state.hasFinished ? <><CheckIcon className={ this.props.classes.checkIcon } /> 完了! リダイレクトします ...</> : "開始" }
-                  </Button>
-                  { this.state.isInProgress && <CircularProgress size={ 24 } className={ this.props.classes.circularProgress } /> }
-                </div>
-              </Grid>
-              <Grid item className={ this.props.classes.progressContainer }>
-                { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
-              </Grid>
-              <Grid item className={ this.props.classes.tweetWrapper }>
-                { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } /> }
-              </Grid>
-            </Grid>
+            </div>
           )
         }
         <Footer bgCaramel />
