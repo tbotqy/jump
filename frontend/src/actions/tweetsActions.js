@@ -45,3 +45,9 @@ export function setHasMore(flag) {
     flag
   };
 }
+
+export function resetHasMore() {
+  return {
+    type: "RESET_HAS_MORE"
+  };
+}
