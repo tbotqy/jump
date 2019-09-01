@@ -16,7 +16,7 @@ import getUserIdFromCookie from "../utils/getUserIdFromCookie.js";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import HeadAppBar from "./HeadAppBar";
-import UserMenu from "./head_nav/UserMenu";
+import UserMenu from "../containers/userMenuContainer";
 import ErrorMessage from "./ErrorMessage";
 
 const styles = theme => ({
@@ -62,17 +62,11 @@ class Import extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchUser()
-      .then( response => this.props.setUser(response.data) )
-      .catch( error => this.setState({ apiErrorCode: error.response.status }) );
-  }
-
   render() {
     return (
       <React.Fragment>
         <HeadAppBar>
-          { this.props.user && <UserMenu user={ this.props.user } hideLinkToData /> }
+          <UserMenu user={ this.props.user } hideLinkToData />
         </HeadAppBar>
         {
           this.state.apiErrorCode ? (
