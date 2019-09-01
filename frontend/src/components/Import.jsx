@@ -65,7 +65,7 @@ class Import extends React.Component {
   componentDidMount() {
     this.props.fetchUser()
       .then( response => this.props.setUser(response.data) )
-      .catch( error => this.props.setApiErrorCode(error.response.status) );
+      .catch( error => this.setState({ apiErrorCode: error.response.status }) );
   }
 
   render() {
