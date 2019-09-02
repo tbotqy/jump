@@ -1,26 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore, applyMiddleware, combineReducers } from "redux";
-import { Provider } from "react-redux";
-import thunk from "redux-thunk";
-
-import selectableDatesReducer from "./reducers/selectableDatesReducer";
-import tweetsReducer from "./reducers/tweetsReducer";
-import userReducer from "./reducers/userReducer";
-import pageReducer from "./reducers/pageReducer";
-import apiErrorReducer from "./reducers/apiErrorReducer";
 
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-const reducers = combineReducers({ user: userReducer, tweets: tweetsReducer, selectableDates: selectableDatesReducer, page: pageReducer, apiError: apiErrorReducer });
-const store    = createStore(reducers, applyMiddleware(thunk));
-//store.subscribe(() => console.log(store.getState()));
-
 ReactDOM.render(
-  <Provider store={ store }>
-    <App />
-  </Provider>,
+  <App />,
   document.getElementById("root")
 );
 
