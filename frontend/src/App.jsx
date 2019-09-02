@@ -1,24 +1,27 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { createMuiTheme, responsiveFontSizes } from "@material-ui/core/styles";
+
 import { ThemeProvider } from "@material-ui/styles";
-
+import CssBaseline from "@material-ui/core/CssBaseline";
 import {
-  PUBLIC_TIMELINE_PATH,
-  USER_TIMELINE_PATH,
-  HOME_TIMELINE_PATH
-} from "./utils/paths";
+  createMuiTheme,
+  responsiveFontSizes
+} from "@material-ui/core/styles";
 
-import Auth from "./containers/AuthContainer";
-import SessionManage from "./containers/SessionManageContainer";
-import Top from "./components/Top";
-import ImportContainer from "./containers/ImportContainer";
-import DataManagement from "./components/DataManagement";
-import TermsAndPrivacy from "./components/TermsAndPrivacy";
-import PublicTimelineContainer from "./containers/PublicTimelineContainer";
-import UserTimelineContainer from "./containers/UserTimelineContainer";
-import HomeTimelineContainer from "./containers/HomeTimelineContainer";
+import { Provider } from "react-redux";
+import {
+  createStore,
+  applyMiddleware,
+  combineReducers
+} from "redux";
+import thunk from "redux-thunk";
+
+import selectableDatesReducer from "./reducers/selectableDatesReducer";
+import tweetsReducer from "./reducers/tweetsReducer";
+import userReducer from "./reducers/userReducer";
+import pageReducer from "./reducers/pageReducer";
+import apiErrorReducer from "./reducers/apiErrorReducer";
+
+import Routes from "./Routes";
 
 const theme = responsiveFontSizes(createMuiTheme({
   palette:{
@@ -28,27 +31,19 @@ const theme = responsiveFontSizes(createMuiTheme({
   }
 }));
 
+const reducers = combineReducers({ user: userReducer, tweets: tweetsReducer, selectableDates: selectableDatesReducer, page: pageReducer, apiError: apiErrorReducer });
+const store    = createStore(reducers, applyMiddleware(thunk));
+//store.subscribe(() => console.log(store.getState()));
+
 class App extends React.Component {
   render() {
     return (
-      <Router>
+      <Provider store={ store }>
         <ThemeProvider theme={ theme }>
           <CssBaseline />
-          <SessionManage>
-            <Switch>
-              <Route exact path="/" component={ Top } />
-              <Route exact path={ `${PUBLIC_TIMELINE_PATH}/:year?/:month?/:day?` } component={ PublicTimelineContainer } />
-              <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
-              <Auth>
-                <Route exact path="/import" component={ ImportContainer } />
-                <Route exact path={ `${USER_TIMELINE_PATH}/:year?/:month?/:day?` } component={ UserTimelineContainer } />
-                <Route exact path={ `${HOME_TIMELINE_PATH}/:year?/:month?/:day?` } component={ HomeTimelineContainer } />
-                <Route exact path="/data" component={ DataManagement } />
-              </Auth>
-            </Switch>
-          </SessionManage>
+          <Routes />
         </ThemeProvider>
-      </Router>
+      </Provider>
     );
   }
 }
