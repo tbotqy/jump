@@ -11,6 +11,7 @@ import {
 } from "./utils/paths";
 
 import Auth from "./containers/AuthContainer";
+import SessionManage from "./containers/SessionManageContainer";
 import Top from "./components/Top";
 import ImportContainer from "./containers/ImportContainer";
 import DataManagement from "./components/DataManagement";
@@ -33,17 +34,19 @@ class App extends React.Component {
       <Router>
         <ThemeProvider theme={ theme }>
           <CssBaseline />
-          <Switch>
-            <Route exact path="/" component={ Top } />
-            <Route exact path={ `${PUBLIC_TIMELINE_PATH}/:year?/:month?/:day?` } component={ PublicTimelineContainer } />
-            <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
-            <Auth>
-              <Route exact path="/import" component={ ImportContainer } />
-              <Route exact path={ `${USER_TIMELINE_PATH}/:year?/:month?/:day?` } component={ UserTimelineContainer } />
-              <Route exact path={ `${HOME_TIMELINE_PATH}/:year?/:month?/:day?` } component={ HomeTimelineContainer } />
-              <Route exact path="/data" component={ DataManagement } />
-            </Auth>
-          </Switch>
+          <SessionManage>
+            <Switch>
+              <Route exact path="/" component={ Top } />
+              <Route exact path={ `${PUBLIC_TIMELINE_PATH}/:year?/:month?/:day?` } component={ PublicTimelineContainer } />
+              <Route exact path="/terms_and_privacy" component={ TermsAndPrivacy } />
+              <Auth>
+                <Route exact path="/import" component={ ImportContainer } />
+                <Route exact path={ `${USER_TIMELINE_PATH}/:year?/:month?/:day?` } component={ UserTimelineContainer } />
+                <Route exact path={ `${HOME_TIMELINE_PATH}/:year?/:month?/:day?` } component={ HomeTimelineContainer } />
+                <Route exact path="/data" component={ DataManagement } />
+              </Auth>
+            </Switch>
+          </SessionManage>
         </ThemeProvider>
       </Router>
     );
