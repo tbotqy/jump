@@ -1,12 +1,11 @@
 import { connect } from "react-redux";
-import { setIsAuthenticated } from "../actions/userActions";
 import Auth from "../components/Auth";
 
-const mapDispatchToProps = dispatch => ({
-  setIsAuthenticated: flag => dispatch(setIsAuthenticated(flag))
+const mapStateToProps = state => ({
+  isAuthenticated: state.user.isAuthenticated
 });
 
 export default connect(
-  null,
-  mapDispatchToProps
+  mapStateToProps,
+  null
 )(Auth);
