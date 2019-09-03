@@ -4,3 +4,9 @@ export function setApiErrorCode(code) {
     code
   };
 }
+
+export function resetApiErrorCode() {
+  return {
+    type: "RESET_API_ERROR_CODE"
+  };
+}

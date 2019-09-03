@@ -8,6 +8,10 @@ export default function apiErrorReducer(state = initialState, action) {
     return {
       code: action.code
     };
+  case "RESET_API_ERROR_CODE":
+    return {
+      code: initialState.code
+    };
   default:
     return state;
   }
