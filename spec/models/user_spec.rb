@@ -177,31 +177,62 @@ RSpec.describe User, type: :model do
   end
 
   describe "#as_json" do
-    subject { user.as_json }
-    let(:name)           { "name" }
-    let(:screen_name)    { "screen_name" }
-    let(:avatar_url)     { "avatar_url" }
-    let(:status_count)   { 100 }
-    let(:followee_count) { 200 }
-    let(:user) do
-      create(:user,
-        :with_statuses_and_followees,
-        name:           name,
-        screen_name:    screen_name,
-        avatar_url:     avatar_url,
-        status_count:   status_count,
-        followee_count: followee_count
-      )
-    end
+    describe "required attributes" do
+      subject { user.as_json }
+      let(:name)           { "name" }
+      let(:screen_name)    { "screen_name" }
+      let(:avatar_url)     { "avatar_url" }
+      let(:status_count)   { 100 }
+      let(:followee_count) { 200 }
+      let(:user) do
+        create(:user,
+          :with_statuses_and_followees,
+          name:           name,
+          screen_name:    screen_name,
+          avatar_url:     avatar_url,
+          status_count:   status_count,
+          followee_count: followee_count
+        )
+      end
 
-    it do
-      is_expected.to include(
-        name:           name,
-        screen_name:    screen_name,
-        avatar_url:     avatar_url,
-        status_count:   status_count,
-        followee_count: followee_count
-      )
+      it do
+        is_expected.to include(
+          name:           name,
+          screen_name:    screen_name,
+          avatar_url:     avatar_url,
+          status_count:   status_count,
+          followee_count: followee_count
+        )
+      end
+    end
+    describe "nullable attributes" do
+      describe "#statuses_updated_at" do
+        subject { user.as_json.fetch(:statuses_updated_at) }
+        context "null" do
+          let(:user) { create(:user, statuses_updated_at: nil) }
+          it { is_expected.to eq nil }
+        end
+        context "present" do
+          let(:at) { 1 }
+          let(:user) { create(:user, statuses_updated_at: at) }
+          it { is_expected.to eq Time.zone.at(at).iso8601 }
+        end
+      end
+      describe "#followees_updated_at" do
+        subject { user.as_json.fetch(:followees_updated_at) }
+        context "null" do
+          let(:user) { create(:user) } # user with no followee
+          it { is_expected.to eq nil }
+        end
+        context "present" do
+          let(:user) { create(:user) }
+          before do
+            create_list(:followee, 2, user: user)
+            create_list(:followee, 2) # the another user's followees
+          end
+          it { is_expected.to eq user.followees.maximum(:created_at).iso8601 }
+        end
+      end
     end
   end
 end

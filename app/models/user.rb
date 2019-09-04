@@ -45,12 +45,16 @@ class User < ApplicationRecord
   end
 
   def as_json(_options = {})
+    _statuses_updated_at  = statuses_updated_at.nil? ? nil : Time.zone.at(statuses_updated_at).iso8601
+    _followees_updated_at = followees.last&.created_at&.iso8601
     {
       name:           name,
       screen_name:    screen_name,
       avatar_url:     avatar_url,
       status_count:   statuses.count,
-      followee_count: followees.count
+      followee_count: followees.count,
+      statuses_updated_at:  _statuses_updated_at,
+      followees_updated_at: _followees_updated_at
     }
   end
 
