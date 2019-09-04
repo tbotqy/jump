@@ -14,7 +14,7 @@ import {
   People as PeopleIcon
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
-import HeadNav from "./HeadNav";
+import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "./data_management/CustomizedListItem";
 import AccountDeleteDialog from "./data_management/AccountDeleteDialog";
 import Footer from "./Footer";
