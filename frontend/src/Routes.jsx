@@ -9,7 +9,7 @@ import SessionManage from "./containers/SessionManageContainer";
 import Auth from "./containers/AuthContainer";
 import Top from "./components/Top";
 import ImportContainer from "./containers/ImportContainer";
-import DataManagement from "./components/DataManagement";
+import DataManagementContainer from "./containers/DataManagementContainer";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
 import PublicTimelineContainer from "./containers/PublicTimelineContainer";
 import UserTimelineContainer from "./containers/UserTimelineContainer";
@@ -34,7 +34,7 @@ const Routes = () => (
             <Route exact path="/import" component={ ImportContainer } />
             <Route exact path={ `${USER_TIMELINE_PATH}/:year?/:month?/:day?` } component={ UserTimelineContainer } />
             <Route exact path={ `${HOME_TIMELINE_PATH}/:year?/:month?/:day?` } component={ HomeTimelineContainer } />
-            <Route exact path="/data" component={ DataManagement } />
+            <Route exact path="/data" component={ DataManagementContainer } />
           </Auth>
         </Switch>
       </Router>

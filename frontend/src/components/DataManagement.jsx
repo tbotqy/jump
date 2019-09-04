@@ -7,13 +7,15 @@ import {
   Typography,
   Container,
   Divider,
-  CardContent
+  CardContent,
+  CircularProgress
 } from "@material-ui/core";
 import {
   Textsms as TextsmsIcon,
   People as PeopleIcon
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
+import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "./data_management/CustomizedListItem";
 import AccountDeleteDialog from "./data_management/AccountDeleteDialog";
@@ -33,51 +35,53 @@ const styles = theme => ({
   }
 });
 
-class DataManagement extends React.Component {
-  render() {
-    return (
-      <React.Fragment>
-        <HeadNav />
-        <Container className={ this.props.classes.container }>
-          <ApiErrorBoundary>
-            <Typography variant="h4" className={ this.props.classes.typography }>
-              データ管理
-            </Typography>
-
-            <Card>
-              <CardContent>
-                <List>
-                  <CustomizedListItem
-                    icon={ <TextsmsIcon /> }
-                    headerText="ツイート"
-                    numberText="3,200件"
-                    updatedAt="2019/5/10 - 23:20"
-                    onButtonClick={ () => {} }
-                  />
-                  <CustomizedListItem
-                    icon={ <PeopleIcon /> }
-                    headerText="フォローリスト"
-                    numberText="200件"
-                    updatedAt="2019/5/10 - 23:20"
-                    onButtonClick={ () => {} }
-                  />
-                </List>
-                <Divider />
-                <List>
-                  <ListItem className={ this.props.classes.deleteButtonListItem }>
-                    <ListItemSecondaryAction>
-                      <AccountDeleteDialog />
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
-          </ApiErrorBoundary>
-        </Container>
-        <Footer bgCaramel />
-      </React.Fragment>
-    );
-  }
-}
+const DataManagement = props => {
+  const { user, classes } = props;
+  return (
+    <React.Fragment>
+      <HeadNav />
+      <Container className={ classes.container }>
+        <ApiErrorBoundary>
+          <Typography variant="h4" className={ classes.typography }>
+            データ管理
+          </Typography>
+          {
+            user ? (
+              <Card>
+                <CardContent>
+                  <List>
+                    <CustomizedListItem
+                      icon={ <TextsmsIcon /> }
+                      headerText="ツイート"
+                      numberText={ `${user.status_count} 件` }
+                      updatedAt={ user.statuses_updated_at ? formatDateString(user.statuses_updated_at) : "-" }
+                      onButtonClick={ () => {} }
+                    />
+                    <CustomizedListItem
+                      icon={ <PeopleIcon /> }
+                      headerText="フォローリスト"
+                      numberText={ `${user.followee_count} 件` }
+                      updatedAt={ user.followees_updated_at ? formatDateString(user.followees_updated_at) : "-" }
+                      onButtonClick={ () => {} }
+                    />
+                  </List>
+                  <Divider />
+                  <List>
+                    <ListItem className={ classes.deleteButtonListItem }>
+                      <ListItemSecondaryAction>
+                        <AccountDeleteDialog />
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                </CardContent>
+              </Card>
+            ): <CircularProgress />
+          }
+        </ApiErrorBoundary>
+      </Container>
+      <Footer bgCaramel />
+    </React.Fragment>
+  );
+};
 
 export default withStyles(styles)(DataManagement);
