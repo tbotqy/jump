@@ -51,8 +51,8 @@ class User < ApplicationRecord
       name:           name,
       screen_name:    screen_name,
       avatar_url:     avatar_url,
-      status_count:   statuses.count,
-      followee_count: followees.count,
+      status_count:   statuses.count.to_s(:delimited),
+      followee_count: followees.count.to_s(:delimited),
       statuses_updated_at:  _statuses_updated_at,
       followees_updated_at: _followees_updated_at
     }

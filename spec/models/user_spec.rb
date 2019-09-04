@@ -200,8 +200,8 @@ RSpec.describe User, type: :model do
           name:           name,
           screen_name:    screen_name,
           avatar_url:     avatar_url,
-          status_count:   status_count,
-          followee_count: followee_count
+          status_count:   status_count.to_s(:delimited),
+          followee_count: followee_count.to_s(:delimited)
         )
       end
     end
