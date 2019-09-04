@@ -17,7 +17,7 @@ import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import HeadAppBar from "./HeadAppBar";
 import UserMenu from "../containers/userMenuContainer";
-import ErrorMessage from "./ErrorMessage";
+import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
   gridContainerWrapper: {
@@ -57,7 +57,6 @@ class Import extends React.Component {
       hasFinished:     false,
       showProgressBar: false,
       progress:        0,
-      apiErrorCode:    null,
       showTweet:       false
     };
   }
@@ -68,41 +67,37 @@ class Import extends React.Component {
         <HeadAppBar>
           <UserMenu user={ this.props.user } hideLinkToData />
         </HeadAppBar>
-        {
-          this.state.apiErrorCode ? (
-            <ErrorMessage apiErrorCode={ this.state.apiErrorCode } />
-          ) : (
-            <div className={ this.props.classes.gridContainerWrapper }>
-              <Grid container direction="column" alignItems="center" spacing={ 6 }>
-                <Grid item>
-                  { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screen_name } のツイートを取り込む</Typography> }
-                </Grid>
-                <Grid item>
-                  <div className={ this.props.classes.buttonWrapper }>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={ this.state.isInProgress }
-                      onClick={ this.handleClick.bind(this) }
-                      className={ clsx({ [this.props.classes.buttonSuccess]: this.state.hasFinished }) }
-                    >
-                      { this.state.hasFinished ? <><CheckIcon className={ this.props.classes.checkIcon } /> 完了! リダイレクトします ...</> : "開始" }
-                    </Button>
-                    { this.state.isInProgress && <CircularProgress size={ 24 } className={ this.props.classes.circularProgress } /> }
-                  </div>
-                </Grid>
-                <Grid item className={ this.props.classes.progressContainer }>
-                  { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
-                </Grid>
-                <Fade in={ this.state.showTweet }>
-                  <Grid item className={ this.props.classes.tweetWrapper }>
-                    { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } options={ { align: "center" } } /> }
-                  </Grid>
-                </Fade>
+        <div className={ this.props.classes.gridContainerWrapper }>
+          <ApiErrorBoundary>
+            <Grid container direction="column" alignItems="center" spacing={ 6 }>
+              <Grid item>
+                { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screen_name } のツイートを取り込む</Typography> }
               </Grid>
-            </div>
-          )
-        }
+              <Grid item>
+                <div className={ this.props.classes.buttonWrapper }>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={ this.state.isInProgress }
+                    onClick={ this.handleClick.bind(this) }
+                    className={ clsx({ [this.props.classes.buttonSuccess]: this.state.hasFinished }) }
+                  >
+                    { this.state.hasFinished ? <><CheckIcon className={ this.props.classes.checkIcon } /> 完了! リダイレクトします ...</> : "開始" }
+                  </Button>
+                  { this.state.isInProgress && <CircularProgress size={ 24 } className={ this.props.classes.circularProgress } /> }
+                </div>
+              </Grid>
+              <Grid item className={ this.props.classes.progressContainer }>
+                { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
+              </Grid>
+              <Fade in={ this.state.showTweet }>
+                <Grid item className={ this.props.classes.tweetWrapper }>
+                  { this.state.last_tweet_id && <TweetEmbed id={ this.state.last_tweet_id } options={ { align: "center" } } /> }
+                </Grid>
+              </Fade>
+            </Grid>
+          </ApiErrorBoundary>
+        </div>
       </React.Fragment>
     );
   }
@@ -111,62 +106,63 @@ class Import extends React.Component {
     if ( this.state.isInProgress || this.state.hasFinished ) return;
 
     // kick the import job on the server
-    this.requestImport();
+    this.requestImport()
+      .catch( error => {
+        if(error.response.status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
+          // A job is already kicked working.
+          // Do nothing.
+          return true;
+        }else{
+          this.props.setApiErrorCode(error.response.status);
+          return false;
+        }
+      }).then( continueFlag => {
+        if(!continueFlag) return;
 
-    this.setState({
-      isInProgress:    true,
-      showProgressBar: true
-    });
-
-    // check for the import progress once per 2 seconds.
-    const redirectInterval      = 3000;
-    const progressCheckInterval = 2000;
-    const interval = setInterval( () => {
-      this.setState({ showTweet: false });
-      this.fetchImportProgress()
-        .then( response => {
-          const progress = response.data;
-          if(progress.finished) {
-            clearInterval(interval);
-            this.setState({
-              isInProgress:  false,
-              hasFinished:   true,
-              progress:      progress.percentage,
-              last_tweet_id: progress.last_tweet_id,
-              showTweet:     true
-            });
-            setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, redirectInterval );
-          }else{
-            this.setState({
-              progress:      progress.percentage,
-              last_tweet_id: progress.last_tweet_id,
-              showTweet:     true
-            });
-          }
-        }).catch( error => {
-          clearInterval(interval);
-          this.setState({
-            isInProgress: false,
-            apiErrorCode: error.response.status
-          });
+        this.setState({
+          isInProgress:    true,
+          showProgressBar: true
         });
-    }, progressCheckInterval );
+
+        // check for the import progress once per 2 seconds.
+        const redirectInterval      = 3000;
+        const progressCheckInterval = 2000;
+        const interval = setInterval( () => {
+          this.setState({ showTweet: false });
+          this.fetchImportProgress()
+            .then( response => {
+              const progress = response.data;
+              if(progress.finished) {
+                clearInterval(interval);
+                this.setState({
+                  isInProgress:  false,
+                  hasFinished:   true,
+                  progress:      progress.percentage,
+                  last_tweet_id: progress.last_tweet_id,
+                  showTweet:     true
+                });
+                setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, redirectInterval );
+              }else{
+                this.setState({
+                  progress:      progress.percentage,
+                  last_tweet_id: progress.last_tweet_id,
+                  showTweet:     true
+                });
+              }
+            }).catch( error => {
+              if( error.response.status !== 404 ) {
+                clearInterval(interval);
+                this.setState({ isInProgress: false });
+                this.props.setApiErrorCode(error.response.status);
+              }
+            });
+        }, progressCheckInterval );
+      });
   }
 
   requestImport() {
     const userId = getUserIdFromCookie();
-    api.post(`/users/${userId}/statuses`)
-      .catch( error => {
-        if(!error.response) return console.log(error);
-        if(error.response.status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
-          // A job is already kicked working.
-          // Do nothing.
-        }else{
-          this.setState({
-            apiErrorCode: error.response.status
-          });
-        }
-      });
+    return api.post(`/users/${userId}/statuses`);
   }
 
   fetchImportProgress() {

@@ -9,7 +9,7 @@ import scrollToTop   from "./../utils/scrollToTop";
 import HeadNav       from "../containers/HeadNavContainer";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import TweetList     from "../containers/TweetListContainer";
-import ErrorMessage  from "./ErrorMessage";
+import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
   container: {
@@ -38,26 +38,11 @@ class Timeline extends React.Component {
       .then( response => {
         this.props.setTweets(response.data);
       }).catch( error => {
-        this.setApiErrorCode(error.response.status);
-      }).then( () => {
+        this.props.setApiErrorCode(error.response.status);
+      }).finally( () => {
         this.props.setIsFetching(false);
       });
     scrollToTop();
-  }
-
-  content() {
-    if(this.props.apiErrorCode) {
-      return <ErrorMessage apiErrorCode={ this.props.apiErrorCode } />;
-    }else{
-      return(
-        <>
-          <div className={ this.props.classes.tweetListContainer }>
-            { this.props.isFetching ? <LinearProgress /> : <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
-          </div>
-          { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } onSelectionChangeTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
-        </>
-      );
-    }
   }
 
   render() {
@@ -65,7 +50,12 @@ class Timeline extends React.Component {
       <>
         <HeadNav />
         <Container className={ this.props.classes.container }>
-          { this.content() }
+          <ApiErrorBoundary>
+            <div className={ this.props.classes.tweetListContainer }>
+              { this.props.isFetching ? <LinearProgress /> : <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
+            </div>
+            { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } onSelectionChangeTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
+          </ApiErrorBoundary>
         </Container>
       </>
     );

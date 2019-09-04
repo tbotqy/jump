@@ -9,7 +9,6 @@ import Timeline from "../components/Timeline";
 const mapStateToProps = state => ({
   tweets:          state.tweets.tweets,
   isFetching:      state.tweets.isFetching,
-  apiErrorCode:    state.apiError.code,
   selectableDates: state.selectableDates.selectableDates
 });
 
