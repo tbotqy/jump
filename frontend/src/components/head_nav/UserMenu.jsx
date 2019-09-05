@@ -17,6 +17,7 @@ import {
   ExitToApp as ExitToAppIcon,
   Autorenew as AutorenewIcon
 } from "@material-ui/icons";
+import { SIGN_OUT_URL } from "../../utils/paths";
 
 class UserMenu extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ class UserMenu extends React.Component {
                   <ListItemText primary="データ管理" />
                 </MenuItem>
               }
-              <MenuItem component="a" href={ `${process.env.REACT_APP_AUTH_ORIGIN}/sign_out` }>
+              <MenuItem component="a" href={ SIGN_OUT_URL }>
                 <ListItemIcon>
                   <ExitToAppIcon />
                 </ListItemIcon>
