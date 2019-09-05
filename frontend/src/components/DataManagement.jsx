@@ -1,13 +1,11 @@
 import React from "react";
 import {
-  Card,
   List,
   ListItem,
   ListItemSecondaryAction,
   Typography,
   Container,
   Divider,
-  CardContent,
   CircularProgress
 } from "@material-ui/core";
 import {
@@ -47,34 +45,32 @@ const DataManagement = props => {
           </Typography>
           {
             user ? (
-              <Card>
-                <CardContent>
-                  <List>
-                    <CustomizedListItem
-                      icon={ <TextsmsIcon /> }
-                      headerText="ツイート"
-                      numberText={ `${user.status_count} 件` }
-                      updatedAt={ user.statuses_updated_at ? formatDateString(user.statuses_updated_at) : "-" }
-                      onButtonClick={ () => {} }
-                    />
-                    <CustomizedListItem
-                      icon={ <PeopleIcon /> }
-                      headerText="フォローリスト"
-                      numberText={ `${user.followee_count} 件` }
-                      updatedAt={ user.followees_updated_at ? formatDateString(user.followees_updated_at) : "-" }
-                      onButtonClick={ () => {} }
-                    />
-                  </List>
-                  <Divider />
-                  <List>
-                    <ListItem className={ classes.deleteButtonListItem }>
-                      <ListItemSecondaryAction>
-                        <AccountDeleteDialog />
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  </List>
-                </CardContent>
-              </Card>
+              <>
+                <List>
+                  <CustomizedListItem
+                    icon={ <TextsmsIcon /> }
+                    headerText="ツイート"
+                    numberText={ `${user.status_count} 件` }
+                    updatedAt={ user.statuses_updated_at ? formatDateString(user.statuses_updated_at) : "-" }
+                    onButtonClick={ () => {} }
+                  />
+                  <CustomizedListItem
+                    icon={ <PeopleIcon /> }
+                    headerText="フォローリスト"
+                    numberText={ `${user.followee_count} 件` }
+                    updatedAt={ user.followees_updated_at ? formatDateString(user.followees_updated_at) : "-" }
+                    onButtonClick={ () => {} }
+                  />
+                </List>
+                <Divider />
+                <List>
+                  <ListItem className={ classes.deleteButtonListItem }>
+                    <ListItemSecondaryAction>
+                      <AccountDeleteDialog />
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                </List>
+              </>
             ): <CircularProgress />
           }
         </ApiErrorBoundary>
