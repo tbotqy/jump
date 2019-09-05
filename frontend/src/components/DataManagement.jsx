@@ -18,7 +18,7 @@ import getUserIdFromCookie from "../utils/getUserIdFromCookie";
 import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "../containers/CustomizedListItemContainer";
-import AccountDeleteDialog from "./data_management/AccountDeleteDialog";
+import AccountDeleteDialog from "../containers/AccountDeleteDialogContainer";
 import Footer from "./Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 

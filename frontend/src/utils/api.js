@@ -16,6 +16,9 @@ const api = {
   },
   put: path => {
     return axios.put(apiOrigin + path);
+  },
+  delete: path => {
+    return axios.delete(apiOrigin + path);
   }
 };
 

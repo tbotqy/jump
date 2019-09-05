@@ -19,17 +19,30 @@ import {
   Textsms as TextsmsIcon,
   People as PeopleIcon
 } from "@material-ui/icons";
+import api from "../../utils/api";
+import getUserIdFromCookie from "../../utils/getUserIdFromCookie";
+import { SIGN_OUT_URL } from "../../utils/paths";
 
 const styles = theme => ({
+  byeMessageWrapper: {
+    width: "100%",
+    textAlign: "center"
+  },
   buttonIcon: {
     marginRight: theme.spacing(1)
   }
 });
 
+const redirectInterval = 3000;
+
 class AccountDeleteDialog extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = {
+      open:           false,
+      disableButton:  false,
+      showByeMessage: false
+    };
   }
 
   render() {
@@ -59,13 +72,23 @@ class AccountDeleteDialog extends React.Component {
             </List>
           </DialogContent>
           <DialogActions>
-            <Button onClick={ this.handleClose.bind(this) } color="primary">
-              キャンセル
-            </Button>
-            <Button onClick={ () => {} } color="secondary">
-              <DeleteIcon className={ this.props.classes.buttonIcon } / >
-              実行
-            </Button>
+            {
+              this.state.showByeMessage ? (
+                <div className={ this.props.classes.byeMessageWrapper }>
+                  <p>完了！ご利用ありがとうございました。リダイレクトします...</p>
+                </div>
+              ) : (
+                <>
+                  <Button onClick={ this.handleClose.bind(this) } disabled={ this.state.disableButton } color="primary">
+                    キャンセル
+                  </Button>
+                  <Button onClick={ this.handleDeleteButtonClick.bind(this) } disabled={ this.state.disableButton } color="secondary">
+                    <DeleteIcon className={ this.props.classes.buttonIcon } />
+                    実行
+                  </Button>
+                </>
+              )
+            }
           </DialogActions>
         </Dialog>
       </React.Fragment>
@@ -74,14 +97,12 @@ class AccountDeleteDialog extends React.Component {
 
   MyListItem(icon, text) {
     return(
-      <React.Fragment>
-        <ListItem>
-          <ListItemIcon>
-            { icon }
-          </ListItemIcon>
-          <ListItemText secondary={ text } />
-        </ListItem>
-      </React.Fragment>
+      <ListItem>
+        <ListItemIcon>
+          { icon }
+        </ListItemIcon>
+        <ListItemText secondary={ text } />
+      </ListItem>
     );
   }
 
@@ -91,6 +112,16 @@ class AccountDeleteDialog extends React.Component {
 
   handleClose() {
     this.setState({ open: false });
+  }
+
+  handleDeleteButtonClick() {
+    this.setState({ disableButton: true });
+    const userId = getUserIdFromCookie();
+    api.delete(`/users/${userId}`)
+      .then( () => {
+        this.setState({ showByeMessage: true });
+        setTimeout( () => { document.location.href = SIGN_OUT_URL; }, redirectInterval );
+      }).catch( error => this.props.setApiErrorCode(error.response.status) );
   }
 }
 
