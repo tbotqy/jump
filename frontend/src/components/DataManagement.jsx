@@ -13,9 +13,11 @@ import {
   People as PeopleIcon
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
+import api from "../utils/api";
+import getUserIdFromCookie from "../utils/getUserIdFromCookie";
 import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
-import CustomizedListItem from "./data_management/CustomizedListItem";
+import CustomizedListItem from "../containers/CustomizedListItemContainer";
 import AccountDeleteDialog from "./data_management/AccountDeleteDialog";
 import Footer from "./Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
@@ -36,6 +38,17 @@ const styles = theme => ({
 
 const DataManagement = props => {
   const { user, classes } = props;
+
+  const requestTweetImport = () => {
+    const userId = getUserIdFromCookie();
+    return api.put(`/users/${userId}/statuses`);
+  };
+
+  const requestFolloweeImport = () => {
+    const userId = getUserIdFromCookie();
+    return api.post(`/users/${userId}/followees`);
+  };
+
   return (
     <React.Fragment>
       <HeadNav />
@@ -53,14 +66,14 @@ const DataManagement = props => {
                     headerText="ツイート"
                     numberText={ `${user.status_count} 件` }
                     updatedAt={ user.statuses_updated_at ? formatDateString(user.statuses_updated_at) : "-" }
-                    onButtonClick={ () => {} }
+                    apiFunc={ requestTweetImport }
                   />
                   <CustomizedListItem
                     icon={ <PeopleIcon /> }
                     headerText="フォローリスト"
                     numberText={ `${user.followee_count} 件` }
                     updatedAt={ user.followees_updated_at ? formatDateString(user.followees_updated_at) : "-" }
-                    onButtonClick={ () => {} }
+                    apiFunc={ requestFolloweeImport }
                   />
                 </List>
                 <Divider />
