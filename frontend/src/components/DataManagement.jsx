@@ -22,7 +22,8 @@ import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
   container: {
-    minHeight: "100vh"
+    minHeight: "100vh",
+    paddingTop: theme.spacing(2)
   },
   typography: {
     marginTop: theme.spacing(3),
