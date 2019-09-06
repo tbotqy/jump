@@ -136,7 +136,7 @@ class Import extends React.Component {
                 this.setState({
                   isInProgress:  false,
                   hasFinished:   true,
-                  progress:      progress.percentage,
+                  progress:      100,
                   last_tweet_id: progress.last_tweet_id,
                   showTweet:     true
                 });
