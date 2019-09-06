@@ -1,28 +1,31 @@
 import React from "react";
 import {
-  Card,
   List,
   ListItem,
   ListItemSecondaryAction,
   Typography,
   Container,
   Divider,
-  CardContent
+  CircularProgress
 } from "@material-ui/core";
 import {
   Textsms as TextsmsIcon,
   People as PeopleIcon
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
-import HeadNav from "./HeadNav";
-import CustomizedListItem from "./data_management/CustomizedListItem";
-import AccountDeleteDialog from "./data_management/AccountDeleteDialog";
+import api from "../utils/api";
+import getUserIdFromCookie from "../utils/getUserIdFromCookie";
+import formatDateString from "../utils/formatDateString";
+import HeadNav from "../containers/HeadNavContainer";
+import CustomizedListItem from "../containers/CustomizedListItemContainer";
+import AccountDeleteDialog from "../containers/AccountDeleteDialogContainer";
 import Footer from "./Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
   container: {
-    minHeight: "100vh"
+    minHeight: "100vh",
+    paddingTop: theme.spacing(2)
   },
   typography: {
     marginTop: theme.spacing(3),
@@ -34,49 +37,67 @@ const styles = theme => ({
 });
 
 class DataManagement extends React.Component {
+  componentDidMount() {
+    this.props.fetchUser()
+      .then( response => this.props.setUser(response.data) )
+      .catch( error => this.props.setApiErrorCode(error.response.status) );
+  }
+
   render() {
+    const { user, classes } = this.props;
     return (
       <React.Fragment>
         <HeadNav />
-        <Container className={ this.props.classes.container }>
+        <Container className={ classes.container }>
           <ApiErrorBoundary>
-            <Typography variant="h4" className={ this.props.classes.typography }>
+            <Typography variant="h4" className={ classes.typography }>
               データ管理
             </Typography>
-
-            <Card>
-              <CardContent>
-                <List>
-                  <CustomizedListItem
-                    icon={ <TextsmsIcon /> }
-                    headerText="ツイート"
-                    numberText="3,200件"
-                    updatedAt="2019/5/10 - 23:20"
-                    onButtonClick={ () => {} }
-                  />
-                  <CustomizedListItem
-                    icon={ <PeopleIcon /> }
-                    headerText="フォローリスト"
-                    numberText="200件"
-                    updatedAt="2019/5/10 - 23:20"
-                    onButtonClick={ () => {} }
-                  />
-                </List>
-                <Divider />
-                <List>
-                  <ListItem className={ this.props.classes.deleteButtonListItem }>
-                    <ListItemSecondaryAction>
-                      <AccountDeleteDialog />
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                </List>
-              </CardContent>
-            </Card>
+            {
+              user ? (
+                <>
+                  <List>
+                    <CustomizedListItem
+                      icon={ <TextsmsIcon /> }
+                      headerText="ツイート"
+                      numberText={ `${user.status_count} 件` }
+                      updatedAt={ user.statuses_updated_at ? formatDateString(user.statuses_updated_at) : "-" }
+                      apiFunc={ this.requestTweetImport }
+                    />
+                    <CustomizedListItem
+                      icon={ <PeopleIcon /> }
+                      headerText="フォローリスト"
+                      numberText={ `${user.followee_count} 件` }
+                      updatedAt={ user.followees_updated_at ? formatDateString(user.followees_updated_at) : "-" }
+                      apiFunc={ this.requestFolloweeImport }
+                    />
+                  </List>
+                  <Divider />
+                  <List>
+                    <ListItem className={ classes.deleteButtonListItem }>
+                      <ListItemSecondaryAction>
+                        <AccountDeleteDialog />
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  </List>
+                </>
+              ): <CircularProgress />
+            }
           </ApiErrorBoundary>
         </Container>
         <Footer bgCaramel />
       </React.Fragment>
     );
+  }
+
+  requestTweetImport() {
+    const userId = getUserIdFromCookie();
+    return api.put(`/users/${userId}/statuses`);
+  }
+
+  requestFolloweeImport() {
+    const userId = getUserIdFromCookie();
+    return api.post(`/users/${userId}/followees`);
   }
 }
 
