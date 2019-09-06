@@ -4,8 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-
-const authUrl = `${process.env.REACT_APP_AUTH_ORIGIN}/users/auth/twitter`;
+import { SIGN_IN_URL } from "../utils/paths";
 
 const styles = theme => ({
   button: {
@@ -24,7 +23,7 @@ const styles = theme => ({
 function SignInButton(props) {
   const { classes, ...others } = props;
   return (
-    <Button { ...others } className={ classes.button } href={ authUrl }>
+    <Button { ...others } className={ classes.button } href={ SIGN_IN_URL }>
       <FontAwesomeIcon icon={ faTwitter } className={ classes.icon } />
       { props.text }
     </Button>

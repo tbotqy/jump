@@ -17,7 +17,10 @@ import {
   ExitToApp as ExitToAppIcon,
   Autorenew as AutorenewIcon
 } from "@material-ui/icons";
-import { SIGN_OUT_URL } from "../../utils/paths";
+import {
+  SIGN_OUT_URL,
+  DATA_PATH
+} from "../../utils/paths";
 
 class UserMenu extends React.Component {
   constructor(props) {
@@ -56,7 +59,7 @@ class UserMenu extends React.Component {
             <Divider />
             <MenuList>
               { !this.props.hideLinkToData &&
-                <MenuItem component={ Link } to="/data">
+                <MenuItem component={ Link } to={ DATA_PATH }>
                   <ListItemIcon>
                     <AutorenewIcon />
                   </ListItemIcon>

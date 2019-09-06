@@ -5,6 +5,7 @@ import {
   Grid,
   Button
 } from "@material-ui/core";
+import { ROOT_PATH } from "../utils/paths";
 
 const styles = theme => ({
   container: {
@@ -30,7 +31,7 @@ const ErrorMessage = props => (
       <Typography variant="h4" color="textSecondary">{ props.errorMessage || errorMessageByApiErrorCode(props.apiErrorCode) }</Typography>
     </Grid>
     <Grid item xs={ 12 } className={ props.classes.item } >
-      <Button href="/">トップへ</Button>
+      <Button href={ ROOT_PATH }>トップへ</Button>
     </Grid>
   </Grid>
 );
