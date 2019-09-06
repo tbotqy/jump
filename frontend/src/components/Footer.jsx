@@ -7,6 +7,10 @@ import {
   Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import {
+  ROOT_PATH,
+  TERMS_AND_PRIVACY_PATH
+} from "../utils/paths";
 
 const styles = theme => ({
   container: {
@@ -35,7 +39,7 @@ class Footer extends React.Component {
               <Link
                 color="inherit"
                 component={ RouterLink }
-                to="/"
+                to={ ROOT_PATH }
                 className={ this.props.classes.link }
               >
                 twitjump.me
@@ -47,7 +51,7 @@ class Footer extends React.Component {
               <Link
                 color="inherit"
                 component={ RouterLink }
-                to="/terms_and_privacy"
+                to={ TERMS_AND_PRIVACY_PATH }
               >
                 利用規約・プライバシーポリシー
               </Link>
