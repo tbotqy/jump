@@ -105,6 +105,8 @@ class Import extends React.Component {
   handleClick() {
     if ( this.state.isInProgress || this.state.hasFinished ) return;
 
+    this.setState({ isInProgress: true });
+
     // kick the import job on the server
     this.requestImport()
       .catch( error => {
@@ -119,10 +121,7 @@ class Import extends React.Component {
       }).then( continueFlag => {
         if(!continueFlag) return;
 
-        this.setState({
-          isInProgress:    true,
-          showProgressBar: true
-        });
+        this.setState({ showProgressBar: true });
 
         // check for the import progress once per 2 seconds.
         const redirectInterval      = 3000;
@@ -137,7 +136,7 @@ class Import extends React.Component {
                 this.setState({
                   isInProgress:  false,
                   hasFinished:   true,
-                  progress:      progress.percentage,
+                  progress:      100,
                   last_tweet_id: progress.last_tweet_id,
                   showTweet:     true
                 });
