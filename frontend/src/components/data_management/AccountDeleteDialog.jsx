@@ -10,7 +10,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
+  CircularProgress
 } from "@material-ui/core";
 import {
   Delete as DeleteIcon,
@@ -79,6 +80,7 @@ class AccountDeleteDialog extends React.Component {
                 </div>
               ) : (
                 <>
+                  { this.state.disableButton && <CircularProgress size={ 24 } /> }
                   <Button onClick={ this.handleClose.bind(this) } disabled={ this.state.disableButton } color="primary">
                     キャンセル
                   </Button>
