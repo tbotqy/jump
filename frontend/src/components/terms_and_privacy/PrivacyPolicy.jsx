@@ -31,19 +31,18 @@ class PrivacyPolicy extends React.Component {
           <ListSubheader disableSticky>広告配信に際して</ListSubheader>
           <ListItem>
             <ListItemText>
-              当サービスでは、Google が提供する広告サービス「Google
-              アドセンス」を利用しています。
+              当サービスでは、Google が提供する広告サービス「Google アドセンス」を利用しています。
             </ListItemText>
           </ListItem>
           <ListItem>
             <ListItemText>
-              Googleアドセンスでは、ユーザーの興味に基づいた広告の表示をするため、当サイトや他サイトへのアクセスに関する情報
+              Google アドセンス では、ユーザーの興味に基づいた広告の表示をするため、当サイトや他サイトへのアクセスに関する情報
               （Cookie）を使用することがあります。
             </ListItemText>
           </ListItem>
           <ListItem>
             <ListItemText>
-              Cookieを無効にする設定およびGoogleアドセンスに関する詳細は
+              Cookie を無効にする設定および Google アドセンス に関する詳細は
               <Link href="https://policies.google.com/technologies/ads?hl=ja">
                 こちら
               </Link>
@@ -53,14 +52,12 @@ class PrivacyPolicy extends React.Component {
           <ListSubheader disableSticky>アクセス解析に際して</ListSubheader>
           <ListItem>
             <ListItemText>
-              当サービスでは、サイトの利用状況の分析と改善の目的で、Google
-              が提供するアクセス解析ツール「Google
-              アナリティクス」を利用しています。
+              当サービスでは、サイトの利用状況の分析と改善の目的で、Google が提供するアクセス解析ツール「Google アナリティクス」を利用しています。
             </ListItemText>
           </ListItem>
           <ListItem>
             <ListItemText>
-              Googleアナリティクスでは、トラフィックデータの収集のために、Cookieを使用しています。
+              Google アナリティクス では、トラフィックデータの収集のために、Cookie を使用しています。
             </ListItemText>
           </ListItem>
           <ListItem>
@@ -70,12 +67,12 @@ class PrivacyPolicy extends React.Component {
           </ListItem>
           <ListItem>
             <ListItemText>
-              Cookieを無効にすることでトラフィックデータの収集を拒否することができます。お使いのブラウザの設定をご確認ください。
+              Cookie を無効にすることでトラフィックデータの収集を拒否することができます。お使いのブラウザの設定をご確認ください。
             </ListItemText>
           </ListItem>
           <ListItem>
             <ListItemText>
-              GoogleのCookieの利用に関する詳細は、
+              Google の Cookie の利用に関する詳細は、
               <Link href="https://policies.google.com/technologies/partner-sites?hl=ja">
                 こちら
               </Link>
