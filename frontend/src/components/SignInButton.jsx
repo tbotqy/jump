@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
@@ -21,9 +21,10 @@ const styles = theme => ({
 });
 
 function SignInButton(props) {
+  const [ disabled, setDisabled ] = useState(false);
   const { classes, ...others } = props;
   return (
-    <Button { ...others } className={ classes.button } href={ SIGN_IN_URL }>
+    <Button { ...others } className={ classes.button } href={ SIGN_IN_URL } disabled={ disabled } onClick={ () => setDisabled(true) } >
       <FontAwesomeIcon icon={ faTwitter } className={ classes.icon } />
       { props.text }
     </Button>
