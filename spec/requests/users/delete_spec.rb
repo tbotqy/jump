@@ -8,6 +8,10 @@ RSpec.describe "Users", type: :request do
       it { expect(DestroyUserJob).not_to have_been_enqueued }
     end
 
+    shared_examples "doesn't make the user signed out" do
+      it { expect(controller.current_user).to eq user }
+    end
+
     context "user has not been authenticated" do
       let(:user) { create(:user) }
       let(:id)   { user.id }
@@ -24,6 +28,7 @@ RSpec.describe "Users", type: :request do
           delete user_path(id: other_user_id)
         end
         it_behaves_like "doesn't enqueue the job"
+        it_behaves_like "doesn't make the user signed out"
         it_behaves_like "respond with status code", :not_found
       end
       context "user with given id exists" do
@@ -35,6 +40,7 @@ RSpec.describe "Users", type: :request do
             delete user_path(id: other_user_id)
           end
           it_behaves_like "doesn't enqueue the job"
+          it_behaves_like "doesn't make the user signed out"
           it_behaves_like "request for the other user's resource"
         end
         context "given id is an authenticated user's id" do
@@ -47,6 +53,7 @@ RSpec.describe "Users", type: :request do
               delete user_path(id: id)
             end
             it_behaves_like "doesn't enqueue the job"
+            it_behaves_like "doesn't make the user signed out"
             it_behaves_like "respond with status code", :internal_server_error
           end
           context "succeeded to kick the job" do
@@ -56,6 +63,9 @@ RSpec.describe "Users", type: :request do
             end
             it "enqueues the job " do
               expect(DestroyUserJob).to have_been_enqueued.exactly(:once)
+            end
+            it "makes the user signed out" do
+              expect(controller.current_user).to eq nil
             end
             it_behaves_like "respond with status code", :accepted
           end

@@ -21,7 +21,7 @@ import {
 } from "@material-ui/icons";
 import api from "../../utils/api";
 import getUserIdFromCookie from "../../utils/getUserIdFromCookie";
-import { SIGN_OUT_URL } from "../../utils/paths";
+import { ROOT_PATH } from "../../utils/paths";
 
 const styles = theme => ({
   byeMessageWrapper: {
@@ -120,7 +120,7 @@ class AccountDeleteDialog extends React.Component {
     api.delete(`/users/${userId}`)
       .then( () => {
         this.setState({ showByeMessage: true });
-        setTimeout( () => { document.location.href = SIGN_OUT_URL; }, redirectInterval );
+        setTimeout( () => { document.location.href = ROOT_PATH; }, redirectInterval );
       }).catch( error => this.props.setApiErrorCode(error.response.status) );
   }
 }

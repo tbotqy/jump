@@ -17,6 +17,8 @@ class UsersController < ApplicationController
     authorize_operation_for!(user)
 
     DestroyUserJob.perform_later(user_id: params[:id])
+    sign_out user
+
     head :accepted
   end
 end
