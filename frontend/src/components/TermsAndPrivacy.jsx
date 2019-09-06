@@ -1,5 +1,5 @@
 import React from "react";
-import HeadNav from "./HeadNav";
+import HeadNav from "../containers/HeadNavContainer";
 import Footer from "./Footer";
 import { Container } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
