@@ -107,8 +107,12 @@ class Import extends React.Component {
 
     this.setState({ isInProgress: true });
 
-    // kick the import job on the server
-    this.requestImport()
+    // kick the import jobs on the server
+
+    this.requestFolloweeImport()
+      .catch( error => this.props.setApiErrorCode(error.response.status) );
+
+    this.requestTweetImport()
       .catch( error => {
         if(error.response.status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
           // A job is already kicked working.
@@ -159,9 +163,14 @@ class Import extends React.Component {
       });
   }
 
-  requestImport() {
+  requestTweetImport() {
     const userId = getUserIdFromCookie();
     return api.post(`/users/${userId}/statuses`);
+  }
+
+  requestFolloweeImport() {
+    const userId = getUserIdFromCookie();
+    return api.post(`/users/${userId}/followees`);
   }
 
   fetchImportProgress() {
