@@ -1,4 +1,6 @@
 import axios from "axios";
+import getUserIdFromCookie from "./getUserIdFromCookie";
+
 axios.defaults.withCredentials = true;
 
 export const API_NORMAL_CODE_OK               = 200;
@@ -23,3 +25,76 @@ const api = {
 };
 
 export default api;
+
+const userId = getUserIdFromCookie();
+
+/*
+ * User
+ */
+
+export function fetchUser() {
+  return api.get(`/users/${userId}`);
+}
+
+export function deleteUser() {
+  return api.delete(`/users/${userId}`);
+}
+
+/*
+ * Tweet
+ */
+
+export function fetchPublicTweets(year, month, day, page) {
+  const params = { year, month, day, page };
+  return api.get("/statuses", params);
+}
+
+export function fetchUserTweets(year, month, day, page) {
+  const params = { year, month, day, page };
+  return api.get(`/users/${userId}/statuses`, params);
+}
+
+export function fetchFolloweeTweets(year, month, day, page) {
+  const params = { year, month, day, page };
+  return api.get(`/users/${userId}/followee_statuses`, params);
+}
+
+export function requestInitialTweetImport() {
+  return api.post(`/users/${userId}/statuses`);
+}
+
+export function requestAdditionalTweetImport() {
+  return api.put(`/users/${userId}/statuses`);
+}
+
+/*
+ * SelectableDate
+ */
+
+export function fetchPublicSelectableDates() {
+  return api.get("/tweeted_dates");
+}
+
+export function fetchUserSelectableDates() {
+  return api.get(`/users/${userId}/tweeted_dates`);
+}
+
+export function fetchFolloweeSelectableDates() {
+  return api.get(`/users/${userId}/followees/tweeted_dates`);
+}
+
+/*
+ * Followee
+ */
+
+export function requestFolloweeImport() {
+  return api.post(`/users/${userId}/followees`);
+}
+
+/*
+ * ImportProgress
+ */
+
+export function fetchImportProgress() {
+  return api.get(`/users/${userId}/tweet_import_progress`);
+}

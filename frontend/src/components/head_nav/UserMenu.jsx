@@ -17,6 +17,7 @@ import {
   ExitToApp as ExitToAppIcon,
   Autorenew as AutorenewIcon
 } from "@material-ui/icons";
+import { fetchUser } from "../../utils/api";
 import {
   SIGN_OUT_URL,
   DATA_PATH
@@ -34,7 +35,7 @@ class UserMenu extends React.Component {
   componentDidMount() {
     if(!this.props.user) {
       this.setState({ fetchingUser: true });
-      this.props.fetchUser()
+      fetchUser()
         .then( response => this.props.setUser(response.data) )
         .catch( error => this.props.setApiErrorCode(error.response.status) )
         .finally( () => this.setState({ fetchingUser: false }) );

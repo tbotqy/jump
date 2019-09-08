@@ -1,17 +1,21 @@
 import React from "react";
+import {
+  fetchUserTweets,
+  fetchUserSelectableDates
+} from "../utils/api";
 import Timeline from "../containers/TimelineContainer";
 
 class UserTimeline extends React.Component {
   fetchTweets(year, month, day) {
     this.props.setIsFetching(true);
-    this.props.fetchUserTweets(year, month, day)
+    fetchUserTweets(year, month, day)
       .then( response => this.props.setTweets(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) )
       .finally( () => this.props.setIsFetching(false) );
   }
 
   fetchSelectableDates(year, month, day) {
-    this.props.fetchUserSelectableDates(year, month, day)
+    fetchUserSelectableDates(year, month, day)
       .then( response => this.props.setSelectableDates(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) );
   }
@@ -24,7 +28,7 @@ class UserTimeline extends React.Component {
   }
 
   render() {
-    return <Timeline tweetsFetchFunc={ this.props.fetchUserTweets.bind(this) } />;
+    return <Timeline tweetsFetchFunc={ fetchUserTweets.bind(this) } />;
   }
 }
 

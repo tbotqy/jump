@@ -13,8 +13,11 @@ import {
   People as PeopleIcon
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
-import api from "../utils/api";
-import getUserIdFromCookie from "../utils/getUserIdFromCookie";
+import {
+  fetchUser,
+  requestAdditionalTweetImport,
+  requestFolloweeImport
+} from "../utils/api";
 import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "../containers/CustomizedListItemContainer";
@@ -38,7 +41,7 @@ const styles = theme => ({
 
 class DataManagement extends React.Component {
   componentDidMount() {
-    this.props.fetchUser()
+    fetchUser()
       .then( response => this.props.setUser(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) );
   }
@@ -62,14 +65,14 @@ class DataManagement extends React.Component {
                       headerText="ツイート"
                       numberText={ `${user.status_count} 件` }
                       updatedAt={ user.statuses_updated_at ? formatDateString(user.statuses_updated_at) : "-" }
-                      apiFunc={ this.requestTweetImport }
+                      apiFunc={ requestAdditionalTweetImport }
                     />
                     <CustomizedListItem
                       icon={ <PeopleIcon /> }
                       headerText="フォローリスト"
                       numberText={ `${user.followee_count} 件` }
                       updatedAt={ user.followees_updated_at ? formatDateString(user.followees_updated_at) : "-" }
-                      apiFunc={ this.requestFolloweeImport }
+                      apiFunc={ requestFolloweeImport }
                     />
                   </List>
                   <Divider />
@@ -88,16 +91,6 @@ class DataManagement extends React.Component {
         <Footer bgCaramel />
       </React.Fragment>
     );
-  }
-
-  requestTweetImport() {
-    const userId = getUserIdFromCookie();
-    return api.put(`/users/${userId}/statuses`);
-  }
-
-  requestFolloweeImport() {
-    const userId = getUserIdFromCookie();
-    return api.post(`/users/${userId}/followees`);
   }
 }
 

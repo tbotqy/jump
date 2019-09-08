@@ -20,8 +20,7 @@ import {
   Textsms as TextsmsIcon,
   People as PeopleIcon
 } from "@material-ui/icons";
-import api from "../../utils/api";
-import getUserIdFromCookie from "../../utils/getUserIdFromCookie";
+import { deleteUser } from "../../utils/api";
 import { ROOT_PATH } from "../../utils/paths";
 
 const styles = theme => ({
@@ -118,12 +117,10 @@ class AccountDeleteDialog extends React.Component {
 
   handleDeleteButtonClick() {
     this.setState({ disableButton: true });
-    const userId = getUserIdFromCookie();
-    api.delete(`/users/${userId}`)
-      .then( () => {
-        this.setState({ showByeMessage: true });
-        setTimeout( () => { document.location.href = ROOT_PATH; }, redirectInterval );
-      }).catch( error => this.props.setApiErrorCode(error.response.status) );
+    deleteUser().then( () => {
+      this.setState({ showByeMessage: true });
+      setTimeout( () => { document.location.href = ROOT_PATH; }, redirectInterval );
+    }).catch( error => this.props.setApiErrorCode(error.response.status) );
   }
 }
 
