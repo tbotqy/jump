@@ -20,7 +20,7 @@ import { USER_TIMELINE_PATH } from "../utils/paths";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import HeadAppBar from "./HeadAppBar";
-import UserMenu from "../containers/userMenuContainer";
+import UserMenu from "../containers/UserMenuContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
