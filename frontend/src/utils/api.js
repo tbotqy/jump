@@ -11,7 +11,7 @@ const apiOrigin = process.env.REACT_APP_API_ORIGIN;
 
 const api = {
   get: (path, params = {}) => {
-    return axios.get(apiOrigin + path, { params: params });
+    return axios.get(apiOrigin + path, { params });
   },
   post: (path, params = {}) => {
     return axios.post(apiOrigin + path, { params });
