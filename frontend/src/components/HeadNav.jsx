@@ -1,6 +1,6 @@
 import React from "react";
 import TimelineSwitch from "./head_nav/TimelineSwitch";
-import UserMenu from "../containers/userMenuContainer";
+import UserMenu from "../containers/UserMenuContainer";
 import SignInButton from "./SignInButton";
 import HeadAppBar from "./HeadAppBar";
 
