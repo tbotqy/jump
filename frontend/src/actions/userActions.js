@@ -1,11 +1,3 @@
-import getUserIdFromCookie from "../utils/getUserIdFromCookie";
-import api from "../utils/api";
-
-export function fetchUser() {
-  const userId = getUserIdFromCookie();
-  return () => api.get(`/users/${userId}`);
-}
-
 export function setUser(user) {
   return {
     type: "SET_USER",

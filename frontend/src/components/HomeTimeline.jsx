@@ -1,17 +1,21 @@
 import React from "react";
+import {
+  fetchFolloweeTweets,
+  fetchFolloweeSelectableDates
+} from "../utils/api";
 import Timeline from "../containers/TimelineContainer";
 
 class HomeTimeline extends React.Component {
   fetchTweets(year, month, day) {
     this.props.setIsFetching(true);
-    this.props.fetchFolloweeTweets(year, month, day)
+    fetchFolloweeTweets(year, month, day)
       .then( response => this.props.setTweets(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) )
       .finally( () => this.props.setIsFetching(false) );
   }
 
   fetchSelectableDates(year, month, day) {
-    this.props.fetchFolloweeSelectableDates(year, month, day)
+    fetchFolloweeSelectableDates(year, month, day)
       .then( response => this.props.setSelectableDates(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) );
   }
@@ -24,7 +28,7 @@ class HomeTimeline extends React.Component {
   }
 
   render() {
-    return <Timeline tweetsFetchFunc={ this.props.fetchFolloweeTweets.bind(this) } />;
+    return <Timeline tweetsFetchFunc={ fetchFolloweeTweets.bind(this) } />;
   }
 }
 

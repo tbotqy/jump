@@ -1,8 +1,5 @@
 import { connect } from "react-redux";
-import {
-  fetchUser,
-  setUser
-} from "../actions/userActions";
+import { setUser } from "../actions/userActions";
 import { setApiErrorCode } from "../actions/apiErrorActions";
 import DataManagement from "../components/DataManagement";
 
@@ -11,7 +8,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser:       () => dispatch(fetchUser()),
   setUser:         user => dispatch(setUser(user)),
   setApiErrorCode: code => dispatch(setApiErrorCode(code))
 });

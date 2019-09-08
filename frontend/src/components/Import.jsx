@@ -10,9 +10,13 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import TweetEmbed from "react-tweet-embed";
-import api, { API_ERROR_CODE_TOO_MANY_REQUESTS } from "../utils/api";
+import {
+  requestInitialTweetImport,
+  requestFolloweeImport,
+  fetchImportProgress,
+  API_ERROR_CODE_TOO_MANY_REQUESTS
+} from "../utils/api";
 import { USER_TIMELINE_PATH } from "../utils/paths";
-import getUserIdFromCookie from "../utils/getUserIdFromCookie.js";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import HeadAppBar from "./HeadAppBar";
@@ -109,10 +113,10 @@ class Import extends React.Component {
 
     // kick the import jobs on the server
 
-    this.requestFolloweeImport()
+    requestFolloweeImport()
       .catch( error => this.props.setApiErrorCode(error.response.status) );
 
-    this.requestTweetImport()
+    requestInitialTweetImport()
       .catch( error => {
         if(error.response.status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
           // A job is already kicked working.
@@ -132,7 +136,7 @@ class Import extends React.Component {
         const progressCheckInterval = 2000;
         const interval = setInterval( () => {
           this.setState({ showTweet: false });
-          this.fetchImportProgress()
+          fetchImportProgress()
             .then( response => {
               const progress = response.data;
               if(progress.finished) {
@@ -161,21 +165,6 @@ class Import extends React.Component {
             });
         }, progressCheckInterval );
       });
-  }
-
-  requestTweetImport() {
-    const userId = getUserIdFromCookie();
-    return api.post(`/users/${userId}/statuses`);
-  }
-
-  requestFolloweeImport() {
-    const userId = getUserIdFromCookie();
-    return api.post(`/users/${userId}/followees`);
-  }
-
-  fetchImportProgress() {
-    const userId = getUserIdFromCookie();
-    return api.get(`/users/${userId}/tweet_import_progress`);
   }
 }
 
