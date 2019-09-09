@@ -38,11 +38,11 @@ class Top extends React.Component {
         <div className={ this.props.classes.contentContainer }>
           <Container>
             <Grid container alignItems="center">
-              <Grid item sm={ 6 } xs={ 12 }>
-                <Hidden only="xs">
+              <Grid item md={ 6 } sm={ 12 }>
+                <Hidden smDown>
                   <LeadText />
                 </Hidden>
-                <Hidden smUp>
+                <Hidden mdUp>
                   <LeadText align="center" />
                   <MockUp />
                 </Hidden>
@@ -87,8 +87,8 @@ class Top extends React.Component {
                   </Grid>
                 </Box>
               </Grid>
-              <Hidden only="xs">
-                <Grid item sm={ 6 } xs={ 12 } align="center">
+              <Hidden smDown>
+                <Grid item md={ 6 } sm={ 12 } align="center">
                   <MockUp />
                 </Grid>
               </Hidden>
