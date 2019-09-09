@@ -38,24 +38,26 @@ class Top extends React.Component {
         <div className={ this.props.classes.contentContainer }>
           <Container>
             <Grid container alignItems="center">
-              <Grid item sm={ 6 } xs={ 12 }>
-                <Hidden only="xs">
+              <Grid item md={ 6 } sm={ 12 }>
+                <Hidden smDown>
                   <LeadText />
                 </Hidden>
-                <Hidden smUp>
+                <Hidden mdUp>
                   <LeadText align="center" />
                   <MockUp />
                 </Hidden>
-                <Grid item lg={ 8 }>
-                  <Typography
-                    variant="body1"
-                    color="textSecondary"
-                    gutterBottom
-                  >
-                    <BrandLogo className={ this.props.classes.smallBrandLogo } />
-                    は、みんなやあなたの過去のツイートを、クリック一つでサクサク見られるウェブサービスです
-                  </Typography>
-                </Grid>
+                <Box mt={ 5 }>
+                  <Grid item lg={ 8 }>
+                    <Typography
+                      variant="body1"
+                      color="textSecondary"
+                      gutterBottom
+                    >
+                      <BrandLogo className={ this.props.classes.smallBrandLogo } />
+                      は、みんなやあなたの過去のツイートを、クリック一つでサクサク見られるウェブサービスです
+                    </Typography>
+                  </Grid>
+                </Box>
                 <Box mt={ 5 }>
                   <Grid container justify="center" spacing={ 3 }>
                     <Grid item lg={ 6 } xs={ 12 }>
@@ -85,8 +87,8 @@ class Top extends React.Component {
                   </Grid>
                 </Box>
               </Grid>
-              <Hidden only="xs">
-                <Grid item sm={ 6 } xs={ 12 } align="center">
+              <Hidden smDown>
+                <Grid item md={ 6 } sm={ 12 } align="center">
                   <MockUp />
                 </Grid>
               </Hidden>
