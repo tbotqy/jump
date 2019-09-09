@@ -72,6 +72,35 @@ RSpec.describe "User authentication", type: :request do
             it { expect(controller.current_user).to eq user }
           end
 
+          describe "sync protection state of user statuses" do
+            subject { -> { get user_twitter_omniauth_callback_path } }
+            context "user has some statuses imported" do
+              context "from unprotected to protected" do
+                let(:before_protected_flag) { false }
+
+                let!(:user) { create(:user, protected_flag: before_protected_flag) }
+                let!(:user_statuses) do
+                  before_updated_at = Time.current - 1.day
+                  create_list(:status, 3, user: user, private_flag: before_protected_flag, created_at: before_updated_at, updated_at: before_updated_at)
+                end
+
+                before do
+                  travel_to(Time.current)
+                  OmniAuth.config.mock_auth[:twitter] = auth_hash_mock.merge(uid: user.uid, extra: { raw_info: { protected: !before_protected_flag } })
+                  sign_in user
+                end
+                after { travel_back }
+
+                it "makes all the user's statuses protected" do
+                  is_expected.to change { Status.where(user: user).pluck(:private_flag).uniq.first }.to(!before_protected_flag)
+                end
+                it "updates timestamp of all the user's statuses" do
+                  is_expected.to change { Status.where(user: user).pluck(:updated_at).uniq.first }.to(Time.current)
+                end
+              end
+            end
+          end
+
           describe "redirection and its response header" do
             shared_examples "includes user_id as a value of Set-Cookie attr in response header" do
               it { expect(response.header.fetch("Set-Cookie")).to include("user_id=#{authenticating_user.id}") }
