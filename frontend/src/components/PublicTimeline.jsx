@@ -3,6 +3,7 @@ import {
   fetchPublicTweets,
   fetchPublicSelectableDates
 } from "../utils/api";
+import timelineTitleText from "../utils/timelineTitleText";
 import Timeline from "../containers/TimelineContainer";
 
 class PublicTimeline extends React.Component {
@@ -25,10 +26,20 @@ class PublicTimeline extends React.Component {
     const { year, month, day } = this.props.match.params;
     this.fetchTweets(year, month, day);
     this.fetchSelectableDates(year, month, day);
+    this.updateTitle();
   }
 
   render() {
     return <Timeline tweetsFetchFunc={ fetchPublicTweets.bind(this) } />;
+  }
+
+  componentDidUpdate() {
+    this.updateTitle();
+  }
+
+  updateTitle() {
+    const { year, month, day } = this.props.match.params;
+    document.title = timelineTitleText("パブリックタイムライン", year, month, day);
   }
 }
 

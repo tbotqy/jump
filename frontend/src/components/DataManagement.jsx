@@ -18,6 +18,7 @@ import {
   requestAdditionalTweetImport,
   requestFolloweeImport
 } from "../utils/api";
+import { PAGE_TITLE_DATA_MANAGEMENT } from "../utils/pageTitles";
 import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "../containers/CustomizedListItemContainer";
@@ -44,6 +45,8 @@ class DataManagement extends React.Component {
     fetchUser()
       .then( response => this.props.setUser(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) );
+
+    document.title = PAGE_TITLE_DATA_MANAGEMENT;
   }
 
   render() {

@@ -3,6 +3,7 @@ import HeadNav from "../containers/HeadNavContainer";
 import Footer from "./Footer";
 import { Container } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { PAGE_TITLE_TERMS_AND_PRIVACY } from "../utils/pageTitles";
 import TermsOfService from "./terms_and_privacy/TermsOfService";
 import PrivacyPolicy from "./terms_and_privacy/PrivacyPolicy";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
@@ -15,6 +16,10 @@ const styles = theme => ({
 });
 
 class TermsAndPrivacy extends React.Component {
+  componentDidMount() {
+    document.title = PAGE_TITLE_TERMS_AND_PRIVACY;
+  }
+
   render() {
     return (
       <React.Fragment>

@@ -3,6 +3,7 @@ import {
   fetchUserTweets,
   fetchUserSelectableDates
 } from "../utils/api";
+import timelineTitleText from "../utils/timelineTitleText";
 import Timeline from "../containers/TimelineContainer";
 
 class UserTimeline extends React.Component {
@@ -25,10 +26,20 @@ class UserTimeline extends React.Component {
     const { year, month, day } = this.props.match.params;
     this.fetchTweets(year, month, day);
     this.fetchSelectableDates(year, month, day);
+    this.updateTitle();
   }
 
   render() {
     return <Timeline tweetsFetchFunc={ fetchUserTweets.bind(this) } />;
+  }
+
+  componentDidUpdate() {
+    this.updateTitle();
+  }
+
+  updateTitle() {
+    const { year, month, day } = this.props.match.params;
+    document.title = timelineTitleText("ユーザータイムライン", year, month, day);
   }
 }
 
