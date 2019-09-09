@@ -9,6 +9,7 @@ import {
   Container,
   Hidden
 } from "@material-ui/core";
+import { PAGE_TITLE_TOP } from "../utils/pageTitles";
 import { PUBLIC_TIMELINE_PATH } from "../utils/paths";
 import { Input as InputIcon } from "@material-ui/icons";
 import BrandLogo from "./BrandLogo";
@@ -32,6 +33,10 @@ const styles = theme => ({
 });
 
 class Top extends React.Component {
+  componentDidMount() {
+    document.title = PAGE_TITLE_TOP;
+  }
+
   render() {
     return (
       <React.Fragment>

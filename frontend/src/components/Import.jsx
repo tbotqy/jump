@@ -16,6 +16,7 @@ import {
   fetchImportProgress,
   API_ERROR_CODE_TOO_MANY_REQUESTS
 } from "../utils/api";
+import { PAGE_TITLE_IMPORT } from "../utils/pageTitles";
 import { USER_TIMELINE_PATH } from "../utils/paths";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
@@ -63,6 +64,10 @@ class Import extends React.Component {
       progress:        0,
       showTweet:       false
     };
+  }
+
+  componentDidMount() {
+    document.title = PAGE_TITLE_IMPORT;
   }
 
   render() {
