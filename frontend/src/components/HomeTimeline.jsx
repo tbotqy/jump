@@ -3,6 +3,7 @@ import {
   fetchFolloweeTweets,
   fetchFolloweeSelectableDates
 } from "../utils/api";
+import timelineTitleText from "../utils/timelineTitleText";
 import Timeline from "../containers/TimelineContainer";
 
 class HomeTimeline extends React.Component {
@@ -25,6 +26,7 @@ class HomeTimeline extends React.Component {
     const { year, month, day } = this.props.match.params;
     this.fetchTweets(year, month, day);
     this.fetchSelectableDates(year, month, day);
+    document.title = timelineTitleText("ホームタイムライン", year, month, day);
   }
 
   render() {
