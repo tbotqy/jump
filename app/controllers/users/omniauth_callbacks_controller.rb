@@ -6,6 +6,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in user
 
     if user.has_any_status?
+      user.statuses.update_all(private_flag: user.protected_flag, updated_at: Time.current)
       redirect_to user_timeline_url
     else
       redirect_to status_import_url
