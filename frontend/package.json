@@ -21,7 +21,7 @@
     "react-tweet-embed": "^1.2.2",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "shortid": "^2.2.14",
+    "shortid": "^2.2.15",
     "twitter-text": "^3.0.0",
     "xss": "^1.0.6"
   },
