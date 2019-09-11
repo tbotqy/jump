@@ -25,26 +25,23 @@ import {
   DATA_PATH,
   TIMELINE_DATE_PARAMS
 } from "./utils/paths";
-import ErrorBoundary from "./components/ErrorBoundary";
 
 const Routes = () => (
-  <ErrorBoundary>
-    <SessionManage>
-      <Router>
-        <Switch>
-          <Route exact path={ ROOT_PATH } component={ Top } />
-          <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
-          <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimelineContainer } />
-          <Auth>
-            <Route exact path={ IMPORT_PATH } component={ ImportContainer } />
-            <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimelineContainer } />
-            <Route exact path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ HomeTimelineContainer } />
-            <Route exact path={ DATA_PATH } component={ DataManagementContainer } />
-          </Auth>
-        </Switch>
-      </Router>
-    </SessionManage>
-  </ErrorBoundary>
+  <SessionManage>
+    <Router>
+      <Switch>
+        <Route exact path={ ROOT_PATH } component={ Top } />
+        <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
+        <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimelineContainer } />
+        <Auth>
+          <Route exact path={ IMPORT_PATH } component={ ImportContainer } />
+          <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimelineContainer } />
+          <Route exact path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ HomeTimelineContainer } />
+          <Route exact path={ DATA_PATH } component={ DataManagementContainer } />
+        </Auth>
+      </Switch>
+    </Router>
+  </SessionManage>
 );
 
 export default Routes;

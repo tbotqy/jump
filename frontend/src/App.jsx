@@ -15,6 +15,9 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 
+import * as Sentry from "@sentry/browser";
+import createSentryMiddleware from "redux-sentry-middleware";
+
 import selectableDatesReducer from "./reducers/selectableDatesReducer";
 import tweetsReducer from "./reducers/tweetsReducer";
 import userReducer from "./reducers/userReducer";
@@ -22,6 +25,7 @@ import pageReducer from "./reducers/pageReducer";
 import apiErrorReducer from "./reducers/apiErrorReducer";
 
 import Routes from "./Routes";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const theme = responsiveFontSizes(createMuiTheme({
   palette:{
@@ -31,19 +35,27 @@ const theme = responsiveFontSizes(createMuiTheme({
   }
 }));
 
+const DSN = process.env.REACT_APP_SENTRY_DSN;
+Sentry.init({
+  dsn: DSN,
+  environment: process.env.NODE_ENV
+});
+
 const reducers = combineReducers({ user: userReducer, tweets: tweetsReducer, selectableDates: selectableDatesReducer, page: pageReducer, apiError: apiErrorReducer });
-const store    = createStore(reducers, applyMiddleware(thunk));
+const store    = createStore(reducers, applyMiddleware(thunk, createSentryMiddleware(Sentry)));
 //store.subscribe(() => console.log(store.getState()));
 
 class App extends React.Component {
   render() {
     return (
-      <Provider store={ store }>
-        <ThemeProvider theme={ theme }>
-          <CssBaseline />
-          <Routes />
-        </ThemeProvider>
-      </Provider>
+      <ErrorBoundary Sentry={ Sentry }>
+        <Provider store={ store }>
+          <ThemeProvider theme={ theme }>
+            <CssBaseline />
+            <Routes />
+          </ThemeProvider>
+        </Provider>
+      </ErrorBoundary>
     );
   }
 }

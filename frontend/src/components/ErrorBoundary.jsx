@@ -11,6 +11,14 @@ class ErrorBoundary extends React.Component {
     return { hasClientError: true };
   }
 
+  componentDidCatch(error, errorInfo) {
+    const { Sentry } = this.props;
+    Sentry.withScope(scope => {
+      scope.setExtras(errorInfo);
+      Sentry.captureException(error);
+    });
+  }
+
   render() {
     if (this.state.hasClientError) {
       return <ErrorMessage errorMessage="Sorry! Something went wrong." />;
