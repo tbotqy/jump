@@ -22,6 +22,7 @@ import pageReducer from "./reducers/pageReducer";
 import apiErrorReducer from "./reducers/apiErrorReducer";
 
 import Routes from "./Routes";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const theme = responsiveFontSizes(createMuiTheme({
   palette:{
@@ -38,12 +39,14 @@ const store    = createStore(reducers, applyMiddleware(thunk));
 class App extends React.Component {
   render() {
     return (
-      <Provider store={ store }>
-        <ThemeProvider theme={ theme }>
-          <CssBaseline />
-          <Routes />
-        </ThemeProvider>
-      </Provider>
+      <ErrorBoundary>
+        <Provider store={ store }>
+          <ThemeProvider theme={ theme }>
+            <CssBaseline />
+            <Routes />
+          </ThemeProvider>
+        </Provider>
+      </ErrorBoundary>
     );
   }
 }
