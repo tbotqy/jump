@@ -15,7 +15,7 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 
-import * as Sentry from '@sentry/browser';
+import * as Sentry from "@sentry/browser";
 import createSentryMiddleware from "redux-sentry-middleware";
 
 import selectableDatesReducer from "./reducers/selectableDatesReducer";
@@ -39,7 +39,7 @@ const DSN = process.env.REACT_APP_SENTRY_DSN;
 Sentry.init({
   dsn: DSN,
   environment: process.env.NODE_ENV
-})
+});
 
 const reducers = combineReducers({ user: userReducer, tweets: tweetsReducer, selectableDates: selectableDatesReducer, page: pageReducer, apiError: apiErrorReducer });
 const store    = createStore(reducers, applyMiddleware(thunk, createSentryMiddleware(Sentry)));
