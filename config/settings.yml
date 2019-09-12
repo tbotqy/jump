@@ -13,5 +13,3 @@ twitter:
   traceable_tweet_count_limit: 3200
 
 frontend_host: <%= ENV.fetch('FRONTEND_HOST') %>
-
-sidekiq_dashboard_user_id: <%= ENV.fetch('SIDEKIQ_DASHBOARD_USER_ID') %>
