@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import Analytics from "react-router-ga";
 
 import SessionManage from "./containers/SessionManageContainer";
 import Auth from "./containers/AuthContainer";
@@ -26,20 +27,24 @@ import {
   TIMELINE_DATE_PARAMS
 } from "./utils/paths";
 
+const ANALYTICS_ID = process.env.REACT_APP_ANALYTICS_ID || "";
+
 const Routes = () => (
   <SessionManage>
     <Router>
-      <Switch>
-        <Route exact path={ ROOT_PATH } component={ Top } />
-        <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
-        <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimelineContainer } />
-        <Auth>
-          <Route exact path={ IMPORT_PATH } component={ ImportContainer } />
-          <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimelineContainer } />
-          <Route exact path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ HomeTimelineContainer } />
-          <Route exact path={ DATA_PATH } component={ DataManagementContainer } />
-        </Auth>
-      </Switch>
+      <Analytics id={ ANALYTICS_ID }>
+        <Switch>
+          <Route exact path={ ROOT_PATH } component={ Top } />
+          <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
+          <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimelineContainer } />
+          <Auth>
+            <Route exact path={ IMPORT_PATH } component={ ImportContainer } />
+            <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimelineContainer } />
+            <Route exact path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ HomeTimelineContainer } />
+            <Route exact path={ DATA_PATH } component={ DataManagementContainer } />
+          </Auth>
+        </Switch>
+      </Analytics>
     </Router>
   </SessionManage>
 );
