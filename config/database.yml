@@ -15,6 +15,10 @@ test:
   <<: *base
   database: jump_test
 
+staging:
+  <<: *base
+  database: jump_staging
+
 production:
   <<: *base
   database: jump_production
