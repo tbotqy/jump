@@ -35,10 +35,6 @@ module Jump
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = false
 
-    config.session_store :cookie_store
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, config.session_options
-
     config.active_job.queue_adapter = :sidekiq
 
     config.generators do |g|
