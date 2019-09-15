@@ -18,6 +18,10 @@ const styles = theme => ({
     paddingLeft:  theme.spacing(1),
     paddingRight: theme.spacing(1)
   },
+  adWrapper: {
+    paddingBottom: theme.spacing(3),
+    textAlign: "center"
+  },
   tweetListContainer: {
     minHeight: "100vh"
   }
@@ -52,11 +56,13 @@ class Timeline extends React.Component {
         <HeadNav />
         <Container className={ this.props.classes.container }>
           <ApiErrorBoundary>
-            <AdSense.Google
-              client={ process.env.REACT_APP_AD_ID }
-              slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS }
-              responsive="true"
-            />
+            <div className={ this.props.classes.adWrapper }>
+              <AdSense.Google
+                client={ process.env.REACT_APP_AD_ID }
+                slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS }
+                responsive="true"
+              />
+            </div>
             <div className={ this.props.classes.tweetListContainer }>
               { this.props.isFetching ? <LinearProgress /> : <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
             </div>
