@@ -290,10 +290,10 @@ Devise.setup do |config|
 
   # set/delete user_id on sign_in/sign_out
   Warden::Manager.after_set_user do |user, auth, opts|
-    auth.cookies[:user_id] = user.id
+    auth.cookies[:user_id] = { value: user.id, domain: Settings.set_cookie_domain }
   end
 
   Warden::Manager.before_logout do |user, auth, opts|
-    auth.cookies.delete :user_id
+    auth.cookies.delete(:user_id, domain: Settings.set_cookie_domain)
   end
 end

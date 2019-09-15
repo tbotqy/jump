@@ -102,8 +102,8 @@ RSpec.describe "User authentication", type: :request do
           end
 
           describe "redirection and its response header" do
-            shared_examples "includes user_id as a value of Set-Cookie attr in response header" do
-              it { expect(response.header.fetch("Set-Cookie")).to include("user_id=#{authenticating_user.id}") }
+            shared_examples "includes user_id as a value of Set-Cookie attr in response header, with target domain specified" do
+              it { expect(response.header.fetch("Set-Cookie")).to include("user_id=#{authenticating_user.id}; domain=.example.com;") }
             end
 
             before do
@@ -114,7 +114,7 @@ RSpec.describe "User authentication", type: :request do
             context "the user has never imported its own tweets yet" do
               let!(:authenticating_user) { create(:user) }
               it { expect(response).to redirect_to status_import_url }
-              it_behaves_like "includes user_id as a value of Set-Cookie attr in response header"
+              it_behaves_like "includes user_id as a value of Set-Cookie attr in response header, with target domain specified"
             end
             context "the user has already imported its own tweets" do
               let!(:authenticating_user) do
@@ -123,7 +123,7 @@ RSpec.describe "User authentication", type: :request do
                 user
               end
               it { expect(response).to redirect_to user_timeline_url }
-              it_behaves_like "includes user_id as a value of Set-Cookie attr in response header"
+              it_behaves_like "includes user_id as a value of Set-Cookie attr in response header, with target domain specified"
             end
           end
         end
