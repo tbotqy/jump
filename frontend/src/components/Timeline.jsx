@@ -5,8 +5,8 @@ import {
   LinearProgress
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import AdSense from "react-adsense";
 import scrollToTop   from "./../utils/scrollToTop";
+import Ad            from "./Ad";
 import HeadNav       from "../containers/HeadNavContainer";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import TweetList     from "../containers/TweetListContainer";
@@ -57,11 +57,7 @@ class Timeline extends React.Component {
         <Container className={ this.props.classes.container }>
           <ApiErrorBoundary>
             <div className={ this.props.classes.adWrapper }>
-              <AdSense.Google
-                client={ process.env.REACT_APP_AD_ID }
-                slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS }
-                responsive="true"
-              />
+              <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
             </div>
             <div className={ this.props.classes.tweetListContainer }>
               { this.props.isFetching ? <LinearProgress /> : <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
