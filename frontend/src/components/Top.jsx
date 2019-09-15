@@ -14,6 +14,7 @@ import { PUBLIC_TIMELINE_PATH } from "../utils/paths";
 import { Input as InputIcon } from "@material-ui/icons";
 import BrandLogo from "./BrandLogo";
 import SignInButton from "./SignInButton";
+import Ad from "./Ad";
 import Footer from "./Footer";
 import LeadText from "./top/LeadText";
 import MockUp from "./top/MockUp";
@@ -29,6 +30,11 @@ const styles = theme => ({
   },
   smallBrandLogo: {
     marginRight: theme.spacing(1)
+  },
+  adWrapper: {
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    textAlign: "center"
   }
 });
 
@@ -99,6 +105,9 @@ class Top extends React.Component {
               </Hidden>
             </Grid>
           </Container>
+          <Box className={ this.props.classes.adWrapper }>
+            <Ad slot={ process.env.REACT_APP_AD_SLOT_TOP } />
+          </Box>
         </div>
         <Footer bgCaramel />
       </React.Fragment>
