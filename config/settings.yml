@@ -13,3 +13,5 @@ twitter:
   traceable_tweet_count_limit: 3200
 
 frontend_host: <%= ENV.fetch('FRONTEND_HOST') %>
+
+set_cookie_domain: all
