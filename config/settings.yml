@@ -15,3 +15,5 @@ twitter:
 frontend_host: <%= ENV.fetch('FRONTEND_HOST') %>
 
 set_cookie_domain: all
+
+admin_user_twitter_id: <%= ENV.fetch("ADMIN_USER_TWITTER_ID") %>

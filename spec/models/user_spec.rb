@@ -235,4 +235,21 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#admin?" do
+    subject { user.admin? }
+
+    let(:admin_user_twitter_id) { 12345 }
+    before { allow(Settings).to receive(:admin_user_twitter_id).and_return(admin_user_twitter_id) }
+
+    context "an admin" do
+      let!(:user) { create(:user, twitter_id: admin_user_twitter_id, uid: admin_user_twitter_id.to_s) }
+      it { is_expected.to eq true }
+    end
+    context "not an admin" do
+      let(:twitter_id) { admin_user_twitter_id + 1 }
+      let!(:user)      { create(:user, twitter_id: twitter_id, uid: twitter_id.to_s) }
+      it { is_expected.to eq false }
+    end
+  end
 end
