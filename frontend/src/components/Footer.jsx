@@ -4,8 +4,11 @@ import {
   Container,
   Grid,
   Link,
-  Typography
+  Typography,
+  IconButton
 } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { withStyles } from "@material-ui/core/styles";
 import {
   ROOT_PATH,
@@ -33,6 +36,11 @@ class Footer extends React.Component {
         style={ { backgroundColor: this.backgroundColor() } }
       >
         <Grid container direction="column" alignItems="center" justify="center" spacing={ 2 }>
+          <Grid item>
+            <IconButton href={ `//twitter.com/${process.env.REACT_APP_ADMIN_TWITTER_SCREEN_NAME}` } target="_blank">
+              <FontAwesomeIcon icon={ faTwitter }/>
+            </IconButton>
+          </Grid>
           <Grid item>
             <Typography color="textSecondary">
               <Link
