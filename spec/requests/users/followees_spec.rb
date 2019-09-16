@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Users::Followees", type: :request do
   describe "POST /users/:id/followees" do
-    subject { post user_followees_path(user_id: user_id) }
+    subject { post user_followees_path(user_id: user_id), xhr: true }
 
     shared_examples "doesn't call the service class" do
       it { expect(RenewUserFolloweesService).not_to have_received(:call!).with(anything) }

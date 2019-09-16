@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Users::Statuses", type: :request do
   describe "PUT /users/:id/statuses" do
-    subject { put user_statuses_path(user_id: user_id) }
+    subject { put user_statuses_path(user_id: user_id), xhr: true }
 
     shared_examples "doesn't enqueue the job" do
       it { expect(MakeAdditionalTweetImportJob).not_to have_been_enqueued }

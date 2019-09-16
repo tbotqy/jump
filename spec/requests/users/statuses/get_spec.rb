@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Users::Statuses", type: :request do
   describe "GET /users/:id/statuses" do
-    subject { get user_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page) }
+    subject { get user_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page), xhr: true }
 
     context "not authenticated" do
       let!(:user_id) { create(:user).id }

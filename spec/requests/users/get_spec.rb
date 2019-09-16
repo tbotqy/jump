@@ -4,38 +4,41 @@ require "rails_helper"
 
 RSpec.describe "Users", type: :request do
   describe "GET /users/:id" do
+    subject { get user_path(id: id), xhr: true }
+
     context "user has not been authenticated" do
       let(:user) { create(:user) }
       let(:id)   { user.id }
-      before { get user_path(id: id) }
+      before { subject }
       it_behaves_like "respond with status code", :unauthorized
     end
     context "user has been authenticated" do
       context "user with given id doesn't exist" do
-        let!(:user)         { create(:user) }
-        let(:other_user_id) { User.maximum(:id) + 1 }
+        let!(:user) { create(:user) }
+        let(:id)    { User.maximum(:id) + 1 }
         before do
           sign_in user
-          get user_path(id: other_user_id)
+          subject
         end
         it_behaves_like "respond with status code", :not_found
       end
       context "user with given id exists" do
         context "given id isn't an authenticated user's id" do
-          let(:user)          { create(:user) }
-          let(:other_user_id) { create(:user).id }
+          let(:user) { create(:user) }
+          let(:id)   { create(:user).id }
           before do
             sign_in user
-            get user_path(id: other_user_id)
+            subject
           end
           it_behaves_like "request for the other user's resource"
         end
         context "given id is an authenticated user's id" do
           describe "status code" do
             let(:user) { create(:user) }
+            let(:id)   { user.id }
             before do
               sign_in user
-              get user_path(id: user.id)
+              subject
             end
             it_behaves_like "respond with status code", :ok
           end
@@ -56,10 +59,11 @@ RSpec.describe "Users", type: :request do
                   followee_count: followee_count
                 )
               end
+              let(:id) { user.id }
 
               before do
                 sign_in user
-                get user_path(id: user.id)
+                subject
               end
 
               it do
@@ -76,10 +80,11 @@ RSpec.describe "Users", type: :request do
               describe "#statuses_updated_at" do
                 before do
                   sign_in user
-                  get user_path(id: user.id)
+                  subject
                 end
                 context "null" do
                   let(:user) { create(:user, statuses_updated_at: nil) }
+                  let(:id)   { user.id }
                   it do
                     expect(response.parsed_body.symbolize_keys).to include(statuses_updated_at: nil)
                   end
@@ -87,6 +92,7 @@ RSpec.describe "Users", type: :request do
                 context "present" do
                   let(:at) { 1 }
                   let(:user) { create(:user, statuses_updated_at: at) }
+                  let(:id)   { user.id }
                   it do
                     expect(response.parsed_body.symbolize_keys).to include(statuses_updated_at: Time.zone.at(at).iso8601)
                   end
@@ -95,9 +101,10 @@ RSpec.describe "Users", type: :request do
               describe "#followees_updated_at" do
                 context "null" do
                   let(:user) { create(:user) } # user with no followee
+                  let(:id)   { user.id }
                   before do
                     sign_in user
-                    get user_path(id: user.id)
+                    subject
                   end
                   it do
                     expect(response.parsed_body.symbolize_keys).to include(followees_updated_at: nil)
@@ -105,11 +112,12 @@ RSpec.describe "Users", type: :request do
                 end
                 context "present" do
                   let(:user) { create(:user) }
+                  let(:id)   { user.id }
                   before do
                     create_list(:followee, 2, user: user)
                     create_list(:followee, 2) # the another user's followees
                     sign_in user
-                    get user_path(id: user.id)
+                    subject
                   end
                   it do
                     expect(response.parsed_body.symbolize_keys).to include(followees_updated_at: user.followees.maximum(:created_at).iso8601)
