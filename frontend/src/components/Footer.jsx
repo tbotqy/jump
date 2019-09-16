@@ -32,8 +32,19 @@ class Footer extends React.Component {
         className={ this.props.classes.container }
         style={ { backgroundColor: this.backgroundColor() } }
       >
-        <Grid container justify="center" spacing={ 1 }>
-          <Grid item xs={ 12 }>
+        <Grid container direction="column" alignItems="center" justify="center" spacing={ 2 }>
+          <Grid item>
+            <Typography color="textSecondary">
+              <Link
+                color="inherit"
+                component={ RouterLink }
+                to={ TERMS_AND_PRIVACY_PATH }
+              >
+                利用規約・プライバシーポリシー
+              </Link>
+            </Typography>
+          </Grid>
+          <Grid item>
             <Typography color="textSecondary">
               © 2012-{ new Date().getFullYear() }
               <Link
@@ -43,17 +54,6 @@ class Footer extends React.Component {
                 className={ this.props.classes.link }
               >
                 twitjump.me
-              </Link>
-            </Typography>
-          </Grid>
-          <Grid item xs={ 12 }>
-            <Typography color="textSecondary">
-              <Link
-                color="inherit"
-                component={ RouterLink }
-                to={ TERMS_AND_PRIVACY_PATH }
-              >
-                利用規約・プライバシーポリシー
               </Link>
             </Typography>
           </Grid>
