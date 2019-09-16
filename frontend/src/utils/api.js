@@ -57,7 +57,7 @@ export function fetchUserTweets(year, month, day, page) {
 
 export function fetchFolloweeTweets(year, month, day, page) {
   const params = { year, month, day, page };
-  return api.get(`/users/${userId}/followee_statuses`, params);
+  return api.get(`/users/${userId}/followees/statuses`, params);
 }
 
 export function requestInitialTweetImport() {
