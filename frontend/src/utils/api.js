@@ -2,6 +2,7 @@ import axios from "axios";
 import getUserIdFromCookie from "./getUserIdFromCookie";
 
 axios.defaults.withCredentials = true;
+axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
 
 export const API_NORMAL_CODE_OK               = 200;
 export const API_NORMAL_CODE_ACCEPTED         = 202;

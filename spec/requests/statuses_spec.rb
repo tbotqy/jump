@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Statuses", type: :request do
   describe "GET /statuses" do
-    subject { get statuses_path(year: year, month: month, day: day, page: page) }
+    subject { get statuses_path(year: year, month: month, day: day, page: page), xhr: true }
 
     describe "no authentication needed" do
       context "not authenticated" do

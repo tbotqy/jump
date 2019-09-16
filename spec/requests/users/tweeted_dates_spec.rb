@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Users::TweetedDates", type: :request do
   describe "GET /users/:user_id/tweeted_dates" do
-    subject { get user_tweeted_dates_path(user_id: user_id) }
+    subject { get user_tweeted_dates_path(user_id: user_id), xhr: true }
     context "not authenticated" do
       let!(:user)   { create(:user) }
       let(:user_id) { user.id }
