@@ -61,4 +61,8 @@ class User < ApplicationRecord
   def has_any_status?
     statuses.exists?
   end
+
+  def admin?
+    twitter_id === Settings.admin_user_twitter_id
+  end
 end

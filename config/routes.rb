@@ -1,3 +1,5 @@
+require "sidekiq/web"
+
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
@@ -36,5 +38,9 @@ Rails.application.routes.draw do
         resources :tweeted_dates, only: %i|index|
       end
     end
+  end
+
+  authenticate :user, -> user { user.admin? } do
+    mount Sidekiq::Web => "/sidekiq"
   end
 end
