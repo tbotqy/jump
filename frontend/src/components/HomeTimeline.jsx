@@ -5,6 +5,7 @@ import {
 } from "../utils/api";
 import timelineTitleText from "../utils/timelineTitleText";
 import Timeline from "../containers/TimelineContainer";
+import Head from "./Head";
 
 class HomeTimeline extends React.Component {
   fetchTweets(year, month, day) {
@@ -26,20 +27,20 @@ class HomeTimeline extends React.Component {
     const { year, month, day } = this.props.match.params;
     this.fetchTweets(year, month, day);
     this.fetchSelectableDates(year, month, day);
-    this.updateTitle();
   }
 
   render() {
-    return <Timeline tweetsFetchFunc={ fetchFolloweeTweets.bind(this) } />;
+    return (
+      <>
+        <Head title={ this.title() } />
+        <Timeline tweetsFetchFunc={ fetchFolloweeTweets.bind(this) } />
+      </>
+    );
   }
 
-  componentDidUpdate() {
-    this.updateTitle();
-  }
-
-  updateTitle() {
+  title() {
     const { year, month, day } = this.props.match.params;
-    document.title = timelineTitleText("ホームタイムライン", year, month, day);
+    return timelineTitleText("ホームタイムライン", year, month, day);
   }
 }
 

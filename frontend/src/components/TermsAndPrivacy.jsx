@@ -3,10 +3,11 @@ import HeadNav from "../containers/HeadNavContainer";
 import Footer from "./Footer";
 import { Container } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { PAGE_TITLE_TERMS_AND_PRIVACY } from "../utils/pageTitles";
+import { PAGE_TITLE_TERMS_AND_PRIVACY } from "../utils/pageHead";
 import TermsOfService from "./terms_and_privacy/TermsOfService";
 import PrivacyPolicy from "./terms_and_privacy/PrivacyPolicy";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
+import Head from "./Head";
 
 const styles = theme => ({
   container: {
@@ -15,25 +16,18 @@ const styles = theme => ({
   }
 });
 
-class TermsAndPrivacy extends React.Component {
-  componentDidMount() {
-    document.title = PAGE_TITLE_TERMS_AND_PRIVACY;
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <HeadNav />
-        <Container className={ this.props.classes.container }>
-          <ApiErrorBoundary>
-            <TermsOfService />
-            <PrivacyPolicy />
-          </ApiErrorBoundary>
-        </Container>
-        <Footer />
-      </React.Fragment>
-    );
-  }
-}
+const TermsAndPrivacy = props => (
+  <React.Fragment>
+    <Head title={ PAGE_TITLE_TERMS_AND_PRIVACY } />
+    <HeadNav />
+    <Container className={ props.classes.container }>
+      <ApiErrorBoundary>
+        <TermsOfService />
+        <PrivacyPolicy />
+      </ApiErrorBoundary>
+    </Container>
+    <Footer />
+  </React.Fragment>
+);
 
 export default withStyles(styles)(TermsAndPrivacy);

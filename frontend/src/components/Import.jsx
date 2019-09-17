@@ -16,13 +16,14 @@ import {
   fetchImportProgress,
   API_ERROR_CODE_TOO_MANY_REQUESTS
 } from "../utils/api";
-import { PAGE_TITLE_IMPORT } from "../utils/pageTitles";
+import { PAGE_TITLE_IMPORT } from "../utils/pageHead";
 import { USER_TIMELINE_PATH } from "../utils/paths";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
 import HeadAppBar from "./HeadAppBar";
 import UserMenu from "../containers/UserMenuContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
+import Head from "./Head";
 
 const styles = theme => ({
   gridContainerWrapper: {
@@ -66,13 +67,10 @@ class Import extends React.Component {
     };
   }
 
-  componentDidMount() {
-    document.title = PAGE_TITLE_IMPORT;
-  }
-
   render() {
     return (
       <React.Fragment>
+        <Head title={ PAGE_TITLE_IMPORT } />
         <HeadAppBar>
           <UserMenu user={ this.props.user } hideLinkToData />
         </HeadAppBar>

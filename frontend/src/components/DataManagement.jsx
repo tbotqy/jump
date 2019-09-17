@@ -18,13 +18,14 @@ import {
   requestAdditionalTweetImport,
   requestFolloweeImport
 } from "../utils/api";
-import { PAGE_TITLE_DATA_MANAGEMENT } from "../utils/pageTitles";
+import { PAGE_TITLE_DATA_MANAGEMENT } from "../utils/pageHead";
 import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "../containers/CustomizedListItemContainer";
 import AccountDeleteDialog from "../containers/AccountDeleteDialogContainer";
 import Footer from "./Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
+import Head from "./Head";
 
 const styles = theme => ({
   container: {
@@ -45,14 +46,13 @@ class DataManagement extends React.Component {
     fetchUser()
       .then( response => this.props.setUser(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) );
-
-    document.title = PAGE_TITLE_DATA_MANAGEMENT;
   }
 
   render() {
     const { user, classes } = this.props;
     return (
       <React.Fragment>
+        <Head title={ PAGE_TITLE_DATA_MANAGEMENT } />
         <HeadNav />
         <Container className={ classes.container }>
           <ApiErrorBoundary>
