@@ -44,7 +44,7 @@ const styles = theme => ({
 
 const Top = props => (
   <React.Fragment>
-    <Head title={ PAGE_TITLE_TOP } description={ TOP_DESCRIPTION } type="website" />
+    <Head title={ PAGE_TITLE_TOP } description={ TOP_DESCRIPTION } />
     <div className={ props.classes.contentContainer }>
       <Container>
         <Grid container>
