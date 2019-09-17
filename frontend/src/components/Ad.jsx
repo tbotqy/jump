@@ -4,7 +4,7 @@ import AdSense from "react-adsense";
 const clientId = process.env.REACT_APP_AD_ID;
 
 const Ad = props => (
-  process.env.NODE_ENV === "development" ?
+  process.env.REACT_APP_HIDE_AD ?
     <>広告</> :
     <AdSense.Google
       client={ clientId }
