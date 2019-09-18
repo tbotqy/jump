@@ -47,14 +47,16 @@ const Top = props => (
     <Head title={ PAGE_TITLE_TOP } description={ TOP_DESCRIPTION } />
     <div className={ props.classes.contentContainer }>
       <Container>
-        <Grid container alignItems="center">
+        <Grid container>
           <Grid item md={ 6 } sm={ 12 }>
             <Hidden smDown>
               <LeadText />
             </Hidden>
             <Hidden mdUp>
               <LeadText align="center" />
-              <MockUp />
+              <Box pt={ 6 }>
+                <MockUp />
+              </Box>
             </Hidden>
             <Box mt={ 5 }>
               <Grid item lg={ 8 }>

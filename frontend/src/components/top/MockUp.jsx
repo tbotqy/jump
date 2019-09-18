@@ -1,12 +1,18 @@
 import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 import MockUpImg from "./../../assets/mockup.png";
 
-class MockUp extends React.Component {
-  render() {
-    return (
-      <img alt="mockup" width="100%" src={ MockUpImg } />
-    );
+const styles = () => ({
+  img: {
+    "width":    "auto",
+    "height":   "auto",
+    "maxWidth": "100%",
+    "maxHeight":"100%"
   }
-}
+});
 
-export default MockUp;
+const MockUp = ({ classes }) => (
+  <img alt="mockup" src={ MockUpImg } decoding="async" className={ classes.img } />
+);
+
+export default withStyles(styles)(MockUp);
