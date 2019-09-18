@@ -4,7 +4,7 @@ import MockUpImg from "./../../assets/mockup.png";
 class MockUp extends React.Component {
   render() {
     return (
-      <img alt="mockup" width="100%" src={ MockUpImg } />
+      <img alt="mockup" width="100%" src={ MockUpImg } decoding="async" />
     );
   }
 }
