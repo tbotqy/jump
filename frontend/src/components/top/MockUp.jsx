@@ -9,14 +9,10 @@ const styles = () => ({
     "maxWidth": "100%",
     "maxHeight":"100%"
   }
-})
+});
 
-class MockUp extends React.Component {
-  render() {
-    return (
-      <img alt="mockup" src={ MockUpImg } decoding="async" className={ this.props.classes.img } />
-    );
-  }
-}
+const MockUp = ({ classes }) => (
+  <img alt="mockup" src={ MockUpImg } decoding="async" className={ classes.img } />
+);
 
 export default withStyles(styles)(MockUp);
