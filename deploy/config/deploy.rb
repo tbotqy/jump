@@ -7,6 +7,10 @@ set :application, "jump"
 set :repo_url, "git@github.com:tbotaq/jump.git"
 set :rbenv_ruby, "2.6.4"
 
+# Integrate with systemd
+set :init_system, :systemd
+set :service_unit_name, "sidekiq-#{fetch(:application)}-#{fetch(:stage)}.service"
+
 set :sidekiq_service_name, "sidekiq_#{fetch(:application)}_#{fetch(:sidekiq_env)}"
 set :sidekiq_monit_conf_file, "#{sidekiq_service_name}.conf"
 set :sidekiq_config, -> { File.join(shared_path, "config", "sidekiq.yml") }
