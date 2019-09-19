@@ -5,7 +5,7 @@ lock "~> 3.11.0"
 
 set :application, "jump"
 set :repo_url, "git@github.com:tbotaq/jump.git"
-set :rbenv_ruby, "2.4.3"
+set :rbenv_ruby, "2.6.4"
 
 set :sidekiq_service_name, "sidekiq_#{fetch(:application)}_#{fetch(:sidekiq_env)}"
 set :sidekiq_monit_conf_file, "#{sidekiq_service_name}.conf"
