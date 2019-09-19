@@ -49,7 +49,7 @@ jobs:
   # for backend
   lint_backend:
     docker:
-      - image: circleci/ruby:2.6.3-stretch
+      - image: circleci/ruby:2.6.4-stretch
     steps:
       - checkout
       - <<: *restore_backend_cache
@@ -60,7 +60,7 @@ jobs:
 
   build_backend:
     docker:
-      - image: circleci/ruby:2.6.3-stretch
+      - image: circleci/ruby:2.6.4-stretch
       - image: circleci/mysql:5.7
       - image: circleci/redis:4
     steps:
