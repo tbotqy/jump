@@ -123,24 +123,6 @@ jobs:
           working_directory: "frontend"
           command: yarn build
 
-  deploy:
-    docker:
-      - image: circleci/ruby:2.6.3-stretch
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "61:b7:07:85:a1:14:6b:d6:a5:a2:73:01:a1:ac:fb:95"
-      - <<: *restore_backend_cache
-      - <<: *install_libs_for_idn_ruby
-      - <<: *install_backend_dependencies
-      - <<: *save_backend_cache
-      - run:
-          name: Deploy
-          command: bundle exec cap production deploy
-          environment:
-            REDUCE_CAP_LOG: 1
-
 workflows:
   version: 2
   frontend:
@@ -162,9 +144,3 @@ workflows:
                 - master
                 - rebuild-frontend
       - build_backend
-      - deploy:
-          requires:
-            - build_backend
-          filters:
-            branches:
-              only: master
