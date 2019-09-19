@@ -14,6 +14,8 @@ set :sidekiq_config, -> { File.join(shared_path, "config", "sidekiq.yml") }
 
 set :format, :dot if ENV["REDUCE_CAP_LOG"]
 
+set :conditionally_migrate, true
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
