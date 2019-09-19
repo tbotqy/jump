@@ -1,5 +1,3 @@
-site_name: <%= ENV.fetch('SITE_NAME') %>
-
 redis:
   namespace: <%= [Rails.application.class.module_parent_name, Rails.env].join(":") %>
   endpoint:  redis://<%= ENV.fetch("JUMP_CACHE_HOST") %>:<%= ENV.fetch("JUMP_CACHE_PORT") %>/0
