@@ -48,9 +48,4 @@ jobs:
         bundle exec rake db:schema:load
 
     - name: Test
-      run: bundle exec rspec --format progress --format RspecJunitFormatter --out ./coverage.xml
-
-    - uses: codecov/codecov-action@v1.0.2
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: ./coverage.xml
+      run: bundle exec rspec --format progress --format RspecJunitFormatter
