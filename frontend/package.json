@@ -14,7 +14,6 @@
     "@typescript-eslint/parser": "^2.3.0",
     "axios": "^0.19.0",
     "clsx": "^1.0.4",
-    "eslint": "^5",
     "js-cookie": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
