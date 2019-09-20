@@ -10,10 +10,6 @@ anchors:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-  install_libs_for_idn_ruby: &install_libs_for_idn_ruby
-    - run:
-        name: install libidn11-dev for gem 'twitter-text'(which depends on idn-ruby)
-        command: sudo apt update && sudo apt -y install libidn11-dev
   install_backend_dependencies: &install_backend_dependencies
     - run:
         name: install dependencies
@@ -53,7 +49,6 @@ jobs:
     steps:
       - checkout
       - <<: *restore_backend_cache
-      - <<: *install_libs_for_idn_ruby
       - <<: *install_backend_dependencies
       - <<: *save_backend_cache
       - run: bundle exec rubocop
@@ -66,7 +61,6 @@ jobs:
     steps:
       - checkout
       - <<: *restore_backend_cache
-      - <<: *install_libs_for_idn_ruby
       - <<: *install_backend_dependencies
       - <<: *save_backend_cache
       # Database setup
