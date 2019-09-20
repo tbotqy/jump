@@ -7,12 +7,18 @@ set :application, "jump"
 set :repo_url, "git@github.com:tbotaq/jump.git"
 set :rbenv_ruby, "2.6.4"
 
+# Integrate with systemd
+set :init_system, :systemd
+set :service_unit_name, "sidekiq-#{fetch(:application)}-#{fetch(:stage)}.service"
+
 set :sidekiq_service_name, "sidekiq_#{fetch(:application)}_#{fetch(:sidekiq_env)}"
 set :sidekiq_monit_conf_file, "#{sidekiq_service_name}.conf"
 set :sidekiq_config, -> { File.join(shared_path, "config", "sidekiq.yml") }
 
 
 set :format, :dot if ENV["REDUCE_CAP_LOG"]
+
+set :conditionally_migrate, true
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -45,7 +51,7 @@ append :linked_dirs, ".bundle", "log", "tmp/pids", "tmp/sockets"
 # set :local_user, -> { `git config user.name`.chomp }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 3
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure

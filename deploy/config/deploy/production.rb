@@ -17,6 +17,9 @@ set :puma_preload_app,        true
 set :puma_init_active_record, true
 set :puma_daemonize,          true
 
+set :yarn_target_path, -> { release_path.join("frontend") }
+set :yarn_flags, "--production --silent --no-progress --prefer-offline"
+
 # role-based syntax
 # ==================
 
