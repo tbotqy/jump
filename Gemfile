@@ -17,8 +17,6 @@ gem "config"
 gem "twitter"
 gem "omniauth"
 gem "omniauth-twitter"
-gem "twitter-text"
-gem "turnout"
 gem "sidekiq"
 gem "sidekiq-cron", "~> 1.1"
 gem "redis-namespace"
@@ -32,10 +30,6 @@ gem "ruby-progressbar"
 gem "draper"
 gem "rack-cors"
 gem "slack-notifier"
-
-group :development do
-  gem "rails-erd"
-end
 
 group :test do
   gem "codecov", require: false
