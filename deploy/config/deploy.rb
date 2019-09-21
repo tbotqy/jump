@@ -8,7 +8,7 @@ set :repo_url, "git@github.com:tbotaq/jump.git"
 set :rbenv_ruby, "2.6.4"
 
 # used by the generator of .service file for Sidekiq
-set :bundler_path, "/home/deploy/.rbenv/shims/bundler"
+set :bundler_path, "/home/#{ENV.fetch("DEPLOY_USER")}/.rbenv/shims/bundler"
 
 # Integrate with systemd
 set :init_system, :systemd
