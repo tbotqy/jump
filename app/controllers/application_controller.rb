@@ -31,16 +31,16 @@ class ApplicationController < ActionController::API
     end
 
     def render_404(e)
-      render_error(e, 404)
+      render_error(e, 404, report: false)
     end
 
     def render_500(e)
       render_error(e, 500)
     end
 
-    def render_error(e, status_code)
+    def render_error(e, status_code, report: true)
       Rails.logger.error(e.message)
-      Raven.capture_exception(e)
+      Raven.capture_exception(e) if report
 
       messages = e.try(:messages) || Array.wrap(e.message)
       render json: { messages: messages }, status: status_code
