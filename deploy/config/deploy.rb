@@ -38,7 +38,7 @@ set :conditionally_migrate, true
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
-append :linked_files, ".env" # TODO: add "config/master.key" when upgrade rails
+append :linked_files, ".env", "frontend/.env" # TODO: add "config/master.key" when upgrade rails
 
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
