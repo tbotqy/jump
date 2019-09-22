@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import {
   appendTweets,
-  setHasMore
+  setHasMore,
+  resetHasMore,
 } from "../actions/tweetsActions";
 import {
   setPage,
@@ -19,6 +20,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   appendTweets:    tweets => dispatch(appendTweets(tweets)),
   setHasMore:      flag => dispatch(setHasMore(flag)),
+  resetHasMore:    () => dispatch(resetHasMore()),
   setPage:         page => dispatch(setPage(page)),
   resetPage:       () => dispatch(resetPage()),
   setApiErrorCode: code => dispatch(setApiErrorCode(code))

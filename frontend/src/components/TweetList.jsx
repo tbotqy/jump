@@ -64,6 +64,7 @@ class TweetList extends React.Component {
 
   componentDidMount() {
     this.props.resetPage();
+    this.props.resetHasMore();
   }
 
   render() {
