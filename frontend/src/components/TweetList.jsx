@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import shortid from "shortid";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {
   Grid,
   List,
@@ -72,9 +72,9 @@ class TweetList extends React.Component {
         <Grid item lg={ 8 }>
           <List>
             <InfiniteScroll
-              initialLoad={ false }
+              dataLength={ this.props.tweets.length }
+              next={ this.loadMore.bind(this) }
               hasMore={ this.props.hasMore }
-              loadMore={ this.loadMore.bind(this) }
               loader={ loader }
             >
               { this.props.tweets.map( tweet => (
