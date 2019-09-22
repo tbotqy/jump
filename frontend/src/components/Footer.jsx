@@ -25,54 +25,52 @@ const styles = theme => ({
   }
 });
 
-class Footer extends React.Component {
-  render() {
-    return (
-      <Container
-        align="center"
-        component="footer"
-        maxWidth="xl"
-        className={ this.props.classes.container }
-        style={ { backgroundColor: this.backgroundColor() } }
-      >
-        <Grid container direction="column" alignItems="center" justify="center" spacing={ 2 }>
-          <Grid item>
-            <IconButton href={ `//twitter.com/${process.env.REACT_APP_ADMIN_TWITTER_SCREEN_NAME}` } target="_blank">
-              <FontAwesomeIcon icon={ faTwitter }/>
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography color="textSecondary">
-              <Link
-                color="inherit"
-                component={ RouterLink }
-                to={ TERMS_AND_PRIVACY_PATH }
-              >
-                利用規約・プライバシーポリシー
-              </Link>
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography color="textSecondary">
-              © 2012-{ new Date().getFullYear() }
-              <Link
-                color="inherit"
-                component={ RouterLink }
-                to={ ROOT_PATH }
-                className={ this.props.classes.link }
-              >
-                twitjump.me
-              </Link>
-            </Typography>
-          </Grid>
-        </Grid>
-      </Container>
-    );
-  }
+const adminTwitterScreenName = process.env.REACT_APP_ADMIN_TWITTER_SCREEN_NAME;
 
-  backgroundColor() {
-    return this.props.bgCaramel ? "#f2eee6" : "white";
-  }
-}
+const Footer = props => {
+  const backgroundColor = props.bgCaramel ? "#f2eee6" : "white";
+
+  return (
+    <Container
+      align="center"
+      component="footer"
+      maxWidth="xl"
+      className={ props.classes.container }
+      style={ { backgroundColor } }
+    >
+      <Grid container direction="column" alignItems="center" justify="center" spacing={ 2 }>
+        <Grid item>
+          <IconButton href={ `//twitter.com/${adminTwitterScreenName}` } target="_blank">
+            <FontAwesomeIcon icon={ faTwitter }/>
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <Typography color="textSecondary">
+            <Link
+              color="inherit"
+              component={ RouterLink }
+              to={ TERMS_AND_PRIVACY_PATH }
+            >
+              利用規約・プライバシーポリシー
+            </Link>
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography color="textSecondary">
+            © 2012-{ new Date().getFullYear() }
+            <Link
+              color="inherit"
+              component={ RouterLink }
+              to={ ROOT_PATH }
+              className={ props.classes.link }
+            >
+              twitjump.me
+            </Link>
+          </Typography>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
 
 export default withStyles(styles)(Footer);

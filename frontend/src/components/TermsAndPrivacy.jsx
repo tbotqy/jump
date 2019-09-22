@@ -16,11 +16,11 @@ const styles = theme => ({
   }
 });
 
-const TermsAndPrivacy = props => (
+const TermsAndPrivacy = ({ classes }) => (
   <React.Fragment>
     <Head title={ PAGE_TITLE_TERMS_AND_PRIVACY } />
     <HeadNav />
-    <Container className={ props.classes.container }>
+    <Container className={ classes.container }>
       <ApiErrorBoundary>
         <TermsOfService />
         <PrivacyPolicy />
