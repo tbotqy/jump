@@ -17,19 +17,15 @@ const styles = theme => ({
   }
 });
 
-class HeadNav extends React.Component {
-  render() {
-    return (
-      <AppBar position="static" className={ this.props.classes.appBar }>
-        <Toolbar>
-          <Typography variant="h6" className={ this.props.classes.typography }>
-            <BrandLogo />
-          </Typography>
-          { this.props.children }
-        </Toolbar>
-      </AppBar>
-    );
-  }
-}
+const HeadNav = ({ classes, children }) => (
+  <AppBar position="static" className={ classes.appBar }>
+    <Toolbar>
+      <Typography variant="h6" className={ classes.typography }>
+        <BrandLogo />
+      </Typography>
+      { children }
+    </Toolbar>
+  </AppBar>
+);
 
 export default withStyles(styles)(HeadNav);

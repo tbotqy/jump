@@ -11,15 +11,12 @@ const styles = {
   }
 };
 
-function BrandLogo(props) {
-  const { classes, ...others } = props;
-  const serviceName = process.env.REACT_APP_SERVICE_NAME;
+const serviceName = process.env.REACT_APP_SERVICE_NAME;
 
-  return (
-    <Link { ...others } underline="none" component={ RouterLink } to={ ROOT_PATH }>
-      <span className={ classes.brandText }>{ serviceName }</span>
-    </Link>
-  );
-}
+const BrandLogo = ({ classes, ...others }) => (
+  <Link { ...others } underline="none" component={ RouterLink } to={ ROOT_PATH }>
+    <span className={ classes.brandText }>{ serviceName }</span>
+  </Link>
+);
 
 export default withStyles(styles)(BrandLogo);

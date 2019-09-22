@@ -5,21 +5,17 @@ import {
   MenuItem
 } from "@material-ui/core";
 
-function Selector(props) {
+const Selector = props => {
   const [ anchorEl, setAnchorEl ] = React.useState(null);
 
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget);
-  }
+  const handleClick = event => setAnchorEl(event.currentTarget);
 
-  function handleClose() {
-    setAnchorEl(null);
-  }
+  const handleClose = () => setAnchorEl(null);
 
-  function handleItemSelect(value) {
+  const handleItemSelect = value => {
     setAnchorEl(null);
     props.selectedValueUpdater(value);
-  }
+  };
 
   return (
     props.selections.length > 0 &&
@@ -36,6 +32,6 @@ function Selector(props) {
       </Menu>
     </>
   );
-}
+};
 
 export default Selector;

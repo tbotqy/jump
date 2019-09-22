@@ -43,7 +43,7 @@ const styles = (theme) => ({
 });
 
 
-function TweetCard(props) {
+const TweetCard = props => {
   const classes    = props.classes;
 
   const isRetweet  = props.isRetweet;
@@ -129,7 +129,6 @@ function TweetCard(props) {
       </CardActions>
     </Card>
   );
-
-}
+};
 
 export default withStyles(styles)(TweetCard);

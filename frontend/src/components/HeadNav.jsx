@@ -4,21 +4,17 @@ import UserMenu from "../containers/UserMenuContainer";
 import SignInButton from "./SignInButton";
 import HeadAppBar from "./HeadAppBar";
 
-class HeadNav extends React.Component {
-  render() {
-    return (
-      <HeadAppBar>
-        {
-          this.props.isAuthenticated ? (
-            <>
-              <TimelineSwitch />
-              <UserMenu />
-            </>
-          ) : ( <SignInButton variant="contained" text="利用する" /> )
-        }
-      </HeadAppBar>
-    );
-  }
-}
+const HeadNav = ({ isAuthenticated }) => (
+  <HeadAppBar>
+    {
+      isAuthenticated ? (
+        <>
+          <TimelineSwitch />
+          <UserMenu />
+        </>
+      ) : ( <SignInButton variant="contained" text="利用する" /> )
+    }
+  </HeadAppBar>
+);
 
 export default HeadNav;

@@ -20,15 +20,14 @@ const styles = theme => ({
   }
 });
 
-function SignInButton(props) {
+const SignInButton = ({ text, classes, ...others }) => {
   const [ disabled, setDisabled ] = useState(false);
-  const { classes, ...others } = props;
-  return (
+  return(
     <Button { ...others } className={ classes.button } href={ SIGN_IN_URL } disabled={ disabled } onClick={ () => setDisabled(true) } >
       <FontAwesomeIcon icon={ faTwitter } className={ classes.icon } />
-      { props.text }
+      { text }
     </Button>
   );
-}
+};
 
 export default withStyles(styles)(SignInButton);
