@@ -15,6 +15,7 @@ import TermsAndPrivacy from "./components/TermsAndPrivacy";
 import PublicTimelineContainer from "./containers/PublicTimelineContainer";
 import UserTimelineContainer from "./containers/UserTimelineContainer";
 import HomeTimelineContainer from "./containers/HomeTimelineContainer";
+import NotFound from "./components/NotFound";
 
 import {
   ROOT_PATH,
@@ -37,12 +38,27 @@ const Routes = () => (
           <Route exact path={ ROOT_PATH } component={ Top } />
           <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
           <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimelineContainer } />
-          <Auth>
-            <Route exact path={ IMPORT_PATH } component={ ImportContainer } />
-            <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimelineContainer } />
-            <Route exact path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ HomeTimelineContainer } />
-            <Route exact path={ DATA_PATH } component={ DataManagementContainer } />
-          </Auth>
+          <Route
+            exact
+            path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS }
+            render={ routerProps => <Auth><UserTimelineContainer { ...routerProps } /></Auth> }
+          />
+          <Route
+            exact
+            path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS }
+            render={ routerProps => <Auth><HomeTimelineContainer { ...routerProps } /></Auth> }
+          />
+          <Route
+            exact
+            path={ IMPORT_PATH }
+            render={ () => <Auth><ImportContainer /></Auth> }
+          />
+          <Route
+            exact
+            path={ DATA_PATH }
+            render={ () => <Auth><DataManagementContainer /></Auth> }
+          />
+          <Route exact component={ NotFound } />
         </Switch>
       </Analytics>
     </Router>
