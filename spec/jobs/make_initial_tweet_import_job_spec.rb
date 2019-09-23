@@ -50,7 +50,7 @@ RSpec.describe MakeInitialTweetImportJob, type: :job do
       let(:user)    { create(:user) }
       let(:user_id) { user.id }
       before { create_list(:status, 2, user: user) }
-      it { is_expected.to raise_error("This job is intended to be called for initial import, but user already have some statuses.") }
+      it { is_expected.to raise_error("This job is intended to be called for initial import, but user already has some statuses.") }
       it_behaves_like "makes no change"
       it_behaves_like "leaves no tweet_import_progress"
     end

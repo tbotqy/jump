@@ -16,7 +16,7 @@ class MakeInitialTweetImportJob < ApplicationJob
 
     def ensure_initial_import!
       if user.has_any_status?
-        raise "This job is intended to be called for initial import, but user already have some statuses."
+        raise "This job is intended to be called for initial import, but user already has some statuses."
       end
     end
 
