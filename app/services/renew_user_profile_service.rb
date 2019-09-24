@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdateUserService
+class RenewUserProfileService
   include UserTwitterClient
   private_class_method :new
 
