@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe UpdateUserService do
+describe RenewUserProfileService do
   include TwitterUserMock
 
   subject { -> { described_class.call!(user_id: user_id) } }

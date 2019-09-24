@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe UpdateUserJob, type: :job do
+RSpec.describe RenewUserProfilesJob, type: :job do
   subject { described_class.perform_now }
   describe "filtering of target user" do
     context "3 users with no fail log, 4 users with fail log" do
@@ -15,19 +15,19 @@ RSpec.describe UpdateUserJob, type: :job do
       describe "only tries to update those users who has no fail log" do
         before do
           user_with_no_fail_log.pluck(:id).each do |user_id|
-            allow(UpdateUserService).to receive(:call!).with(user_id: user_id)
+            allow(RenewUserProfileService).to receive(:call!).with(user_id: user_id)
           end
         end
         it do
           subject
           user_with_no_fail_log.pluck(:id).each do |user_id|
-            expect(UpdateUserService).to have_received(:call!).with(user_id: user_id)
+            expect(RenewUserProfileService).to have_received(:call!).with(user_id: user_id)
           end
         end
 
         it do
           subject
-          expect(UpdateUserService).to have_received(:call!).exactly(3).times
+          expect(RenewUserProfileService).to have_received(:call!).exactly(3).times
         end
       end
     end
@@ -41,10 +41,10 @@ RSpec.describe UpdateUserJob, type: :job do
 
       before do
         users_to_succeed.pluck(:id).each do |user_id|
-          allow(UpdateUserService).to receive(:call!).with(user_id: user_id)
+          allow(RenewUserProfileService).to receive(:call!).with(user_id: user_id)
         end
         users_to_fail.pluck(:id).each do |user_id|
-          allow(UpdateUserService).to receive(:call!).with(user_id: user_id).and_raise(Twitter::Error, error_message)
+          allow(RenewUserProfileService).to receive(:call!).with(user_id: user_id).and_raise(Twitter::Error, error_message)
         end
       end
 
@@ -67,7 +67,7 @@ RSpec.describe UpdateUserJob, type: :job do
     let!(:users) { create_list(:user, 2) }
     context "service class raises a Twitter::Error" do
       before do
-        allow(UpdateUserService).to receive(:call!).and_raise(Twitter::Error, "twitter error ocurred")
+        allow(RenewUserProfileService).to receive(:call!).and_raise(Twitter::Error, "twitter error ocurred")
       end
       describe "the job itself doesn't raise it" do
         it { expect { subject }.not_to raise_error }
@@ -77,7 +77,7 @@ RSpec.describe UpdateUserJob, type: :job do
     context "service class raises an exception other than a kind of Twitter::Error" do
       let(:error_message) { "non twitter error ocurred" }
       before do
-        allow(UpdateUserService).to receive(:call!).and_raise(error_message)
+        allow(RenewUserProfileService).to receive(:call!).and_raise(error_message)
       end
       describe "the job raises it" do
         it { expect { subject }.to raise_error(error_message) }

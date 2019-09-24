@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class UpdateUserJob < ApplicationJob
+class RenewUserProfilesJob < ApplicationJob
   queue_as :default
 
   def perform
     target_user_ids.each do |user_id|
-      UpdateUserService.call!(user_id: user_id)
+      RenewUserProfileService.call!(user_id: user_id)
     rescue Twitter::Error => twitter_error
       # TODO: include to service class
       UserUpdateFailLog.create!(user_id: user_id, error_message: twitter_error.message)
