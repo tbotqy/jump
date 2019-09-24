@@ -9,7 +9,7 @@ class Status < ApplicationRecord
 
   validates :tweet_id,                presence: true,  uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :in_reply_to_tweet_id,    allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :in_reply_to_user_id_str, allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :in_reply_to_twitter_id,  allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :in_reply_to_screen_name, allow_nil: true, length: { maximum: 255 }
   validates :place_full_name,         allow_nil: true, length: { maximum: 255 }
   validates :retweet_count,           allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
