@@ -19,6 +19,17 @@ class RenewUserProfileService
 
     def call!
       fetch_fresh_data
+      ActiveRecord::Base.transaction do
+        update_user!
+        update_user_statuses!
+      end
+    end
+
+    def fetch_fresh_data
+      @user_info = user_twitter_client.twitter_user
+    end
+
+    def update_user!
       user.update!(
         name:           @user_info.name,
         screen_name:    @user_info.screen_name,
@@ -27,8 +38,8 @@ class RenewUserProfileService
       )
     end
 
-    def fetch_fresh_data
-      @user_info = user_twitter_client.twitter_user
+    def update_user_statuses!
+      user.statuses.update_all(private_flag: @user_info.protected?, updated_at: Time.current)
     end
 
     def user
