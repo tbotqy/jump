@@ -5,7 +5,7 @@ FactoryBot.define do
     user
     tweet_id { tweeted_at }
     in_reply_to_tweet_id { nil }
-    in_reply_to_user_id_str { nil }
+    in_reply_to_twitter_id { nil }
     in_reply_to_screen_name { nil }
     place_full_name { nil }
     retweet_count { 0 }

@@ -21,8 +21,8 @@ RSpec.describe Status, type: :model do
     describe "#in_reply_to_tweet_id" do
       it { should validate_numericality_of(:in_reply_to_tweet_id).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
-    describe "#in_reply_to_user_id_str" do
-      it { should validate_numericality_of(:in_reply_to_user_id_str).is_greater_than_or_equal_to(0).only_integer.allow_nil }
+    describe "#in_reply_to_twitter_id" do
+      it { should validate_numericality_of(:in_reply_to_twitter_id).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
     describe "#in_reply_to_screen_name" do
       it { should validate_length_of(:in_reply_to_screen_name).is_at_most(255).allow_nil }
