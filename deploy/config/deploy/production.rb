@@ -16,6 +16,7 @@ set :puma_workers,            2
 set :puma_preload_app,        true
 set :puma_init_active_record, true
 set :puma_daemonize,          true
+# set :puma_control_app,       true MEMO: Disabling to prevent an useless socket(pumactl.sock) from being generated.
 
 set :yarn_target_path, -> { release_path.join("frontend") }
 set :yarn_flags, "--production --silent --no-progress --prefer-offline"
