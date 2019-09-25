@@ -37,6 +37,8 @@ module Jump
 
     config.active_job.queue_adapter = :sidekiq
 
+    config.hosts << Settings.authorized_host
+
     config.generators do |g|
       g.template_engine false
       g.javascripts     false
