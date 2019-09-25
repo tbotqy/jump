@@ -10,6 +10,7 @@ twitter:
   consumer_secret: <%= ENV.fetch('TWITTER_CONSUMER_SECRET') %>
   traceable_tweet_count_limit: 3200
 
+frontend_url: https://<%= ENV.fetch('FRONTEND_HOST') %>
 frontend_host: <%= ENV.fetch('FRONTEND_HOST') %>
 authorized_host: <%= ENV.fetch('AUTHORIZED_HOST') %>
 

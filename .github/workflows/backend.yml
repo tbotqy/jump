@@ -29,8 +29,8 @@ jobs:
         JUMP_CACHE_PORT: 6379
         TWITTER_CONSUMER_KEY: foo
         TWITTER_CONSUMER_SECRET: bar
-        FRONTEND_HOST: https://foo.com
-        AUTHORIZED_HOST: https://foo.com
+        FRONTEND_HOST: foo.com
+        AUTHORIZED_HOST: foo.com
         SENTRY_CLIENT_KEY: https://foo@sentry.io/1234567
         ADMIN_USER_TWITTER_ID: 12345
 
