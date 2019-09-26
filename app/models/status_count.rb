@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class ActiveStatusCount
-  REDIS_KEY_NAME = "active_status_count"
+class StatusCount
+  REDIS_KEY_NAME = "status_count"
   private_constant :REDIS_KEY_NAME
 
   class << self

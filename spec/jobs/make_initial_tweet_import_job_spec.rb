@@ -13,8 +13,8 @@ RSpec.describe MakeInitialTweetImportJob, type: :job do
       it { expect { subject.call rescue nil }.not_to change { User.find(user_id).urls.count } }
       it { expect { subject.call rescue nil }.not_to change { User.find(user_id).media.count } }
     end
-    describe "doesn't update ActiveStatusCount" do
-      it { expect { subject.call rescue nil }.not_to change { ActiveStatusCount.current_count } }
+    describe "doesn't update StatusCount" do
+      it { expect { subject.call rescue nil }.not_to change { StatusCount.current_count } }
     end
     describe "doesn't update timestamp" do
       it { expect { subject.call rescue nil }.not_to change { User.find(user_id).statuses_updated_at }.from(nil) }
@@ -105,9 +105,9 @@ RSpec.describe MakeInitialTweetImportJob, type: :job do
                   it_behaves_like "leaves no tweet_import_progress related to the user"
                 end
                 context "succeeds to mark progress as finished" do
-                  context "fails to increment ActiveStatusCount" do
+                  context "fails to increment StatusCount" do
                     include_context "user has 10 tweets on twitter"
-                    before { allow(ActiveStatusCount).to receive(:increment_by).and_raise(Redis::CannotConnectError) }
+                    before { allow(StatusCount).to receive(:increment_by).and_raise(Redis::CannotConnectError) }
                     it { is_expected.to raise_error(Redis::CannotConnectError) }
                     it_behaves_like "makes no change"
                     it_behaves_like "leaves no tweet_import_progress related to the user"
@@ -131,8 +131,8 @@ RSpec.describe MakeInitialTweetImportJob, type: :job do
                         expect(tweet_import_progress.current_count.value).to eq tweet_mocks.count
                         expect(tweet_import_progress.last_tweet_id.value).to eq tweet_mocks.last.id.to_s
                       end
-                      it "increments ActiveStatusCount by the number of tweets" do
-                        is_expected.to change { ActiveStatusCount.current_count }.by(tweet_mocks.count)
+                      it "increments StatusCount by the number of tweets" do
+                        is_expected.to change { StatusCount.current_count }.by(tweet_mocks.count)
                       end
                       describe "updates timestamp" do
                         before { travel_to(Time.current) }

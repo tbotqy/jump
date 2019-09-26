@@ -13,8 +13,8 @@ RSpec.describe MakeAdditionalTweetImportJob, type: :job do
       it { expect { subject.call rescue nil }.not_to change { User.find(user_id).urls.count } }
       it { expect { subject.call rescue nil }.not_to change { User.find(user_id).media.count } }
     end
-    describe "doesn't update ActiveStatusCount" do
-      it { expect { subject.call rescue nil }.not_to change { ActiveStatusCount.current_count } }
+    describe "doesn't update StatusCount" do
+      it { expect { subject.call rescue nil }.not_to change { StatusCount.current_count } }
     end
     describe "doesn't update timestamp" do
       it { expect { subject.call rescue nil }.not_to change { User.find(user_id).statuses_updated_at } }
@@ -49,7 +49,7 @@ RSpec.describe MakeAdditionalTweetImportJob, type: :job do
 
       # register with "registered_tweet_ids"
       registered_tweet_ids.sort.reverse_each { |tweet_id| create(:status, tweeted_at: tweet_id, tweet_id: tweet_id, user: user) }
-      ActiveStatusCount.count_up
+      StatusCount.count_up
 
       # stub API requests
       tweet_mocks          = unregistered_tweet_ids.sort.reverse.map { |tweet_id| tweet_mock(twitter_account_id: user.twitter_id, id: tweet_id) }
@@ -137,15 +137,15 @@ RSpec.describe MakeAdditionalTweetImportJob, type: :job do
                 it_behaves_like "doesn't leave the job locked"
               end
               context "succeeds to update timestamp" do
-                context "fails to increment ActiveStatusCount" do
+                context "fails to increment StatusCount" do
                   include_context "user has 2 registered tweets and 10 unregistered tweets"
-                  before { allow(ActiveStatusCount).to receive(:increment_by).and_raise(Redis::CannotConnectError) }
+                  before { allow(StatusCount).to receive(:increment_by).and_raise(Redis::CannotConnectError) }
                   it { is_expected.to raise_error(Redis::CannotConnectError) }
                   it_behaves_like "makes no change"
                   it_behaves_like "the job lock is once acquired"
                   it_behaves_like "doesn't leave the job locked"
                 end
-                context "succeeds to increment ActiveStatusCount" do
+                context "succeeds to increment StatusCount" do
                   include_context "user has 2 registered tweets and 10 unregistered tweets"
                   it { is_expected.not_to raise_error }
                   describe "registers tweets" do
@@ -154,8 +154,8 @@ RSpec.describe MakeAdditionalTweetImportJob, type: :job do
                     it { is_expected.to change { User.find(user_id).urls.count } }
                     it { is_expected.to change { User.find(user_id).media.count } }
                   end
-                  it "increments ActiveStatusCount by the number of tweets" do
-                    is_expected.to change { ActiveStatusCount.current_count }.by(unregistered_tweets_count)
+                  it "increments StatusCount by the number of tweets" do
+                    is_expected.to change { StatusCount.current_count }.by(unregistered_tweets_count)
                   end
                   describe "updates timestamp" do
                     before { travel_to(Time.current) }
