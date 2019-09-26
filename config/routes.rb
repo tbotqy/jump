@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     Settings.frontend_url
   end
 
+  resource :stats, only: %i|show|
+
   resources :statuses, only: %i|index|
 
   resources :tweeted_dates, only: %i|index|

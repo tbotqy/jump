@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -7,13 +7,18 @@ import {
   Box,
   Typography,
   Container,
-  Hidden
+  Hidden,
+  Chip,
+  CircularProgress
 } from "@material-ui/core";
 import {
   PAGE_TITLE_TOP,
   TOP_DESCRIPTION
 } from "../utils/pageHead";
-import { PUBLIC_TIMELINE_PATH } from "../utils/paths";
+import {
+  PUBLIC_TIMELINE_PATH,
+  TERMS_AND_PRIVACY_PATH
+} from "../utils/paths";
 import { Input as InputIcon } from "@material-ui/icons";
 import BrandLogo from "./BrandLogo";
 import SignInButton from "./SignInButton";
@@ -22,6 +27,8 @@ import Footer from "./Footer";
 import LeadText from "./top/LeadText";
 import MockUp from "./top/MockUp";
 import Head from "./Head";
+import { fetchStats } from "../utils/api";
+import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
   contentContainer: {
@@ -34,84 +41,94 @@ const styles = theme => ({
   },
   smallBrandLogo: {
     marginRight: theme.spacing(1)
-  },
-  adWrapper: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    textAlign: "center"
   }
 });
 
-const Top = props => (
-  <React.Fragment>
-    <Head title={ PAGE_TITLE_TOP } description={ TOP_DESCRIPTION } />
-    <div className={ props.classes.contentContainer }>
-      <Container>
-        <Grid container>
-          <Grid item md={ 6 } sm={ 12 }>
-            <Hidden smDown>
-              <LeadText />
-            </Hidden>
-            <Hidden mdUp>
-              <LeadText align="center" />
-              <Box pt={ 6 }>
-                <MockUp />
-              </Box>
-            </Hidden>
-            <Box mt={ 5 }>
-              <Grid item lg={ 8 }>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  gutterBottom
-                >
-                  <BrandLogo className={ props.classes.smallBrandLogo } />
-                  は、みんなやあなたの過去のツイートを、クリック一つでサクサク見られるウェブサービスです
-                </Typography>
-              </Grid>
-            </Box>
-            <Box mt={ 5 }>
-              <Grid container justify="center" spacing={ 3 }>
-                <Grid item lg={ 6 } xs={ 12 }>
-                  <Button
-                    size="large"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    component={ Link }
-                    to={ PUBLIC_TIMELINE_PATH }
+const Top = props => {
+  const [ tweetCountText, setTweetCount ] = useState(null);
+  useEffect(() => {
+    fetchStats()
+      .then( response => setTweetCount(response.data.status_count) )
+      .catch( error => props.setApiErrorCode(error.response.status) );
+  });
+
+  return(
+    <ApiErrorBoundary>
+      <Head title={ PAGE_TITLE_TOP } description={ TOP_DESCRIPTION } />
+      <div className={ props.classes.contentContainer }>
+        <Container>
+          <Grid container>
+            <Grid item md={ 6 } sm={ 12 }>
+              <Hidden smDown>
+                <LeadText />
+              </Hidden>
+              <Hidden mdUp>
+                <LeadText align="center" />
+                <Box pt={ 6 }>
+                  <MockUp />
+                </Box>
+              </Hidden>
+              <Box mt={ 5 }>
+                <Grid item lg={ 8 }>
+                  <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    gutterBottom
                   >
-                    公開タイムラインを見てみる
-                    <InputIcon
-                      fontSize="small"
-                      className={ props.classes.buttonIcon }
+                    <BrandLogo className={ props.classes.smallBrandLogo } />
+                    は、みんなやあなたの過去のツイートを、クリック一つでサクサク見られるウェブサービスです
+                  </Typography>
+                </Grid>
+              </Box>
+              <Box mt={ 5 }>
+                <Grid container justify="center" spacing={ 4 }>
+                  <Grid item lg={ 6 } xs={ 12 }>
+                    <Button
+                      size="large"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      component={ Link }
+                      to={ PUBLIC_TIMELINE_PATH }
+                    >
+                      公開タイムラインを見てみる
+                      <InputIcon
+                        fontSize="small"
+                        className={ props.classes.buttonIcon }
+                      />
+                    </Button>
+                    <Box p={ 2 } textAlign="center">
+                      { tweetCountText ? <Chip label={ `${tweetCountText} ツイート` } /> : <CircularProgress size={ 24 } /> }
+                    </Box>
+                  </Grid>
+                  <Grid item lg={ 6 } xs={ 12 }>
+                    <SignInButton
+                      size="large"
+                      fullWidth
+                      variant="contained"
+                      text="Twitterアカウントで利用する"
                     />
-                  </Button>
+                    <Box pt={ 2 } textAlign="center">
+                      <Chip label="利用規約はこちら" component={ Link } clickable to={ TERMS_AND_PRIVACY_PATH } />
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item lg={ 6 } xs={ 12 }>
-                  <SignInButton
-                    size="large"
-                    fullWidth
-                    variant="contained"
-                    text="Twitterアカウントで利用する"
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </Grid>
-          <Hidden smDown>
-            <Grid item md={ 6 } sm={ 12 } align="center">
-              <MockUp />
+              </Box>
             </Grid>
-          </Hidden>
-        </Grid>
-      </Container>
-      <Box className={ props.classes.adWrapper }>
-        <Ad slot={ process.env.REACT_APP_AD_SLOT_TOP } />
-      </Box>
-    </div>
-    <Footer bgCaramel />
-  </React.Fragment>
-);
+            <Hidden smDown>
+              <Grid item md={ 6 } sm={ 12 } align="center">
+                <MockUp />
+              </Grid>
+            </Hidden>
+          </Grid>
+        </Container>
+        <Box pt={ 5 } textAlign="center">
+          <Ad slot={ process.env.REACT_APP_AD_SLOT_TOP } />
+        </Box>
+      </div>
+      <Footer bgCaramel />
+    </ApiErrorBoundary>
+  );
+};
 
 export default withStyles(styles)(Top);
