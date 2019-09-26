@@ -4,6 +4,9 @@ class DestroyUserJob < ApplicationJob
   queue_as :default
 
   def perform(user_id:)
-    User.find(user_id).destroy!
+    user         = User.find(user_id)
+    status_count = user.statuses.count
+    user.destroy!
+    StatusCount.decrement_by(status_count)
   end
 end

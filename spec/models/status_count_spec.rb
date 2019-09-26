@@ -21,6 +21,24 @@ RSpec.describe StatusCount do
       it { is_expected.to raise_error(Redis::CommandError, "ERR value is not an integer or out of range") }
     end
   end
+  describe "decrement_by" do
+    subject { -> { described_class.decrement_by(param) } }
+    shared_examples "decrements current_count by given param" do
+      it { is_expected.to change { described_class.current_count }.by(-1 * param.to_i) }
+    end
+    context "given a number" do
+      let(:param) { 10 }
+      it_behaves_like "decrements current_count by given param"
+    end
+    context "given a numeric string" do
+      let(:param) { "10" }
+      it_behaves_like "decrements current_count by given param"
+    end
+    context "given an un-numeric string" do
+      let(:param) { "あ" }
+      it { is_expected.to raise_error(Redis::CommandError, "ERR value is not an integer or out of range") }
+    end
+  end
   describe "current_count" do
     subject { described_class.current_count }
     context "with initial state" do
