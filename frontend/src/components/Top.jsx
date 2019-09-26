@@ -122,7 +122,7 @@ const Top = props => {
             </Hidden>
           </Grid>
         </Container>
-        <Box pt={ 3 } pb={ 3 } textAlign="center">
+        <Box pt={ 5 } textAlign="center">
           <Ad slot={ process.env.REACT_APP_AD_SLOT_TOP } />
         </Box>
       </div>
