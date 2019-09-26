@@ -1,7 +1,5 @@
 FROM ruby:2.6.4
 
-RUN apt-get update && apt-get install -y libidn11-dev
-
 WORKDIR /app
 
 ARG RAILS_ENV=development
