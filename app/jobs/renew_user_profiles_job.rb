@@ -8,7 +8,6 @@ class RenewUserProfilesJob < ApplicationJob
       RenewUserProfileService.call!(user_id: user_id)
     rescue Twitter::Error => twitter_error
       UserUpdateFailLog.create!(user_id: user_id, error_message: twitter_error.message)
-      next
     end
   end
 
