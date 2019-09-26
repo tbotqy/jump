@@ -8,7 +8,7 @@ import Analytics from "react-router-ga";
 
 import SessionManage from "./containers/SessionManageContainer";
 import Auth from "./containers/AuthContainer";
-import Top from "./components/Top";
+import TopContainer from "./containers/TopContainer";
 import ImportContainer from "./containers/ImportContainer";
 import DataManagementContainer from "./containers/DataManagementContainer";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
@@ -35,7 +35,7 @@ const Routes = () => (
     <Router>
       <Analytics id={ ANALYTICS_ID }>
         <Switch>
-          <Route exact path={ ROOT_PATH } component={ Top } />
+          <Route exact path={ ROOT_PATH } component={ TopContainer } />
           <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
           <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimelineContainer } />
           <Route

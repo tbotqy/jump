@@ -99,3 +99,11 @@ export function requestFolloweeImport() {
 export function fetchImportProgress() {
   return api.get(`/users/${userId}/tweet_import_progress`);
 }
+
+/*
+ * stats
+ */
+
+export function fetchStats() {
+  return api.get("/stats");
+}
