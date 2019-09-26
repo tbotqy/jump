@@ -80,23 +80,20 @@ RSpec.describe "Users::Followees::FolloweeStatuses", type: :request do
             end
             context "followee has some statuses" do
               describe "boundary test on date-search" do
-                shared_context "user's followee has 3 statuses tweeted around the boundary_time" do |without_entities|
+                shared_context "user's followee has 3 statuses tweeted around the boundary_time" do
                   let(:boundary_unixtime) { boundary_time.to_i }
                   let!(:status_tweeted_before_boundary) do
                     status = create(:status, user: followee, text: "to be ordered as 2nd item", tweeted_at: boundary_unixtime - 1)
-                    create_list(:entity, 2, status: status) unless without_entities
                     status
                   end
                   let!(:status_tweeted_at_boundary) do
                     # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
                     id = status_tweeted_before_boundary.id + 1
                     status = create(:status, id: id, user: followee, text: "to be ordered as 1st item", tweeted_at: boundary_unixtime)
-                    create_list(:entity, 2, status: status) unless without_entities
                     status
                   end
                   let!(:status_tweeted_after_boundary) do
                     status = create(:status, user: followee, text: "to be filtered", tweeted_at: boundary_unixtime + 1)
-                    create_list(:entity, 2, status: status) unless without_entities
                     status
                   end
                 end

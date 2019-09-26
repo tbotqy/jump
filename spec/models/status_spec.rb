@@ -8,7 +8,6 @@ RSpec.describe Status, type: :model do
     it { should have_many(:hashtags).dependent(:delete_all) }
     it { should have_many(:urls).dependent(:delete_all) }
     it { should have_many(:media).dependent(:delete_all) }
-    it { should have_many(:entities).dependent(:delete_all) }
   end
 
   describe "validations" do
