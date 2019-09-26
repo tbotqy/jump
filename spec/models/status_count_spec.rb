@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ActiveStatusCount do
+RSpec.describe StatusCount do
   describe "increment_by" do
     subject { -> { described_class.increment_by(param) } }
     shared_examples "increments current_count by given param" do

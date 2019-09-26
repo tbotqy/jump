@@ -46,7 +46,7 @@ class MakeInitialTweetImportJob < ApplicationJob
     def finalize!
       user.update!(statuses_updated_at: Time.current.to_i)
       progress.mark_as_finished!
-      ActiveStatusCount.increment_by(progress.current_count.value)
+      StatusCount.increment_by(progress.current_count.value)
     end
 
     def user
