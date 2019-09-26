@@ -9,6 +9,10 @@ class StatusCount
       REDIS.incrby(REDIS_KEY_NAME, count)
     end
 
+    def decrement_by(count)
+      REDIS.decrby(REDIS_KEY_NAME, count)
+    end
+
     def current_count
       REDIS.get(REDIS_KEY_NAME).to_i
     end
