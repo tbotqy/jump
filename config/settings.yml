@@ -17,3 +17,5 @@ authorized_host: <%= ENV.fetch('AUTHORIZED_HOST') %>
 set_cookie_domain: all
 
 admin_user_twitter_id: <%= ENV.fetch("ADMIN_USER_TWITTER_ID") %>
+
+slow_query_threshold: <%= ENV.fetch("SLOW_QUERY_THRESHOLD", 1.0) %>
