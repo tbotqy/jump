@@ -41,11 +41,6 @@ const styles = theme => ({
   },
   smallBrandLogo: {
     marginRight: theme.spacing(1)
-  },
-  adWrapper: {
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    textAlign: "center"
   }
 });
 
@@ -127,7 +122,7 @@ const Top = props => {
             </Hidden>
           </Grid>
         </Container>
-        <Box className={ props.classes.adWrapper }>
+        <Box pt={ 3 } pb={ 3 } textAlign="center">
           <Ad slot={ process.env.REACT_APP_AD_SLOT_TOP } />
         </Box>
       </div>
