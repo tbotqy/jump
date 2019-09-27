@@ -30,6 +30,7 @@ gem "ruby-progressbar"
 gem "draper"
 gem "rack-cors"
 gem "slack-notifier"
+gem "sitemap_generator"
 
 group :test do
   gem "codecov", require: false
