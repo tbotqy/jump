@@ -67,7 +67,6 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               let!(:user)                  { create(:user) }
               let!(:user_id)               { user.id }
               let!(:statuses)              { create_list(:status, assumed_imported_status_count, user: user) }
-              let!(:entities)              { statuses.each { |status| create(:entity, status: status) } }
               let!(:tweet_import_progress) { create(:tweet_import_progress, user: user) }
 
               let(:assumed_imported_status_count) { 33 }
@@ -92,7 +91,6 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               let!(:user)                  { create(:user) }
               let!(:user_id)               { user.id }
               let!(:statuses)              { create_list(:status, total_imported_count, user: user) }
-              let!(:entities)              { statuses.each { |status| create(:entity, status: status) } }
               let!(:tweet_import_progress) { create(:tweet_import_progress, finished: true, user: user) }
 
               let(:total_imported_count) { 33 }

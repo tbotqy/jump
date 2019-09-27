@@ -10,21 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_24_021259) do
-
-  create_table "entities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
-    t.bigint "status_id", null: false
-    t.string "url"
-    t.string "display_url"
-    t.string "hashtag"
-    t.string "mention_to_screen_name"
-    t.bigint "mention_to_user_id_str"
-    t.integer "indice_f", null: false
-    t.integer "indice_l", null: false
-    t.string "entity_type", null: false
-    t.integer "created_at", null: false
-    t.index ["status_id"], name: "fk_rails_994021b93c"
-  end
+ActiveRecord::Schema.define(version: 2019_09_26_232650) do
 
   create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -142,7 +128,6 @@ ActiveRecord::Schema.define(version: 2019_09_24_021259) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
-  add_foreign_key "entities", "statuses"
   add_foreign_key "followees", "users"
   add_foreign_key "hashtags", "statuses"
   add_foreign_key "media", "statuses"

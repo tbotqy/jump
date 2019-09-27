@@ -5,7 +5,6 @@ class Status < ApplicationRecord
   has_many   :hashtags, dependent: :delete_all
   has_many   :urls,     dependent: :delete_all
   has_many   :media,    dependent: :delete_all
-  has_many   :entities, dependent: :delete_all # deprecated
 
   validates :tweet_id,                presence: true,  uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :in_reply_to_tweet_id,    allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
