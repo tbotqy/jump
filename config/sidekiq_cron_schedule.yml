@@ -1,3 +1,6 @@
 renew_user_profiles:
   cron: "0 4 * * *"
   class: "RenewUserProfilesJob"
+update_sitemap:
+  cron: "0 6 * * *"
+  class: "GenerateSitemapJob"
