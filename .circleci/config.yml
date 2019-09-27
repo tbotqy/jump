@@ -126,7 +126,6 @@ workflows:
             branches:
               ignore:
                 - master
-                - rebuild-frontend
       - test_frontend
       - build_frontend
   backend:
@@ -136,5 +135,4 @@ workflows:
             branches:
               ignore:
                 - master
-                - rebuild-frontend
       - build_backend
