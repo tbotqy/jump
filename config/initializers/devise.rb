@@ -12,7 +12,7 @@ Devise.setup do |config|
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
-  # config.parent_controller = 'DeviseController'
+  config.parent_controller = 'DeviseBaseController'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -256,7 +256,7 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :twitter, Settings.twitter.consumer_key, Settings.twitter.consumer_secret_key
+  config.omniauth :twitter, Settings.twitter.consumer_key, Settings.twitter.consumer_secret
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -287,4 +287,13 @@ Devise.setup do |config|
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end
+
+  # set/delete user_id on sign_in/sign_out
+  Warden::Manager.after_set_user do |user, auth, opts|
+    auth.cookies[:user_id] = { value: user.id, domain: Settings.set_cookie_domain }
+  end
+
+  Warden::Manager.before_logout do |user, auth, opts|
+    auth.cookies.delete(:user_id, domain: Settings.set_cookie_domain)
+  end
 end

@@ -2,12 +2,23 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_tweet_import
 
-  def setting
-    @view_object = UsersViewObject::Setting.new(current_user)
+  # GET /users/:id
+  def show
+    user = User.find(params[:id])
+    authorize_operation_for!(user)
+
+    render json: user
   end
 
-  def delete_account
+  # DELETE /users/:id
+  def destroy
+    user = User.find(params[:id])
+    authorize_operation_for!(user)
+
+    DestroyUserJob.perform_later(user_id: params[:id])
+    sign_out user
+
+    head :accepted
   end
 end

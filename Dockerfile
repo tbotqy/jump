@@ -1,6 +1,4 @@
-FROM ruby:2.4
-
-RUN apt-get update && apt-get install -y libidn11-dev
+FROM ruby:2.6.4
 
 WORKDIR /app
 
@@ -12,4 +10,3 @@ COPY Gemfile.lock /app
 RUN bundle install --jobs=4
 
 COPY . /app
-RUN bundle exec rake assets:precompile

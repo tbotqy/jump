@@ -2,108 +2,74 @@
 
 class Status < ApplicationRecord
   belongs_to :user
-  has_many :entities, dependent: :delete_all
-  scope :not_deleted, -> { where(deleted: false) }
-  scope :not_private, -> { where(private: false) }
-  scope :tweeted_by, ->(user_ids) { where(user_id: user_ids) }
-  scope :tweeted_by_friend_of, ->(user_id) do
-    friend_user_ids = User.find(user_id).friend_user_ids
-    tweeted_by(friend_user_ids)
-  end
+  has_many   :hashtags, dependent: :delete_all
+  has_many   :urls,     dependent: :delete_all
+  has_many   :media,    dependent: :delete_all
 
-  scope :order_for_timeline, -> { order("twitter_created_at_reversed ASC", "status_id_str_reversed ASC") }
-  scope :force_index, ->(index_name) { from("#{table_name} FORCE INDEX(#{index_name})") }
-  after_save :update_user_timestamp
+  validates :tweet_id,                presence: true,  uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :in_reply_to_tweet_id,    allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :in_reply_to_twitter_id,  allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :in_reply_to_screen_name, allow_nil: true, length: { maximum: 255 }
+  validates :place_full_name,         allow_nil: true, length: { maximum: 255 }
+  validates :retweet_count,           allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :source,                  presence: true,  length: { maximum: 255 }
+  validates :text,                    presence: true,  length: { maximum: 280 }
+  validates :is_retweet_before_type_cast, inclusion: { in: [1, 0, true, false] }
+  with_options if: :is_retweet? do |retweet|
+    retweet.validates :rt_name,        presence: true, length: { maximum: 280 }
+    retweet.validates :rt_screen_name, presence: true, length: { maximum: 255 }
+    retweet.validates :rt_avatar_url,  presence: true, length: { maximum: 255 }
+    retweet.validates :rt_text,        presence: true, length: { maximum: 255 }
+    retweet.validates :rt_source,      presence: true, length: { maximum: 255 }
+    retweet.validates :rt_created_at,  presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  end
+  with_options unless: :is_retweet? do |tweet|
+    tweet.validates :rt_name,        absence: true
+    tweet.validates :rt_screen_name, absence: true
+    tweet.validates :rt_avatar_url,  absence: true
+    tweet.validates :rt_text,        absence: true
+    tweet.validates :rt_source,      absence: true
+    tweet.validates :rt_created_at,  absence: true
+  end
+  validates :possibly_sensitive_before_type_cast, inclusion: { in: [1, 0, true, false] }
+  validates :private_flag_before_type_cast,       inclusion: { in: [1, 0, true, false] }
+  validates :tweeted_at,              presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :tweet_id_reversed,       presence: true, numericality: { only_integer: true, less_than_or_equal_to: 0 }
+  validates :tweeted_at_reversed,     presence: true, numericality: { only_integer: true, less_than_or_equal_to: 0 }
+  validates :tweeted_on,              presence: true
+
+  scope :not_private,               -> { where(private_flag: false) }
+  scope :order_by_newest_to_oldest, -> { order(tweeted_at_reversed: :asc, tweet_id_reversed: :asc) }
+  scope :tweeted_at_or_before,      -> (time) do
+    boundary = time.to_i
+    where("tweeted_at_reversed >= ?", -1 * boundary)
+  end
 
   class << self
-    def ordered_tweeted_unixtimes_by_user_id(user_id)
-      tweeted_by(user_id).order(twitter_created_at_reversed: :asc).pluck(:twitter_created_at)
+    def most_recent_tweet_id!
+      order_by_newest_to_oldest.first!.tweet_id
     end
-
-    def newest_in_tweeted_time
-      order(twitter_created_at_reversed: :asc).first
-    end
-
-    def save_tweets!(user_id, tweets)
-      Array.wrap(tweets).each do |tweet|
-        status          = new_by_tweet(tweet)
-        status.user_id  = user_id
-        status.entities = Entity.bulk_new_by_tweet(tweet)
-        status.save!
-      end
-    end
-
-    def get_latest_status(limit = 10)
-      includes(:user, :entities).limit(limit).order_for_timeline
-    end
-
-    # date_string: YYYY(-M(-D))
-    def tweeted_in(date_string, limit = 10)
-      # search the statuses tweeted in given date
-      date_range = date_range_of(date_string)
-      from = date_range.first.to_i
-      to   = date_range.last.to_i
-
-      includes(:user, :entities).where(twitter_created_at_reversed: (-1 * to)..(-1 * from)).limit(limit).order_for_timeline
-    end
-
-    def get_older_status_by_tweet_id(threshold_tweet_id, limit = 10)
-      # search the statuses whose status_id_str is smaller than given threshold_tweet_id
-      # used to proccess read more button's request
-      # use status_id_str_reversed in order to search by index
-      threshold_tweet_id_revered = -1 * threshold_tweet_id.to_i
-      includes(:user).where("statuses.status_id_str_reversed > ?", threshold_tweet_id_revered).limit(limit).order(:status_id_str_reversed)
-    end
-
-    private
-
-      def new_by_tweet(tweet)
-        ret = new(
-          status_id_str: tweet.attrs[:id_str],
-          status_id_str_reversed: -1 * tweet.attrs[:id_str].to_i,
-          in_reply_to_status_id_str: tweet.attrs[:in_reply_to_status_id_str],
-          in_reply_to_user_id_str: tweet.attrs[:in_reply_to_user_id_str],
-          in_reply_to_screen_name: tweet.in_reply_to_screen_name,
-          place_full_name: tweet.place.try!(:full_name),
-          retweet_count: tweet.retweet_count,
-          tweeted_on: Time.at(tweet.created_at.to_i).in_time_zone.to_date,
-          twitter_created_at: Time.parse(tweet.created_at.to_s).to_i,
-          twitter_created_at_reversed: -1 * Time.parse(tweet.created_at.to_s).to_i,
-          source: tweet.source,
-          text: tweet.text,
-          possibly_sensitive: tweet.possibly_sensitive? || false,
-          private: tweet.user.protected?,
-          deleted: false
-        )
-        ret.assign_retweeted_status(tweet.retweeted_status) if tweet.retweet?
-        ret
-      end
-
-      # date_string: YYYY(-M(-D))
-      def date_range_of(date_string)
-        year, month, day = date_string.split("-")
-        time = Time.zone.local(year, month, day)
-        if year && month && day
-          time.all_day
-        elsif year && month
-          time.all_month
-        elsif year
-          time.all_year
-        end
-      end
   end
 
-  def update_user_timestamp
-    user.update_attribute(:statuses_updated_at, Time.now.to_i)
-  end
-
-  def assign_retweeted_status(retweeted_status)
-    self.is_retweet = true
-    self.rt_name = retweeted_status.user.name
-    self.rt_screen_name = retweeted_status.user.screen_name
-    self.rt_profile_image_url_https = retweeted_status.user.profile_image_url_https.to_s
-    self.rt_text = retweeted_status.text
-    self.rt_source = retweeted_status.source
-    self.rt_created_at = retweeted_status.created_at.to_i
+  def as_json(_options = {})
+    ret = {
+      tweet_id:   tweet_id.to_s,
+      text:       text,
+      tweeted_at: Time.zone.at(tweeted_at).iso8601,
+      is_retweet: is_retweet,
+      urls:       (urls + media).as_json,
+      user:       user.as_json
+    }
+    if is_retweet?
+      ret.merge!(
+        rt_avatar_url:  rt_avatar_url,
+        rt_name:        rt_name,
+        rt_screen_name: rt_screen_name,
+        rt_text:        rt_text,
+        rt_source:      rt_source,
+        rt_created_at:  Time.zone.at(rt_created_at).iso8601,
+      )
+    end
+    ret
   end
 end

@@ -1,0 +1,64 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-brands-svg-icons": "^5.11.2",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@material-ui/core": "^4.4.3",
+    "@material-ui/icons": "^4.4.3",
+    "@sentry/browser": "^5.6.3",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
+    "axios": "^0.19.0",
+    "clsx": "^1.0.4",
+    "js-cookie": "^2.2.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-adsense": "^0.1.0",
+    "react-dom": "^16.9.0",
+    "react-infinite-scroll-component": "^4.5.3",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.0.0",
+    "react-router-ga": "^1.2.1",
+    "react-scripts": "3.1.2",
+    "react-tweet-embed": "^1.2.2",
+    "redux": "^4.0.4",
+    "redux-sentry-middleware": "^0.1.1",
+    "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.15",
+    "twitter-text": "^3.0.0",
+    "typescript": "^3.6.3",
+    "xss": "^1.0.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:ci": "react-scripts test --watchAll=false",
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .jsx,.js src",
+    "lint:fix": "eslint --fix --ext .jsx,.js src"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-react": "^7.14.3"
+  }
+}

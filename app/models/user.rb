@@ -1,77 +1,68 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :omniauthable
+  devise :omniauthable, omniauth_providers: %i|twitter|
 
-  has_many :statuses, dependent: :destroy
-  has_many :following_twitter_ids, dependent: :delete_all
-  has_many :tweet_import_job_progresses, dependent: :delete_all
+  has_many :statuses,              dependent: :destroy
+  has_many :followees,             dependent: :delete_all
+  has_one  :tweet_import_progress, dependent: :destroy
+  has_one  :tweet_import_lock,     dependent: :destroy
+  has_many :user_update_fail_logs, dependent: :delete_all
 
-  # FIXME : this is referenced only at one point
-  # consider to delete this scope and replace with some private method
-  scope :active, -> { where(deleted: false) }
+  has_many :hashtags, through: :statuses
+  has_many :urls,     through: :statuses
+  has_many :media,    through: :statuses
+
+  validates :uid,                 presence: true, uniqueness: true, length: { maximum: 255 }
+  validates :twitter_id,          presence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :provider,            presence: true, length: { maximum: 255 }
+  validates :name,                presence: true, length: { maximum: 255 }
+  validates :screen_name,         presence: true, length: { maximum: 255 }
+  validates :protected_flag_before_type_cast, inclusion: { in: [1, 0, true, false] }
+  validates :avatar_url,          presence: true, length: { maximum: 255 }
+  validates :twitter_created_at,  presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :access_token,        presence: true, length: { maximum: 255 }
+  validates :access_token_secret, presence: true, length: { maximum: 255 }
+  validates :token_updated_at,    numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :statuses_updated_at, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
   class << self
-    def register_or_update!(auth)
-      user = find_or_initialize_by(uid: auth.uid, provider: auth.provider, twitter_id: auth.uid, deleted: false)
-      user.assign(auth)
-      user.save!
-    end
-
-    def find_active_with_auth(auth)
-      find_by(twitter_id: auth.uid, deleted: false)
-    end
-
-    def deactivate_account(user_id)
-      # just turn the flag off, not actually delete user's status from database
-      deleted_status_count = Status.where(user_id: user_id).update_all(deleted: true)
-      # update stats
-      ActiveStatusCount.decrement_by(deleted_status_count)
-      # turn the flag off for users table
-      find(user_id).update_attribute(:deleted, true)
+    def register_or_update!(provider:, uid:, twitter_id:, twitter_created_at:, name:, screen_name:, protected_flag:, avatar_url:, access_token:, access_token_secret:)
+      user = find_or_initialize_by(uid: uid)
+      user.update!(
+        twitter_id:          twitter_id,
+        provider:            provider,
+        name:                name,
+        screen_name:         screen_name,
+        protected_flag:      protected_flag,
+        avatar_url:          avatar_url,
+        twitter_created_at:  Time.zone.parse(twitter_created_at).to_i,
+        access_token:        access_token,
+        access_token_secret: access_token_secret
+      )
+      user
     end
   end
 
-  def status_newest_in_tweeted_time
-    statuses.newest_in_tweeted_time
-  end
-
-  def last_status
-    statuses&.last
+  def as_json(_options = {})
+    _statuses_updated_at  = statuses_updated_at.nil? ? nil : Time.zone.at(statuses_updated_at).iso8601
+    _followees_updated_at = followees.last&.created_at&.iso8601
+    {
+      name:           name,
+      screen_name:    screen_name,
+      avatar_url:     avatar_url,
+      status_count:   statuses.count.to_s(:delimited),
+      followee_count: followees.count.to_s(:delimited),
+      statuses_updated_at:  _statuses_updated_at,
+      followees_updated_at: _followees_updated_at
+    }
   end
 
   def has_any_status?
     statuses.exists?
   end
 
-  def finish_initial_import!
-    self.finished_initial_import = true
-    save!
-  end
-
-  def has_working_job?
-    tweet_import_job_progresses.unfinished.exists?
-  end
-
-  def friend_user_ids
-    self.class.where(twitter_id: following_twitter_ids.pluck(:following_twitter_id)).pluck(:id)
-  end
-
-  def friend_count
-    following_twitter_ids.count
-  end
-
-  def assign(auth)
-    info = auth.extra.raw_info
-    self.assign_attributes(
-      twitter_id: info.id,
-      name: info.name,
-      screen_name: info.screen_name,
-      protected: info.protected?,
-      profile_image_url_https: info.profile_image_url_https,
-      twitter_created_at: Time.zone.parse(info.created_at).to_i,
-      token: auth.credentials.token,
-      token_secret: auth.credentials.secret,
-    )
+  def admin?
+    twitter_id === Settings.admin_user_twitter_id
   end
 end

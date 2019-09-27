@@ -1,0 +1,42 @@
+name: Frontend
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Lint
+      working-directory: frontend
+      run: |
+        yarn install
+        yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Test
+      working-directory: frontend
+      run: |
+        yarn install
+        yarn test:ci
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Build
+      working-directory: frontend
+      run: |
+        yarn install
+        yarn build

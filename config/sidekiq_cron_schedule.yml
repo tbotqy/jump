@@ -1,0 +1,3 @@
+renew_user_profiles:
+  cron: "0 4 * * *"
+  class: "RenewUserProfilesJob"

@@ -2,40 +2,34 @@
 
 FactoryBot.define do
   factory :user do
-    uid 123456789
-    twitter_id 123456789
-    provider "twitter"
-    name "test_name"
-    screen_name "test_screen_name"
-    protected 0
-    profile_image_url_https "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg"
-    twitter_created_at 1342689117
-    token "hoge"
-    token_secret "fuga"
-    token_updated_at 1
-    statuses_updated_at 1482676461
-    friends_updated_at 1482774672
-    closed_only 0
-    deleted 0
-    created_at 1345305649
-    updated_at 1482774672
+    sequence(:uid) { |n| "123456789#{n}" }
+    sequence(:twitter_id) { uid.to_i }
+    provider { "twitter" }
+    name { "test_name" }
+    screen_name { "test_screen_name" }
+    protected_flag { false }
+    avatar_url { "https//pbs.twimg.com/profile_images/0000000000/hoge_normal.jpeg" }
+    twitter_created_at { 1342689117 }
+    access_token { "test_access_token" }
+    access_token_secret { "test_access_token_secret" }
+    token_updated_at { nil }
+    statuses_updated_at { nil }
 
-    trait(:with_friend) do
-      after(:create) do |u|
-        FactoryBot.create(:following_twitter_id, user_id: u.id)
+    trait(:with_statuses_and_followees) do
+      transient do
+        status_count   { 5 }
+        followee_count { 10 }
       end
-    end
 
-    trait(:with_no_friend) do
-    end
+      after(:create) do |user, evaluator|
+        # create followees of the user
+        followees = create_list(:user, evaluator.followee_count)
+        ## register created users as user's followees
+        followees.pluck(:twitter_id).each { |twitter_id| create(:followee, user: user, twitter_id: twitter_id) }
 
-    trait(:with_status) do
-      after(:create) do |u|
-        FactoryBot.create(:status, user_id: u.id)
+        # create user's statuses
+        create_list(:status, evaluator.status_count, user: user)
       end
-    end
-
-    trait(:with_no_status) do
     end
   end
 end

@@ -1,0 +1,52 @@
+name: Backend
+on: push
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+        - 3306
+      redis:
+        image: redis:4
+        ports:
+        - 6379
+
+    container:
+      image: ruby:2.6.4
+      env:
+        TZ: Asia/Tokyo
+        RAILS_ENV: test
+        JUMP_DB_HOST: mysql
+        JUMP_DB_USER_NAME: root
+        JUMP_DB_PASSWORD: password
+        JUMP_CACHE_HOST: redis
+        JUMP_CACHE_PORT: 6379
+        TWITTER_CONSUMER_KEY: foo
+        TWITTER_CONSUMER_SECRET: bar
+        FRONTEND_HOST: foo.com
+        AUTHORIZED_HOST: foo.com
+        SENTRY_CLIENT_KEY: https://foo@sentry.io/1234567
+        ADMIN_USER_TWITTER_ID: 12345
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install dependencies
+      run: bundle install --jobs 4 --deployment
+
+    - name: Lint
+      run: bundle exec rubocop
+
+    - name: Setup database
+      run: |
+        bundle exec rake db:create
+        bundle exec rake db:schema:load
+
+    - name: Test
+      run: bundle exec rspec --format progress --format RspecJunitFormatter

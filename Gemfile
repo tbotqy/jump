@@ -7,45 +7,43 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby "2.6.4"
+
 gem "dotenv-rails"
-gem "rails", "~> 5.0.0"
+gem "rails", "~> 6.0.0"
 gem "mysql2"
 gem "puma"
-gem "uglifier", ">= 1.3.0"
-gem "jquery-rails"
-gem "jpmobile", "~> 5.0.0"
 gem "config"
 gem "twitter"
 gem "omniauth"
-gem "omniauth-twitter", github: "arunagw/omniauth-twitter"
-gem "twitter-text"
-gem "turnout"
-gem "slim-rails"
-gem "therubyracer", platforms: :ruby
+gem "omniauth-twitter"
 gem "sidekiq"
 gem "sidekiq-cron", "~> 1.1"
 gem "redis-namespace"
+gem "redis-objects"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "activerecord-import"
 gem "devise"
 gem "sentry-raven"
+gem "kaminari"
+gem "ruby-progressbar"
+gem "draper"
+gem "rack-cors"
+gem "slack-notifier"
 
-group :development do
-  gem "web-console", "~> 2.0"
-  gem "listen", ">= 3.0.5", "< 3.2"
-  gem "rails-erd"
-  gem "capistrano", "~> 3.11", require: false
-  gem "capistrano-rbenv", require: false
-  gem "capistrano-bundler", require: false
-  gem "capistrano-rails", require: false
-  gem "capistrano3-puma", require: false
-  gem "capistrano-sidekiq", require: false
+group :test do
+  gem "codecov", require: false
+  gem "shoulda-matchers"
 end
+
 group :development, :test do
   gem "rspec-rails", "~> 3.5"
+  gem "listen"
   gem "factory_bot_rails"
   gem "database_cleaner"
   gem "rspec_junit_formatter"
   gem "rubocop", require: false
   gem "rubocop-rails_config", require: false
+  gem "rubocop-rspec"
+  gem "bullet"
 end
