@@ -14,7 +14,7 @@ import {
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
 import {
-  fetchUser,
+  fetchAuthenticatedUser,
   requestAdditionalTweetImport,
   requestFolloweeImport
 } from "../utils/api";
@@ -43,7 +43,7 @@ const styles = theme => ({
 
 class DataManagement extends React.Component {
   componentDidMount() {
-    fetchUser()
+    fetchAuthenticatedUser()
       .then( response => this.props.setUser(response.data) )
       .catch( error => this.props.setApiErrorCode(error.response.status) );
   }

@@ -28,7 +28,9 @@ Rails.application.routes.draw do
 
   resources :tweeted_dates, only: %i|index|
 
-  resources :users, only: %i|show destroy| do
+  get :me, to: "users#me"
+
+  resources :users, only: %i|destroy| do
     scope module: :users do
       resources :statuses,              only: %i|index create|
       put "statuses",                   to: "statuses#update"
