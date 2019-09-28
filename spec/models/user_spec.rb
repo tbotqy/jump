@@ -163,6 +163,43 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe ".find_latest_by_screen_name!" do
+    subject { described_class.find_latest_by_screen_name!(screen_name) }
+    shared_examples "raises NotFound error" do
+      it { expect { subject }.to raise_error(ActiveRecord::RecordNotFound) }
+    end
+
+    context "no user matches" do
+      before { create(:user, screen_name: "existing_screen_name") }
+      context "given a non-blank value" do
+        let(:screen_name) { "imaginary_screen_name" }
+        it_behaves_like "raises NotFound error"
+      end
+      context "given a blank value" do
+        context "nil" do
+          let(:screen_name) { nil }
+          it_behaves_like "raises NotFound error"
+        end
+        context "blank string" do
+          let(:screen_name) { "" }
+          it_behaves_like "raises NotFound error"
+        end
+      end
+    end
+    context "only single user matches" do
+      let(:screen_name) { create(:user).screen_name }
+      it { expect { subject }.not_to raise_error }
+      it { is_expected.to eq User.find_by!(screen_name: screen_name) }
+    end
+    context "several users match" do
+      let(:screen_name) { "duplicating_screen_name" }
+      let!(:older_user) { create(:user, screen_name: screen_name, updated_at: Time.zone.at(1)) }
+      let!(:newer_user) { create(:user, screen_name: screen_name, updated_at: Time.zone.at(2)) }
+      it { expect { subject }.not_to raise_error }
+      it { is_expected.to eq newer_user }
+    end
+  end
+
   describe "#has_any_status?" do
     subject { user.has_any_status? }
     context "user has no status" do

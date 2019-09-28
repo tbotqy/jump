@@ -101,4 +101,40 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "GET /users/:screen_name" do
+    subject { get user_page_path(screen_name: screen_name), xhr: true }
+    describe "Authentication state doesn't matter" do
+      let!(:screen_name) { create(:user).screen_name }
+      before { subject }
+      context "not authenticated" do
+        it_behaves_like "respond with status code", :ok
+      end
+      context "authenticated" do
+        it_behaves_like "respond with status code", :ok
+      end
+    end
+    context "no user matches" do
+      before do
+        create(:user, screen_name: "existing_screen_name")
+        subject
+      end
+      let(:screen_name) { "imaginary_screen_name" }
+      it_behaves_like "respond with status code", :not_found
+    end
+    context "only single user matches" do
+      let(:screen_name) { create(:user).screen_name }
+      before { subject }
+      it_behaves_like "respond with status code", :ok
+      it { expect(response.body).to eq User.find_by!(screen_name: screen_name).to_json }
+    end
+    context "several users match" do
+      let(:screen_name) { "duplicating_screen_name" }
+      let!(:older_user) { create(:user, screen_name: screen_name, updated_at: Time.zone.at(1)) }
+      let!(:newer_user) { create(:user, screen_name: screen_name, updated_at: Time.zone.at(2)) }
+      before { subject }
+      it_behaves_like "respond with status code", :ok
+      it { expect(response.body).to eq newer_user.to_json }
+    end
+  end
 end
