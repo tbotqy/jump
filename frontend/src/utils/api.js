@@ -33,8 +33,8 @@ const userId = getUserIdFromCookie();
  * User
  */
 
-export function fetchUser() {
-  return api.get(`/users/${userId}`);
+export function fetchAuthenticatedUser() {
+  return api.get("/me");
 }
 
 export function deleteUser() {
