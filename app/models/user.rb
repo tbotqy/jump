@@ -42,6 +42,10 @@ class User < ApplicationRecord
       )
       user
     end
+
+    def find_latest_by_screen_name!(screen_name)
+      where(screen_name: screen_name).order(updated_at: :asc).last!
+    end
   end
 
   def as_json(_options = {})

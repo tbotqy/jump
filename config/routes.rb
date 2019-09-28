@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :tweeted_dates, only: %i|index|
 
   get :me, to: "users#me"
+  get "/users/:screen_name", to: "users#show", as: :user_page
 
   resources :users, only: %i|destroy| do
     scope module: :users do
