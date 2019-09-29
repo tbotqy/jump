@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_26_232650) do
+ActiveRecord::Schema.define(version: 2019_09_29_091818) do
 
   create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2019_09_26_232650) do
     t.string "screen_name", null: false
     t.boolean "protected_flag", default: false, null: false
     t.string "avatar_url", null: false
+    t.string "profile_banner_url"
     t.integer "twitter_created_at", null: false
     t.string "access_token", null: false
     t.string "access_token_secret", null: false
