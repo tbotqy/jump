@@ -32,13 +32,17 @@ class UserMenu extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if(!this.props.user) {
       this.setState({ fetchingUser: true });
-      fetchAuthenticatedUser()
-        .then( response => this.props.setUser(response.data) )
-        .catch( error => this.props.setApiErrorCode(error.response.status) )
-        .finally( () => this.setState({ fetchingUser: false }) );
+      try {
+        const response = await fetchAuthenticatedUser();
+        this.props.setUser(response.data);
+      } catch(error) {
+        this.props.setApiErrorCode(error.response.status);
+      } finally {
+        this.setState({ fetchingUser: false });
+      }
     }
   }
 

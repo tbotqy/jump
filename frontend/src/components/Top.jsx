@@ -47,9 +47,14 @@ const styles = theme => ({
 const Top = props => {
   const [ tweetCountText, setTweetCount ] = useState(null);
   useEffect(() => {
-    fetchStats()
-      .then( response => setTweetCount(response.data.status_count) )
-      .catch( error => props.setApiErrorCode(error.response.status) );
+    (async() => {
+      try {
+        const response = await fetchStats();
+        setTweetCount(response.data.status_count);
+      } catch(error) {
+        props.setApiErrorCode(error.response.status);
+      }
+    })();
   });
 
   return(

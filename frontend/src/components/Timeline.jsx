@@ -35,21 +35,6 @@ class Timeline extends React.Component {
     window.addEventListener("popstate", this.onPopStateFunc);
   }
 
-  onBackOrForwardButtonEvent(e) {
-    e.preventDefault();
-    const { year, month, day } = this.props.match.params;
-    this.props.setIsFetching(true);
-    this.props.tweetsFetchFunc(year, month, day)
-      .then( response => {
-        this.props.setTweets(response.data);
-      }).catch( error => {
-        this.props.setApiErrorCode(error.response.status);
-      }).finally( () => {
-        this.props.setIsFetching(false);
-      });
-    scrollToTop();
-  }
-
   render() {
     return(
       <>
@@ -71,6 +56,21 @@ class Timeline extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("popstate", this.onPopStateFunc);
+  }
+
+  async onBackOrForwardButtonEvent(e) {
+    e.preventDefault();
+    const { year, month, day } = this.props.match.params;
+    this.props.setIsFetching(true);
+    try {
+      const response = await this.props.tweetsFetchFunc(year, month, day);
+      this.props.setTweets(response.data);
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    } finally {
+      this.props.setIsFetching(false);
+    }
+    scrollToTop();
   }
 }
 

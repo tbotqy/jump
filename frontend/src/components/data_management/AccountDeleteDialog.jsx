@@ -115,12 +115,15 @@ class AccountDeleteDialog extends React.Component {
     this.setState({ open: false });
   }
 
-  handleDeleteButtonClick() {
+  async handleDeleteButtonClick() {
     this.setState({ disableButton: true });
-    deleteUser().then( () => {
+    try {
+      await deleteUser();
       this.setState({ showByeMessage: true });
       setTimeout( () => { document.location.href = ROOT_PATH; }, redirectInterval );
-    }).catch( error => this.props.setApiErrorCode(error.response.status) );
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    }
   }
 }
 

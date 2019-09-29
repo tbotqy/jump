@@ -46,22 +46,6 @@ const loader = (
 );
 
 class TweetList extends React.Component {
-  loadMore() {
-    const { year, month, day } = this.props.match.params;
-    const nextPage = this.props.page + 1;
-    this.props.onLoadMoreTweetsFetchFunc(year, month, day, nextPage)
-      .then( response => {
-        this.props.appendTweets(response.data);
-        this.props.setPage(nextPage);
-      }).catch( error => {
-        this.props.setHasMore(false);
-        const statusCode = error.response.status;
-        if(statusCode !== 404) {
-          this.props.setApiErrorCode(statusCode);
-        }
-      });
-  }
-
   componentDidMount() {
     this.props.resetPage();
     this.props.resetHasMore();
@@ -88,6 +72,22 @@ class TweetList extends React.Component {
         </Grid>
       </Grid>
     );
+  }
+
+  async loadMore() {
+    const { year, month, day } = this.props.match.params;
+    const nextPage = this.props.page + 1;
+    try {
+      const response = await this.props.onLoadMoreTweetsFetchFunc(year, month, day, nextPage);
+      this.props.appendTweets(response.data);
+      this.props.setPage(nextPage);
+    } catch(error) {
+      this.props.setHasMore(false);
+      const statusCode = error.response.status;
+      if(statusCode !== 404) {
+        this.props.setApiErrorCode(statusCode);
+      }
+    }
   }
 }
 

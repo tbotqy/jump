@@ -116,11 +116,16 @@ class DateSelectors extends React.Component {
     window.removeEventListener("popstate", this.onPopStateFunc);
   }
 
-  fetchTweets(year, month, day) {
+  async fetchTweets(year, month, day) {
     this.props.setIsFetching(true);
-    this.props.onSelectionChangeTweetsFetchFunc(year, month, day)
-      .then( response => this.props.setTweets(response.data))
-      .then( () => this.props.setIsFetching(false) );
+    try {
+      const response = await this.props.onSelectionChangeTweetsFetchFunc(year, month, day);
+      this.props.setTweets(response.data);
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    } finally {
+      this.props.setIsFetching(false);
+    }
   }
 }
 

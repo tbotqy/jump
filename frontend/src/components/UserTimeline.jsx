@@ -8,20 +8,6 @@ import Timeline from "../containers/TimelineContainer";
 import Head from "./Head";
 
 class UserTimeline extends React.Component {
-  fetchTweets(year, month, day) {
-    this.props.setIsFetching(true);
-    fetchUserTweets(year, month, day)
-      .then( response => this.props.setTweets(response.data) )
-      .catch( error => this.props.setApiErrorCode(error.response.status) )
-      .finally( () => this.props.setIsFetching(false) );
-  }
-
-  fetchSelectableDates(year, month, day) {
-    fetchUserSelectableDates(year, month, day)
-      .then( response => this.props.setSelectableDates(response.data) )
-      .catch( error => this.props.setApiErrorCode(error.response.status) );
-  }
-
   componentDidMount() {
     this.props.setSelectableDates([]);
     const { year, month, day } = this.props.match.params;
@@ -36,6 +22,27 @@ class UserTimeline extends React.Component {
         <Timeline tweetsFetchFunc={ fetchUserTweets.bind(this) } />
       </>
     );
+  }
+
+  async fetchTweets(year, month, day) {
+    this.props.setIsFetching(true);
+    try {
+      const response = await fetchUserTweets(year, month, day);
+      this.props.setTweets(response.data);
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    } finally {
+      this.props.setIsFetching(false);
+    }
+  }
+
+  async fetchSelectableDates(year, month, day) {
+    try {
+      const response = await fetchUserSelectableDates(year, month, day);
+      this.props.setSelectableDates(response.data);
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    }
   }
 
   title() {
