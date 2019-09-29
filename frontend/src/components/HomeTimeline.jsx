@@ -8,20 +8,6 @@ import Timeline from "../containers/TimelineContainer";
 import Head from "./Head";
 
 class HomeTimeline extends React.Component {
-  fetchTweets(year, month, day) {
-    this.props.setIsFetching(true);
-    fetchFolloweeTweets(year, month, day)
-      .then( response => this.props.setTweets(response.data) )
-      .catch( error => this.props.setApiErrorCode(error.response.status) )
-      .finally( () => this.props.setIsFetching(false) );
-  }
-
-  fetchSelectableDates(year, month, day) {
-    fetchFolloweeSelectableDates(year, month, day)
-      .then( response => this.props.setSelectableDates(response.data) )
-      .catch( error => this.props.setApiErrorCode(error.response.status) );
-  }
-
   componentDidMount() {
     this.props.setSelectableDates([]);
     const { year, month, day } = this.props.match.params;
@@ -36,6 +22,27 @@ class HomeTimeline extends React.Component {
         <Timeline tweetsFetchFunc={ fetchFolloweeTweets.bind(this) } />
       </>
     );
+  }
+
+  async fetchTweets(year, month, day) {
+    this.props.setIsFetching(true);
+    try {
+      const response = await fetchFolloweeTweets(year, month, day);
+      this.props.setTweets(response.data);
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    } finally {
+      this.props.setIsFetching(false);
+    }
+  }
+
+  async fetchSelectableDates(year, month, day) {
+    try {
+      const response = await fetchFolloweeSelectableDates(year, month, day);
+      this.props.setSelectableDates(response.data);
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    }
   }
 
   title() {

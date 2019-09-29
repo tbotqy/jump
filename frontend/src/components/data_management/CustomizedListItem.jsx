@@ -64,31 +64,37 @@ class CustomizedListItem extends React.Component {
     );
   }
 
-  onButtonClick() {
+  async onButtonClick() {
     this.setState({
       isRequesting:   true,
       buttonDisabled: true
     });
-    this.props.apiFunc()
-      .then( response => {
-        switch(response.status) {
-        case API_NORMAL_CODE_OK:
-          this.setState({ buttonText: "更新しました" });
-          break;
-        case API_NORMAL_CODE_ACCEPTED:
-          this.setState({ buttonText: "受け付けました" });
-          break;
-        default:
-          throw new Error(`Unexpected status code returned from API: ${response.status}`);
-        }
-      }).catch( error => {
+    try {
+      const response = await this.props.apiFunc();
+      switch(response.status) {
+      case API_NORMAL_CODE_OK:
+        this.setState({ buttonText: "更新しました" });
+        break;
+      case API_NORMAL_CODE_ACCEPTED:
+        this.setState({ buttonText: "受け付けました" });
+        break;
+      default:
+        throw new Error(`Unexpected status code returned from API: ${response.status}`);
+      }
+    } catch(error) {
+      if(error.response) {
         const { status } = error.response;
         if(status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
           this.setState({ buttonText: "処理中..." });
         }else{
           this.props.setApiErrorCode(status);
         }
-      }).finally( () => this.setState({ isRequesting: false }) );
+      } else {
+        throw error;
+      }
+    } finally {
+      this.setState({ isRequesting: false });
+    }
   }
 }
 

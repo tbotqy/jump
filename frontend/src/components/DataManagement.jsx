@@ -42,10 +42,13 @@ const styles = theme => ({
 });
 
 class DataManagement extends React.Component {
-  componentDidMount() {
-    fetchAuthenticatedUser()
-      .then( response => this.props.setUser(response.data) )
-      .catch( error => this.props.setApiErrorCode(error.response.status) );
+  async componentDidMount() {
+    try {
+      const response = await fetchAuthenticatedUser();
+      this.props.setUser(response.data);
+    } catch(error) {
+      this.props.setApiErrorCode(error.response.status);
+    }
   }
 
   render() {
