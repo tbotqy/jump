@@ -180,6 +180,13 @@ RSpec.describe Status, type: :model do
     end
   end
 
+  describe ".use_index" do
+    subject { Status.use_index(index_name) }
+    let(:index_name) { "some_index" }
+    it { expect(subject.to_sql).to include("USE INDEX(#{index_name})") }
+    it_behaves_like "a scope"
+  end
+
   describe ".most_recent_tweet_id!" do
     subject { Status.most_recent_tweet_id! }
     context "no status exists" do
