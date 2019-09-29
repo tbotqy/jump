@@ -44,6 +44,7 @@ class Status < ApplicationRecord
     boundary = time.to_i
     where("tweeted_at_reversed >= ?", -1 * boundary)
   end
+  scope :use_index, -> (index) { from("#{self.table_name} USE INDEX(#{index})") }
 
   class << self
     def most_recent_tweet_id!
