@@ -34,7 +34,8 @@ class RenewUserProfileService
         name:           @user_info.name,
         screen_name:    @user_info.screen_name,
         protected_flag: @user_info.protected?,
-        avatar_url:     @user_info.profile_image_url_https.to_s
+        avatar_url:     @user_info.profile_image_url_https.to_s,
+        profile_banner_url: @user_info.profile_banner_url_https(nil) # not calling #to_s to register nil as NULL
       )
     end
 

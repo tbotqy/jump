@@ -32,6 +32,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
              :screen_name,
              :protected,
              :profile_image_url_https,
+             :profile_banner_url,
              to: :auth_raw_info
 
     delegate :token,
@@ -48,6 +49,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         screen_name:        screen_name,
         protected_flag:     protected,
         avatar_url:         profile_image_url_https,
+        profile_banner_url: profile_banner_url,
         access_token:        token,
         access_token_secret: secret
       }

@@ -16,6 +16,7 @@ module OmniauthMock
           name: "name",
           screen_name: "screen_name",
           profile_image_url_https: "https://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
+          profile_banner_url: "https://pbs.twimg.com/profile_banners/783214/1556918042",
           created_at: "Thu Jul 4 00:00:00 +0000 2013",
           protected: false
         }
