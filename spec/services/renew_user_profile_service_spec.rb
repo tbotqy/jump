@@ -34,11 +34,13 @@ describe RenewUserProfileService do
           let(:initial_screen_name)    { "initial user screen_name" }
           let(:initial_protected_flag) { false }
           let(:initial_avatar_url)     { "https://old.com/old.jpg" }
+          let(:initial_profile_banner_url) { "https://old.com/old-banner/" }
           let!(:user) do
             create(:user,
               name:           initial_name,
               screen_name:    initial_screen_name,
               avatar_url:     initial_avatar_url,
+              profile_banner_url: initial_profile_banner_url,
               protected_flag: initial_protected_flag
             )
           end
@@ -49,6 +51,7 @@ describe RenewUserProfileService do
               name:                    "new name",
               screen_name:             "new screen_name",
               profile_image_url_https: "https://new.com/new.jpg",
+              profile_banner_url_https: "https://new.com/new-banner",
               protected?:              !initial_protected_flag
             )
           end
@@ -75,6 +78,7 @@ describe RenewUserProfileService do
               it { is_expected.to change { User.find(user_id).screen_name    }.from(initial_screen_name)   .to(api_response.screen_name) }
               it { is_expected.to change { User.find(user_id).protected_flag }.from(initial_protected_flag).to(api_response.protected?) }
               it { is_expected.to change { User.find(user_id).avatar_url     }.from(initial_avatar_url)    .to(api_response.profile_image_url_https.to_s) }
+              it { is_expected.to change { User.find(user_id).profile_banner_url }.from(initial_profile_banner_url) .to(api_response.profile_banner_url_https.to_s) }
             end
             it "updates the user's statuses' private_flag with the one in API response" do
               is_expected.to change { User.find(user_id).statuses.pluck(:private_flag).uniq.first }.from(initial_protected_flag).to(api_response.protected?)

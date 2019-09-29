@@ -80,6 +80,7 @@ RSpec.describe User, type: :model do
           screen_name:         "passed_screen_name",
           protected_flag:      true,
           avatar_url:          "passed_url",
+          profile_banner_url:  "passed_banner_url",
           twitter_created_at:  "Thu Jul 4 00:00:00 +0000 2013",
           access_token:        "passed_access_token",
           access_token_secret: "passed_access_token_secret"
@@ -115,6 +116,7 @@ RSpec.describe User, type: :model do
           screen_name:         "screen_name_before_update",
           protected_flag:      false,
           avatar_url:          "url_before_update",
+          profile_banner_url:  "banner_url_before_update",
           twitter_created_at:  Time.zone.parse("Thu Jul 4 00:00:00 +0000 2013").to_i,
           access_token:        "access_token_before_update",
           access_token_secret: "access_token_secret_before_update",
@@ -131,6 +133,7 @@ RSpec.describe User, type: :model do
           screen_name:         "screen_name_after_update",
           protected_flag:      true,
           avatar_url:          "url_after_update",
+          profile_banner_url:  "banner_url_after_update",
           twitter_created_at:  "Thu Jul 4 00:00:00 +0000 2013",
           access_token:        "access_token_after_update",
           access_token_secret: "access_token_secret_after_update"
