@@ -46,6 +46,9 @@ RSpec.describe User, type: :model do
       it { should validate_presence_of(:avatar_url) }
       it { should validate_length_of(:avatar_url).is_at_most(255) }
     end
+    describe "#profile_banner_url" do
+      it { should validate_length_of(:profile_banner_url).is_at_most(255).allow_nil }
+    end
     describe "#twitter_created_at" do
       it { should validate_presence_of(:twitter_created_at) }
       it { should validate_numericality_of(:twitter_created_at).is_greater_than_or_equal_to(0).only_integer }

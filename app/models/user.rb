@@ -20,6 +20,7 @@ class User < ApplicationRecord
   validates :screen_name,         presence: true, length: { maximum: 255 }
   validates :protected_flag_before_type_cast, inclusion: { in: [1, 0, true, false] }
   validates :avatar_url,          presence: true, length: { maximum: 255 }
+  validates :profile_banner_url,  allow_nil: true, length: { maximum: 255 }
   validates :twitter_created_at,  presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :access_token,        presence: true, length: { maximum: 255 }
   validates :access_token_secret, presence: true, length: { maximum: 255 }
