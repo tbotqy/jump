@@ -27,6 +27,8 @@ class User < ApplicationRecord
   validates :token_updated_at,    numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
   validates :statuses_updated_at, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_nil: true
 
+  scope :not_protected, -> { where(protected_flag: false) }
+
   class << self
     def register_or_update!(provider:, uid:, twitter_id:, twitter_created_at:, name:, screen_name:, protected_flag:, avatar_url:, profile_banner_url:, access_token:, access_token_secret:)
       user = find_or_initialize_by(uid: uid)

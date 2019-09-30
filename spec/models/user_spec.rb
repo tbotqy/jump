@@ -68,6 +68,22 @@ RSpec.describe User, type: :model do
       it { should validate_numericality_of(:statuses_updated_at).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     end
   end
+
+  describe ".not_protected" do
+    subject { described_class.not_protected }
+    context "no record matches" do
+      before { create_list(:user, 3, protected_flag: true) }
+      it { is_expected.to be_none }
+      it_behaves_like "a scope"
+    end
+    context "some record matches" do
+      let!(:public_users)    { create_list(:user, 3, protected_flag: false) }
+      let!(:protected_users) { create_list(:user, 3, protected_flag: true) }
+      it { is_expected.to contain_exactly(*public_users) }
+      it_behaves_like "a scope"
+    end
+  end
+
   describe ".register_or_update!" do
     subject { User.register_or_update!(params) }
     context "register new user" do
