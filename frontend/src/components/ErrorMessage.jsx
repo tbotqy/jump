@@ -3,36 +3,31 @@ import { withStyles } from "@material-ui/core/styles";
 import {
   Typography,
   Grid,
-  Button
+  Button,
+  Divider
 } from "@material-ui/core";
 import { ROOT_PATH } from "../utils/paths";
 
-const styles = theme => ({
+const styles = () => ({
   container: {
-    paddingTop: theme.spacing(5)
+    minHeight: "80vh"
   },
   item: {
     textAlign: "center"
   }
 });
 
-const errorMessageByApiErrorCode = apiErrorCode => {
-  switch(apiErrorCode) {
-  case 404:
-    return "データが見つかりませんでした";
-  default:
-    return "サーバーエラーが発生しました。時間をおいて再度お試し願います。";
-  }
-};
-
 const ErrorMessage = props => (
-  <Grid container direction="row" spacing={ 5 } className={ props.classes.container }>
-    <Grid item xs={ 12 } className={ props.classes.item } >
-      <Typography variant="h4" color="textSecondary">{ props.errorMessage || errorMessageByApiErrorCode(props.apiErrorCode) }</Typography>
+  <Grid container direction="column" justify="center" alignItems="center" spacing={ 1 } className={ props.classes.container }>
+    <Grid item>
+      <Typography variant="h4" component="h1" color="textSecondary" gutterBottom>{ props.errorMessage }</Typography>
+      <Divider variant="fullWidth" />
     </Grid>
-    <Grid item xs={ 12 } className={ props.classes.item } >
-      <Button href={ ROOT_PATH }>トップへ</Button>
-    </Grid>
+    { !props.hideLinkToTop &&
+      <Grid item>
+        <Button href={ ROOT_PATH }>トップへ</Button>
+      </Grid>
+    }
   </Grid>
 );
 
