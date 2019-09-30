@@ -27,7 +27,7 @@ const api = {
 
 export default api;
 
-const userId = getUserIdFromCookie();
+const authenticatedUserId = getUserIdFromCookie();
 
 /*
  * User
@@ -37,8 +37,12 @@ export function fetchAuthenticatedUser() {
   return api.get("/me");
 }
 
+export function fetchUserByScreenName(screenName) {
+  return api.get(`/users/${screenName}`);
+}
+
 export function deleteUser() {
-  return api.delete(`/users/${userId}`);
+  return api.delete(`/users/${authenticatedUserId}`);
 }
 
 /*
@@ -50,22 +54,22 @@ export function fetchPublicTweets(year, month, day, page) {
   return api.get("/statuses", params);
 }
 
-export function fetchUserTweets(year, month, day, page) {
+export function fetchUserTweets(year, month, day, page = 1, userId = authenticatedUserId) {
   const params = { year, month, day, page };
   return api.get(`/users/${userId}/statuses`, params);
 }
 
 export function fetchFolloweeTweets(year, month, day, page) {
   const params = { year, month, day, page };
-  return api.get(`/users/${userId}/followees/statuses`, params);
+  return api.get(`/users/${authenticatedUserId}/followees/statuses`, params);
 }
 
 export function requestInitialTweetImport() {
-  return api.post(`/users/${userId}/statuses`);
+  return api.post(`/users/${authenticatedUserId}/statuses`);
 }
 
 export function requestAdditionalTweetImport() {
-  return api.put(`/users/${userId}/statuses`);
+  return api.put(`/users/${authenticatedUserId}/statuses`);
 }
 
 /*
@@ -76,12 +80,12 @@ export function fetchPublicSelectableDates() {
   return api.get("/tweeted_dates");
 }
 
-export function fetchUserSelectableDates() {
+export function fetchUserSelectableDates(userId = authenticatedUserId) {
   return api.get(`/users/${userId}/tweeted_dates`);
 }
 
 export function fetchFolloweeSelectableDates() {
-  return api.get(`/users/${userId}/followees/tweeted_dates`);
+  return api.get(`/users/${authenticatedUserId}/followees/tweeted_dates`);
 }
 
 /*
@@ -89,7 +93,7 @@ export function fetchFolloweeSelectableDates() {
  */
 
 export function requestFolloweeImport() {
-  return api.post(`/users/${userId}/followees`);
+  return api.post(`/users/${authenticatedUserId}/followees`);
 }
 
 /*
@@ -97,7 +101,7 @@ export function requestFolloweeImport() {
  */
 
 export function fetchImportProgress() {
-  return api.get(`/users/${userId}/tweet_import_progress`);
+  return api.get(`/users/${authenticatedUserId}/tweet_import_progress`);
 }
 
 /*

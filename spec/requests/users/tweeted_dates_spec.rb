@@ -6,10 +6,24 @@ RSpec.describe "Users::TweetedDates", type: :request do
   describe "GET /users/:user_id/tweeted_dates" do
     subject { get user_tweeted_dates_path(user_id: user_id), xhr: true }
     context "not authenticated" do
-      let!(:user)   { create(:user) }
-      let(:user_id) { user.id }
-      before { subject }
-      it_behaves_like "respond with status code", :unauthorized
+      context "the target resource is protected" do
+        let!(:user)   { create(:user, protected_flag: true) }
+        let(:user_id) { user.id }
+        before do
+          create(:status, user_id: user_id, private_flag: true)
+          subject
+        end
+        it_behaves_like "unauthenticated request"
+      end
+      context "the target resource is not protected" do
+        let!(:user)   { create(:user, protected_flag: false) }
+        let(:user_id) { user.id }
+        before do
+          create(:status, user_id: user_id, private_flag: false)
+          subject
+        end
+        it_behaves_like "respond with status code", :ok
+      end
     end
     context "authenticated" do
       context "user with given id doesn't exist" do
@@ -23,14 +37,28 @@ RSpec.describe "Users::TweetedDates", type: :request do
       end
       context "user with given id exists" do
         context "given id is not authenticated user's" do
-          let!(:signed_in_user) { create(:user) }
-          let!(:another_user)   { create(:user) }
-          let!(:user_id)        { another_user.id }
-          before do
-            sign_in signed_in_user
-            subject
+          context "the target user's resources are protected" do
+            let!(:signed_in_user) { create(:user) }
+            let!(:another_user)   { create(:user, protected_flag: true) }
+            let!(:user_id)        { another_user.id }
+            before do
+              create(:status, user_id: user_id, private_flag: true)
+              sign_in signed_in_user
+              subject
+            end
+            it_behaves_like "request for the other user's resource"
           end
-          it_behaves_like "request for the other user's resource"
+          context "the target user's resources are not protected" do
+            let!(:signed_in_user) { create(:user) }
+            let!(:another_user)   { create(:user, protected_flag: false) }
+            let!(:user_id)        { another_user.id }
+            before do
+              create(:status, user_id: user_id, private_flag: false)
+              sign_in signed_in_user
+              subject
+            end
+            it_behaves_like "respond with status code",  :ok
+          end
         end
         context "given id is authenticated user's" do
           context "user has no status" do

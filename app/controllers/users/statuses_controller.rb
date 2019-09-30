@@ -2,11 +2,13 @@
 
 module Users
   class StatusesController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: %i|index|
 
     def index
       user = User.find(params[:user_id])
-      authorize_operation_for!(user)
+
+      check_ownership_of!(user) if user.protected_flag?
+
       statuses = CollectUserStatusesService.call!(params_to_collect_by)
       render json: statuses
     end

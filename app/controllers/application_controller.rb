@@ -22,6 +22,11 @@ class ApplicationController < ActionController::API
       end
     end
 
+    def check_ownership_of!(resource)
+      authenticate_user!
+      authorize_operation_for!(resource)
+    end
+
     def render_400(e)
       render_error(e, 400)
     end

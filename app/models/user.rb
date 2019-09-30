@@ -54,9 +54,12 @@ class User < ApplicationRecord
     _statuses_updated_at  = statuses_updated_at.nil? ? nil : Time.zone.at(statuses_updated_at).iso8601
     _followees_updated_at = followees.last&.created_at&.iso8601
     {
+      id:             id,
       name:           name,
       screen_name:    screen_name,
       avatar_url:     avatar_url,
+      profile_banner_url: profile_banner_url,
+      protected_flag: protected_flag,
       status_count:   statuses.count.to_s(:delimited),
       followee_count: followees.count.to_s(:delimited),
       statuses_updated_at:  _statuses_updated_at,

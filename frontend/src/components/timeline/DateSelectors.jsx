@@ -69,8 +69,14 @@ class DateSelectors extends React.Component {
   }
 
   updateDatePath(datePath) {
-    const timelineType = this.props.match.path.split("/")[1]; // e.g public_timeline
-    const newPath = `/${timelineType}/${datePath}`;
+    const { screenName } = this.props.match.params;
+    const timelineType   = this.props.match.path.split("/")[1]; // e.g public_timeline
+    let newPath = "";
+    if(screenName) {
+      newPath = `/${timelineType}/${screenName}/${datePath}`;
+    }else{
+      newPath = `/${timelineType}/${datePath}`;
+    }
     this.props.history.push(newPath);
   }
 
