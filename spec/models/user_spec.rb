@@ -225,6 +225,7 @@ RSpec.describe User, type: :model do
       let(:name)           { "name" }
       let(:screen_name)    { "screen_name" }
       let(:avatar_url)     { "avatar_url" }
+      let(:protected_flag) { true }
       let(:status_count)   { 100 }
       let(:followee_count) { 200 }
       let(:user) do
@@ -233,6 +234,7 @@ RSpec.describe User, type: :model do
           name:           name,
           screen_name:    screen_name,
           avatar_url:     avatar_url,
+          protected_flag: protected_flag,
           status_count:   status_count,
           followee_count: followee_count
         )
@@ -240,15 +242,29 @@ RSpec.describe User, type: :model do
 
       it do
         is_expected.to include(
+          id:             user.id,
           name:           name,
           screen_name:    screen_name,
           avatar_url:     avatar_url,
+          protected_flag: protected_flag,
           status_count:   status_count.to_s(:delimited),
           followee_count: followee_count.to_s(:delimited)
         )
       end
     end
     describe "nullable attributes" do
+      describe "#profile_banner_url" do
+        subject { user.as_json.fetch(:profile_banner_url) }
+        context "null" do
+          let(:user) { create(:user, profile_banner_url: nil) }
+          it { is_expected.to eq nil }
+        end
+        context "present" do
+          let(:profile_banner_url) { "https://foo/bar" }
+          let(:user) { create(:user, profile_banner_url: profile_banner_url) }
+          it { is_expected.to eq profile_banner_url }
+        end
+      end
       describe "#statuses_updated_at" do
         subject { user.as_json.fetch(:statuses_updated_at) }
         context "null" do
