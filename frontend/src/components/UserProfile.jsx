@@ -11,7 +11,7 @@ import {
 import LockIcon from "@material-ui/icons/Lock";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-const styles = () => ({
+const styles = theme => ({
   card: {
     "boxShadow": "0 0 20px 0 rgba(0,0,0,0.12)"
   },
@@ -30,7 +30,7 @@ const styles = () => ({
     height: 134
   },
   cardHeader: {
-    paddingLeft: 160
+    paddingLeft: theme.spacing(20)
   },
   lockIcon: {
     position: "relative",
@@ -44,9 +44,11 @@ const styles = () => ({
   }
 });
 
+const bannerSize = "ipad_retina";
+
 const UserProfile = ({ name, screen_name, avatar_url, profile_banner_url, protected_flag, classes }) => (
   <Card className={ classes.card }>
-    <CardMedia image={ `${profile_banner_url}/ipad_retina` } className={ classes.cardMedia }>
+    <CardMedia image={ `${profile_banner_url}/${bannerSize}` } className={ classes.cardMedia }>
       <IconButton href={ `https://twitter.com/${screen_name}` } target="_blank" className={ classes.avatarWrapper }>
         <Avatar src={ avatar_url.replace("_normal", "") } className={ classes.avatar } />
       </IconButton>

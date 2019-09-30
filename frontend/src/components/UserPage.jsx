@@ -20,6 +20,9 @@ import {
 } from "@material-ui/core";
 
 const styles = theme => ({
+  profileContainer: {
+    paddingTop: theme.spacing(2.5)
+  },
   message: {
     paddingTop: theme.spacing(10),
     minHeight: "50vh"
@@ -63,7 +66,7 @@ class UserPage extends React.Component {
         <Head title={ this.title() } />
         <HeadNav />
         <ApiErrorBoundary>
-          <Container style={ { paddingTop: "20px" } }>
+          <Container className={ this.props.classes.profileContainer }>
             { this.state.currentUser &&
               <Grid container justify="center">
                 <Grid item xs={ 12 } md={ 9 }  >
@@ -75,9 +78,7 @@ class UserPage extends React.Component {
           { !this.state.currentUser ?
             <FullPageLoading />
             : !this.state.showMessage ?
-              <>
-                <Timeline tweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id).bind(this) } />
-              </>
+              <Timeline tweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id).bind(this) } />
               : (
               <>
                 <Grid container direction="column" alignItems="center" className={ this.props.classes.message }>
@@ -118,7 +119,7 @@ class UserPage extends React.Component {
   title() {
     const { screenName, year, month, day } = this.props.match.params;
     const name = this.state.currentUser ? this.state.currentUser.name : "";
-    return timelineTitleText(`${name}（@${screenName}）のツイート`, year, month, day);
+    return timelineTitleText(`${name}（@${screenName}）の過去のツイート`, year, month, day);
   }
 
   handleTweetDataApiError(error) {

@@ -17,17 +17,15 @@ const styles = () => ({
   }
 });
 
-const ErrorMessage = props => (
-  <Grid container direction="column" justify="center" alignItems="center" spacing={ 1 } className={ props.classes.container }>
+const ErrorMessage = ({ errorMessage, classes }) => (
+  <Grid container direction="column" justify="center" alignItems="center" spacing={ 1 } className={ classes.container }>
     <Grid item>
-      <Typography variant="h4" component="h1" color="textSecondary" gutterBottom>{ props.errorMessage }</Typography>
+      <Typography variant="h4" component="h1" color="textSecondary" gutterBottom>{ errorMessage }</Typography>
       <Divider variant="fullWidth" />
     </Grid>
-    { !props.hideLinkToTop &&
-      <Grid item>
-        <Button href={ ROOT_PATH }>トップへ</Button>
-      </Grid>
-    }
+    <Grid item>
+      <Button href={ ROOT_PATH }>トップへ</Button>
+    </Grid>
   </Grid>
 );
 
