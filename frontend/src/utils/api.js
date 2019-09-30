@@ -37,6 +37,10 @@ export function fetchAuthenticatedUser() {
   return api.get("/me");
 }
 
+export function fetchUserByScreenName(screenName) {
+  return api.get(`/users/${screenName}`);
+}
+
 export function deleteUser() {
   return api.delete(`/users/${authenticatedUserId}`);
 }
