@@ -26,6 +26,23 @@ RSpec.describe GenerateSitemapJob, type: :job do
         expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend_url}/terms_and_privacy</loc>")
       end
 
+      describe "includes all the urls of public user timeline" do
+        let(:unprotected_user_screen_name) { "unprotected_user_screen_name" }
+        let(:protected_user_screen_name)   { "protected_user_screen_name" }
+        before do
+          create(:user, protected_flag: false, screen_name: unprotected_user_screen_name)
+          create(:user, protected_flag: true,  screen_name: protected_user_screen_name)
+        end
+        it "includes the url of public user timeline of unprotected user" do
+          subject.call
+          expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend_url}/users/#{unprotected_user_screen_name}</loc>")
+        end
+        it "doesn't include the url of public user timeline of protected user" do
+          subject.call
+          expect(File.read(sitemap_xml_path)).not_to include("<loc>#{Settings.frontend_url}/users/#{protected_user_screen_name}</loc>")
+        end
+      end
+
       describe "includes all the urls of public_timeline" do
         let(:public_tweeted_dates)  { [1, 2].map { |day| Time.local(2019, 1, day) } }
         let(:private_tweeted_dates) { [3, 4].map { |day| Time.local(2019, 1, day) } }
@@ -51,16 +68,23 @@ RSpec.describe GenerateSitemapJob, type: :job do
   end
 
   context "A sitemap is already generated" do
+    let(:existing_user_screen_name)   { "existing_user_screen_name" }
+    let(:additional_user_screen_name) { "additional_user_screen_name" }
+
     let(:existing_tweeted_date)   { Time.local(2019, 1, 1) }
     let(:additional_tweeted_date) { Time.local(2019, 1, 2) }
+
     let(:additional_path) { additional_tweeted_date.strftime(date_path_format) }
     before do
+      create(:user, protected_flag: false, screen_name: existing_user_screen_name)
       create(:status, tweeted_at: existing_tweeted_date.to_i)
       subject.call
+      create(:user, protected_flag: false, screen_name: additional_user_screen_name)
       create(:status, tweeted_at: additional_tweeted_date.to_i)
     end
-    it "updates the existing sitemap" do
-      is_expected.to change { File.read(sitemap_xml_path).include?(additional_path) }.from(false).to(true)
+    describe "updates the existing sitemap" do
+      it { is_expected.to change { File.read(sitemap_xml_path).include?(additional_user_screen_name) }.from(false).to(true) }
+      it { is_expected.to change { File.read(sitemap_xml_path).include?(additional_path) }.from(false).to(true) }
     end
   end
 end

@@ -7,6 +7,12 @@ class GenerateSitemapJob < ApplicationJob
     SitemapGenerator::Sitemap.create(options) do
       add "/terms_and_privacy", changefreq: "never"
 
+      # add urls of public user timeline
+      User.not_protected.find_in_batches do |users|
+        users.pluck(:screen_name).each { |screen_name| add "/users/#{screen_name}" }
+      end
+
+      # add urls of public_timeline
       public_tweeted_dates = Status.not_private.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
       format = "/%Y/%-1m/%-1d"
       date_params = public_tweeted_dates.map { |date| date.strftime(format) }
