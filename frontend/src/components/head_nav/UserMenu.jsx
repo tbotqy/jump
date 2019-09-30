@@ -11,7 +11,8 @@ import {
   Divider,
   ListItemIcon,
   ListItemText,
-  CircularProgress
+  CircularProgress,
+  CardActionArea
 } from "@material-ui/core";
 import {
   ExitToApp as ExitToAppIcon,
@@ -20,7 +21,8 @@ import {
 import { fetchAuthenticatedUser } from "../../utils/api";
 import {
   SIGN_OUT_URL,
-  DATA_PATH
+  DATA_PATH,
+  USER_PAGE_PATH
 } from "../../utils/paths";
 
 class UserMenu extends React.Component {
@@ -54,12 +56,14 @@ class UserMenu extends React.Component {
             { this.UserAvatar() }
           </IconButton>
           <Menu anchorEl={ this.state.anchorEl } open={ Boolean(this.state.anchorEl) } onClose={ () => this.setState( { anchorEl: null } ) }>
-            <Box>
-              <CardHeader
-                avatar={ this.UserAvatar() }
-                title={ this.props.user.name }
-                subheader={ `@${this.props.user.screen_name}` }
-              />
+            <Box pb={ 1 }>
+              <CardActionArea href={ `${USER_PAGE_PATH}/${this.props.user.screen_name}` } target="_blank">
+                <CardHeader
+                  avatar={ this.UserAvatar() }
+                  title={ this.props.user.name }
+                  subheader={ `@${this.props.user.screen_name}` }
+                />
+              </CardActionArea>
             </Box>
             <Divider />
             <MenuList>
