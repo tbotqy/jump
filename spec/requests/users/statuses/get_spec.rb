@@ -7,13 +7,30 @@ RSpec.describe "Users::Statuses", type: :request do
     subject { get user_statuses_path(user_id: user_id, year: year, month: month, day: day, page: page), xhr: true }
 
     context "not authenticated" do
-      let!(:user_id) { create(:user).id }
-      let(:year)     { nil }
-      let(:month)    { nil }
-      let(:day)      { nil }
-      let(:page)     { nil }
-      before { subject }
-      it_behaves_like "unauthenticated request"
+      context "the target resource is protected" do
+        let!(:user_id) { create(:user, protected_flag: true).id }
+        let(:year)     { nil }
+        let(:month)    { nil }
+        let(:day)      { nil }
+        let(:page)     { nil }
+        before do
+          create(:status, user_id: user_id, private_flag: true)
+          subject
+        end
+        it_behaves_like "unauthenticated request"
+      end
+      context "the target resource is not protected" do
+        let!(:user_id) { create(:user, protected_flag: false).id }
+        let(:year)     { nil }
+        let(:month)    { nil }
+        let(:day)      { nil }
+        let(:page)     { nil }
+        before do
+          create(:status, user_id: user_id, private_flag: false)
+          subject
+        end
+        it_behaves_like "respond with status code", :ok
+      end
     end
     context "authenticated" do
       context "user not found" do
@@ -30,21 +47,39 @@ RSpec.describe "Users::Statuses", type: :request do
         it_behaves_like "respond with status code", :not_found
       end
       context "user found" do
-        context "unauthorized to operate on the found user" do
-          let!(:signed_in_user) { create(:user) }
-          let!(:another_user)   { create(:user) }
-          let!(:user_id)        { another_user.id }
-          let(:year)  { 2019 }
-          let(:month) { 3 }
-          let(:day)   { 2 }
-          let(:page)  { 1 }
-          before do
-            sign_in signed_in_user
-            subject
+        context "the target user is not identical with the logged in user" do
+          context "the target user's resources are protected" do
+            let!(:signed_in_user) { create(:user) }
+            let!(:another_user)   { create(:user, protected_flag: true) }
+            let!(:user_id)        { another_user.id }
+            let(:year)  { nil }
+            let(:month) { nil }
+            let(:day)   { nil }
+            let(:page)  { nil }
+            before do
+              create(:status, user_id: user_id, private_flag: true)
+              sign_in signed_in_user
+              subject
+            end
+            it_behaves_like "request for the other user's resource"
           end
-          it_behaves_like "request for the other user's resource"
+          context "the target user's resources are not protected" do
+            let!(:signed_in_user) { create(:user) }
+            let!(:another_user)   { create(:user, protected_flag: false) }
+            let!(:user_id)        { another_user.id }
+            let(:year)  { nil }
+            let(:month) { nil }
+            let(:day)   { nil }
+            let(:page)  { nil }
+            before do
+              create(:status, user_id: user_id, private_flag: false)
+              sign_in signed_in_user
+              subject
+            end
+            it_behaves_like "respond with status code",  :ok
+          end
         end
-        context "authorized to operate on the found user" do
+        context "the target user is identical with the logged in user" do
           context "user has no status" do
             let!(:user)    { create(:user) }
             let!(:user_id) { user.id }

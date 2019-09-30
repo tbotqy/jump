@@ -2,11 +2,10 @@
 
 module Users
   class TweetedDatesController < ApplicationController
-    before_action :authenticate_user!
-
     def index
       user = User.find(params[:user_id])
-      authorize_operation_for!(user)
+
+      check_ownership_of!(user) if user.protected_flag?
 
       tweeted_dates = StatusesDecorator.new(user.statuses).tweeted_dates
       raise Errors::NotFound if tweeted_dates.blank?
