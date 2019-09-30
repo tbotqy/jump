@@ -66,15 +66,15 @@ class UserPage extends React.Component {
         <Head title={ this.title() } />
         <HeadNav />
         <ApiErrorBoundary>
-          <Container className={ this.props.classes.profileContainer }>
-            { this.state.currentUser &&
+          { this.state.currentUser &&
+            <Container className={ this.props.classes.profileContainer }>
               <Grid container justify="center">
                 <Grid item xs={ 12 } md={ 9 }  >
                   <UserProfile { ...this.state.currentUser } />
                 </Grid>
               </Grid>
-            }
-          </Container>
+            </Container>
+          }
           { !this.state.currentUser ?
             <FullPageLoading />
             : !this.state.showMessage ?
