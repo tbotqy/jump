@@ -7,10 +7,8 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import scrollToTop   from "./../utils/scrollToTop";
 import Ad            from "./Ad";
-import HeadNav       from "../containers/HeadNavContainer";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import TweetList     from "../containers/TweetListContainer";
-import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
   container: {
@@ -37,20 +35,15 @@ class Timeline extends React.Component {
 
   render() {
     return(
-      <>
-        <HeadNav />
-        <Container className={ this.props.classes.container }>
-          <ApiErrorBoundary>
-            <div className={ this.props.classes.adWrapper }>
-              <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
-            </div>
-            <div className={ this.props.classes.tweetListContainer }>
-              { this.props.isFetching ? <LinearProgress /> : <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
-            </div>
-            { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } onSelectionChangeTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
-          </ApiErrorBoundary>
-        </Container>
-      </>
+      <Container className={ this.props.classes.container }>
+        <div className={ this.props.classes.adWrapper }>
+          <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
+        </div>
+        <div className={ this.props.classes.tweetListContainer }>
+          { this.props.isFetching ? <LinearProgress /> : <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
+        </div>
+        { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } onSelectionChangeTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
+      </Container>
     );
   }
 

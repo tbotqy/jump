@@ -6,6 +6,8 @@ import {
 import timelineTitleText from "../utils/timelineTitleText";
 import Timeline from "../containers/TimelineContainer";
 import Head from "./Head";
+import HeadNav from "../containers/HeadNavContainer";
+import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 class UserTimeline extends React.Component {
   componentDidMount() {
@@ -19,7 +21,10 @@ class UserTimeline extends React.Component {
     return (
       <>
         <Head title={ this.title() } />
-        <Timeline tweetsFetchFunc={ fetchUserTweets.bind(this) } />
+        <HeadNav />
+        <ApiErrorBoundary>
+          <Timeline tweetsFetchFunc={ fetchUserTweets.bind(this) } />
+        </ApiErrorBoundary>
       </>
     );
   }
