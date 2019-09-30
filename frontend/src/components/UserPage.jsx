@@ -118,8 +118,8 @@ class UserPage extends React.Component {
 
   title() {
     const { screenName, year, month, day } = this.props.match.params;
-    const name = this.state.currentUser ? this.state.currentUser.name : "";
-    return timelineTitleText(`${name}（@${screenName}）の過去のツイート`, year, month, day);
+    const userName = this.state.currentUser ? `${this.state.currentUser.name}（@${screenName}）` : `@${screenName}`;
+    return timelineTitleText(`${userName}の過去のツイート`, year, month, day);
   }
 
   handleTweetDataApiError(error) {
