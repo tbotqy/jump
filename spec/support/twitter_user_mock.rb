@@ -15,7 +15,7 @@ module TwitterUserMock
         screen_name:             "screen_name",
         protected?:              false,
         profile_image_url_https: Addressable::URI.parse("https://example.com/foo.jpg"),
-        profile_banner_url_https: Addressable::URI.parse("https://example.com/bar")
+        profile_banner_url_https: Addressable::URI.parse("https://example.com/bar/web")
       }
     end
 end
