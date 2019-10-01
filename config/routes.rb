@@ -11,15 +11,15 @@ Rails.application.routes.draw do
   end
 
   direct :user_timeline do
-    "#{Settings.frontend_url}/user_timeline"
+    "#{Settings.frontend.url}/user_timeline"
   end
 
   direct :status_import do
-    "#{Settings.frontend_url}/import"
+    "#{Settings.frontend.url}/import"
   end
 
   direct :service_top do
-    Settings.frontend_url
+    Settings.frontend.url
   end
 
   resource :stats, only: %i|show|

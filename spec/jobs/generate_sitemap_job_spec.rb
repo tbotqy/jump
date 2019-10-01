@@ -18,12 +18,12 @@ RSpec.describe GenerateSitemapJob, type: :job do
     describe "All the expected paths are included in the sitemap" do
       it "includes the root url" do
         subject.call
-        expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend_url}</loc>")
+        expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend.url}</loc>")
       end
 
       it "includes the url for terms and privacy" do
         subject.call
-        expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend_url}/terms_and_privacy</loc>")
+        expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend.url}/terms_and_privacy</loc>")
       end
 
       describe "includes all the urls of public user timeline" do
@@ -35,11 +35,11 @@ RSpec.describe GenerateSitemapJob, type: :job do
         end
         it "includes the url of public user timeline of unprotected user" do
           subject.call
-          expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend_url}/users/#{unprotected_user_screen_name}</loc>")
+          expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend.url}/users/#{unprotected_user_screen_name}</loc>")
         end
         it "doesn't include the url of public user timeline of protected user" do
           subject.call
-          expect(File.read(sitemap_xml_path)).not_to include("<loc>#{Settings.frontend_url}/users/#{protected_user_screen_name}</loc>")
+          expect(File.read(sitemap_xml_path)).not_to include("<loc>#{Settings.frontend.url}/users/#{protected_user_screen_name}</loc>")
         end
       end
 
@@ -54,13 +54,13 @@ RSpec.describe GenerateSitemapJob, type: :job do
         it "includes the paths of the tweeted day of public statuses" do
           subject.call
           public_tweeted_dates.each do |public_tweeted_date|
-            expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend_url}/public_timeline#{public_tweeted_date.strftime(date_path_format)}</loc>")
+            expect(File.read(sitemap_xml_path)).to include("<loc>#{Settings.frontend.url}/public_timeline#{public_tweeted_date.strftime(date_path_format)}</loc>")
           end
         end
         it "doesn't include the paths of the tweeted day of private statuses" do
           subject.call
           protected_tweeted_dates.each do |protected_tweeted_date|
-            expect(File.read(sitemap_xml_path)).not_to include("<loc>#{Settings.frontend_url}/public_timeline#{protected_tweeted_date.strftime(date_path_format)}</loc>")
+            expect(File.read(sitemap_xml_path)).not_to include("<loc>#{Settings.frontend.url}/public_timeline#{protected_tweeted_date.strftime(date_path_format)}</loc>")
           end
         end
       end

@@ -25,7 +25,7 @@ class GenerateSitemapJob < ApplicationJob
   private
     def options
       {
-        default_host: Settings.frontend_url,
+        default_host: Settings.frontend.url,
         public_path:  Settings.sitemap_dir,
         verbose:      false,
         compress:     false
