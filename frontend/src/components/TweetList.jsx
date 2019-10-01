@@ -10,6 +10,7 @@ import {
   CircularProgress
 } from "@material-ui/core";
 import TweetCard from "./TweetCard";
+import { API_ERROR_CODE_NOT_FOUND } from "../utils/api";
 
 const tweetCardPropsByTweet = tweet => {
   const ret = {
@@ -84,7 +85,7 @@ class TweetList extends React.Component {
     } catch(error) {
       this.props.setHasMore(false);
       const statusCode = error.response.status;
-      if(statusCode !== 404) {
+      if(statusCode !== API_ERROR_CODE_NOT_FOUND) {
         this.props.setApiErrorCode(statusCode);
       }
     }

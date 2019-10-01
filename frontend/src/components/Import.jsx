@@ -14,6 +14,7 @@ import {
   requestInitialTweetImport,
   requestFolloweeImport,
   fetchImportProgress,
+  API_ERROR_CODE_NOT_FOUND,
   API_ERROR_CODE_TOO_MANY_REQUESTS
 } from "../utils/api";
 import { PAGE_TITLE_IMPORT } from "../utils/pageHead";
@@ -162,7 +163,7 @@ class Import extends React.Component {
         });
       }
     } catch(error) {
-      if( error.response.status !== 404 ) {
+      if( error.response.status !== API_ERROR_CODE_NOT_FOUND ) {
         clearInterval(interval);
         this.setState({ isInProgress: false });
         this.props.setApiErrorCode(error.response.status);

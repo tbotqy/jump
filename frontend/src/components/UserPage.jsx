@@ -3,7 +3,10 @@ import { withStyles } from "@material-ui/core/styles";
 import {
   fetchUserByScreenName,
   fetchUserTweets,
-  fetchUserSelectableDates
+  fetchUserSelectableDates,
+  API_ERROR_CODE_BAD_REQUEST,
+  API_ERROR_CODE_UNAUTHORIZED,
+  API_ERROR_CODE_NOT_FOUND
 } from "../utils/api";
 import timelineTitleText from "../utils/timelineTitleText";
 import Timeline from "../containers/TimelineContainer";
@@ -124,11 +127,11 @@ class UserPage extends React.Component {
 
   handleTweetDataApiError(error) {
     switch(error.response.status) {
-    case 400:
-    case 401:
+    case API_ERROR_CODE_BAD_REQUEST:
+    case API_ERROR_CODE_UNAUTHORIZED:
       this.setState({ showMessage: true, message: "非公開ユーザーです" });
       break;
-    case 404:
+    case API_ERROR_CODE_NOT_FOUND:
       this.setState({ showMessage: true, message: "ツイートが未登録です" });
       break;
     default:
