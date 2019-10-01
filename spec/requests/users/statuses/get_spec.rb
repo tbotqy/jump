@@ -195,7 +195,7 @@ RSpec.describe "Users::Statuses", type: :request do
               before do
                 # Register the statuses tweeted in ending of the specified date.
                 # To test if the sort is applied, registering in random order, by using #shuffle.
-                (1..15).to_a.shuffle.map do |seconds_ago|
+                (1..30).to_a.shuffle.map do |seconds_ago|
                   tweeted_at = Time.current.end_of_day - seconds_ago.seconds
                   create(:status, user: user, text: "#{seconds_ago}th-new status", tweeted_at: tweeted_at.to_i)
                 end
@@ -213,13 +213,13 @@ RSpec.describe "Users::Statuses", type: :request do
                 context "page 1" do
                   let(:page) { 1 }
                   describe "number of return values" do
-                    it "returns as much as 10 (the maximum number for a page) statuses" do
-                      expect(response.parsed_body.count).to eq 10
+                    it "returns as much as 25 (the maximum number for a page) statuses" do
+                      expect(response.parsed_body.count).to eq 25
                     end
                   end
                   describe "sort under the pagination" do
-                    it "includes first 10 statuses, ordered in new-tweet-first" do
-                      expected_status_texts_with_expected_order = (1..10).map { |nth| "#{nth}th-new status" }
+                    it "includes first 25 statuses, ordered in new-tweet-first" do
+                      expected_status_texts_with_expected_order = (1..25).map { |nth| "#{nth}th-new status" }
                       expect(response.parsed_body.map { |item| item["text"] }).to eq expected_status_texts_with_expected_order
                     end
                   end
@@ -233,7 +233,7 @@ RSpec.describe "Users::Statuses", type: :request do
                   end
                   describe "sort under the pagination" do
                     it "includes last 5 statuses, ordered in new-tweet-first" do
-                      expected_status_texts_with_expected_order = (11..15).map { |nth| "#{nth}th-new status" }
+                      expected_status_texts_with_expected_order = (26..30).map { |nth| "#{nth}th-new status" }
                       expect(response.parsed_body.map { |item| item["text"] }).to eq expected_status_texts_with_expected_order
                     end
                   end
@@ -424,7 +424,7 @@ RSpec.describe "Users::Statuses", type: :request do
 
               before { sign_in user }
 
-              let(:expected_per_page) { 10 }
+              let(:expected_per_page) { 25 }
 
               let!(:user_statuses) do
                 # register statuses from newest to oldest
@@ -435,7 +435,7 @@ RSpec.describe "Users::Statuses", type: :request do
                 end
               end
 
-              it "returns at most 10 of the statuses" do
+              it "returns at most 25 of the statuses" do
                 subject
                 expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*user_statuses.first(expected_per_page).map(&:as_json))
               end
