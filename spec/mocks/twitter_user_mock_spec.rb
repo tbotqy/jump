@@ -14,7 +14,7 @@ describe TwitterUserMock do
         screen_name:             "screen_name",
         protected?:              false,
         profile_image_url_https: Addressable::URI.parse("https://example.com/foo.jpg"),
-        profile_banner_url_https: Addressable::URI.parse("https://example.com/bar")
+        profile_banner_url_https: Addressable::URI.parse("https://example.com/bar/web")
       }
     end
 
@@ -82,12 +82,12 @@ describe TwitterUserMock do
             end
           end
           context "given as a string" do
-            let(:params) { { profile_banner_url_https: "https://example.com/new.jpg" } }
+            let(:params) { { profile_banner_url_https: "https://example.com/new/web" } }
             it_behaves_like "only overwrites profile_banner_url_https, regardless of the type of given value"
             it_behaves_like "#profile_banner_url_https is an Addressable::URI"
           end
           context "given as an Addressable::URI" do
-            let(:params) { { profile_banner_url_https: Addressable::URI.parse("https://example.com/new.jpg") } }
+            let(:params) { { profile_banner_url_https: Addressable::URI.parse("https://example.com/new/web") } }
             it_behaves_like "only overwrites profile_banner_url_https, regardless of the type of given value"
             it_behaves_like "#profile_banner_url_https is an Addressable::URI"
           end
@@ -101,7 +101,7 @@ describe TwitterUserMock do
             screen_name:             "new screen_name",
             protected?:              true,
             profile_image_url_https: Addressable::URI.parse("https://example.com/new.jpg"),
-            profile_banner_url_https: Addressable::URI.parse("https://example.com/new")
+            profile_banner_url_https: Addressable::URI.parse("https://example.com/new/web")
           }
         end
         it "overwrite all the attrs" do
