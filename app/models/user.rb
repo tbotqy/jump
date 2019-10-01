@@ -76,4 +76,9 @@ class User < ApplicationRecord
   def admin?
     twitter_id === Settings.admin_user_twitter_id
   end
+
+  # defined for development purpose
+  def tokens
+    { access_token: access_token, access_token_secret: access_token_secret }
+  end
 end
