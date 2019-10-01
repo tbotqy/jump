@@ -183,12 +183,12 @@ describe CollectUserStatusesService do
           let(:day)     { nil }
           let(:page)    { nil }
           context "user's statuses are public" do
-            let!(:public_statuses) { create_list(:status, 2, private_flag: false, user: user) }
+            let!(:public_statuses) { create_list(:status, 2, protected_flag: false, user: user) }
             it { is_expected.to contain_exactly(*public_statuses) }
           end
           context "user's statuses are private" do
-            let!(:private_statuses) { create_list(:status, 2, private_flag: true, user: user) }
-            it { is_expected.to contain_exactly(*private_statuses) }
+            let!(:protected_statuses) { create_list(:status, 2, protected_flag: true, user: user) }
+            it { is_expected.to contain_exactly(*protected_statuses) }
           end
         end
 

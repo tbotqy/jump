@@ -45,10 +45,10 @@ RSpec.describe GenerateSitemapJob, type: :job do
 
       describe "includes all the urls of public_timeline" do
         let(:public_tweeted_dates)  { [1, 2].map { |day| Time.local(2019, 1, day) } }
-        let(:private_tweeted_dates) { [3, 4].map { |day| Time.local(2019, 1, day) } }
+        let(:protected_tweeted_dates) { [3, 4].map { |day| Time.local(2019, 1, day) } }
         before do
-          public_tweeted_dates.each  { |public_tweeted_date|  create(:status, private_flag: false, tweeted_at: public_tweeted_date.to_i) }
-          private_tweeted_dates.each { |private_tweeted_date| create(:status, private_flag: true,  tweeted_at: private_tweeted_date.to_i) }
+          public_tweeted_dates.each  { |public_tweeted_date|  create(:status, protected_flag: false, tweeted_at: public_tweeted_date.to_i) }
+          protected_tweeted_dates.each { |protected_tweeted_date| create(:status, protected_flag: true, tweeted_at: protected_tweeted_date.to_i) }
         end
 
         it "includes the paths of the tweeted day of public statuses" do
@@ -59,8 +59,8 @@ RSpec.describe GenerateSitemapJob, type: :job do
         end
         it "doesn't include the paths of the tweeted day of private statuses" do
           subject.call
-          private_tweeted_dates.each do |private_tweeted_date|
-            expect(File.read(sitemap_xml_path)).not_to include("<loc>#{Settings.frontend_url}/public_timeline#{private_tweeted_date.strftime(date_path_format)}</loc>")
+          protected_tweeted_dates.each do |protected_tweeted_date|
+            expect(File.read(sitemap_xml_path)).not_to include("<loc>#{Settings.frontend_url}/public_timeline#{protected_tweeted_date.strftime(date_path_format)}</loc>")
           end
         end
       end

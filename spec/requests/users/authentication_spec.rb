@@ -81,7 +81,7 @@ RSpec.describe "User authentication", type: :request do
                 let!(:user) { create(:user, protected_flag: before_protected_flag) }
                 let!(:user_statuses) do
                   before_updated_at = Time.current - 1.day
-                  create_list(:status, 3, user: user, private_flag: before_protected_flag, created_at: before_updated_at, updated_at: before_updated_at)
+                  create_list(:status, 3, user: user, protected_flag: before_protected_flag, created_at: before_updated_at, updated_at: before_updated_at)
                 end
 
                 before do
@@ -92,7 +92,7 @@ RSpec.describe "User authentication", type: :request do
                 after { travel_back }
 
                 it "makes all the user's statuses protected" do
-                  is_expected.to change { Status.where(user: user).pluck(:private_flag).uniq.first }.to(!before_protected_flag)
+                  is_expected.to change { Status.where(user: user).pluck(:protected_flag).uniq.first }.to(!before_protected_flag)
                 end
                 it "updates timestamp of all the user's statuses" do
                   is_expected.to change { Status.where(user: user).pluck(:updated_at).uniq.first }.to(Time.current)

@@ -10,7 +10,7 @@ RSpec.describe "Users::TweetedDates", type: :request do
         let!(:user)   { create(:user, protected_flag: true) }
         let(:user_id) { user.id }
         before do
-          create(:status, user_id: user_id, private_flag: true)
+          create(:status, user_id: user_id, protected_flag: true)
           subject
         end
         it_behaves_like "unauthenticated request"
@@ -19,7 +19,7 @@ RSpec.describe "Users::TweetedDates", type: :request do
         let!(:user)   { create(:user, protected_flag: false) }
         let(:user_id) { user.id }
         before do
-          create(:status, user_id: user_id, private_flag: false)
+          create(:status, user_id: user_id, protected_flag: false)
           subject
         end
         it_behaves_like "respond with status code", :ok
@@ -42,7 +42,7 @@ RSpec.describe "Users::TweetedDates", type: :request do
             let!(:another_user)   { create(:user, protected_flag: true) }
             let!(:user_id)        { another_user.id }
             before do
-              create(:status, user_id: user_id, private_flag: true)
+              create(:status, user_id: user_id, protected_flag: true)
               sign_in signed_in_user
               subject
             end
@@ -53,7 +53,7 @@ RSpec.describe "Users::TweetedDates", type: :request do
             let!(:another_user)   { create(:user, protected_flag: false) }
             let!(:user_id)        { another_user.id }
             before do
-              create(:status, user_id: user_id, private_flag: false)
+              create(:status, user_id: user_id, protected_flag: false)
               sign_in signed_in_user
               subject
             end
@@ -179,8 +179,8 @@ RSpec.describe "Users::TweetedDates", type: :request do
 
             describe "both public and private statuses are included" do
               before do
-                create(:status, private_flag: true,  tweeted_at: Time.zone.local(2019, 12, 31).to_i, user: user)
-                create(:status, private_flag: false, tweeted_at: Time.zone.local(2019, 12, 30).to_i, user: user)
+                create(:status, protected_flag: true,  tweeted_at: Time.zone.local(2019, 12, 31).to_i, user: user)
+                create(:status, protected_flag: false, tweeted_at: Time.zone.local(2019, 12, 30).to_i, user: user)
               end
               it do
                 subject

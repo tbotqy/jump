@@ -44,7 +44,7 @@ class RegisterTweetService
           source:                  tweet.source,
           text:                    tweet.attrs[:full_text],
           possibly_sensitive:      tweet.possibly_sensitive?,
-          private_flag:            tweet.user.protected?,
+          protected_flag:          tweet.user.protected?,
           is_retweet:              tweet.retweet?
         }
         if tweet.retweet?

@@ -100,8 +100,8 @@ RSpec.describe "TweetedDates", type: :request do
 
       describe "only public statuses are included" do
         before do
-          create(:status, private_flag: true,  tweeted_at: Time.zone.local(2019, 12, 31).to_i)
-          create(:status, private_flag: false, tweeted_at: Time.zone.local(2019, 12, 30).to_i)
+          create(:status, protected_flag: true,  tweeted_at: Time.zone.local(2019, 12, 31).to_i)
+          create(:status, protected_flag: false, tweeted_at: Time.zone.local(2019, 12, 30).to_i)
         end
         it do
           subject

@@ -40,7 +40,7 @@ class RenewUserProfileService
     end
 
     def update_user_statuses!
-      user.statuses.update_all(private_flag: @user_info.protected?, updated_at: Time.current)
+      user.statuses.update_all(protected_flag: @user_info.protected?, updated_at: Time.current)
     end
 
     def user
