@@ -44,11 +44,9 @@ const styles = theme => ({
   }
 });
 
-const bannerSize = "ipad_retina";
-
 const UserProfile = ({ name, screen_name, avatar_url, profile_banner_url, protected_flag, classes }) => (
   <Card className={ classes.card }>
-    <CardMedia image={ `${profile_banner_url}/${bannerSize}` } className={ classes.cardMedia }>
+    <CardMedia image={ profile_banner_url } className={ classes.cardMedia }>
       <IconButton href={ `https://twitter.com/${screen_name}` } target="_blank" className={ classes.avatarWrapper }>
         <Avatar src={ avatar_url.replace("_normal", "") } className={ classes.avatar } />
       </IconButton>

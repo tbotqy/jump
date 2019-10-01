@@ -34,7 +34,7 @@ describe RenewUserProfileService do
           let(:initial_screen_name)    { "initial user screen_name" }
           let(:initial_protected_flag) { false }
           let(:initial_avatar_url)     { "https://old.com/old.jpg" }
-          let(:initial_profile_banner_url) { "https://old.com/old-banner/" }
+          let(:initial_profile_banner_url) { "https://old.com/old-banner/ipad_retina" }
           let!(:user) do
             create(:user,
               name:           initial_name,
@@ -46,17 +46,19 @@ describe RenewUserProfileService do
           end
           let!(:user_statuses) { create_list(:status, 3, user: user, protected_flag: initial_protected_flag, updated_at: Time.zone.at(1) - 1.day) }
           let(:user_id) { user.id }
+
+          let(:profile_banner_url_in_api_response) { "https://new.com/new-banner/ipad_retina" }
           let(:api_response) do
             twitter_user_mock(
               name:                    "new name",
               screen_name:             "new screen_name",
               profile_image_url_https: "https://new.com/new.jpg",
-              profile_banner_url_https: "https://new.com/new-banner",
               protected?:              !initial_protected_flag
-            )
+            ) # profile_banner_url_https is mocked in before's block
           end
           before do
             travel_to(Time.current)
+            allow(api_response).to receive(:profile_banner_url_https).with(:ipad_retina).and_return(profile_banner_url_in_api_response)
             allow(user_twitter_client).to receive(:twitter_user).and_return(api_response)
           end
           after { travel_back }
@@ -78,7 +80,16 @@ describe RenewUserProfileService do
               it { is_expected.to change { User.find(user_id).screen_name    }.from(initial_screen_name)   .to(api_response.screen_name) }
               it { is_expected.to change { User.find(user_id).protected_flag }.from(initial_protected_flag).to(api_response.protected?) }
               it { is_expected.to change { User.find(user_id).avatar_url     }.from(initial_avatar_url)    .to(api_response.profile_image_url_https.to_s) }
-              it { is_expected.to change { User.find(user_id).profile_banner_url }.from(initial_profile_banner_url) .to(api_response.profile_banner_url_https.to_s) }
+              describe "#profile_banner_url, that is nullable" do
+                context "present" do
+                  let(:profile_banner_url_in_api_response) { "https://new.com/new-banner/ipad_retina" }
+                  it { is_expected.to change { User.find(user_id).profile_banner_url }.from(initial_profile_banner_url).to(profile_banner_url_in_api_response) }
+                end
+                context "blank" do
+                  let(:profile_banner_url_in_api_response) { nil }
+                  it { is_expected.to change { User.find(user_id).profile_banner_url }.from(initial_profile_banner_url).to(profile_banner_url_in_api_response) }
+                end
+              end
             end
             it "updates the user's statuses' protected_flag with the one in API response" do
               is_expected.to change { User.find(user_id).statuses.pluck(:protected_flag).uniq.first }.from(initial_protected_flag).to(api_response.protected?)
