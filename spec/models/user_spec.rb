@@ -327,4 +327,12 @@ RSpec.describe User, type: :model do
       it { is_expected.to eq false }
     end
   end
+
+  describe "#tokens" do
+    subject { user.tokens }
+    let(:access_token) { "access_token" }
+    let(:access_token_secret) { "access_token_secret" }
+    let(:user) { create(:user, access_token: access_token, access_token_secret: access_token_secret) }
+    it { is_expected.to eq({ access_token: access_token, access_token_secret: access_token_secret }) }
+  end
 end
