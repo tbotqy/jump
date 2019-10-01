@@ -44,7 +44,7 @@ describe RenewUserProfileService do
               protected_flag: initial_protected_flag
             )
           end
-          let!(:user_statuses) { create_list(:status, 3, user: user, private_flag: initial_protected_flag, updated_at: Time.zone.at(1) - 1.day) }
+          let!(:user_statuses) { create_list(:status, 3, user: user, protected_flag: initial_protected_flag, updated_at: Time.zone.at(1) - 1.day) }
           let(:user_id) { user.id }
           let(:api_response) do
             twitter_user_mock(
@@ -64,7 +64,7 @@ describe RenewUserProfileService do
           context "fails to update the user's statuses' protected flag" do
             before do
               allow_any_instance_of(ActiveRecord::Associations::CollectionProxy).to receive(:update_all)
-                .with(private_flag: api_response.protected?, updated_at: Time.current)
+                .with(protected_flag: api_response.protected?, updated_at: Time.current)
                 .and_raise(ActiveRecord::RecordInvalid)
             end
             it "doesn't update the user" do
@@ -80,8 +80,8 @@ describe RenewUserProfileService do
               it { is_expected.to change { User.find(user_id).avatar_url     }.from(initial_avatar_url)    .to(api_response.profile_image_url_https.to_s) }
               it { is_expected.to change { User.find(user_id).profile_banner_url }.from(initial_profile_banner_url) .to(api_response.profile_banner_url_https.to_s) }
             end
-            it "updates the user's statuses' private_flag with the one in API response" do
-              is_expected.to change { User.find(user_id).statuses.pluck(:private_flag).uniq.first }.from(initial_protected_flag).to(api_response.protected?)
+            it "updates the user's statuses' protected_flag with the one in API response" do
+              is_expected.to change { User.find(user_id).statuses.pluck(:protected_flag).uniq.first }.from(initial_protected_flag).to(api_response.protected?)
             end
             it "updates the user's statuses' updated_at" do
               is_expected.to change { User.find(user_id).statuses.pluck(:updated_at).uniq.first }.to(Time.current)

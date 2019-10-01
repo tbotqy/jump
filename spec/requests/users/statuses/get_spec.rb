@@ -14,7 +14,7 @@ RSpec.describe "Users::Statuses", type: :request do
         let(:day)      { nil }
         let(:page)     { nil }
         before do
-          create(:status, user_id: user_id, private_flag: true)
+          create(:status, user_id: user_id, protected_flag: true)
           subject
         end
         it_behaves_like "unauthenticated request"
@@ -26,7 +26,7 @@ RSpec.describe "Users::Statuses", type: :request do
         let(:day)      { nil }
         let(:page)     { nil }
         before do
-          create(:status, user_id: user_id, private_flag: false)
+          create(:status, user_id: user_id, protected_flag: false)
           subject
         end
         it_behaves_like "respond with status code", :ok
@@ -57,7 +57,7 @@ RSpec.describe "Users::Statuses", type: :request do
             let(:day)   { nil }
             let(:page)  { nil }
             before do
-              create(:status, user_id: user_id, private_flag: true)
+              create(:status, user_id: user_id, protected_flag: true)
               sign_in signed_in_user
               subject
             end
@@ -72,7 +72,7 @@ RSpec.describe "Users::Statuses", type: :request do
             let(:day)   { nil }
             let(:page)  { nil }
             before do
-              create(:status, user_id: user_id, private_flag: false)
+              create(:status, user_id: user_id, protected_flag: false)
               sign_in signed_in_user
               subject
             end
@@ -399,14 +399,14 @@ RSpec.describe "Users::Statuses", type: :request do
               before { sign_in user }
 
               context "user's statuses are public" do
-                let!(:public_statuses) { create_list(:status, 2, private_flag: false, user: user) }
+                let!(:public_statuses) { create_list(:status, 2, protected_flag: false, user: user) }
                 it do
                   subject
                   expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*public_statuses.map(&:as_json))
                 end
               end
               context "user's statuses are private" do
-                let!(:private_statuses) { create_list(:status, 2, private_flag: true, user: user) }
+                let!(:private_statuses) { create_list(:status, 2, protected_flag: true, user: user) }
                 it do
                   subject
                   expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*private_statuses.map(&:as_json))

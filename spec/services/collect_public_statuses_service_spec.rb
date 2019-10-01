@@ -22,17 +22,17 @@ describe CollectPublicStatusesService do
         shared_context "there are 3 public statuses tweeted around the boundary_time" do
           let(:boundary_unixtime) { boundary_time.to_i }
           let!(:status_tweeted_before_boundary) do
-            status = create(:status, text: "to be ordered as 2nd item", private_flag: false, tweeted_at: boundary_unixtime - 1)
+            status = create(:status, text: "to be ordered as 2nd item", protected_flag: false, tweeted_at: boundary_unixtime - 1)
             status
           end
           let!(:status_tweeted_at_boundary) do
             # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
             id = status_tweeted_before_boundary.id + 1
-            status = create(:status, id: id, text: "to be ordered as 1st item", private_flag: false, tweeted_at: boundary_unixtime)
+            status = create(:status, id: id, text: "to be ordered as 1st item", protected_flag: false, tweeted_at: boundary_unixtime)
             status
           end
           let!(:status_tweeted_after_boundary) do
-            status = create(:status, text: "to be filtered", private_flag: false, tweeted_at: boundary_unixtime + 1)
+            status = create(:status, text: "to be filtered", protected_flag: false, tweeted_at: boundary_unixtime + 1)
             status
           end
         end
@@ -93,7 +93,7 @@ describe CollectPublicStatusesService do
           # To test if the sort is applied, registering in random order, by using #shuffle.
           (1..15).to_a.shuffle.each do |seconds_ago|
             tweeted_at = (Time.zone.local(year, month, day).end_of_day - seconds_ago.seconds).to_i
-            create(:status, text: "#{seconds_ago}th-new status", private_flag: false, tweeted_at: tweeted_at)
+            create(:status, text: "#{seconds_ago}th-new status", protected_flag: false, tweeted_at: tweeted_at)
           end
         end
 
@@ -138,15 +138,15 @@ describe CollectPublicStatusesService do
         end
       end
 
-      describe "filtering by private_flag" do
+      describe "filtering by protected_flag" do
         let(:year)  { 2019 }
         let(:month) { 3 }
         let(:day)   { 20 }
         let(:page)  { 1 }
 
         let(:specified_time)    { Time.zone.local(year, month, day).end_of_day }
-        let!(:public_statuses)  { (1..3).to_a.map { |i| create(:status, private_flag: false, tweeted_at: specified_time.to_i, tweet_id: i) } }
-        let!(:private_statuses) { (4..6).to_a.map { |i| create(:status, private_flag: true,  tweeted_at: specified_time.to_i, tweet_id: i) } }
+        let!(:public_statuses)  { (1..3).to_a.map { |i| create(:status, protected_flag: false, tweeted_at: specified_time.to_i, tweet_id: i) } }
+        let!(:private_statuses) { (4..6).to_a.map { |i| create(:status, protected_flag: true,  tweeted_at: specified_time.to_i, tweet_id: i) } }
 
         it "only returns public statuses" do
           is_expected.to contain_exactly(*public_statuses)

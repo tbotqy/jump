@@ -13,7 +13,7 @@ RSpec.describe "Statuses", type: :request do
         let(:day)   { nil }
         let(:page)  { nil }
         before do
-          create_list(:status, 2, private_flag: false)
+          create_list(:status, 2, protected_flag: false)
           subject
         end
         it_behaves_like "respond with status code", :ok
@@ -33,17 +33,17 @@ RSpec.describe "Statuses", type: :request do
         shared_context "there are 3 public statuses tweeted around the boundary_time" do
           let(:boundary_unixtime) { boundary_time.to_i }
           let!(:status_tweeted_before_boundary) do
-            status = create(:status, text: "to be ordered as 2nd item", private_flag: false, tweeted_at: boundary_unixtime - 1)
+            status = create(:status, text: "to be ordered as 2nd item", protected_flag: false, tweeted_at: boundary_unixtime - 1)
             status
           end
           let!(:status_tweeted_at_boundary) do
             # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
             id = status_tweeted_before_boundary.id + 1
-            status = create(:status, id: id, text: "to be ordered as 1st item", private_flag: false, tweeted_at: boundary_unixtime)
+            status = create(:status, id: id, text: "to be ordered as 1st item", protected_flag: false, tweeted_at: boundary_unixtime)
             status
           end
           let!(:status_tweeted_after_boundary) do
-            status = create(:status, text: "to be filtered", private_flag: false, tweeted_at: boundary_unixtime + 1)
+            status = create(:status, text: "to be filtered", protected_flag: false, tweeted_at: boundary_unixtime + 1)
             status
           end
         end
@@ -299,8 +299,8 @@ RSpec.describe "Statuses", type: :request do
         let(:day)   { nil }
         let(:page)  { nil }
 
-        let!(:public_statuses)  { create_list(:status, 2, private_flag: false) }
-        let!(:private_statuses) { create_list(:status, 2, private_flag: true) }
+        let!(:public_statuses)  { create_list(:status, 2, protected_flag: false) }
+        let!(:private_statuses) { create_list(:status, 2, protected_flag: true) }
 
         it do
           subject

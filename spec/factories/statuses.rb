@@ -20,7 +20,7 @@ FactoryBot.define do
     rt_source { nil }
     rt_created_at { nil }
     possibly_sensitive { false }
-    private_flag { false }
+    protected_flag { false }
     tweet_id_reversed { -1 * tweet_id }
     tweeted_at_reversed { -1 * tweeted_at }
     tweeted_on { Time.zone.at(tweeted_at).beginning_of_day }

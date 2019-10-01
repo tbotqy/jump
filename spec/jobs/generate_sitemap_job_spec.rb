@@ -47,8 +47,8 @@ RSpec.describe GenerateSitemapJob, type: :job do
         let(:public_tweeted_dates)  { [1, 2].map { |day| Time.local(2019, 1, day) } }
         let(:private_tweeted_dates) { [3, 4].map { |day| Time.local(2019, 1, day) } }
         before do
-          public_tweeted_dates.each  { |public_tweeted_date|  create(:status, private_flag: false, tweeted_at: public_tweeted_date.to_i) }
-          private_tweeted_dates.each { |private_tweeted_date| create(:status, private_flag: true,  tweeted_at: private_tweeted_date.to_i) }
+          public_tweeted_dates.each  { |public_tweeted_date|  create(:status, protected_flag: false, tweeted_at: public_tweeted_date.to_i) }
+          private_tweeted_dates.each { |private_tweeted_date| create(:status, protected_flag: true,  tweeted_at: private_tweeted_date.to_i) }
         end
 
         it "includes the paths of the tweeted day of public statuses" do

@@ -96,8 +96,8 @@ RSpec.describe Status, type: :model do
     describe "#possibly_sensitive" do
       include_examples "should validate before_type_cast is a boolean", :status, :possibly_sensitive
     end
-    describe "#private_flag" do
-      include_examples "should validate before_type_cast is a boolean", :status, :private_flag
+    describe "#protected_flag" do
+      include_examples "should validate before_type_cast is a boolean", :status, :protected_flag
     end
     describe "#tweeted_at" do
       it { should validate_presence_of(:tweeted_at) }
@@ -119,13 +119,13 @@ RSpec.describe Status, type: :model do
   describe ".not_private" do
     subject { Status.not_private }
     context "no record matches" do
-      before { create_list(:status, 3, private_flag: true) }
+      before { create_list(:status, 3, protected_flag: true) }
       it { is_expected.to be_none }
       it_behaves_like "a scope"
     end
     context "some record matches" do
-      let!(:public_statuses)  { create_list(:status, 3, private_flag: false) }
-      let!(:private_statuses) { create_list(:status, 3, private_flag: true) }
+      let!(:public_statuses)  { create_list(:status, 3, protected_flag: false) }
+      let!(:private_statuses) { create_list(:status, 3, protected_flag: true) }
       it { is_expected.to contain_exactly(*public_statuses) }
       it_behaves_like "a scope"
     end

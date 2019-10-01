@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_29_091818) do
+ActiveRecord::Schema.define(version: 2019_10_01_080630) do
 
   create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -60,17 +60,17 @@ ActiveRecord::Schema.define(version: 2019_09_29_091818) do
     t.string "rt_source"
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive", null: false
-    t.boolean "private_flag", null: false
+    t.boolean "protected_flag", null: false
     t.integer "tweeted_at", null: false
     t.bigint "tweet_id_reversed", null: false
     t.integer "tweeted_at_reversed", null: false
     t.datetime "tweeted_on", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["private_flag", "tweet_id_reversed"], name: "index_statuses_on_private_flag_and_tweet_id_reversed"
-    t.index ["private_flag", "tweeted_at_reversed", "tweet_id_reversed"], name: "index_statuses_for_public_timeline"
+    t.index ["protected_flag", "tweet_id_reversed"], name: "index_statuses_on_protected_flag_and_tweet_id_reversed"
+    t.index ["protected_flag", "tweeted_at_reversed", "tweet_id_reversed"], name: "index_statuses_for_public_timeline"
     t.index ["tweet_id"], name: "index_statuses_on_tweet_id", unique: true
-    t.index ["tweeted_on", "private_flag"], name: "index_statuses_on_tweeted_on_and_private_flag"
+    t.index ["tweeted_on", "protected_flag"], name: "index_statuses_on_tweeted_on_and_protected_flag"
     t.index ["tweeted_on"], name: "index_statuses_on_tweeted_on"
     t.index ["user_id"], name: "index_statuses_on_user_id"
   end

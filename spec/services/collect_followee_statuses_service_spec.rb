@@ -233,11 +233,11 @@ describe CollectFolloweeStatusesService do
             end
 
             context "user's followee's statuses are public" do
-              let!(:public_followee_statuses) { create_list(:status, 2, private_flag: false, user: followee) }
+              let!(:public_followee_statuses) { create_list(:status, 2, protected_flag: false, user: followee) }
               it { is_expected.to contain_exactly(*public_followee_statuses) }
             end
             context "user's followee's statuses are private" do
-              let!(:private_followee_statuses) { create_list(:status, 2, private_flag: true, user: followee) }
+              let!(:private_followee_statuses) { create_list(:status, 2, protected_flag: true, user: followee) }
               it { is_expected.to contain_exactly(*private_followee_statuses) }
             end
           end

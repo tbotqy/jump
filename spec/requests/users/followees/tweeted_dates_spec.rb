@@ -240,8 +240,8 @@ RSpec.describe "Users::Followees::TweetedDates", type: :request do
                 end
 
                 before do
-                  create(:status, private_flag: true,  tweeted_at: Time.zone.local(2019, 12, 31).to_i, user: followee)
-                  create(:status, private_flag: false, tweeted_at: Time.zone.local(2019, 12, 30).to_i, user: followee)
+                  create(:status, protected_flag: true,  tweeted_at: Time.zone.local(2019, 12, 31).to_i, user: followee)
+                  create(:status, protected_flag: false, tweeted_at: Time.zone.local(2019, 12, 30).to_i, user: followee)
                 end
                 it do
                   subject
