@@ -91,7 +91,7 @@ describe CollectPublicStatusesService do
         before do
           # Register the statuses tweeted in ending of the specified date.
           # To test if the sort is applied, registering in random order, by using #shuffle.
-          (1..15).to_a.shuffle.each do |seconds_ago|
+          (1..30).to_a.shuffle.each do |seconds_ago|
             tweeted_at = (Time.zone.local(year, month, day).end_of_day - seconds_ago.seconds).to_i
             create(:status, text: "#{seconds_ago}th-new status", protected_flag: false, tweeted_at: tweeted_at)
           end
@@ -104,13 +104,13 @@ describe CollectPublicStatusesService do
           context "page 1" do
             let(:page) { 1 }
             describe "number of return values" do
-              it "returns as much as 10 (the maximum number for a page) statuses" do
-                expect(subject.count).to eq 10
+              it "returns as much as 25 (the maximum number for a page) statuses" do
+                expect(subject.count).to eq 25
               end
             end
             describe "sort under the pagination" do
-              it "includes first 10 statuses, ordered in new-tweet-first" do
-                expected_status_texts_with_expected_order = (1..10).map { |nth| "#{nth}th-new status" }
+              it "includes first 25 statuses, ordered in new-tweet-first" do
+                expected_status_texts_with_expected_order = (1..25).map { |nth| "#{nth}th-new status" }
                 expect(subject.pluck(:text)).to eq expected_status_texts_with_expected_order
               end
             end
@@ -124,7 +124,7 @@ describe CollectPublicStatusesService do
             end
             describe "sort under the pagination" do
               it "includes last 5 statuses, ordered in new-tweet-first" do
-                expected_status_texts_with_expected_order = (11..15).map { |nth| "#{nth}th-new status" }
+                expected_status_texts_with_expected_order = (26..30).map { |nth| "#{nth}th-new status" }
                 expect(subject.pluck(:text)).to eq expected_status_texts_with_expected_order
               end
             end
@@ -159,7 +159,7 @@ describe CollectPublicStatusesService do
         let(:day)     { nil }
         let(:page)    { nil }
 
-        let(:expected_per_page) { 10 }
+        let(:expected_per_page) { 25 }
 
         let!(:statuses) do
           # register statuses from newest to oldest
@@ -170,7 +170,7 @@ describe CollectPublicStatusesService do
           end
         end
 
-        it "returns at most 10 of the statuses" do
+        it "returns at most 25 of the statuses" do
           is_expected.to contain_exactly(*statuses.first(expected_per_page))
         end
       end
