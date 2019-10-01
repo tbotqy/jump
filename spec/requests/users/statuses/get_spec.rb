@@ -406,10 +406,10 @@ RSpec.describe "Users::Statuses", type: :request do
                 end
               end
               context "user's statuses are private" do
-                let!(:private_statuses) { create_list(:status, 2, protected_flag: true, user: user) }
+                let!(:protected_statuses) { create_list(:status, 2, protected_flag: true, user: user) }
                 it do
                   subject
-                  expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*private_statuses.map(&:as_json))
+                  expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*protected_statuses.map(&:as_json))
                 end
               end
             end

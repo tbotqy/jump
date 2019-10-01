@@ -457,10 +457,10 @@ RSpec.describe "Users::Followees::FolloweeStatuses", type: :request do
                   end
                 end
                 context "user's followee's statuses are private" do
-                  let!(:private_followee_statuses) { create_list(:status, 2, protected_flag: true, user: followee) }
+                  let!(:protected_followee_statuses) { create_list(:status, 2, protected_flag: true, user: followee) }
                   it do
                     subject
-                    expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*private_followee_statuses.map(&:as_json))
+                    expect(response.parsed_body.map(&:deep_symbolize_keys)).to contain_exactly(*protected_followee_statuses.map(&:as_json))
                   end
                 end
               end

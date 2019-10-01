@@ -124,8 +124,8 @@ RSpec.describe Status, type: :model do
       it_behaves_like "a scope"
     end
     context "some record matches" do
-      let!(:public_statuses)  { create_list(:status, 3, protected_flag: false) }
-      let!(:private_statuses) { create_list(:status, 3, protected_flag: true) }
+      let!(:public_statuses)    { create_list(:status, 3, protected_flag: false) }
+      let!(:protected_statuses) { create_list(:status, 3, protected_flag: true) }
       it { is_expected.to contain_exactly(*public_statuses) }
       it_behaves_like "a scope"
     end

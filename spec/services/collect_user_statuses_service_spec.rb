@@ -187,8 +187,8 @@ describe CollectUserStatusesService do
             it { is_expected.to contain_exactly(*public_statuses) }
           end
           context "user's statuses are private" do
-            let!(:private_statuses) { create_list(:status, 2, protected_flag: true, user: user) }
-            it { is_expected.to contain_exactly(*private_statuses) }
+            let!(:protected_statuses) { create_list(:status, 2, protected_flag: true, user: user) }
+            it { is_expected.to contain_exactly(*protected_statuses) }
           end
         end
 

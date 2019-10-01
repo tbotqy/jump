@@ -146,7 +146,7 @@ describe CollectPublicStatusesService do
 
         let(:specified_time)    { Time.zone.local(year, month, day).end_of_day }
         let!(:public_statuses)  { (1..3).to_a.map { |i| create(:status, protected_flag: false, tweeted_at: specified_time.to_i, tweet_id: i) } }
-        let!(:private_statuses) { (4..6).to_a.map { |i| create(:status, protected_flag: true,  tweeted_at: specified_time.to_i, tweet_id: i) } }
+        let!(:protected_statuses) { (4..6).to_a.map { |i| create(:status, protected_flag: true,  tweeted_at: specified_time.to_i, tweet_id: i) } }
 
         it "only returns public statuses" do
           is_expected.to contain_exactly(*public_statuses)

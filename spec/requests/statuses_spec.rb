@@ -299,8 +299,8 @@ RSpec.describe "Statuses", type: :request do
         let(:day)   { nil }
         let(:page)  { nil }
 
-        let!(:public_statuses)  { create_list(:status, 2, protected_flag: false) }
-        let!(:private_statuses) { create_list(:status, 2, protected_flag: true) }
+        let!(:public_statuses)    { create_list(:status, 2, protected_flag: false) }
+        let!(:protected_statuses) { create_list(:status, 2, protected_flag: true) }
 
         it do
           subject
