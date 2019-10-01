@@ -1,9 +1,10 @@
 import React from "react";
 import ErrorMessage from "./ErrorMessage";
+import { API_ERROR_CODE_NOT_FOUND } from "../utils/api";
 
 const errorMessageByApiErrorCode = apiErrorCode => {
   switch(apiErrorCode) {
-  case 404:
+  case API_ERROR_CODE_NOT_FOUND:
     return "データが見つかりませんでした";
   default:
     return "サーバーエラーが発生しました。時間をおいて再度お試し願います。";
