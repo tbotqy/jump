@@ -18,7 +18,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import formatDateString from "../utils/formatDateString";
 import linkifyTweetText from "../utils/linkifyTweetText";
-import TwitterLogo from "./../assets/twitter/logo.svg";
+import TwitterIcon from "./TwitterIcon";
 
 const styles = (theme) => ({
   card: {
@@ -34,7 +34,8 @@ const styles = (theme) => ({
     whiteSpace: "pre-line"
   },
   logo: {
-    marginTop: theme.spacing(1)
+    marginTop:   theme.spacing(3),
+    marginRight: theme.spacing(2)
   },
   tweetedAt: {
     padding: "0 12px",
@@ -84,11 +85,7 @@ const TweetCard = props => {
             target="_blank"
           >{ `@${screenName}` }</Link>
         }
-        action={
-          <IconButton disabled>
-            <Avatar className={ classes.logo } src={ TwitterLogo } />
-          </IconButton>
-        }
+        action={ <TwitterIcon className={ classes.logo } /> }
       />
 
       <CardContent>

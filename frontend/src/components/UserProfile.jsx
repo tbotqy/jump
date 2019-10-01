@@ -9,7 +9,7 @@ import {
   Link
 } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/Lock";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import TwitterIcon from "./TwitterIcon";
 
 const styles = theme => ({
   card: {
@@ -69,7 +69,7 @@ const UserProfile = ({ name, screen_name, avatar_url, profile_banner_url, protec
       }
       subheader={
         <>
-          <TwitterIcon htmlColor="#1DA1F2" className={ classes.twitterIcon } />
+          <TwitterIcon className={ classes.twitterIcon } />
           <Link
             color="inherit"
             href={ `https://twitter.com/${screen_name}` }
