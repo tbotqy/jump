@@ -116,8 +116,8 @@ RSpec.describe Status, type: :model do
     end
   end
 
-  describe ".not_private" do
-    subject { Status.not_private }
+  describe ".not_protected" do
+    subject { Status.not_protected }
     context "no record matches" do
       before { create_list(:status, 3, protected_flag: true) }
       it { is_expected.to be_none }

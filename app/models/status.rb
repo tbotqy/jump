@@ -38,7 +38,7 @@ class Status < ApplicationRecord
   validates :tweeted_at_reversed,     presence: true, numericality: { only_integer: true, less_than_or_equal_to: 0 }
   validates :tweeted_on,              presence: true
 
-  scope :not_private,               -> { where(protected_flag: false) }
+  scope :not_protected,             -> { where(protected_flag: false) }
   scope :order_by_newest_to_oldest, -> { order(tweeted_at_reversed: :asc, tweet_id_reversed: :asc) }
   scope :tweeted_at_or_before,      -> (time) do
     boundary = time.to_i

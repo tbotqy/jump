@@ -13,7 +13,7 @@ class GenerateSitemapJob < ApplicationJob
       end
 
       # add urls of public_timeline
-      public_tweeted_dates = Status.not_private.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
+      public_tweeted_dates = Status.not_protected.distinct(:tweeted_on).order(tweeted_on: :desc).pluck(:tweeted_on)
       format = "/%Y/%-1m/%-1d"
       date_params = public_tweeted_dates.map { |date| date.strftime(format) }
       date_params.each do |date_param|
