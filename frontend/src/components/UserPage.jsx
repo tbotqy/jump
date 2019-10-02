@@ -13,6 +13,7 @@ import Timeline from "../containers/TimelineContainer";
 import Head from "./Head";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import HeadNav from "../containers/HeadNavContainer";
+import HeadProgressBar from "../containers/HeadProgressBarContainer";
 import UserProfile from "../components/UserProfile";
 import FullPageLoading from "./FullPageLoading";
 import Footer from "./Footer";
@@ -23,8 +24,8 @@ import {
 } from "@material-ui/core";
 
 const styles = theme => ({
-  profileContainer: {
-    paddingTop: theme.spacing(2.5)
+  container: {
+    paddingTop: theme.spacing(2)
   },
   message: {
     paddingTop: theme.spacing(10),
@@ -69,29 +70,20 @@ class UserPage extends React.Component {
         <Head title={ this.title() } />
         <HeadNav />
         <ApiErrorBoundary>
-          { this.state.currentUser &&
-            <Container className={ this.props.classes.profileContainer }>
-              <Grid container justify="center">
-                <Grid item xs={ 12 } md={ 9 }  >
-                  <UserProfile { ...this.state.currentUser } />
-                </Grid>
-              </Grid>
-            </Container>
-          }
-          { !this.state.currentUser ?
-            <FullPageLoading />
-            : !this.state.showMessage ?
-              <Timeline tweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id).bind(this) } />
-              : (
-              <>
-                <Grid container direction="column" alignItems="center" className={ this.props.classes.message }>
-                  <Grid item>
-                    <Typography variant="h4" component="h1" color="textSecondary">{ this.state.message }</Typography>
+          <HeadProgressBar />
+          {
+            !this.state.currentUser? (
+              <FullPageLoading />
+            ) : (
+              <Container className={ this.props.classes.container }>
+                <Grid container justify="center">
+                  <Grid item xs={ 12 } md={ 9 }  >
+                    <UserProfile { ...this.state.currentUser } />
                   </Grid>
+                  { this.state.showMessage ? this.errorMessage() : <Timeline tweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id).bind(this) } /> }
                 </Grid>
-                <Footer />
-              </>
-              )
+              </Container>
+            )
           }
         </ApiErrorBoundary>
       </>
@@ -138,6 +130,17 @@ class UserPage extends React.Component {
       this.props.setApiErrorCode(error.response.status);
       break;
     }
+  }
+
+  errorMessage() {
+    return(
+      <>
+        <Grid container item justify="center" className={ this.props.classes.message }>
+          <Typography variant="h4" component="p" color="textSecondary">{ this.state.message }</Typography>
+        </Grid>
+        <Footer />
+      </>
+    );
   }
 }
 

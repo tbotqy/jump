@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import shortid from "shortid";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
-  Grid,
   List,
   ListItem,
   Box,
@@ -54,24 +53,20 @@ class TweetList extends React.Component {
 
   render() {
     return(
-      <Grid container justify="center">
-        <Grid item lg={ 8 }>
-          <List>
-            <InfiniteScroll
-              dataLength={ this.props.tweets.length }
-              next={ this.loadMore.bind(this) }
-              hasMore={ this.props.hasMore }
-              loader={ loader }
-            >
-              { this.props.tweets.map( tweet => (
-                <ListItem divider disableGutters key={ tweet.tweet_id }>
-                  <TweetCard { ...tweetCardPropsByTweet(tweet) } />
-                </ListItem>
-              )) }
-            </InfiniteScroll>
-          </List>
-        </Grid>
-      </Grid>
+      <List>
+        <InfiniteScroll
+          dataLength={ this.props.tweets.length }
+          next={ this.loadMore.bind(this) }
+          hasMore={ this.props.hasMore }
+          loader={ loader }
+        >
+          { this.props.tweets.map( tweet => (
+            <ListItem divider disableGutters key={ tweet.tweet_id }>
+              <TweetCard { ...tweetCardPropsByTweet(tweet) } />
+            </ListItem>
+          )) }
+        </InfiniteScroll>
+      </List>
     );
   }
 
