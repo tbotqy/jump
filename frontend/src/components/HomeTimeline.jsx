@@ -14,7 +14,7 @@ class HomeTimeline extends React.Component {
     this.props.setSelectableDates([]);
     const { year, month, day } = this.props.match.params;
     this.fetchTweets(year, month, day);
-    this.fetchSelectableDates(year, month, day);
+    this.fetchSelectableDates();
   }
 
   render() {
@@ -41,9 +41,9 @@ class HomeTimeline extends React.Component {
     }
   }
 
-  async fetchSelectableDates(year, month, day) {
+  async fetchSelectableDates() {
     try {
-      const response = await fetchFolloweeSelectableDates(year, month, day);
+      const response = await fetchFolloweeSelectableDates();
       this.props.setSelectableDates(response.data);
     } catch(error) {
       this.props.setApiErrorCode(error.response.status);

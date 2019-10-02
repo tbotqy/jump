@@ -57,7 +57,7 @@ class UserPage extends React.Component {
 
       const userId = currentUser.id;
       this.fetchTweets(userId, year, month, day);
-      this.fetchSelectableDates(userId, year, month, day);
+      this.fetchSelectableDates(userId);
     } catch (error) {
       this.props.setApiErrorCode(error.response.status);
     }
