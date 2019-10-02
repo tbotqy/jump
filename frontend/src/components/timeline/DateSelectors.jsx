@@ -27,9 +27,16 @@ class DateSelectors extends React.Component {
     const selectedDay   = day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
 
     this.state = { selectedYear, selectedMonth, selectedDay };
+    this.selectedYear  = selectedYear;
+    this.selectedMonth = selectedMonth;
+    this.selectedDay   = selectedDay;
 
     this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
     window.addEventListener("popstate", this.onPopStateFunc);
+  }
+
+  componentDidMount() {
+    this.propagateSelectedValues(this.selectedYear, this.selectedMonth, this.selectedDay);
   }
 
   handleYearChange(year) {
@@ -43,6 +50,7 @@ class DateSelectors extends React.Component {
 
     this.fetchTweets(year, month, day);
     this.updateDatePath(year);
+    this.propagateSelectedValues(year, month, day);
     scrollToTop();
   }
 
@@ -56,6 +64,7 @@ class DateSelectors extends React.Component {
 
     this.fetchTweets(year, month, day);
     this.updateDatePath(`${year}/${month}`);
+    this.propagateSelectedValues(year, month, day);
     scrollToTop();
   }
 
@@ -65,6 +74,7 @@ class DateSelectors extends React.Component {
     const { selectedYear, selectedMonth } = this.state;
     this.fetchTweets(selectedYear, selectedMonth, day);
     this.updateDatePath(`${selectedYear}/${selectedMonth}/${day}`);
+    this.propagateSelectedValues(selectedYear, selectedMonth, day);
     scrollToTop();
   }
 
@@ -88,6 +98,7 @@ class DateSelectors extends React.Component {
     const selectedMonth = month || this.dateParser.latestMonthByYear(selectedYear);
     const selectedDay   = day   || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
     this.setState({ selectedYear, selectedMonth, selectedDay });
+    this.propagateSelectedValues(selectedYear, selectedMonth, selectedDay);
   }
 
   render() {
@@ -132,6 +143,12 @@ class DateSelectors extends React.Component {
     } finally {
       this.props.setIsFetching(false);
     }
+  }
+
+  propagateSelectedValues(year, month, day) {
+    this.props.setSelectedYear(year);
+    this.props.setSelectedMonth(month);
+    this.props.setSelectedDay(day);
   }
 }
 

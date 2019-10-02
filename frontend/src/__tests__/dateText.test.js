@@ -5,7 +5,7 @@ describe("dateText", () => {
   describe("With invalid params", () => {
     describe("null, null, null", () => {
       it("", () => {
-        expect(() => dateText(null, null, null)).toThrow("Nothings is given");
+        expect(() => dateText(null, null, null)).toThrow("Nothing is given");
       });
     });
     describe("null, 1, 1", () => {

@@ -7,6 +7,7 @@ import timelineTitleText from "../utils/timelineTitleText";
 import Timeline from "../containers/TimelineContainer";
 import Head from "./Head";
 import HeadNav from "../containers/HeadNavContainer";
+import HeadProgressBar from "../containers/HeadProgressBarContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 class UserTimeline extends React.Component {
@@ -23,6 +24,7 @@ class UserTimeline extends React.Component {
         <Head title={ this.title() } />
         <HeadNav />
         <ApiErrorBoundary>
+          <HeadProgressBar />
           <Timeline tweetsFetchFunc={ fetchUserTweets.bind(this) } />
         </ApiErrorBoundary>
       </>
