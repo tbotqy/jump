@@ -59,7 +59,7 @@ class Status < ApplicationRecord
       tweeted_at: Time.zone.at(tweeted_at).iso8601,
       is_retweet: is_retweet,
       urls:       (urls + media).as_json,
-      user:       user.as_json
+      user:       user.as_tweet_user_json
     }
     if is_retweet?
       ret.merge!(

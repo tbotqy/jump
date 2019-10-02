@@ -317,7 +317,7 @@ RSpec.describe Status, type: :model do
       describe "user" do
         let!(:user)   { create(:user) }
         let!(:status) { create(:status, user: user) }
-        it { is_expected.to include(user: user.as_json) }
+        it { is_expected.to include(user: user.as_tweet_user_json) }
       end
       describe "urls" do
         let!(:status) { create(:status) }
