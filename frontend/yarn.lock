@@ -8401,10 +8401,10 @@ react-router-dom@^5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-router-ga@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-router-ga/-/react-router-ga-1.2.1.tgz#5ce10dbe4f51b4a856af8cf308e17f801b70cf70"
-  integrity sha512-3LzYWRofJvt0tRMVS6509eQFedMJV3uHfXZrhnxQYqcZzxqVCvDtMBzAzrPeb8bTc86q8VOLfZdVZ1bH5FVaXw==
+react-router-ga@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-router-ga/-/react-router-ga-1.2.2.tgz#107d6ca14ef388f814ed9dc6796dc7970a8fb001"
+  integrity sha512-VyV+pSHoGi9ih08KzJzxcCSvBa3DdIVaTRwG4mjZMPCORCVwLD6Tc75tKiJ/UhuaVOboVeSCrVqV8kahVBsj4Q==
 
 react-router@5.1.2:
   version "5.1.2"
