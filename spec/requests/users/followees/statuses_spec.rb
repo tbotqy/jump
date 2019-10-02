@@ -409,7 +409,7 @@ RSpec.describe "Users::Followees::FolloweeStatuses", type: :request do
                     let!(:status) { create(:status, user: followee) }
                     it do
                       subject
-                      expect(response.parsed_body.first.deep_symbolize_keys).to include(user: followee.as_json)
+                      expect(response.parsed_body.first.deep_symbolize_keys).to include(user: followee.as_tweet_user_json)
                     end
                   end
                   describe "urls" do

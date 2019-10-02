@@ -235,6 +235,27 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe "#as_tweet_user_json" do
+    subject { user.as_tweet_user_json }
+    let(:name)        { "name" }
+    let(:screen_name) { "screen_name" }
+    let(:avatar_url)  { "avatar_url" }
+    let(:user) do
+      create(:user,
+        name:        name,
+        screen_name: screen_name,
+        avatar_url:  avatar_url,
+      )
+    end
+    it do
+      is_expected.to include(
+        name:        name,
+        screen_name: screen_name,
+        avatar_url:  avatar_url
+      )
+    end
+  end
+
   describe "#as_json" do
     describe "required attributes" do
       subject { user.as_json }

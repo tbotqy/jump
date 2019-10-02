@@ -269,7 +269,7 @@ RSpec.describe "Statuses", type: :request do
             let!(:status) { create(:status, user: user) }
             it do
               subject
-              expect(response.parsed_body.first.deep_symbolize_keys).to include(user: user.as_json)
+              expect(response.parsed_body.first.deep_symbolize_keys).to include(user: user.as_tweet_user_json)
             end
           end
           describe "urls" do

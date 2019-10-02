@@ -52,6 +52,14 @@ class User < ApplicationRecord
     end
   end
 
+  def as_tweet_user_json
+    {
+      name:        name,
+      screen_name: screen_name,
+      avatar_url:  avatar_url,
+    }
+  end
+
   def as_json(_options = {})
     _statuses_updated_at  = statuses_updated_at.nil? ? nil : Time.zone.at(statuses_updated_at).iso8601
     _followees_updated_at = followees.last&.created_at&.iso8601
