@@ -135,10 +135,8 @@ class UserPage extends React.Component {
   errorMessage() {
     return(
       <>
-        <Grid container direction="column" alignItems="center" className={ this.props.classes.message }>
-          <Grid item>
-            <Typography variant="h4" component="h1" color="textSecondary">{ this.state.message }</Typography>
-          </Grid>
+        <Grid container item justify="center" className={ this.props.classes.message }>
+          <Typography variant="h4" component="p" color="textSecondary">{ this.state.message }</Typography>
         </Grid>
         <Footer />
       </>

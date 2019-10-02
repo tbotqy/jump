@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import HeadProgressBar from "../components/HeadProgressBar";
 
-
 const mapStateToProps = state => ({
   isFetching: state.tweets.isFetching
 });

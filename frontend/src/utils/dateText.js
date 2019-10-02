@@ -20,7 +20,7 @@ export default function dateText(year, month, day) {
  */
 function validateParams(year, month, day) {
   if(!year && !month && !day) {
-    throw new Error("Nothings is given");
+    throw new Error("Nothing is given");
   }
 
   if(!year && month) {

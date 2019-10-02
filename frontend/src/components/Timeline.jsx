@@ -19,6 +19,7 @@ const styles = theme => ({
     paddingRight: theme.spacing(1)
   },
   adWrapper: {
+    paddingTop:    theme.spacing(3),
     paddingBottom: theme.spacing(3),
     textAlign: "center"
   },
@@ -38,15 +39,13 @@ class Timeline extends React.Component {
   render() {
     return(
       <Container className={ this.props.classes.container }>
-        <Grid container direction="column" justify="center" alignItems="center" spacing={ 4 }>
-          <Grid item>
-            { this.headerText() }
-          </Grid>
+        <Grid container item justify="center">
+          { this.headerText() }
         </Grid>
         <div className={ this.props.classes.adWrapper }>
           <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
         </div>
-        <Grid container direction="column" justify="center" alignItems="center" spacing={ 4 }>
+        <Grid container justify="center">
           <Grid item lg={ 8 } className={ this.props.classes.tweetListContainer }>
             { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
           </Grid>
@@ -84,7 +83,7 @@ class Timeline extends React.Component {
           { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName) }
         </Typography>
       );
-    }else{
+    } else {
       return <></>;
     }
   }
