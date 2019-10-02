@@ -42,9 +42,9 @@ class Timeline extends React.Component {
         <Grid container item justify="center">
           { this.headerText() }
         </Grid>
-        <div className={ this.props.classes.adWrapper }>
+        <Container maxWidth="md" className={ this.props.classes.adWrapper }>
           <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
-        </div>
+        </Container>
         <Grid container justify="center">
           <Grid item lg={ 8 } className={ this.props.classes.tweetListContainer }>
             { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
