@@ -3,7 +3,8 @@ import { withRouter } from "react-router-dom";
 import {
   Container,
   Grid,
-  Typography
+  Typography,
+  Box
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import scrollToTop   from "./../utils/scrollToTop";
@@ -15,8 +16,8 @@ import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 const styles = theme => ({
   container: {
     paddingTop:   theme.spacing(3),
-    paddingLeft:  theme.spacing(1),
-    paddingRight: theme.spacing(1)
+    paddingLeft:  theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   adWrapper: {
     paddingTop:    theme.spacing(3),
@@ -25,6 +26,10 @@ const styles = theme => ({
   },
   tweetListContainer: {
     minHeight: "100vh"
+  },
+  dateSelectorContainer: {
+    position: "sticky",
+    bottom: theme.spacing(3)
   }
 });
 
@@ -38,22 +43,25 @@ class Timeline extends React.Component {
 
   render() {
     return(
-      <Container className={ this.props.classes.container }>
-        <Grid container item justify="center">
-          { this.headerText() }
-        </Grid>
-        <Container maxWidth="md" className={ this.props.classes.adWrapper }>
-          <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
-        </Container>
-        <Grid container justify="center">
-          <Grid item lg={ 8 } className={ this.props.classes.tweetListContainer }>
+      <>
+        <Container maxWidth="md" className={ this.props.classes.container }>
+          <Grid container item justify="flex-start">
+            { this.headerText() }
+          </Grid>
+          <Container>
+            <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
+          </Container>
+          <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
             { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
           </Grid>
-        </Grid>
-        { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } onSelectionChangeTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
-      </Container>
+        </Container>
+        <Box pr={ 2 } className={ this.props.classes.dateSelectorContainer }>
+          { this.props.selectableDates.length > 0 && <DateSelectors selectableDates={ this.props.selectableDates } onSelectionChangeTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
+        </Box>
+      </>
     );
   }
+
 
   componentWillUnmount() {
     window.removeEventListener("popstate", this.onPopStateFunc);
