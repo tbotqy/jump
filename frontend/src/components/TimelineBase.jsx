@@ -6,10 +6,12 @@ import {
   Box
 } from "@material-ui/core";
 import Timeline from "../containers/TimelineContainer";
+import Head from "./Head";
 import HeadNav from "../containers/HeadNavContainer";
 import HeadProgressBar from "../containers/HeadProgressBarContainer";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
+import timelineTitleText from "../utils/timelineTitleText";
 
 const styles = theme => ({
   container: {
@@ -39,6 +41,7 @@ class TimelineBase extends React.Component {
   render() {
     return (
       <>
+        <Head title={ this.title() } />
         <HeadNav />
         <ApiErrorBoundary>
           <HeadProgressBar />
@@ -77,6 +80,11 @@ class TimelineBase extends React.Component {
     } catch(error) {
       error.response && this.props.setApiErrorCode(error.response.status);
     }
+  }
+
+  title() {
+    const { year, month, day } = this.props.match.params;
+    return timelineTitleText(this.props.timelineName, year, month, day);
   }
 }
 
