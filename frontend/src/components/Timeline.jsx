@@ -87,7 +87,7 @@ class Timeline extends React.Component {
     const { screenName } = this.props.match.params;
     if( selectedYear && selectedMonth && selectedDay ) {
       return (
-        <Typography component="h1" variant="h4" color="textSecondary">
+        <Typography component="h1" variant="h5" color="textSecondary">
           { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName) }
         </Typography>
       );
