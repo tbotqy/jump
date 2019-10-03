@@ -4,7 +4,7 @@ import {
   setIsFetching
 } from "../actions/tweetsActions";
 import { setApiErrorCode } from "../actions/apiErrorActions";
-import HomeTimeline from "../components/HomeTimeline";
+import TimelineBase from "../components/TimelineBase";
 
 const mapDispatchToProps = dispatch => ({
   setTweets:       tweets => dispatch(setTweets(tweets)),
@@ -12,4 +12,4 @@ const mapDispatchToProps = dispatch => ({
   setApiErrorCode: code => dispatch(setApiErrorCode(code))
 });
 
-export default connect(null, mapDispatchToProps)(HomeTimeline);
+export default connect(null, mapDispatchToProps)(TimelineBase);
