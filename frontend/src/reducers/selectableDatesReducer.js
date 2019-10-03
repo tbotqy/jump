@@ -1,5 +1,4 @@
 const initialState = {
-  selectableDates: [],
   selectedYear:  null,
   selectedMonth: null,
   selectedDay:   null
@@ -7,11 +6,6 @@ const initialState = {
 
 export default function selectableDatesReducer(state = initialState, action) {
   switch(action.type) {
-  case "SET_SELECTABLE_DATES":
-    return {
-      ...state,
-      selectableDates: action.selectableDates
-    };
   case "SET_SELECTED_YEAR":
     return {
       ...state,

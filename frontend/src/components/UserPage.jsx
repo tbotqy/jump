@@ -43,12 +43,13 @@ class UserPage extends React.Component {
     super(props);
     this.state = {
       currentUser: null,
-      showMessage: false
+      showMessage: false,
+      selectableDates: []
     };
   }
 
   async componentDidMount() {
-    this.props.setSelectableDates([]);
+    this.setState({ selectableDates: [] });
     const { screenName, year, month, day } = this.props.match.params;
 
     try {
@@ -105,7 +106,7 @@ class UserPage extends React.Component {
   async fetchSelectableDates(userId) {
     try {
       const response = await fetchUserSelectableDates(userId);
-      this.props.setSelectableDates(response.data);
+      this.setState({ selectableDates: response.data });
     } catch(error) {
       this.handleTweetDataApiError(error);
     }
