@@ -46,7 +46,6 @@ class Timeline extends React.Component {
     );
   }
 
-
   componentWillUnmount() {
     window.removeEventListener("popstate", this.onPopStateFunc);
   }
