@@ -26,6 +26,7 @@ import {
 import Ad            from "./Ad";
 import TweetList     from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
+import TweetButton from "./TweetButton";
 import scrollToTop   from "./../utils/scrollToTop";
 
 const styles = theme => ({
@@ -99,8 +100,13 @@ class UserPage extends React.Component {
                   { this.state.showMessage ?
                     this.errorMessage() :
                     <Box pt={ 3 }>
-                      <Grid container item justify="flex-start">
-                        { this.headerText() }
+                      <Grid container justify="space-between" alignItems="center">
+                        <Grid item>
+                          { this.headerText() }
+                        </Grid>
+                        <Grid item>
+                          <TweetButton text={ document.title } buttonText={ "共有" } inTwitterBrandColor />
+                        </Grid>
                       </Grid>
                       <Container>
                         <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
@@ -159,10 +165,12 @@ class UserPage extends React.Component {
     }
   }
 
+  // TODO: consider to be given as param
   title() {
     const { screenName, year, month, day } = this.props.match.params;
     const userName = this.state.currentUser ? `${this.state.currentUser.name}（@${screenName}）` : `@${screenName}`;
-    return timelineTitleText(`${userName}の過去のツイート`, year, month, day);
+    const leadText = year ? `${userName}のツイート` : `${userName}の過去のツイート`;
+    return timelineTitleText(leadText, year, month, day);
   }
 
   handleTweetDataApiError(error) {
@@ -193,11 +201,10 @@ class UserPage extends React.Component {
 
   headerText() {
     const { selectedYear, selectedMonth, selectedDay } = this.props;
-    const { screenName } = this.props.match.params;
     if( selectedYear && selectedMonth && selectedDay ) {
       return (
         <Typography component="h1" variant="h5" color="textSecondary">
-          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName) }
+          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay) }
         </Typography>
       );
     } else {

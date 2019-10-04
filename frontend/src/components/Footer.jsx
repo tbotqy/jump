@@ -14,6 +14,7 @@ import {
   ROOT_PATH,
   TERMS_AND_PRIVACY_PATH
 } from "../utils/paths";
+import TweetButton from "./TweetButton";
 
 const styles = theme => ({
   container: {
@@ -40,12 +41,10 @@ const Footer = props => {
     >
       <Grid container direction="column" alignItems="center" justify="center" spacing={ 2 }>
         <Grid item>
-          <IconButton href={ `//twitter.com/${adminTwitterScreenName}` } target="_blank">
-            <FontAwesomeIcon icon={ faTwitter }/>
-          </IconButton>
+          <TweetButton />
         </Grid>
         <Grid item>
-          <Typography color="textSecondary">
+          <Typography variant="subtitle1" color="textSecondary">
             <Link
               color="inherit"
               component={ RouterLink }
@@ -56,17 +55,29 @@ const Footer = props => {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography color="textSecondary">
-            © 2012-{ new Date().getFullYear() }
-            <Link
-              color="inherit"
-              component={ RouterLink }
-              to={ ROOT_PATH }
-              className={ props.classes.link }
-            >
-              twitjump.me
-            </Link>
-          </Typography>
+          <Grid container direction="row" justify="center" alignItems="center" spacing={ 2 }>
+            <Grid item>
+              <IconButton href={ `//twitter.com/${adminTwitterScreenName}` } target="_blank">
+                <FontAwesomeIcon icon={ faTwitter }/>
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <Typography color="textSecondary">
+                © 2012-{ new Date().getFullYear() }
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography color="textSecondary">
+                <Link
+                  color="inherit"
+                  component={ RouterLink }
+                  to={ ROOT_PATH }
+                >
+                  twitjump.me
+                </Link>
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Container>

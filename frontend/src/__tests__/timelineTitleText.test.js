@@ -38,17 +38,17 @@ describe("timelineTitleText", () => {
     });
     describe("2019, null, null", () => {
       it("", () => {
-        expect(timelineTitleText(timelineName, 2019, null, null)).toEqual(`2019年以前の${timelineName} - ${serviceName}`);
+        expect(timelineTitleText(timelineName, 2019, null, null)).toEqual(`2019年の${timelineName} - ${serviceName}`);
       });
     });
     describe("2019, 1, null", () => {
       it("", () => {
-        expect(timelineTitleText(timelineName, 2019, 1, null)).toEqual(`2019年1月以前の${timelineName} - ${serviceName}`);
+        expect(timelineTitleText(timelineName, 2019, 1, null)).toEqual(`2019年1月の${timelineName} - ${serviceName}`);
       });
     });
     describe("2019, 1, 1", () => {
       it("", () => {
-        expect(timelineTitleText(timelineName, 2019, 1, 1)).toEqual(`2019年1月1日以前の${timelineName} - ${serviceName}`);
+        expect(timelineTitleText(timelineName, 2019, 1, 1)).toEqual(`2019年1月1日の${timelineName} - ${serviceName}`);
       });
     });
   });
