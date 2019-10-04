@@ -4,7 +4,7 @@ import {
   setIsFetching
 } from "../actions/tweetsActions";
 import { setApiErrorCode } from "../actions/apiErrorActions";
-import UserPage from "../components/UserPage";
+import TimelineBase from "../components/TimelineBase";
 
 const mapStateToProps = state => ({
   isFetching:    state.tweets.isFetching,
@@ -22,4 +22,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserPage);
+)(TimelineBase);

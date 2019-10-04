@@ -3,59 +3,14 @@ import {
   fetchPublicTweets,
   fetchPublicSelectableDates
 } from "../utils/api";
-import timelineTitleText from "../utils/timelineTitleText";
-import Timeline from "../containers/TimelineContainer";
-import Head from "./Head";
-import HeadNav from "../containers/HeadNavContainer";
-import HeadProgressBar from "../containers/HeadProgressBarContainer";
-import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
+import TimelineBase from "../containers/TimelineBaseContainer";
 
-class PublicTimeline extends React.Component {
-  componentDidMount() {
-    this.props.setSelectableDates([]);
-    const { year, month, day } = this.props.match.params;
-    this.fetchTweets(year, month, day);
-    this.fetchSelectableDates();
-  }
-
-  render() {
-    return (
-      <>
-        <Head title={ this.title() } />
-        <HeadNav />
-        <ApiErrorBoundary>
-          <HeadProgressBar />
-          <Timeline tweetsFetchFunc={ fetchPublicTweets.bind(this) } />
-        </ApiErrorBoundary>
-      </>
-    );
-  }
-
-  async fetchTweets(year, month, day) {
-    this.props.setIsFetching(true);
-    try {
-      const response = await fetchPublicTweets(year, month, day);
-      this.props.setTweets(response.data);
-    } catch(error) {
-      this.props.setApiErrorCode(error.response.status);
-    } finally{
-      this.props.setIsFetching(false);
-    }
-  }
-
-  async fetchSelectableDates() {
-    try {
-      const response = await fetchPublicSelectableDates();
-      this.props.setSelectableDates(response.data);
-    } catch(error) {
-      this.props.setApiErrorCode(error.response.status);
-    }
-  }
-
-  title() {
-    const { year, month, day } = this.props.match.params;
-    return timelineTitleText("パブリックタイムライン", year, month, day);
-  }
-}
+const PublicTimeline = () => (
+  <TimelineBase
+    tweetsFetchFunc={ fetchPublicTweets }
+    selectableDatesFetchFunc={ fetchPublicSelectableDates }
+    timelineName={ "パブリックタイムライン" }
+  />
+);
 
 export default PublicTimeline;

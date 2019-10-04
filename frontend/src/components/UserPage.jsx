@@ -9,27 +9,41 @@ import {
   API_ERROR_CODE_NOT_FOUND
 } from "../utils/api";
 import timelineTitleText from "../utils/timelineTitleText";
-import Timeline from "../containers/TimelineContainer";
 import Head from "./Head";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import HeadNav from "../containers/HeadNavContainer";
 import HeadProgressBar from "../containers/HeadProgressBarContainer";
 import UserProfile from "../components/UserProfile";
+import DateSelectors from "../containers/DateSelectorsContainer";
 import FullPageLoading from "./FullPageLoading";
 import Footer from "./Footer";
 import {
   Container,
   Grid,
-  Typography
+  Typography,
+  Box
 } from "@material-ui/core";
+import Ad            from "./Ad";
+import TweetList     from "../containers/TweetListContainer";
+import timelinePageHeaderText from "../utils/timelinePageHeaderText";
+import scrollToTop   from "./../utils/scrollToTop";
 
 const styles = theme => ({
   container: {
-    paddingTop: theme.spacing(2)
+    paddingTop:   theme.spacing(3),
+    paddingLeft:  theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
   message: {
     paddingTop: theme.spacing(10),
     minHeight: "50vh"
+  },
+  tweetListContainer: {
+    minHeight: "100vh"
+  },
+  dateSelectorContainer: {
+    position: "sticky",
+    bottom: theme.spacing(3)
   }
 });
 
@@ -43,12 +57,16 @@ class UserPage extends React.Component {
     super(props);
     this.state = {
       currentUser: null,
-      showMessage: false
+      showMessage: false,
+      selectableDates: []
     };
+
+    this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
+    window.addEventListener("popstate", this.onPopStateFunc);
   }
 
   async componentDidMount() {
-    this.props.setSelectableDates([]);
+    this.setState({ selectableDates: [] });
     const { screenName, year, month, day } = this.props.match.params;
 
     try {
@@ -75,19 +93,49 @@ class UserPage extends React.Component {
             !this.state.currentUser? (
               <FullPageLoading />
             ) : (
-              <Container className={ this.props.classes.container }>
-                <Grid container justify="center">
-                  <Grid item xs={ 12 } md={ 9 }  >
-                    <UserProfile { ...this.state.currentUser } />
-                  </Grid>
-                  { this.state.showMessage ? this.errorMessage() : <Timeline tweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id).bind(this) } /> }
-                </Grid>
-              </Container>
+              <>
+                <Container maxWidth="md" className={ this.props.classes.container }>
+                  <UserProfile { ...this.state.currentUser } />
+                  { this.state.showMessage ?
+                    this.errorMessage() :
+                    <Box pt={ 3 }>
+                      <Grid container item justify="flex-start">
+                        { this.headerText() }
+                      </Grid>
+                      <Container>
+                        <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
+                      </Container>
+                      <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
+                        { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id) } /> }
+                      </Grid>
+                    </Box>
+                  }
+                </Container>
+                { this.state.selectableDates.length > 0 &&
+                  <Box pr={ 2 } className={ this.props.classes.dateSelectorContainer }>
+                    <DateSelectors
+                      selectableDates={ this.state.selectableDates }
+                      onSelectionChangeTweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id) }
+                    />
+                  </Box>
+                }
+              </>
             )
           }
         </ApiErrorBoundary>
       </>
     );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.onPopStateFunc);
+  }
+
+  async onBackOrForwardButtonEvent(e) {
+    e.preventDefault();
+    const { year, month, day } = this.props.match.params;
+    this.fetchTweets(this.state.currentUser.id, year, month, day);
+    scrollToTop();
   }
 
   async fetchTweets(userId, year, month, day) {
@@ -105,7 +153,7 @@ class UserPage extends React.Component {
   async fetchSelectableDates(userId) {
     try {
       const response = await fetchUserSelectableDates(userId);
-      this.props.setSelectableDates(response.data);
+      this.setState({ selectableDates: response.data });
     } catch(error) {
       this.handleTweetDataApiError(error);
     }
@@ -141,6 +189,20 @@ class UserPage extends React.Component {
         <Footer />
       </>
     );
+  }
+
+  headerText() {
+    const { selectedYear, selectedMonth, selectedDay } = this.props;
+    const { screenName } = this.props.match.params;
+    if( selectedYear && selectedMonth && selectedDay ) {
+      return (
+        <Typography component="h1" variant="h5" color="textSecondary">
+          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName) }
+        </Typography>
+      );
+    } else {
+      return <></>;
+    }
   }
 }
 

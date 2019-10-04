@@ -2,17 +2,9 @@ import React          from "react";
 import { withRouter } from "react-router-dom";
 import scrollToTop    from "../../utils/scrollToTop";
 import { Grid }       from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 import Selector       from "./date_selectors/Selector";
 
 import DateCollection from "../../utils/DateCollection";
-
-const styles = theme => ({
-  container: {
-    position: "sticky",
-    bottom: theme.spacing(3)
-  }
-});
 
 class DateSelectors extends React.Component {
   constructor(props) {
@@ -103,7 +95,7 @@ class DateSelectors extends React.Component {
 
   render() {
     return(
-      <Grid container justify="flex-end" spacing={ 1 } className={ this.props.classes.container }>
+      <Grid container justify="flex-end" spacing={ 1 }>
         <Grid item>
           <Selector
             selections={ this.dateParser.years() }
@@ -152,4 +144,4 @@ class DateSelectors extends React.Component {
   }
 }
 
-export default withRouter(withStyles(styles)(DateSelectors));
+export default withRouter(DateSelectors);

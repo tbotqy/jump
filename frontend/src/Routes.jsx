@@ -12,9 +12,9 @@ import TopContainer from "./containers/TopContainer";
 import ImportContainer from "./containers/ImportContainer";
 import DataManagementContainer from "./containers/DataManagementContainer";
 import TermsAndPrivacy from "./components/TermsAndPrivacy";
-import PublicTimelineContainer from "./containers/PublicTimelineContainer";
-import UserTimelineContainer from "./containers/UserTimelineContainer";
-import HomeTimelineContainer from "./containers/HomeTimelineContainer";
+import PublicTimeline from "./components/PublicTimeline";
+import UserTimeline from "./components/UserTimeline";
+import HomeTimeline from "./components/HomeTimeline";
 import UserPageContainer from "./containers/UserPageContainer";
 import NotFound from "./components/NotFound";
 
@@ -41,12 +41,12 @@ const Routes = () => (
           <Route exact path={ ROOT_PATH } component={ TopContainer } />
           <Route exact path={ USER_PAGE_PATH + SCREEN_NAME_PARAM + TIMELINE_DATE_PARAMS } component={ UserPageContainer } />
           <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
-          <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimelineContainer } />
-          <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimelineContainer } />
+          <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimeline } />
+          <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimeline } />
           <Route
             exact
             path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS }
-            render={ routerProps => <Auth><HomeTimelineContainer { ...routerProps } /></Auth> }
+            render={ routerProps => <Auth><HomeTimeline { ...routerProps } /></Auth> }
           />
           <Route
             exact
