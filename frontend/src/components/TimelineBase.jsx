@@ -3,15 +3,21 @@ import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Container,
-  Box
+  Box,
+  Grid,
+  Typography
 } from "@material-ui/core";
-import Timeline from "../containers/TimelineContainer";
 import Head from "./Head";
 import HeadNav from "../containers/HeadNavContainer";
 import HeadProgressBar from "../containers/HeadProgressBarContainer";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import timelineTitleText from "../utils/timelineTitleText";
+import scrollToTop   from "./../utils/scrollToTop";
+import Ad            from "./Ad";
+import timelinePageHeaderText from "../utils/timelinePageHeaderText";
+import TweetList     from "../containers/TweetListContainer";
+
 
 const styles = theme => ({
   container: {
@@ -22,6 +28,9 @@ const styles = theme => ({
   dateSelectorContainer: {
     position: "sticky",
     bottom: theme.spacing(3)
+  },
+  tweetListContainer: {
+    minHeight: "100vh"
   }
 });
 
@@ -29,6 +38,9 @@ class TimelineBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectableDates: [] };
+
+    this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
+    window.addEventListener("popstate", this.onPopStateFunc);
   }
 
   componentDidMount() {
@@ -46,7 +58,15 @@ class TimelineBase extends React.Component {
         <ApiErrorBoundary>
           <HeadProgressBar />
           <Container maxWidth="md" className={ this.props.classes.container }>
-            <Timeline tweetsFetchFunc={ this.props.tweetsFetchFunc } />
+            <Grid container item justify="flex-start">
+              { this.headerText() }
+            </Grid>
+            <Container>
+              <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
+            </Container>
+            <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
+              { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
+            </Grid>
           </Container>
           { this.state.selectableDates.length > 0 &&
             <Box pr={ 2 } className={ this.props.classes.dateSelectorContainer }>
@@ -59,6 +79,17 @@ class TimelineBase extends React.Component {
         </ApiErrorBoundary>
       </>
     );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("popstate", this.onPopStateFunc);
+  }
+
+  async onBackOrForwardButtonEvent(e) {
+    e.preventDefault();
+    const { year, month, day } = this.props.match.params;
+    this.fetchTweets(year, month, day);
+    scrollToTop();
   }
 
   async fetchTweets(year, month, day) {
@@ -85,6 +116,20 @@ class TimelineBase extends React.Component {
   title() {
     const { year, month, day } = this.props.match.params;
     return timelineTitleText(this.props.timelineName, year, month, day);
+  }
+
+  headerText() {
+    const { selectedYear, selectedMonth, selectedDay } = this.props;
+    const { screenName } = this.props.match.params;
+    if( selectedYear && selectedMonth && selectedDay ) {
+      return (
+        <Typography component="h1" variant="h5" color="textSecondary">
+          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName) }
+        </Typography>
+      );
+    } else {
+      return <></>;
+    }
   }
 }
 
