@@ -48,6 +48,10 @@ const styles = theme => ({
   },
   smallBrandLogo: {
     marginRight: theme.spacing(1)
+  },
+  avatar: {
+    width:  50,
+    height: 50
   }
 });
 
@@ -158,7 +162,7 @@ const Top = props => {
                     { newArrivals.map( user => (
                       <Grid item key={ shortid.generate() }>
                         <IconButton component={ Link } to={ `${USER_PAGE_PATH}/${user.screen_name}` }>
-                          <Avatar src={ user.avatar_url } />
+                          <Avatar className={ props.classes.avatar } src={ user.avatar_url.replace("_normal", "_bigger") } />
                         </IconButton>
                       </Grid>
                     ))

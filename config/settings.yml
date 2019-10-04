@@ -17,7 +17,7 @@ frontend:
   user_page_path: /users
   public_timeline_path: /public_timeline
 
-new_arrival_users_count: 15
+new_arrival_users_count: 12
 
 banner_size: :ipad_retina
 
