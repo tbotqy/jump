@@ -185,6 +185,45 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe ".new_arrivals!" do
+    subject { described_class.new_arrivals! }
+    context "no user exists" do
+      it { expect { subject }.to raise_error(ActiveRecord::RecordNotFound) }
+    end
+    context "some users exist" do
+      describe "number of returned items and their order" do
+        before { (1..user_count).each { |n| create(:user, name: "#{n}th user") } }
+
+        shared_examples "returns users ordered by from newest to oldest" do
+          it do
+            expect(subject.pluck(:name)).to eq (1..user_count).last(Settings.new_arrival_users_count).reverse.map { |n| "#{n}th user" }
+          end
+        end
+        shared_examples "returns n users" do |n|
+          it "returns #{n} users" do
+            expect(subject.count).to eq n
+          end
+        end
+
+        context "less than max" do
+          let(:user_count) { Settings.new_arrival_users_count - 1 }
+          include_examples "returns n users", Settings.new_arrival_users_count - 1
+          it_behaves_like  "returns users ordered by from newest to oldest"
+        end
+        context "as much as max" do
+          let(:user_count) { Settings.new_arrival_users_count }
+          include_examples "returns n users", Settings.new_arrival_users_count
+          it_behaves_like  "returns users ordered by from newest to oldest"
+        end
+        context "more than max" do
+          let(:user_count) { Settings.new_arrival_users_count + 1 }
+          include_examples "returns n users", Settings.new_arrival_users_count
+          it_behaves_like  "returns users ordered by from newest to oldest"
+        end
+      end
+    end
+  end
+
   describe ".find_latest_by_screen_name!" do
     subject { described_class.find_latest_by_screen_name!(screen_name) }
     shared_examples "raises NotFound error" do
@@ -232,6 +271,24 @@ RSpec.describe User, type: :model do
       let!(:user)     { create(:user) }
       let!(:statuses) { create_list(:status, 2, user: user) }
       it { is_expected.to be true }
+    end
+  end
+
+  describe "#as_index_json" do
+    subject { user.as_index_json }
+    let(:screen_name) { "screen_name" }
+    let(:avatar_url)  { "avatar_url" }
+    let(:user) do
+      create(:user,
+        screen_name: screen_name,
+        avatar_url:  avatar_url,
+      )
+    end
+    it do
+      is_expected.to include(
+        screen_name: screen_name,
+        avatar_url:  avatar_url
+      )
     end
   end
 

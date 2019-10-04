@@ -3,6 +3,58 @@
 require "rails_helper"
 
 RSpec.describe "Users", type: :request do
+  describe "GET /" do
+    subject { get users_path, xhr: true }
+    context "no user exists" do
+      before { subject }
+      it_behaves_like "respond with status code", :not_found
+    end
+    context "some users exist" do
+      describe "number of returned items and their order" do
+        before { (1..user_count).each { |n| create(:user, screen_name: "#{n}th_user") } }
+
+        shared_examples "returns users ordered by from newest to oldest" do
+          it do
+            subject
+            expected_screen_names_in_expected_order = (1..user_count).last(Settings.new_arrival_users_count).reverse.map { |n| "#{n}th_user" }
+            expect(response.parsed_body.map { |item| item["screen_name"] }).to eq expected_screen_names_in_expected_order
+          end
+        end
+        shared_examples "returns n users" do |n|
+          it "returns #{n} users" do
+            subject
+            expect(response.parsed_body.count).to eq n
+          end
+        end
+
+        context "less than max" do
+          let(:user_count) { Settings.new_arrival_users_count - 1 }
+          include_examples "returns n users", Settings.new_arrival_users_count - 1
+          it_behaves_like  "returns users ordered by from newest to oldest"
+        end
+        context "as much as max" do
+          let(:user_count) { Settings.new_arrival_users_count }
+          include_examples "returns n users", Settings.new_arrival_users_count
+          it_behaves_like  "returns users ordered by from newest to oldest"
+        end
+        context "more than max" do
+          let(:user_count) { Settings.new_arrival_users_count + 1 }
+          include_examples "returns n users", Settings.new_arrival_users_count
+          it_behaves_like  "returns users ordered by from newest to oldest"
+        end
+      end
+      describe "response body" do
+        let!(:user) { create(:user) }
+        it do
+          subject
+          expect(response.parsed_body.first.symbolize_keys).to eq ({
+            "screen_name": user.screen_name,
+            "avatar_url":  user.avatar_url
+          })
+        end
+      end
+    end
+  end
   describe "GET /me" do
     subject { get me_path, xhr: true }
 
