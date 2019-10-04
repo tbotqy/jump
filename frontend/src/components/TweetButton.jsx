@@ -31,7 +31,7 @@ const TweetButton = ({ text, buttonText = "ツイート", classes, inTwitterBran
     <TwitterShareButton url={ url() } title={ text || document.title }>
       <Button size="small" className={ clsx({ [classes.button]: inTwitterBrandColor }) }>
         <TwitterIcon htmlColor={ iconColor } fontSize="small" />
-        <Typography variant="body" color={ textColor } className={ classes.iconText }>{ buttonText }</Typography>
+        <Typography variant="body2" color={ textColor } className={ classes.iconText }>{ buttonText }</Typography>
       </Button>
     </TwitterShareButton>
   );
