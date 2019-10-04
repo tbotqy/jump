@@ -149,7 +149,7 @@ const Top = props => {
             </Hidden>
           </Grid>
           <Box pt={ 6 } pb={ 6 }>
-            <Typography gutterBottom variant="h6" component="h3" color="textSecondary">新着ユーザー</Typography>
+            <Typography gutterBottom variant="h5" component="h3" color="textSecondary">新着ユーザー</Typography>
             <Box pt={ 2 }>
               {
                 newArrivals.length === 0 ?
