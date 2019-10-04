@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get :me, to: "users#me"
   get "/users/:screen_name", to: "users#show", as: :user_page
 
-  resources :users, only: %i|destroy| do
+  resources :users, only: %i|index destroy| do
     scope module: :users do
       resources :statuses,              only: %i|index create|
       put "statuses",                   to: "statuses#update"
