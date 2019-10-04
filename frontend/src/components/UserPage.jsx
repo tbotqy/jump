@@ -165,6 +165,7 @@ class UserPage extends React.Component {
     }
   }
 
+  // TODO: consider to be given as param
   title() {
     const { screenName, year, month, day } = this.props.match.params;
     const userName = this.state.currentUser ? `${this.state.currentUser.name}（@${screenName}）` : `@${screenName}`;

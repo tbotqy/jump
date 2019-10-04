@@ -119,6 +119,7 @@ class TimelineBase extends React.Component {
     }
   }
 
+  // TODO: consider to be given as param
   title() {
     const { year, month, day } = this.props.match.params;
     return timelineTitleText(this.props.timelineName, year, month, day);

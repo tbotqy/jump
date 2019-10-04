@@ -9,7 +9,7 @@ const PublicTimeline = () => (
   <TimelineBase
     tweetsFetchFunc={ fetchPublicTweets }
     selectableDatesFetchFunc={ fetchPublicSelectableDates }
-    timelineName={ "パブリックタイムライン" }
+    timelineName={ "ツイート" } // TODO: rename param name
     showTweetButton
   />
 );
