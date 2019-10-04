@@ -17,6 +17,7 @@ import scrollToTop   from "./../utils/scrollToTop";
 import Ad            from "./Ad";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import TweetList     from "../containers/TweetListContainer";
+import TweetButton from "./TweetButton";
 
 
 const styles = theme => ({
@@ -58,8 +59,13 @@ class TimelineBase extends React.Component {
         <ApiErrorBoundary>
           <HeadProgressBar />
           <Container maxWidth="md" className={ this.props.classes.container }>
-            <Grid container item justify="flex-start">
-              { this.headerText() }
+            <Grid container justify="space-between">
+              <Grid item>
+                { this.headerText() }
+              </Grid>
+              <Grid item>
+                { this.props.showTweetButton && <TweetButton inTwitterBrandColor /> }
+              </Grid>
             </Grid>
             <Container>
               <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />

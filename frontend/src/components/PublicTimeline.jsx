@@ -10,6 +10,7 @@ const PublicTimeline = () => (
     tweetsFetchFunc={ fetchPublicTweets }
     selectableDatesFetchFunc={ fetchPublicSelectableDates }
     timelineName={ "パブリックタイムライン" }
+    showTweetButton
   />
 );
 

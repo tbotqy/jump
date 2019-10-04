@@ -26,6 +26,7 @@ import {
 import Ad            from "./Ad";
 import TweetList     from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
+import TweetButton from "./TweetButton";
 import scrollToTop   from "./../utils/scrollToTop";
 
 const styles = theme => ({
@@ -99,8 +100,13 @@ class UserPage extends React.Component {
                   { this.state.showMessage ?
                     this.errorMessage() :
                     <Box pt={ 3 }>
-                      <Grid container item justify="flex-start">
-                        { this.headerText() }
+                      <Grid container justify="space-between">
+                        <Grid item>
+                          { this.headerText() }
+                        </Grid>
+                        <Grid item>
+                          <TweetButton inTwitterBrandColor />
+                        </Grid>
                       </Grid>
                       <Container>
                         <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
