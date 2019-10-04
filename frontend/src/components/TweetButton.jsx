@@ -23,21 +23,18 @@ const styles = theme => ({
   }
 });
 
-const TweetButton = ({ classes, inTwitterBrandColor = false }) => {
-  const [ title, setTitle ] = useState("");
-
-  useEffect(() => setTitle(document.title));
-
+const TweetButton = ({ text, classes, inTwitterBrandColor = false }) => {
   const iconColor = inTwitterBrandColor ? "white" : "gray";
   const textColor = inTwitterBrandColor ? "white" : "textSecondary";
 
   return(
-    <TwitterShareButton url={ url() } title={ title }>
+    <TwitterShareButton url={ url() } title={ text }>
       <Button size="small" className={ clsx({ [classes.button]: inTwitterBrandColor }) }>
         <TwitterIcon htmlColor={ iconColor } fontSize="small" />
         <Typography variant="body" color={ textColor } className={ classes.iconText }>ツイート</Typography>
       </Button>
-    </TwitterShareButton>);
+    </TwitterShareButton>
+  );
 };
 
 export default withStyles(styles)(TweetButton);
