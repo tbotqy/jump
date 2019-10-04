@@ -105,7 +105,7 @@ class UserPage extends React.Component {
                           { this.headerText() }
                         </Grid>
                         <Grid item>
-                          <TweetButton text={ document.title } buttonText={ "共有" } inTwitterBrandColor />
+                          <TweetButton buttonText={ "共有" } inTwitterBrandColor />
                         </Grid>
                       </Grid>
                       <Container>

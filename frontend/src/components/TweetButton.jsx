@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
 import { TwitterShareButton } from "react-share";
@@ -23,12 +24,15 @@ const styles = theme => ({
   }
 });
 
-const TweetButton = ({ text, buttonText = "ツイート", classes, inTwitterBrandColor = false }) => {
+const TweetButton = ({ buttonText = "ツイート", classes, match, inTwitterBrandColor = false }) => {
+  const [ title, setTitle ] = useState("");
   const iconColor = inTwitterBrandColor ? "white" : "gray";
   const textColor = inTwitterBrandColor ? "white" : "textSecondary";
 
+  useEffect(() => setTitle(document.title), [ match.url ]);
+
   return(
-    <TwitterShareButton url={ url() } title={ text || document.title }>
+    <TwitterShareButton url={ url() } title={ title }>
       <Button size="small" className={ clsx({ [classes.button]: inTwitterBrandColor }) }>
         <TwitterIcon htmlColor={ iconColor } fontSize="small" />
         <Typography variant="body2" color={ textColor } className={ classes.iconText }>{ buttonText }</Typography>
@@ -37,4 +41,4 @@ const TweetButton = ({ text, buttonText = "ツイート", classes, inTwitterBran
   );
 };
 
-export default withStyles(styles)(TweetButton);
+export default withRouter(withStyles(styles)(TweetButton));
