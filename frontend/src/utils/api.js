@@ -114,3 +114,12 @@ export function fetchImportProgress() {
 export function fetchStats() {
   return api.get("/stats");
 }
+
+
+/*
+ * New arrivals
+ */
+
+export function fetchNewArrivals() {
+  return api.get("/users");
+}

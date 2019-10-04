@@ -9,15 +9,19 @@ import {
   Container,
   Hidden,
   Chip,
-  CircularProgress
+  CircularProgress,
+  Avatar,
+  IconButton
 } from "@material-ui/core";
+import shortid from "shortid";
 import {
   PAGE_TITLE_TOP,
   TOP_DESCRIPTION
 } from "../utils/pageHead";
 import {
   PUBLIC_TIMELINE_PATH,
-  TERMS_AND_PRIVACY_PATH
+  TERMS_AND_PRIVACY_PATH,
+  USER_PAGE_PATH
 } from "../utils/paths";
 import { Input as InputIcon } from "@material-ui/icons";
 import BrandLogo from "./BrandLogo";
@@ -27,7 +31,10 @@ import Footer from "./Footer";
 import LeadText from "./top/LeadText";
 import MockUp from "./top/MockUp";
 import Head from "./Head";
-import { fetchStats } from "../utils/api";
+import {
+  fetchStats,
+  fetchNewArrivals,
+} from "../utils/api";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 
 const styles = theme => ({
@@ -46,6 +53,8 @@ const styles = theme => ({
 
 const Top = props => {
   const [ tweetCountText, setTweetCount ] = useState(null);
+  const [ newArrivals, setNewArrivals ]   = useState([]);
+
   useEffect(() => {
     (async() => {
       try {
@@ -55,7 +64,15 @@ const Top = props => {
         props.setApiErrorCode(error.response.status);
       }
     })();
-  });
+    (async() => {
+      try {
+        const response = await fetchNewArrivals();
+        setNewArrivals(response.data);
+      } catch(error) {
+        props.setApiErrorCode(error.response.status);
+      }
+    })();
+  }, []);
 
   return(
     <ApiErrorBoundary>
@@ -126,6 +143,29 @@ const Top = props => {
               </Grid>
             </Hidden>
           </Grid>
+          <Box pt={ 6 } pb={ 6 }>
+            <Typography gutterBottom variant="h6" component="h3" color="textSecondary">新着ユーザー</Typography>
+            <Box pt={ 2 }>
+              {
+                newArrivals.length === 0 ?
+                  <Grid container alignItems="center" justify="center">
+                    <Grid item>
+                      <CircularProgress />
+                    </Grid>
+                  </Grid> :
+                  <Grid container direction="row" alignItems="center" justify="space-between">
+                    { newArrivals.map( user => (
+                      <Grid item key={ shortid.generate() }>
+                        <IconButton component={ Link } to={ `${USER_PAGE_PATH}/${user.screen_name}` }>
+                          <Avatar src={ user.avatar_url } />
+                        </IconButton>
+                      </Grid>
+                    ))
+                    }
+                  </Grid>
+              }
+            </Box>
+          </Box>
         </Container>
         <Box pt={ 5 } textAlign="center">
           <Ad slot={ process.env.REACT_APP_AD_SLOT_TOP } />
