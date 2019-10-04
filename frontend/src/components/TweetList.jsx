@@ -1,4 +1,5 @@
 import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import shortid from "shortid";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -10,6 +11,12 @@ import {
 } from "@material-ui/core";
 import TweetCard from "./TweetCard";
 import { API_ERROR_CODE_NOT_FOUND } from "../utils/api";
+
+const styles = () => ({
+  list: {
+    width: "100%"
+  }
+});
 
 const tweetCardPropsByTweet = tweet => {
   const ret = {
@@ -53,7 +60,7 @@ class TweetList extends React.Component {
 
   render() {
     return(
-      <List>
+      <List className={ this.props.classes.list }>
         <InfiniteScroll
           dataLength={ this.props.tweets.length }
           next={ this.loadMore.bind(this) }
@@ -87,4 +94,4 @@ class TweetList extends React.Component {
   }
 }
 
-export default withRouter(TweetList);
+export default withRouter(withStyles(styles)(TweetList));
