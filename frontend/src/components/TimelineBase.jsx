@@ -68,7 +68,9 @@ class TimelineBase extends React.Component {
               </Grid>
             </Grid>
             <Container>
-              <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
+              <Box pt={ 2 } pb={ 2 }>
+                <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
+              </Box>
             </Container>
             <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
               { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
