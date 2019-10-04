@@ -64,7 +64,7 @@ class TimelineBase extends React.Component {
                 { this.headerText() }
               </Grid>
               <Grid item>
-                { this.props.showTweetButton && <TweetButton text={ document.title } buttonText={ "共有" } inTwitterBrandColor /> }
+                { this.props.showTweetButton && <TweetButton buttonText={ "共有" } inTwitterBrandColor /> }
               </Grid>
             </Grid>
             <Container>
