@@ -47,9 +47,22 @@ class User < ApplicationRecord
       user
     end
 
+    def new_arrivals!
+      users = order(id: :desc).limit(Settings.new_arrival_users_count)
+      raise ActiveRecord::RecordNotFound unless users.exists?
+      users
+    end
+
     def find_latest_by_screen_name!(screen_name)
       where(screen_name: screen_name).order(updated_at: :asc).last!
     end
+  end
+
+  def as_index_json
+    {
+      screen_name: screen_name,
+      avatar_url:  avatar_url
+    }
   end
 
   def as_tweet_user_json
