@@ -54,6 +54,7 @@ const styles = theme => ({
 const Top = props => {
   const [ tweetCountText, setTweetCount ] = useState(null);
   const [ newArrivals, setNewArrivals ]   = useState([]);
+  const { setApiErrorCode } = props;
 
   useEffect(() => {
     (async() => {
@@ -61,7 +62,7 @@ const Top = props => {
         const response = await fetchStats();
         setTweetCount(response.data.status_count);
       } catch(error) {
-        props.setApiErrorCode(error.response.status);
+        setApiErrorCode(error.response.status);
       }
     })();
     (async() => {
@@ -69,7 +70,7 @@ const Top = props => {
         const response = await fetchNewArrivals();
         setNewArrivals(response.data);
       } catch(error) {
-        props.setApiErrorCode(error.response.status);
+        setApiErrorCode(error.response.status);
       }
     })();
   }, []);
