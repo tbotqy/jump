@@ -7,8 +7,7 @@ import {
   Typography,
   IconButton
 } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import TwitterIcon from "@material-ui/icons/Twitter";
 import { withStyles } from "@material-ui/core/styles";
 import {
   ROOT_PATH,
@@ -58,7 +57,7 @@ const Footer = props => {
           <Grid container direction="row" justify="center" alignItems="center" spacing={ 2 }>
             <Grid item>
               <IconButton href={ `//twitter.com/${adminTwitterScreenName}` } target="_blank">
-                <FontAwesomeIcon icon={ faTwitter }/>
+                <TwitterIcon />
               </IconButton>
             </Grid>
             <Grid item>
