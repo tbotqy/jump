@@ -59,7 +59,7 @@ class TimelineBase extends React.Component {
         <ApiErrorBoundary>
           <HeadProgressBar />
           <Container maxWidth="md" className={ this.props.classes.container }>
-            <Grid container justify="space-between">
+            <Grid container justify="space-between" alignItems="center">
               <Grid item>
                 { this.headerText() }
               </Grid>

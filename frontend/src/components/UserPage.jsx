@@ -100,7 +100,7 @@ class UserPage extends React.Component {
                   { this.state.showMessage ?
                     this.errorMessage() :
                     <Box pt={ 3 }>
-                      <Grid container justify="space-between">
+                      <Grid container justify="space-between" alignItems="center">
                         <Grid item>
                           { this.headerText() }
                         </Grid>
