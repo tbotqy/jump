@@ -23,15 +23,15 @@ const styles = theme => ({
   }
 });
 
-const TweetButton = ({ text, classes, inTwitterBrandColor = false }) => {
+const TweetButton = ({ text, buttonText = "ツイート", classes, inTwitterBrandColor = false }) => {
   const iconColor = inTwitterBrandColor ? "white" : "gray";
   const textColor = inTwitterBrandColor ? "white" : "textSecondary";
 
   return(
-    <TwitterShareButton url={ url() } title={ text }>
+    <TwitterShareButton url={ url() } title={ text || document.title }>
       <Button size="small" className={ clsx({ [classes.button]: inTwitterBrandColor }) }>
         <TwitterIcon htmlColor={ iconColor } fontSize="small" />
-        <Typography variant="body" color={ textColor } className={ classes.iconText }>ツイート</Typography>
+        <Typography variant="body" color={ textColor } className={ classes.iconText }>{ buttonText }</Typography>
       </Button>
     </TwitterShareButton>
   );

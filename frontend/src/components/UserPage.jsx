@@ -105,7 +105,7 @@ class UserPage extends React.Component {
                           { this.headerText() }
                         </Grid>
                         <Grid item>
-                          <TweetButton text={ document.title } inTwitterBrandColor />
+                          <TweetButton text={ document.title } buttonText={ "共有" } inTwitterBrandColor />
                         </Grid>
                       </Grid>
                       <Container>
@@ -201,11 +201,10 @@ class UserPage extends React.Component {
 
   headerText() {
     const { selectedYear, selectedMonth, selectedDay } = this.props;
-    const { screenName } = this.props.match.params;
     if( selectedYear && selectedMonth && selectedDay ) {
       return (
         <Typography component="h1" variant="h5" color="textSecondary">
-          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName) }
+          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay) }
         </Typography>
       );
     } else {
