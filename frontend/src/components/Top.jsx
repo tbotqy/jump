@@ -77,7 +77,7 @@ const Top = props => {
         setApiErrorCode(error.response.status);
       }
     })();
-  }, []);
+  }, [ setApiErrorCode ]);
 
   return(
     <ApiErrorBoundary>

@@ -14,7 +14,6 @@ import DateSelectors from "../containers/DateSelectorsContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import timelineTitleText from "../utils/timelineTitleText";
 import scrollToTop   from "./../utils/scrollToTop";
-import Ad            from "./Ad";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import TweetList     from "../containers/TweetListContainer";
 import TweetButton from "./TweetButton";
@@ -67,11 +66,6 @@ class TimelineBase extends React.Component {
                 { this.props.showTweetButton && <TweetButton buttonText={ "共有" } inTwitterBrandColor /> }
               </Grid>
             </Grid>
-            <Container>
-              <Box pt={ 2 } pb={ 2 }>
-                <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
-              </Box>
-            </Container>
             <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
               { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
             </Grid>
