@@ -23,7 +23,6 @@ import {
   Typography,
   Box
 } from "@material-ui/core";
-import Ad            from "./Ad";
 import TweetList     from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import TweetButton from "./TweetButton";
@@ -108,11 +107,6 @@ class UserPage extends React.Component {
                           <TweetButton buttonText={ "共有" } inTwitterBrandColor />
                         </Grid>
                       </Grid>
-                      <Container>
-                        <Box pt={ 2 } pb={ 2 }>
-                          <Ad slot={ process.env.REACT_APP_AD_SLOT_ABOVE_TWEETS } />
-                        </Box>
-                      </Container>
                       <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
                         { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ tweetsFetchFunc(this.state.currentUser.id) } /> }
                       </Grid>
