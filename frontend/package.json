@@ -27,7 +27,7 @@
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.15",
     "twitter-text": "^3.0.0",
-    "typescript": "^3.6.3",
+    "typescript": "^3.6.4",
     "xss": "^1.0.6"
   },
   "scripts": {
