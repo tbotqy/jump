@@ -8522,10 +8522,10 @@ react-tweet-embed@^1.2.2:
   resolved "https://registry.yarnpkg.com/react-tweet-embed/-/react-tweet-embed-1.2.2.tgz#b518510a6e6ef17609f9c9b16bc4775624730d8a"
   integrity sha512-Y932BlSaJsDUsKDucC2opzzd+uhc0YNhrlTa/4Beb2be1od+AjLGo6Fhuo2wPT0D+fF4VTXOyoZyA8Yc88RdYA==
 
-react@^16.10.1:
-  version "16.10.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.10.1.tgz#967c1e71a2767dfa699e6ba702a00483e3b0573f"
-  integrity sha512-2bisHwMhxQ3XQz4LiJJwG3360pY965pTl/MRrZYxIBKVj4fOHoDs5aZAkYXGxDRO1Li+SyjTAilQEbOmtQJHzA==
+react@^16.11.0:
+  version "16.11.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
+  integrity sha512-M5Y8yITaLmU0ynd0r1Yvfq98Rmll6q8AxaEe88c8e7LxO8fZ2cNgmFt0aGAS9wzf1Ao32NKXtCl+/tVVtkxq6g==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
