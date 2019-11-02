@@ -22,7 +22,6 @@ gem "sidekiq-cron", "~> 1.1"
 gem "redis-namespace"
 gem "redis-objects"
 gem "bootsnap", ">= 1.1.0", require: false
-gem "activerecord-import"
 gem "devise"
 gem "sentry-raven"
 gem "kaminari"

@@ -49,8 +49,6 @@ GEM
     activerecord (6.0.0)
       activemodel (= 6.0.0)
       activesupport (= 6.0.0)
-    activerecord-import (1.0.2)
-      activerecord (>= 3.2)
     activestorage (6.0.0)
       actionpack (= 6.0.0)
       activejob (= 6.0.0)
@@ -367,7 +365,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-import
   bootsnap (>= 1.1.0)
   bullet
   codecov
