@@ -55,11 +55,7 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "eslint-plugin-jest": "^22.17.0",
-=======
     "eslint-plugin-jest": "^23.0.2",
->>>>>>> origin/master
     "eslint-plugin-react": "^7.16.0"
   }
 }
