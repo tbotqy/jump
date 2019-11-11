@@ -17,8 +17,13 @@ jobs:
         ports:
         - 6379
 
-    container:
-      image: ruby:2.6.5
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up Ruby 2.6
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.6.5
       env:
         TZ: Asia/Tokyo
         RAILS_ENV: test
@@ -33,9 +38,6 @@ jobs:
         AUTHORIZED_HOST: foo.com
         SENTRY_CLIENT_KEY: https://foo@sentry.io/1234567
         ADMIN_USER_TWITTER_ID: 12345
-
-    steps:
-    - uses: actions/checkout@v1
 
     - name: Install dependencies
       run: bundle install --jobs 4 --deployment
