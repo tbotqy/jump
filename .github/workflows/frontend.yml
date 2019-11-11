@@ -9,6 +9,12 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/frontend/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
     - name: Lint
       working-directory: frontend
       run: |
@@ -22,6 +28,12 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/frontend/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
     - name: Test
       working-directory: frontend
       run: |
@@ -35,6 +47,12 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/frontend/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
     - name: Build
       working-directory: frontend
       run: |
