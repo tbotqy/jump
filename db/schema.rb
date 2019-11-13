@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_01_080630) do
+ActiveRecord::Schema.define(version: 2019_11_13_143100) do
 
   create_table "followees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -51,12 +51,12 @@ ActiveRecord::Schema.define(version: 2019_10_01_080630) do
     t.string "place_full_name"
     t.integer "retweet_count"
     t.string "source", null: false
-    t.string "text", limit: 280, null: false
+    t.text "text", null: false
     t.boolean "is_retweet", null: false
     t.string "rt_name"
     t.string "rt_screen_name"
     t.string "rt_avatar_url"
-    t.string "rt_text", limit: 280
+    t.text "rt_text"
     t.string "rt_source"
     t.integer "rt_created_at"
     t.boolean "possibly_sensitive", null: false
