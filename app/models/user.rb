@@ -48,7 +48,7 @@ class User < ApplicationRecord
     end
 
     def new_arrivals!
-      users = order(id: :desc).limit(Settings.new_arrival_users_count)
+      users = not_protected.order(id: :desc).limit(Settings.new_arrival_users_count)
       raise ActiveRecord::RecordNotFound unless users.exists?
       users
     end
