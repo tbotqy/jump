@@ -38,7 +38,7 @@ RSpec.describe Status, type: :model do
     end
     describe "#text" do
       it { should validate_presence_of(:text) }
-      it { should validate_length_of(:text).is_at_most(280) }
+      it { should validate_length_of(:text).is_at_most(304) }
     end
     describe "#is_retweet" do
       include_examples "should validate before_type_cast is a boolean", :status, :is_retweet
@@ -60,7 +60,7 @@ RSpec.describe Status, type: :model do
         end
         describe "#rt_text" do
           it { should validate_presence_of(:rt_text) }
-          it { should validate_length_of(:rt_text).is_at_most(280) }
+          it { should validate_length_of(:rt_text).is_at_most(304) }
         end
         describe "#rt_source" do
           it { should validate_presence_of(:rt_source) }
