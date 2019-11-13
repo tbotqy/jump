@@ -60,7 +60,7 @@ RSpec.describe Status, type: :model do
         end
         describe "#rt_text" do
           it { should validate_presence_of(:rt_text) }
-          it { should validate_length_of(:rt_text).is_at_most(255) }
+          it { should validate_length_of(:rt_text).is_at_most(280) }
         end
         describe "#rt_source" do
           it { should validate_presence_of(:rt_source) }
