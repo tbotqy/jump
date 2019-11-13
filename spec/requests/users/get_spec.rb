@@ -10,6 +10,14 @@ RSpec.describe "Users", type: :request do
       it_behaves_like "respond with status code", :not_found
     end
     context "some users exist" do
+      describe "only non-protected users are included" do
+        let!(:protected_users) { create_list(:user, 2, protected_flag: true, screen_name: "a protected user") }
+        let!(:non_protected_users) { create_list(:user, 2, protected_flag: false, screen_name: "a non-protected user") }
+        it do
+          subject
+          expect(response.parsed_body.map { |item| item["screen_name"] }).to contain_exactly("a non-protected user", "a non-protected user")
+        end
+      end
       describe "number of returned items and their order" do
         before { (1..user_count).each { |n| create(:user, screen_name: "#{n}th_user") } }
 
