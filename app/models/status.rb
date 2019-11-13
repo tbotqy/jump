@@ -19,7 +19,7 @@ class Status < ApplicationRecord
     retweet.validates :rt_name,        presence: true, length: { maximum: 280 }
     retweet.validates :rt_screen_name, presence: true, length: { maximum: 255 }
     retweet.validates :rt_avatar_url,  presence: true, length: { maximum: 255 }
-    retweet.validates :rt_text,        presence: true, length: { maximum: 255 }
+    retweet.validates :rt_text,        presence: true, length: { maximum: 280 }
     retweet.validates :rt_source,      presence: true, length: { maximum: 255 }
     retweet.validates :rt_created_at,  presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   end
