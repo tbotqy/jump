@@ -56,15 +56,15 @@ const styles = theme => ({
 });
 
 const Top = props => {
-  const [ tweetCountText, setTweetCount ] = useState(null);
-  const [ newArrivals, setNewArrivals ]   = useState([]);
+  const [ stats, setStats ] = useState(null);
+  const [ newArrivals, setNewArrivals ] = useState([]);
   const { setApiErrorCode } = props;
 
   useEffect(() => {
     (async() => {
       try {
         const response = await fetchStats();
-        setTweetCount(response.data.status_count);
+        setStats(response.data);
       } catch(error) {
         setApiErrorCode(error.response.status);
       }
@@ -125,7 +125,7 @@ const Top = props => {
                       />
                     </Button>
                     <Box p={ 2 } textAlign="center">
-                      { tweetCountText ? <Chip label={ `${tweetCountText} ツイート` } /> : <CircularProgress size={ 24 } /> }
+                      { stats ? <Chip label={ `${stats.status_count} ツイート / ${stats.user_count} ユーザー` } /> : <CircularProgress size={ 24 } /> }
                     </Box>
                   </Grid>
                   <Grid item lg={ 6 } xs={ 12 }>
