@@ -4,7 +4,8 @@ import { ThemeProvider } from "@material-ui/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   createMuiTheme,
-  responsiveFontSizes
+  responsiveFontSizes,
+  Theme
 } from "@material-ui/core/styles";
 
 import { Provider } from "react-redux";
@@ -27,9 +28,9 @@ import apiErrorReducer from "./reducers/apiErrorReducer";
 import Routes from "./Routes";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-const theme = responsiveFontSizes(createMuiTheme({
-  palette:{
-    background:{
+const theme: Theme = responsiveFontSizes(createMuiTheme({
+  palette: {
+    background: {
       default: "white"
     }
   }
@@ -42,11 +43,11 @@ Sentry.init({
 });
 
 const reducers = combineReducers({ user: userReducer, tweets: tweetsReducer, selectedDate: selectedDateReducer, page: pageReducer, apiError: apiErrorReducer });
-const store    = createStore(reducers, applyMiddleware(thunk, createSentryMiddleware(Sentry)));
+const store    = createStore(reducers, applyMiddleware(thunk, createSentryMiddleware(Sentry as any)));
 //store.subscribe(() => console.log(store.getState()));
 
 class App extends React.Component {
-  render() {
+  render(): React.ReactNode {
     return (
       <ErrorBoundary Sentry={ Sentry }>
         <Provider store={ store }>
