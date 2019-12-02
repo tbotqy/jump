@@ -31,9 +31,9 @@ import {
   TIMELINE_DATE_PARAMS
 } from "./utils/paths";
 
-const ANALYTICS_ID = process.env.REACT_APP_ANALYTICS_ID || "";
+const ANALYTICS_ID: string = process.env.REACT_APP_ANALYTICS_ID || "";
 
-const Routes = () => (
+const Routes = (): React.ReactElement => (
   <SessionManage>
     <Router>
       <Analytics id={ ANALYTICS_ID }>
@@ -46,7 +46,7 @@ const Routes = () => (
           <Route
             exact
             path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS }
-            render={ routerProps => <Auth><HomeTimeline { ...routerProps } /></Auth> }
+            render={ () => <Auth><HomeTimeline /></Auth> }
           />
           <Route
             exact
