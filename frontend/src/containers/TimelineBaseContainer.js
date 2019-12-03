@@ -8,9 +8,9 @@ import TimelineBase from "../components/TimelineBase";
 
 const mapStateToProps = state => ({
   isFetching:    state.tweets.isFetching,
-  selectedYear:  state.selectableDates.selectedYear,
-  selectedMonth: state.selectableDates.selectedMonth,
-  selectedDay:   state.selectableDates.selectedDay
+  selectedYear:  state.selectedDate.selectedYear,
+  selectedMonth: state.selectedDate.selectedMonth,
+  selectedDay:   state.selectedDate.selectedDay
 });
 
 const mapDispatchToProps = dispatch => ({

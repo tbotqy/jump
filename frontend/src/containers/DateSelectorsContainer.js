@@ -7,7 +7,7 @@ import {
   setSelectedYear,
   setSelectedMonth,
   setSelectedDay
-} from "../actions/selectableDatesActions";
+} from "../actions/selectedDateActions";
 import { setApiErrorCode } from "../actions/apiErrorActions";
 import DateSelectors from "../components/timeline/DateSelectors";
 
