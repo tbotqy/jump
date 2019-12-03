@@ -119,15 +119,6 @@ jobs:
 
 workflows:
   version: 2
-  frontend:
-    jobs:
-      - lint_frontend:
-          filters:
-            branches:
-              ignore:
-                - master
-      - test_frontend
-      - build_frontend
   backend:
     jobs:
       - lint_backend:
