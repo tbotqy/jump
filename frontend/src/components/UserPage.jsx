@@ -48,8 +48,8 @@ const styles = theme => ({
 });
 
 // to be passed to the child
-const tweetsFetchFunc = userId => (year, month, day, page) => (
-  fetchUserTweets(year, month, day, page, userId)
+const tweetsFetchFunc = userId => dateParams => (
+  fetchUserTweets(dateParams, userId)
 );
 
 class UserPage extends React.Component {
@@ -143,7 +143,7 @@ class UserPage extends React.Component {
   async fetchTweets(userId, year, month, day) {
     this.props.setIsFetching(true);
     try {
-      const response = await fetchUserTweets(year, month, day, 1, userId);
+      const response = await fetchUserTweets({ year, month, day, page: 1 }, userId);
       this.props.setTweets(response.data);
     } catch(error) {
       this.handleTweetDataApiError(error);

@@ -81,7 +81,7 @@ class TweetList extends React.Component {
     const { year, month, day } = this.props.match.params;
     const nextPage = this.props.page + 1;
     try {
-      const response = await this.props.onLoadMoreTweetsFetchFunc(year, month, day, nextPage);
+      const response = await this.props.onLoadMoreTweetsFetchFunc({ year, month, day, page: nextPage });
       this.props.appendTweets(response.data);
       this.props.setPage(nextPage);
     } catch(error) {
