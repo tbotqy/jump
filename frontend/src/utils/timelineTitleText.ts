@@ -1,7 +1,12 @@
 import dateText from "./dateText";
 const serviceName = process.env.REACT_APP_SERVICE_NAME;
 
-export default function timelineTitleText(timelineName, year, month, day) {
+export default function timelineTitleText(
+  timelineName: string,
+  year: string,
+  month: string,
+  day: string
+): string {
   if(!timelineName) {
     throw new Error("timelineName is not given.");
   }

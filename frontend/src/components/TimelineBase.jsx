@@ -97,7 +97,7 @@ class TimelineBase extends React.Component {
   async fetchTweets(year, month, day) {
     this.props.setIsFetching(true);
     try {
-      const response = await this.props.tweetsFetchFunc(year, month, day);
+      const response = await this.props.tweetsFetchFunc({ year, month, day });
       this.props.setTweets(response.data);
     } catch(error) {
       error.response && this.props.setApiErrorCode(error.response.status);

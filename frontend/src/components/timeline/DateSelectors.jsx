@@ -4,13 +4,13 @@ import scrollToTop    from "../../utils/scrollToTop";
 import { Grid }       from "@material-ui/core";
 import Selector       from "./date_selectors/Selector";
 
-import DateCollection from "../../utils/DateCollection";
+import DateParser from "../../utils/DateParser";
 
 class DateSelectors extends React.Component {
   constructor(props) {
     super(props);
 
-    const dateParser = new DateCollection(props.selectableDates);
+    const dateParser = new DateParser(props.selectableDates);
     this.dateParser  = dateParser;
 
     const { year, month, day } = props.match.params;
@@ -128,7 +128,7 @@ class DateSelectors extends React.Component {
   async fetchTweets(year, month, day) {
     this.props.setIsFetching(true);
     try {
-      const response = await this.props.onSelectionChangeTweetsFetchFunc(year, month, day);
+      const response = await this.props.onSelectionChangeTweetsFetchFunc({ year, month, day });
       this.props.setTweets(response.data);
     } catch(error) {
       this.props.setApiErrorCode(error.response.status);

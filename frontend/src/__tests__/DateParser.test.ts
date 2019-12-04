@@ -1,6 +1,6 @@
-import DateCollection from "../utils/DateCollection";
+import DateParser, { Dates } from "../utils/DateParser";
 
-const dates = [
+const dates: Dates = [
   {
     "2019": [ { "12": [ "31", "30" ] }, { "11": [ "30", "29" ] } ]
   },
@@ -9,7 +9,7 @@ const dates = [
   }
 ];
 
-const instance = new DateCollection(dates);
+const instance = new DateParser(dates);
 
 describe("#years", () => {
   it("returns all the years", () => {
@@ -25,25 +25,25 @@ describe("#latestYear", () => {
 
 describe("#latestMonth", () => {
   it("returns the latest month of the collection", () => {
-    expect(instance.latestMonth()).toEqual("12");
+    expect((instance as any).latestMonth()).toEqual("12");
   });
 });
 
 describe("#latestDay", () => {
   it("returns the latest day of the collection", () => {
-    expect(instance.latestDay()).toEqual("31");
+    expect((instance as any).latestDay()).toEqual("31");
   });
 });
 
 describe("#latestMonths", () => {
   it("returns the latest month of the collection", () => {
-    expect(instance.latestMonth()).toEqual("12");
+    expect((instance as any).latestMonth()).toEqual("12");
   });
 });
 
 describe("#latestDays", () => {
   it("returns the days of the latest month of the collection", () => {
-    expect(instance.latestDays()).toEqual([ "31", "30" ]);
+    expect((instance as any).latestDays()).toEqual([ "31", "30" ]);
   });
 });
 
@@ -67,7 +67,7 @@ describe("#monthsByYear", () => {
 
 describe("#monthsAndDaysByYear", () => {
   it("returns the hash of given year", () => {
-    expect(instance.monthsAndDaysByYear("2018")).toEqual([ { "10": [ "28", "27" ] }, { "9": [ "26", "25" ] } ]);
+    expect((instance as any).monthsAndDaysByYear("2018")).toEqual([ { "10": [ "28", "27" ] }, { "9": [ "26", "25" ] } ]);
   });
 });
 
@@ -80,7 +80,7 @@ describe("#daysByYearAndMonth", () => {
 describe("#keysOf", () => {
   it("returns the keys of given hash", () => {
     expect(
-      instance.keysOf(
+      (instance as any).keysOf(
         [
           { "a": "A" },
           { "b": "B" }

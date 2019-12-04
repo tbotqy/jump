@@ -1,16 +1,3 @@
-export default function dateText(year, month, day) {
-  validateParams(year, month, day);
-
-  let ret = `${year}年`;
-  if(month) {
-    ret += `${month}月`;
-  }
-  if(day) {
-    ret += `${day}日`;
-  }
-  return ret;
-}
-
 /*
  * Invalid patterns:
  * - null/null/null
@@ -18,7 +5,7 @@ export default function dateText(year, month, day) {
  * - 2019/null/1
  * - null/null/1
  */
-function validateParams(year, month, day) {
+function validateParams(year?: string, month?: string, day?: string): void {
   if(!year && !month && !day) {
     throw new Error("Nothing is given");
   }
@@ -35,4 +22,17 @@ function validateParams(year, month, day) {
     throw new Error("Year and Month are not given while Day is given");
   }
   return;
+}
+
+export default function dateText(year: string, month: string, day: string): string {
+  validateParams(year, month, day);
+
+  let ret = `${year}年`;
+  if(month) {
+    ret += `${month}月`;
+  }
+  if(day) {
+    ret += `${day}日`;
+  }
+  return ret;
 }

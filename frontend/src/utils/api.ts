@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosPromise } from "axios";
 import getUserIdFromCookie from "./getUserIdFromCookie";
 
 axios.defaults.withCredentials = true;
@@ -14,64 +14,91 @@ export const API_ERROR_CODE_TOO_MANY_REQUESTS = 429;
 const apiOrigin = process.env.REACT_APP_API_ORIGIN;
 
 const api = {
-  get: (path, params = {}) => {
+  get: (path: string, params = {}): AxiosPromise => {
     return axios.get(apiOrigin + path, { params });
   },
-  post: (path, params = {}) => {
+  post: (path: string, params = {}): AxiosPromise => {
     return axios.post(apiOrigin + path, { params });
   },
-  put: path => {
+  put: (path: string): AxiosPromise => {
     return axios.put(apiOrigin + path);
   },
-  delete: path => {
+  delete: (path: string): AxiosPromise => {
     return axios.delete(apiOrigin + path);
   }
 };
 
 export default api;
 
-const authenticatedUserId = getUserIdFromCookie();
+const authenticatedUserId: string | undefined = getUserIdFromCookie();
 
 /*
  * User
  */
 
-export function fetchAuthenticatedUser() {
+export function fetchAuthenticatedUser(): AxiosPromise {
   return api.get("/me");
 }
 
-export function fetchUserByScreenName(screenName) {
+export function fetchUserByScreenName(screenName: string): AxiosPromise {
   return api.get(`/users/${screenName}`);
 }
 
-export function deleteUser() {
+export function deleteUser(): AxiosPromise {
   return api.delete(`/users/${authenticatedUserId}`);
 }
+
+/*
+ * Types of date parameter
+ */
+
+interface None {
+  year: undefined;
+  month: undefined;
+  day: undefined;
+}
+
+interface YearOnly {
+  year: string;
+  month: undefined;
+  day: undefined;
+}
+
+interface YearAndMonthOnly {
+  year: string;
+  month: string;
+  day: undefined;
+}
+
+interface All {
+  year: string;
+  month: string;
+  day: string;
+}
+
+type DateParams = (None | YearOnly | YearAndMonthOnly | All) & { page?: number }
 
 /*
  * Tweet
  */
 
-export function fetchPublicTweets(year, month, day, page) {
-  const params = { year, month, day, page };
+export function fetchPublicTweets(params: DateParams): AxiosPromise {
   return api.get("/statuses", params);
 }
 
-export function fetchUserTweets(year, month, day, page = 1, userId = authenticatedUserId) {
-  const params = { year, month, day, page };
+export function fetchUserTweets(params: DateParams, userId = authenticatedUserId): AxiosPromise {
   return api.get(`/users/${userId}/statuses`, params);
 }
 
-export function fetchFolloweeTweets(year, month, day, page) {
-  const params = { year, month, day, page };
+export function fetchFolloweeTweets(params: DateParams): AxiosPromise {
   return api.get(`/users/${authenticatedUserId}/followees/statuses`, params);
 }
 
-export function requestInitialTweetImport() {
+export function requestInitialTweetImport(): AxiosPromise {
   return api.post(`/users/${authenticatedUserId}/statuses`);
 }
 
-export function requestAdditionalTweetImport() {
+export function requestAdditionalTweetImport(): AxiosPromise {
   return api.put(`/users/${authenticatedUserId}/statuses`);
 }
 
@@ -79,15 +106,15 @@ export function requestAdditionalTweetImport() {
  * SelectableDate
  */
 
-export function fetchPublicSelectableDates() {
+export function fetchPublicSelectableDates(): AxiosPromise  {
   return api.get("/tweeted_dates");
 }
 
-export function fetchUserSelectableDates(userId = authenticatedUserId) {
+export function fetchUserSelectableDates(userId = authenticatedUserId): AxiosPromise  {
   return api.get(`/users/${userId}/tweeted_dates`);
 }
 
-export function fetchFolloweeSelectableDates() {
+export function fetchFolloweeSelectableDates(): AxiosPromise  {
   return api.get(`/users/${authenticatedUserId}/followees/tweeted_dates`);
 }
 
@@ -95,7 +122,7 @@ export function fetchFolloweeSelectableDates() {
  * Followee
  */
 
-export function requestFolloweeImport() {
+export function requestFolloweeImport(): AxiosPromise  {
   return api.post(`/users/${authenticatedUserId}/followees`);
 }
 
@@ -103,7 +130,7 @@ export function requestFolloweeImport() {
  * ImportProgress
  */
 
-export function fetchImportProgress() {
+export function fetchImportProgress(): AxiosPromise  {
   return api.get(`/users/${authenticatedUserId}/tweet_import_progress`);
 }
 
@@ -111,7 +138,7 @@ export function fetchImportProgress() {
  * stats
  */
 
-export function fetchStats() {
+export function fetchStats(): AxiosPromise  {
   return api.get("/stats");
 }
 
@@ -120,6 +147,6 @@ export function fetchStats() {
  * New arrivals
  */
 
-export function fetchNewArrivals() {
+export function fetchNewArrivals(): AxiosPromise  {
   return api.get("/users");
 }

@@ -1,6 +1,6 @@
 import { User } from "../user/types";
 
-interface UrlEntity {
+export interface UrlEntity {
   url: string;
   display_url: string;
   indices: [number, number];
