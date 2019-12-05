@@ -1,12 +1,13 @@
 import { connect } from "react-redux";
-import { resetApiErrorCode } from "../actions/apiErrorActions";
+import { resetApiErrorCode } from "../store/api_error/actions";
 import ApiErrorBoundary from "../components/ApiErrorBoundary";
+import { AppState } from "../store";
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: AppState) => ({
   apiErrorCode: state.apiError.code
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: any) => ({
   resetApiErrorCode: () => dispatch(resetApiErrorCode())
 });
 
