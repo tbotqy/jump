@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import HeadNav from "../components/HeadNav";
+import { AppState } from "../store";
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state: AppState) => ({
   isAuthenticated: state.user.isAuthenticated
 });
 
