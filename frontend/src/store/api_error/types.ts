@@ -1,5 +1,5 @@
 export interface ApiErrorState {
-  code?: number;
+  readonly code?: number;
 }
 
 export const SET_API_ERROR_CODE = "SET_API_ERROR_CODE";

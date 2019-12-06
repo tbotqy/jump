@@ -5,8 +5,8 @@ export interface User {
 }
 
 export interface UserState {
-  isAuthenticated: boolean;
-  user?: User;
+  readonly isAuthenticated: boolean;
+  readonly user?: User;
 }
 
 export const SET_USER = "SET_USER";
