@@ -1,7 +1,7 @@
 export interface SelectedDateState {
-  selectedYear?:  number;
-  selectedMonth?: number;
-  selectedDay?:   number;
+  readonly selectedYear?:  number;
+  readonly selectedMonth?: number;
+  readonly selectedDay?:   number;
 }
 
 export const SET_SELECTED_YEAR = "SET_SELECTED_YEAR";

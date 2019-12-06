@@ -1,5 +1,5 @@
 export interface PageState {
-  page: number;
+  readonly page: number;
 }
 
 export const SET_PAGE = "SET_PAGE";

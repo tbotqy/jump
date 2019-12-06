@@ -20,10 +20,10 @@ export interface Tweet {
 }
 
 export interface TweetState {
-  tweets: Tweet[];
-  isFetching: boolean;
-  hasMore: boolean;
-  noTweetFound: boolean;
+  readonly tweets: Tweet[];
+  readonly isFetching: boolean;
+  readonly hasMore: boolean;
+  readonly noTweetFound: boolean;
 }
 
 export const SET_TWEETS = "SET_TWEETS";
