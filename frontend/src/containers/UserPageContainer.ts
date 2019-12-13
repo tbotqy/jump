@@ -6,7 +6,7 @@ import {
 import { setApiErrorCode } from "../store/api_error/actions";
 import UserPage from "../components/UserPage";
 import { AppState } from "../store";
-import { Tweet } from "../store/tweet/types";
+import { Tweet } from "../models/tweet";
 
 const mapStateToProps = (state: AppState) => ({
   isFetching:    state.tweets.isFetching,

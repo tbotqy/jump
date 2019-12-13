@@ -1,23 +1,4 @@
-import { User } from "../user/types";
-
-export interface UrlEntity {
-  url: string;
-  display_url: string;
-  indices: [number, number];
-}
-
-export interface Tweet {
-  tweet_id: number;
-  text: string;
-  tweeted_at: string;
-  rt_avatar_url?: string;
-  rt_name?: string;
-  rt_screen_name?: string;
-  rt_text?: string;
-  rt_created_at?: string;
-  urls: UrlEntity[];
-  user: User;
-}
+import { Tweet } from "../../models/tweet";
 
 export interface TweetState {
   readonly tweets: Tweet[];

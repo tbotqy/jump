@@ -76,21 +76,21 @@ interface All {
   day: string;
 }
 
-type DateParams = (None | YearOnly | YearAndMonthOnly | All) & { page?: number }
-
+export type DateParams = None | YearOnly | YearAndMonthOnly | All
+export type PaginatableDateParams = DateParams & { page?: number }
 /*
  * Tweet
  */
 
-export function fetchPublicTweets(params: DateParams): AxiosPromise {
+export function fetchPublicTweets(params: PaginatableDateParams): AxiosPromise {
   return api.get("/statuses", params);
 }
 
-export function fetchUserTweets(params: DateParams, userId = authenticatedUserId): AxiosPromise {
+export function fetchUserTweets(params: PaginatableDateParams, userId = authenticatedUserId): AxiosPromise {
   return api.get(`/users/${userId}/statuses`, params);
 }
 
-export function fetchFolloweeTweets(params: DateParams): AxiosPromise {
+export function fetchFolloweeTweets(params: PaginatableDateParams): AxiosPromise {
   return api.get(`/users/${authenticatedUserId}/followees/statuses`, params);
 }
 

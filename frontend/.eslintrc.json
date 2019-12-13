@@ -78,6 +78,7 @@
       "error",
       { "when": "always", "children": true }
     ],
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": "off"
   }
 }

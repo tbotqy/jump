@@ -11,7 +11,7 @@ import {
 import { setApiErrorCode } from "../store/api_error/actions";
 import TweetList from "../components/TweetList";
 import { AppState } from "../store";
-import { Tweet } from "../store/tweet/types";
+import { Tweet } from "../models/tweet";
 
 const mapStateToProps = (state: AppState) => ({
   tweets:  state.tweets.tweets,

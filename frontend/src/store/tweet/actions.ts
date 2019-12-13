@@ -1,5 +1,4 @@
 import {
-  Tweet,
   TweetActionTypes,
   SET_TWEETS,
   APPEND_TWEETS,
@@ -7,6 +6,7 @@ import {
   SET_HAS_MORE,
   RESET_HAS_MORE
 } from "./types";
+import { Tweet } from "../../models/tweet";
 
 export function setTweets(tweets: Tweet[]): TweetActionTypes {
   return {
