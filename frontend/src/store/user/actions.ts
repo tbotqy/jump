@@ -1,9 +1,9 @@
 import {
-  User,
   UserActionTypes,
   SET_USER,
   SET_IS_AUTHENTICATED
 } from "./types";
+import { User } from "../../models/user";
 
 export function setUser(user: User): UserActionTypes {
   return {

@@ -3,7 +3,7 @@ import { setUser } from "../store/user/actions";
 import { setApiErrorCode } from "../store/api_error/actions";
 import DataManagement from "../components/DataManagement";
 import { AppState } from "../store";
-import { User } from "../store/user/types";
+import { User } from "../models/user";
 
 const mapStateToProps = (state: AppState) => ({
   user: state.user.user

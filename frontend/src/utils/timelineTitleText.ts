@@ -1,12 +1,8 @@
 import dateText from "./dateText";
+import { DateParams } from "./api";
 const serviceName = process.env.REACT_APP_SERVICE_NAME;
 
-export default function timelineTitleText(
-  timelineName: string,
-  year: string,
-  month: string,
-  day: string
-): string {
+export default function timelineTitleText(timelineName: string, { year, month, day }: DateParams): string {
   if(!timelineName) {
     throw new Error("timelineName is not given.");
   }
@@ -15,5 +11,5 @@ export default function timelineTitleText(
     return `${timelineName} - ${serviceName}`;
   }
 
-  return `${dateText(year, month, day)}の${timelineName} - ${process.env.REACT_APP_SERVICE_NAME}`;
+  return `${dateText({ year, month, day } as DateParams)}の${timelineName} - ${process.env.REACT_APP_SERVICE_NAME}`;
 }

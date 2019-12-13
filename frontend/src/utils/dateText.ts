@@ -1,3 +1,5 @@
+import { DateParams } from "./api";
+
 /*
  * Invalid patterns:
  * - null/null/null
@@ -24,7 +26,7 @@ function validateParams(year?: string, month?: string, day?: string): void {
   return;
 }
 
-export default function dateText(year: string, month: string, day: string): string {
+export default function dateText({ year, month, day }: DateParams): string {
   validateParams(year, month, day);
 
   let ret = `${year}年`;

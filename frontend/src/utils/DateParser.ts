@@ -1,20 +1,15 @@
-type Days = string[]
-
-interface Month {
-  [month: string]: Days;
-}
-
-interface Year {
-  [year: string]: Month[];
-}
-
-export type Dates = Year[]
+import {
+  TweetDays,
+  TweetMonth,
+  TweetYear,
+  TweetDates
+} from "../models/tweet_date";
 
 class DateParser {
   /*
     dates: [{"2019": [{"3": ["31", "29"]}]}]
   */
-  constructor(private dates: Dates) {
+  constructor(private dates: TweetDates) {
     if(dates.length === 0) {
       throw Error("Given dates is empty.");
     }
@@ -34,18 +29,18 @@ class DateParser {
   }
 
   public latestDayByYearAndMonth(year: string, month: string): string {
-    const days: Days = this.daysByYearAndMonth(year, month);
+    const days: TweetDays = this.daysByYearAndMonth(year, month);
     return days[0];
   }
 
   public monthsByYear(year: string): string[] {
-    const monthsAndDays: Month[] = this.monthsAndDaysByYear(year);
+    const monthsAndDays: TweetMonth[] = this.monthsAndDaysByYear(year);
     return this.keysOf(monthsAndDays);
   }
 
   public daysByYearAndMonth(year: string, month: string): string[] {
-    const monthsAndDays: Month[] = this.monthsAndDaysByYear(year);
-    const monthAndDays: Month | undefined  = monthsAndDays.find( monthAndDays => Object.keys(monthAndDays)[0] === month );
+    const monthsAndDays: TweetMonth[] = this.monthsAndDaysByYear(year);
+    const monthAndDays: TweetMonth | undefined  = monthsAndDays.find( monthAndDays => Object.keys(monthAndDays)[0] === month );
     if(!monthAndDays) {
       return [];
     }else{
@@ -65,14 +60,14 @@ class DateParser {
     return this.monthsByYear(this.latestYear());
   }
 
-  private latestDays(): Days {
+  private latestDays(): TweetDays {
     const year: string  = this.latestYear();
     const month: string = this.latestMonth();
     return this.daysByYearAndMonth(year, month);
   }
 
-  private monthsAndDaysByYear(year: string): Month[] {
-    const hash: Year | undefined = this.dates.find( (yearAndMonths: Year) => Object.keys(yearAndMonths)[0] === year );
+  private monthsAndDaysByYear(year: string): TweetMonth[] {
+    const hash: TweetYear | undefined = this.dates.find( (yearAndMonths: TweetYear) => Object.keys(yearAndMonths)[0] === year );
     if(!hash) {
       return [];
     }else{
@@ -81,7 +76,7 @@ class DateParser {
   }
 
   private keysOf(collectionOfHash: {}[]): string[] {
-    return collectionOfHash.flatMap( (item: Year | Month): string[] => Object.keys(item) );
+    return collectionOfHash.flatMap( (item: TweetYear | TweetMonth): string[] => Object.keys(item) );
   }
 }
 

@@ -1,8 +1,4 @@
-export interface User {
-  name: string;
-  screen_name: string;
-  avatar_url: string;
-}
+import { User } from "../../models/user";
 
 export interface UserState {
   readonly isAuthenticated: boolean;

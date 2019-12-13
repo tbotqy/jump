@@ -9,7 +9,6 @@ import {
 import { Provider } from "react-redux";
 import Routes from "./Routes";
 import ErrorBoundary from "./components/ErrorBoundary";
-import Sentry from "./sentry";
 import store from "./store";
 
 const theme: Theme = responsiveFontSizes(createMuiTheme({
@@ -23,7 +22,7 @@ const theme: Theme = responsiveFontSizes(createMuiTheme({
 class App extends React.Component {
   render(): React.ReactNode {
     return (
-      <ErrorBoundary Sentry={ Sentry }>
+      <ErrorBoundary>
         <Provider store={ store }>
           <ThemeProvider theme={ theme }>
             <CssBaseline />

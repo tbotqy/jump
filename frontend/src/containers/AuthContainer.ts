@@ -9,4 +9,4 @@ const mapStateToProps = (state: AppState) => ({
 export default connect(
   mapStateToProps,
   null
-)(Auth);
+)(Auth as any);

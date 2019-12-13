@@ -1,6 +1,7 @@
 import twitter, { AutoLinkOptions } from "twitter-text";
 import { filterXSS } from "xss";
-import { UrlEntity } from  "../store/tweet/types";
+import { UrlEntity } from "../models/tweet";
+
 
 const autoLinkOptions: AutoLinkOptions = {
   targetBlank: true,

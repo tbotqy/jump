@@ -5,21 +5,21 @@ import {
   SET_SELECTED_DAY
 } from "./types";
 
-export function setSelectedYear(year: number): SelectedDateActionTypes {
+export function setSelectedYear(year: string): SelectedDateActionTypes {
   return {
     type: SET_SELECTED_YEAR,
     year
   };
 }
 
-export function setSelectedMonth(month: number): SelectedDateActionTypes {
+export function setSelectedMonth(month: string): SelectedDateActionTypes {
   return {
     type: SET_SELECTED_MONTH,
     month
   };
 }
 
-export function setSelectedDay(day: number): SelectedDateActionTypes {
+export function setSelectedDay(day: string): SelectedDateActionTypes {
   return {
     type: SET_SELECTED_DAY,
     day
