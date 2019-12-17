@@ -15,7 +15,7 @@ RSpec.describe "Users", type: :request do
         let!(:non_protected_users) { create_list(:user, 2, protected_flag: false, screen_name: "a non-protected user") }
         it do
           subject
-          expect(response.parsed_body.map { |item| item["screen_name"] }).to contain_exactly("a non-protected user", "a non-protected user")
+          expect(response.parsed_body.map { |item| item["screenName"] }).to contain_exactly("a non-protected user", "a non-protected user")
         end
       end
       describe "number of returned items and their order" do
@@ -25,7 +25,7 @@ RSpec.describe "Users", type: :request do
           it do
             subject
             expected_screen_names_in_expected_order = (1..user_count).last(Settings.new_arrival_users_count).reverse.map { |n| "#{n}th_user" }
-            expect(response.parsed_body.map { |item| item["screen_name"] }).to eq expected_screen_names_in_expected_order
+            expect(response.parsed_body.map { |item| item["screenName"] }).to eq expected_screen_names_in_expected_order
           end
         end
         shared_examples "returns n users" do |n|
@@ -56,8 +56,8 @@ RSpec.describe "Users", type: :request do
         it do
           subject
           expect(response.parsed_body.first.symbolize_keys).to eq ({
-            "screen_name": user.screen_name,
-            "avatar_url":  user.avatar_url
+            "screenName": user.screen_name,
+            "avatarUrl":  user.avatar_url
           })
         end
       end
@@ -107,13 +107,13 @@ RSpec.describe "Users", type: :request do
 
           it do
             expect(response.parsed_body.symbolize_keys).to include(
-              id:             user.id,
-              name:           name,
-              screen_name:    screen_name,
-              avatar_url:     avatar_url,
-              protected_flag: protected_flag,
-              status_count:   status_count.to_s(:delimited),
-              followee_count: followee_count.to_s(:delimited)
+              id:            user.id,
+              name:          name,
+              screenName:    screen_name,
+              avatarUrl:     avatar_url,
+              protectedFlag: protected_flag,
+              statusCount:   status_count.to_s(:delimited),
+              followeeCount: followee_count.to_s(:delimited)
             )
           end
         end
@@ -126,14 +126,14 @@ RSpec.describe "Users", type: :request do
             context "null" do
               let(:user) { create(:user, profile_banner_url: nil) }
               it do
-                expect(response.parsed_body.symbolize_keys).to include(profile_banner_url: nil)
+                expect(response.parsed_body.symbolize_keys).to include(profileBannerUrl: nil)
               end
             end
             context "present" do
               let(:profile_banner_url) { "https://foo/bar" }
               let(:user) { create(:user, profile_banner_url: profile_banner_url) }
               it do
-                expect(response.parsed_body.symbolize_keys).to include(profile_banner_url: profile_banner_url)
+                expect(response.parsed_body.symbolize_keys).to include(profileBannerUrl: profile_banner_url)
               end
             end
           end
@@ -145,14 +145,14 @@ RSpec.describe "Users", type: :request do
             context "null" do
               let(:user) { create(:user, statuses_updated_at: nil) }
               it do
-                expect(response.parsed_body.symbolize_keys).to include(statuses_updated_at: nil)
+                expect(response.parsed_body.symbolize_keys).to include(statusesUpdatedAt: nil)
               end
             end
             context "present" do
               let(:at) { 1 }
               let(:user) { create(:user, statuses_updated_at: at) }
               it do
-                expect(response.parsed_body.symbolize_keys).to include(statuses_updated_at: Time.zone.at(at).iso8601)
+                expect(response.parsed_body.symbolize_keys).to include(statusesUpdatedAt: Time.zone.at(at).iso8601)
               end
             end
           end
@@ -164,7 +164,7 @@ RSpec.describe "Users", type: :request do
                 subject
               end
               it do
-                expect(response.parsed_body.symbolize_keys).to include(followees_updated_at: nil)
+                expect(response.parsed_body.symbolize_keys).to include(followeesUpdatedAt: nil)
               end
             end
             context "present" do
@@ -176,7 +176,7 @@ RSpec.describe "Users", type: :request do
                 subject
               end
               it do
-                expect(response.parsed_body.symbolize_keys).to include(followees_updated_at: user.followees.maximum(:created_at).iso8601)
+                expect(response.parsed_body.symbolize_keys).to include(followeesUpdatedAt: user.followees.maximum(:created_at).iso8601)
               end
             end
           end
