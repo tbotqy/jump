@@ -131,7 +131,7 @@ const Top: React.FC<Props> = ({ setApiErrorCode, classes }) => {
                       />
                     </Button>
                     <Box p={ 2 } textAlign="center">
-                      { stats ? <Chip label={ `${stats.status_count} ツイート / ${stats.user_count} ユーザー` } /> : <CircularProgress size={ 24 } /> }
+                      { stats ? <Chip label={ `${stats.statusCount} ツイート / ${stats.userCount} ユーザー` } /> : <CircularProgress size={ 24 } /> }
                     </Box>
                   </Grid>
                   <Grid item lg={ 6 } xs={ 12 }>
@@ -168,8 +168,8 @@ const Top: React.FC<Props> = ({ setApiErrorCode, classes }) => {
                   <Grid container direction="row" alignItems="center" justify="space-between">
                     { newArrivals.map( user => (
                       <Grid item key={ shortid.generate() }>
-                        <IconButton component={ Link } to={ `${USER_PAGE_PATH}/${user.screen_name}` }>
-                          <Avatar className={ classes.avatar } src={ user.avatar_url.replace("_normal", "_bigger") } />
+                        <IconButton component={ Link } to={ `${USER_PAGE_PATH}/${user.screenName}` }>
+                          <Avatar className={ classes.avatar } src={ user.avatarUrl.replace("_normal", "_bigger") } />
                         </IconButton>
                       </Grid>
                     ))

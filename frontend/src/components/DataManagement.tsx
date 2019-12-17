@@ -81,15 +81,15 @@ class DataManagement extends React.Component<Props> {
                     <CustomizedListItem
                       icon={ <TextsmsIcon /> }
                       headerText="ツイート"
-                      numberText={ `${user.status_count} 件` }
-                      updatedAt={ user.statuses_updated_at ? formatDateString(user.statuses_updated_at) : "-" }
+                      numberText={ `${user.statusCount} 件` }
+                      updatedAt={ user.statusesUpdatedAt ? formatDateString(user.statusesUpdatedAt) : "-" }
                       apiFunc={ requestAdditionalTweetImport }
                     />
                     <CustomizedListItem
                       icon={ <PeopleIcon /> }
                       headerText="フォローリスト"
-                      numberText={ `${user.followee_count} 件` }
-                      updatedAt={ user.followees_updated_at ? formatDateString(user.followees_updated_at) : "-" }
+                      numberText={ `${user.followeeCount} 件` }
+                      updatedAt={ user.followeesUpdatedAt ? formatDateString(user.followeesUpdatedAt) : "-" }
                       apiFunc={ requestFolloweeImport }
                     />
                   </List>

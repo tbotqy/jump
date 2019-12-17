@@ -41,27 +41,27 @@ interface TweetCardProps {
 
 const tweetCardPropsByTweet = (tweet: Tweet): TweetCardProps => {
   const ret = {
-    tweetId:     tweet.tweet_id,
-    isRetweet:   tweet.is_retweet,
-    tweetedAt:   tweet.tweeted_at,
+    tweetId:     tweet.tweetId,
+    isRetweet:   tweet.isRetweet,
+    tweetedAt:   tweet.tweetedAt,
     user:        tweet.user,
     urlEntities: tweet.urls
   };
 
-  if(tweet.is_retweet) {
+  if(tweet.isRetweet) {
     return ({
       ...ret,
-      name:       tweet.rt_name,
-      screenName: tweet.rt_screen_name,
-      avatarUrl:  tweet.rt_avatar_url,
-      text:       tweet.rt_text
+      name:       tweet.rtName,
+      screenName: tweet.rtScreenName,
+      avatarUrl:  tweet.rtAvatarUrl,
+      text:       tweet.rtText
     });
   }else{
     return ({
       ...ret,
       name:       tweet.user.name,
-      screenName: tweet.user.screen_name,
-      avatarUrl:  tweet.user.avatar_url,
+      screenName: tweet.user.screenName,
+      avatarUrl:  tweet.user.avatarUrl,
       text:       tweet.text
     });
   }
@@ -102,7 +102,7 @@ class TweetList extends React.Component<Props> {
           loader={ loader }
         >
           { this.props.tweets.map( tweet => (
-            <ListItem divider disableGutters key={ tweet.tweet_id }>
+            <ListItem divider disableGutters key={ tweet.tweetId }>
               <TweetCard { ...tweetCardPropsByTweet(tweet) } />
             </ListItem>
           )) }

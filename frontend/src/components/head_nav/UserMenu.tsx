@@ -74,11 +74,11 @@ class UserMenu extends React.Component<Props, State> {
           </IconButton>
           <Menu anchorEl={ this.state.anchorEl } open={ Boolean(this.state.anchorEl) } onClose={ () => this.setState( { anchorEl: null } ) }>
             <Box pb={ 1 }>
-              <CardActionArea href={ `${USER_PAGE_PATH}/${this.props.user.screen_name}` } target="_blank">
+              <CardActionArea href={ `${USER_PAGE_PATH}/${this.props.user.screenName}` } target="_blank">
                 <CardHeader
                   avatar={ this.UserAvatar() }
                   title={ this.props.user.name }
-                  subheader={ `@${this.props.user.screen_name}` }
+                  subheader={ `@${this.props.user.screenName}` }
                 />
               </CardActionArea>
             </Box>
@@ -109,7 +109,7 @@ class UserMenu extends React.Component<Props, State> {
 
   UserAvatar() {
     const { user } = this.props;
-    return user && <Avatar src={ user.avatar_url } />;
+    return user && <Avatar src={ user.avatarUrl } />;
   }
 }
 

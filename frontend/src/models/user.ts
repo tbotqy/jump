@@ -1,18 +1,18 @@
 export interface User {
   id: number | string;
   name: string;
-  screen_name: string;
-  avatar_url: string;
-  profile_banner_url: string;
-  protected_flag: boolean;
-  status_count: string;
-  followee_count: string;
-  statuses_updated_at: string;
-  followees_updated_at: string;
+  screenName: string;
+  avatarUrl: string;
+  profileBannerUrl: string;
+  protectedFlag: boolean;
+  statusCount: string;
+  followeeCount: string;
+  statusesUpdatedAt: string;
+  followeesUpdatedAt: string;
 }
 
 export interface TweetUser {
   name: string;
-  screen_name: string;
-  avatar_url: string;
+  screenName: string;
+  avatarUrl: string;
 }
