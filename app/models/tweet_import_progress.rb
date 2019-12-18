@@ -18,9 +18,9 @@ class TweetImportProgress < ApplicationRecord
 
   def as_json(_options = {})
     {
-      percentage:    percentage,
-      finished:      finished,
-      last_tweet_id: last_tweet_id.value
+      percentage:  percentage,
+      finished:    finished,
+      lastTweetId: last_tweet_id.value
     }
   end
 

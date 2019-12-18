@@ -205,20 +205,20 @@ RSpec.describe "Statuses", type: :request do
             it do
               subject
               expect(response.parsed_body.first.deep_symbolize_keys).to include(
-                tweet_id:       tweet_id.to_s,
-                text:           text,
-                tweeted_at:     Time.zone.at(tweeted_at).iso8601,
-                is_retweet:     is_retweet,
+                tweetId:   tweet_id.to_s,
+                text:      text,
+                tweetedAt: Time.zone.at(tweeted_at).iso8601,
+                isRetweet: is_retweet,
               )
             end
             it do
               subject
               expect(response.parsed_body.first.deep_symbolize_keys).not_to include(
-                rt_name:        nil,
-                rt_screen_name: nil,
-                rt_text:        nil,
-                rt_source:      nil,
-                rt_created_at:  nil
+                rtName:       nil,
+                rtScreenName: nil,
+                rtText:       nil,
+                rtSource:     nil,
+                rtCreatedAt:  nil
               )
             end
           end
@@ -250,15 +250,15 @@ RSpec.describe "Statuses", type: :request do
             it do
               subject
               expect(response.parsed_body.first.deep_symbolize_keys).to include(
-                tweet_id:       tweet_id.to_s,
-                text:           text,
-                tweeted_at:     Time.zone.at(tweeted_at).iso8601,
-                is_retweet:     is_retweet,
-                rt_name:        rt_name,
-                rt_screen_name: rt_screen_name,
-                rt_text:        rt_text,
-                rt_source:      rt_source,
-                rt_created_at:  Time.zone.at(rt_created_at).iso8601
+                tweetId:      tweet_id.to_s,
+                text:         text,
+                tweetedAt:    Time.zone.at(tweeted_at).iso8601,
+                isRetweet:    is_retweet,
+                rtName:       rt_name,
+                rtScreenName: rt_screen_name,
+                rtText:       rt_text,
+                rtSource:     rt_source,
+                rtCreatedAt:  Time.zone.at(rt_created_at).iso8601
               )
             end
           end

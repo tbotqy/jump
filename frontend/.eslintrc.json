@@ -79,6 +79,10 @@
       { "when": "always", "children": true }
     ],
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/camelcase": [
+      "error",
+      { "properties": "always" }
+    ]
   }
 }

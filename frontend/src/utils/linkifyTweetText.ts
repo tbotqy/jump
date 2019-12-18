@@ -11,7 +11,7 @@ const autoLinkOptions: AutoLinkOptions = {
 export default function linkifyTweetText(text: string, urlEntities: UrlEntity[]): string {
   let html: string = twitter.autoLink(text, autoLinkOptions);
   urlEntities.forEach( urlEntity => {
-    html = html.replace(`>${urlEntity.url}</a>`, `>${urlEntity.display_url}</a>`);
+    html = html.replace(`>${urlEntity.url}</a>`, `>${urlEntity.displayUrl}</a>`);
   });
   html = filterXSS(html);
   return html;

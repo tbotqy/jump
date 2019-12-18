@@ -106,9 +106,9 @@ RSpec.describe TweetImportProgress, type: :model do
       let!(:tweet_import_progress) { create(:tweet_import_progress) }
       it do
         is_expected.to include(
-          percentage:    0,
-          finished:      false,
-          last_tweet_id: nil
+          percentage:  0,
+          finished:    false,
+          lastTweetId: nil
         )
       end
     end
@@ -126,9 +126,9 @@ RSpec.describe TweetImportProgress, type: :model do
       end
       it do
         is_expected.to include(
-          percentage:    expected_percentage,
-          finished:      false,
-          last_tweet_id: last_tweet_id
+          percentage:  expected_percentage,
+          finished:    false,
+          lastTweetId: last_tweet_id
         )
       end
     end
@@ -146,9 +146,9 @@ RSpec.describe TweetImportProgress, type: :model do
       end
       it do
         is_expected.to include(
-          percentage:    expected_percentage,
-          finished:      true,
-          last_tweet_id: last_tweet_id
+          percentage:  expected_percentage,
+          finished:    true,
+          lastTweetId: last_tweet_id
         )
       end
     end

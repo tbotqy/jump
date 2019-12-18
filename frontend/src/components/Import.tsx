@@ -97,7 +97,7 @@ class Import extends React.Component<Props, State> {
           <ApiErrorBoundary>
             <Grid container direction="column" alignItems="center" spacing={ 6 }>
               <Grid item>
-                { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screen_name } のツイートを取り込む</Typography> }
+                { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screenName } のツイートを取り込む</Typography> }
               </Grid>
               <Grid item>
                 <div className={ this.props.classes.buttonWrapper }>
@@ -169,14 +169,14 @@ class Import extends React.Component<Props, State> {
           isInProgress: false,
           hasFinished:  true,
           progress:     100,
-          lastTweetId:  progress.last_tweet_id,
+          lastTweetId:  progress.lastTweetId,
           showTweet:    true
         });
         setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, redirectInterval );
       } else {
         this.setState({
           progress:    progress.percentage,
-          lastTweetId: progress.last_tweet_id,
+          lastTweetId: progress.lastTweetId,
           showTweet:   true
         });
       }
