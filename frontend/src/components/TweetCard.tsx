@@ -134,7 +134,7 @@ const TweetCard: React.FC<Props> = props => {
           <Grid item className={ classes.tweetedAt }>
             <Link
               color="inherit"
-              href={ `https://twitter.com/${user.screen_name}/status/${tweetId}` }
+              href={ `https://twitter.com/${user.screenName}/status/${tweetId}` }
               target="_blank"
             >
               { isRetweet ? `${tweetedAt} にリツイート` : tweetedAt }

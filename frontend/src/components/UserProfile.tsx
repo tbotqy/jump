@@ -56,22 +56,22 @@ interface Props extends WithStyles<typeof styles> {
 
 const UserProfile: React.FC<Props> = ({ user, classes }) => {
   // TODO: to camel case
-  const { name, screen_name, avatar_url, profile_banner_url, protected_flag } = user;
+  const { name, screenName, avatarUrl, profileBannerUrl, protectedFlag } = user;
   return(
     <Card className={ classes.card }>
-      <CardMedia image={ profile_banner_url } className={ classes.cardMedia }>
-        <IconButton href={ `https://twitter.com/${screen_name}` } target="_blank" className={ classes.avatarWrapper }>
-          <Avatar src={ avatar_url.replace("_normal", "") } className={ classes.avatar } />
+      <CardMedia image={ profileBannerUrl } className={ classes.cardMedia }>
+        <IconButton href={ `https://twitter.com/${screenName}` } target="_blank" className={ classes.avatarWrapper }>
+          <Avatar src={ avatarUrl.replace("_normal", "") } className={ classes.avatar } />
         </IconButton>
       </CardMedia>
       <CardHeader
         className={ classes.cardHeader }
         title={
         <>
-          { protected_flag && <LockIcon className={ classes.lockIcon } /> }
+          { protectedFlag && <LockIcon className={ classes.lockIcon } /> }
           <Link
             color="inherit"
-            href={ `https://twitter.com/${screen_name}` }
+            href={ `https://twitter.com/${screenName}` }
             target="_blank"
           >
             { name }
@@ -83,10 +83,10 @@ const UserProfile: React.FC<Props> = ({ user, classes }) => {
           <TwitterIcon className={ classes.twitterIcon } />
           <Link
             color="inherit"
-            href={ `https://twitter.com/${screen_name}` }
+            href={ `https://twitter.com/${screenName}` }
             target="_blank"
           >
-            { `@${screen_name}` }
+            { `@${screenName}` }
           </Link>
         </>
         }

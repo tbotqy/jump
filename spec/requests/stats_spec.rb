@@ -41,8 +41,8 @@ RSpec.describe "Stats", type: :request do
           it_behaves_like "respond with status code", :ok
           it do
             expect(response.body).to eq({
-              status_count: total_status_count.to_s,
-              user_count:   total_user_count.to_s,
+              statusCount: total_status_count.to_s,
+              userCount:   total_user_count.to_s,
             }.to_json)
           end
         end
@@ -58,8 +58,8 @@ RSpec.describe "Stats", type: :request do
           it_behaves_like "respond with status code", :ok
           it "returns delimited numbers" do
             expect(response.body).to eq({
-              status_count: total_status_count.to_s(:delimited),
-              user_count:   total_user_count.to_s(:delimited),
+              statusCount: total_status_count.to_s(:delimited),
+              userCount:   total_user_count.to_s(:delimited),
             }.to_json)
           end
         end
