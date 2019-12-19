@@ -5,7 +5,8 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "es6"
+      "es6",
+      "esnext"
     ],
     "jsx": "react",
     "outDir": "build",

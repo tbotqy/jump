@@ -291,8 +291,8 @@ RSpec.describe User, type: :model do
     end
     it do
       is_expected.to include(
-        screen_name: screen_name,
-        avatar_url:  avatar_url
+        screenName: screen_name,
+        avatarUrl:  avatar_url
       )
     end
   end
@@ -312,8 +312,8 @@ RSpec.describe User, type: :model do
     it do
       is_expected.to include(
         name:        name,
-        screen_name: screen_name,
-        avatar_url:  avatar_url
+        screenName: screen_name,
+        avatarUrl:  avatar_url
       )
     end
   end
@@ -341,19 +341,19 @@ RSpec.describe User, type: :model do
 
       it do
         is_expected.to include(
-          id:             user.id,
-          name:           name,
-          screen_name:    screen_name,
-          avatar_url:     avatar_url,
-          protected_flag: protected_flag,
-          status_count:   status_count.to_s(:delimited),
-          followee_count: followee_count.to_s(:delimited)
+          id:            user.id,
+          name:          name,
+          screenName:    screen_name,
+          avatarUrl:     avatar_url,
+          protectedFlag: protected_flag,
+          statusCount:   status_count.to_s(:delimited),
+          followeeCount: followee_count.to_s(:delimited)
         )
       end
     end
     describe "nullable attributes" do
       describe "#profile_banner_url" do
-        subject { user.as_json.fetch(:profile_banner_url) }
+        subject { user.as_json.fetch(:profileBannerUrl) }
         context "null" do
           let(:user) { create(:user, profile_banner_url: nil) }
           it { is_expected.to eq nil }
@@ -365,7 +365,7 @@ RSpec.describe User, type: :model do
         end
       end
       describe "#statuses_updated_at" do
-        subject { user.as_json.fetch(:statuses_updated_at) }
+        subject { user.as_json.fetch(:statusesUpdatedAt) }
         context "null" do
           let(:user) { create(:user, statuses_updated_at: nil) }
           it { is_expected.to eq nil }
@@ -377,7 +377,7 @@ RSpec.describe User, type: :model do
         end
       end
       describe "#followees_updated_at" do
-        subject { user.as_json.fetch(:followees_updated_at) }
+        subject { user.as_json.fetch(:followeesUpdatedAt) }
         context "null" do
           let(:user) { create(:user) } # user with no followee
           it { is_expected.to eq nil }

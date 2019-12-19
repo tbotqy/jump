@@ -60,16 +60,16 @@ class User < ApplicationRecord
 
   def as_index_json
     {
-      screen_name: screen_name,
-      avatar_url:  avatar_url
+      screenName: screen_name,
+      avatarUrl:  avatar_url
     }
   end
 
   def as_tweet_user_json
     {
-      name:        name,
-      screen_name: screen_name,
-      avatar_url:  avatar_url,
+      name:       name,
+      screenName: screen_name,
+      avatarUrl:  avatar_url,
     }
   end
 
@@ -77,16 +77,16 @@ class User < ApplicationRecord
     _statuses_updated_at  = statuses_updated_at.nil? ? nil : Time.zone.at(statuses_updated_at).iso8601
     _followees_updated_at = followees.last&.created_at&.iso8601
     {
-      id:             id,
-      name:           name,
-      screen_name:    screen_name,
-      avatar_url:     avatar_url,
-      profile_banner_url: profile_banner_url,
-      protected_flag: protected_flag,
-      status_count:   statuses.count.to_s(:delimited),
-      followee_count: followees.count.to_s(:delimited),
-      statuses_updated_at:  _statuses_updated_at,
-      followees_updated_at: _followees_updated_at
+      id:            id,
+      name:          name,
+      screenName:    screen_name,
+      avatarUrl:     avatar_url,
+      profileBannerUrl: profile_banner_url,
+      protectedFlag: protected_flag,
+      statusCount:   statuses.count.to_s(:delimited),
+      followeeCount: followees.count.to_s(:delimited),
+      statusesUpdatedAt:  _statuses_updated_at,
+      followeesUpdatedAt: _followees_updated_at
     }
   end
 

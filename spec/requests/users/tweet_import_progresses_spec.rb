@@ -57,9 +57,9 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               it_behaves_like "respond with status code", :ok
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
-                  percentage:    0,
-                  finished:      false,
-                  last_tweet_id: nil
+                  percentage:  0,
+                  finished:    false,
+                  lastTweetId: nil
                 )
               end
             end
@@ -81,9 +81,9 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               it_behaves_like "respond with status code", :ok
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
-                  percentage:    expected_percentage,
-                  finished:      false,
-                  last_tweet_id: last_tweet_id
+                  percentage:  expected_percentage,
+                  finished:    false,
+                  lastTweetId: last_tweet_id
                 )
               end
             end
@@ -105,9 +105,9 @@ RSpec.describe "Users::TweetImportProgresses", type: :request do
               it_behaves_like "respond with status code", :ok
               it do
                 expect(response.parsed_body.deep_symbolize_keys).to include(
-                  percentage:    expected_percentage,
-                  finished:      true,
-                  last_tweet_id: last_tweet_id
+                  percentage:  expected_percentage,
+                  finished:    true,
+                  lastTweetId: last_tweet_id
                 )
               end
             end
