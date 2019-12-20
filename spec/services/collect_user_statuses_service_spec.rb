@@ -34,18 +34,15 @@ describe CollectUserStatusesService do
           shared_context "user has 3 statuses tweeted around the boundary_time" do
             let(:boundary_unixtime) { boundary_time.to_i }
             let!(:status_tweeted_before_boundary) do
-              status = create(:status, user: user, text: "to be ordered as 2nd item", tweeted_at: boundary_unixtime - 1)
-              status
+              create(:status, user: user, text: "to be ordered as 2nd item", tweeted_at: boundary_unixtime - 1)
             end
             let!(:status_tweeted_at_boundary) do
               # specifying larger id than status_tweeted_before_boundary has, in order to test the sort of fetched collection.
               id = status_tweeted_before_boundary.id + 1
-              status = create(:status, id: id, user: user, text: "to be ordered as 1st item",  tweeted_at: boundary_unixtime)
-              status
+              create(:status, id: id, user: user, text: "to be ordered as 1st item",  tweeted_at: boundary_unixtime)
             end
             let!(:status_tweeted_after_boundary) do
-              status = create(:status, user: user, text: "to be filtered", tweeted_at: boundary_unixtime + 1)
-              status
+              create(:status, user: user, text: "to be filtered", tweeted_at: boundary_unixtime + 1)
             end
           end
 
