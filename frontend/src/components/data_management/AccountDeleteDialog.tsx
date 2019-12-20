@@ -23,7 +23,7 @@ import {
   Textsms as TextsmsIcon,
   People as PeopleIcon
 } from "@material-ui/icons";
-import { deleteUser } from "../../utils/api";
+import { deleteUser } from "../../api/";
 import { ROOT_PATH } from "../../utils/paths";
 
 const styles = (theme: Theme) => (

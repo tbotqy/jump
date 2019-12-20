@@ -8,8 +8,11 @@ import {
   API_ERROR_CODE_UNAUTHORIZED,
   API_ERROR_CODE_NOT_FOUND,
   DateParams,
-  PaginatableDateParams
-} from "../utils/api";
+  PaginatableDateParams,
+  Tweet,
+  User,
+  TweetDate
+} from "../api";
 import timelineTitleText from "../utils/timelineTitleText";
 import Head from "./Head";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
@@ -34,9 +37,6 @@ import TweetButton from "./TweetButton";
 import scrollToTop   from "../utils/scrollToTop";
 import { RouteComponentProps } from "react-router-dom";
 import { UserPageParams } from "./types";
-import { Tweet } from "../models/tweet";
-import { User } from "../models/user";
-import { TweetDates } from "../models/tweet_date";
 import { AxiosError } from "axios";
 
 const styles = (theme: Theme) => (
@@ -73,7 +73,7 @@ interface Props extends RouteComponentProps<UserPageParams>, WithStyles<typeof s
 interface State {
   user: User | null;
   showMessage: boolean;
-  selectableDates: TweetDates;
+  selectableDates: TweetDate[];
   message: string;
 }
 
@@ -168,7 +168,7 @@ class UserPage extends React.Component<Props, State> {
     scrollToTop();
   }
 
-  async fetchTweets(userId: string, date: DateParams) {
+  async fetchTweets(userId: number, date: DateParams) {
     this.props.setIsFetching(true);
     try {
       const response = await fetchUserTweets({ ...date, page: 1 }, userId);
@@ -180,7 +180,7 @@ class UserPage extends React.Component<Props, State> {
     }
   }
 
-  async fetchSelectableDates(userId: string) {
+  async fetchSelectableDates(userId: number) {
     try {
       const response = await fetchUserSelectableDates(userId);
       this.setState({ selectableDates: response.data });
@@ -191,7 +191,7 @@ class UserPage extends React.Component<Props, State> {
 
   // to be passed to the child
   tweetsFetchFunc = (params: PaginatableDateParams) => {
-    const userId: string = (this.state.user as any).id;
+    const userId: number = (this.state.user as any).id;
     return fetchUserTweets(params, userId);
   }
 

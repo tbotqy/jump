@@ -6,7 +6,7 @@ import {
   SET_HAS_MORE,
   RESET_HAS_MORE
 } from "./types";
-import { Tweet } from "../../models/tweet";
+import { Tweet } from "../../api";
 
 export function setTweets(tweets: Tweet[]): TweetActionTypes {
   return {

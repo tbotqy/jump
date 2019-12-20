@@ -18,13 +18,15 @@ import {
   ExitToApp as ExitToAppIcon,
   Autorenew as AutorenewIcon
 } from "@material-ui/icons";
-import { fetchAuthenticatedUser } from "../../utils/api";
 import {
   SIGN_OUT_URL,
   DATA_PATH,
   USER_PAGE_PATH
 } from "../../utils/paths";
-import { User } from "../../models/user";
+import {
+  User,
+  fetchAuthenticatedUser
+} from "../../api";
 
 interface DefaultProps {
   hideLinkToData: boolean;

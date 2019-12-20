@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/Lock";
 import TwitterIcon from "./TwitterIcon";
-import { User } from "../models/user";
+import { User } from "../api";
 
 const styles = (theme: Theme) => (
   createStyles({

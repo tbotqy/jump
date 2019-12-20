@@ -1,4 +1,4 @@
-import { DateParams } from "./api";
+import { DateParams } from "../api";
 
 /*
  * Invalid patterns:

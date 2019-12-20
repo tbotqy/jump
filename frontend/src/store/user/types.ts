@@ -1,4 +1,4 @@
-import { User } from "../../models/user";
+import { User } from "../../api";
 
 export interface UserState {
   readonly isAuthenticated: boolean;

@@ -19,8 +19,9 @@ import { withStyles } from "@material-ui/core/styles";
 import {
   fetchAuthenticatedUser,
   requestAdditionalTweetImport,
-  requestFolloweeImport
-} from "../utils/api";
+  requestFolloweeImport,
+  User
+} from "../api";
 import { PAGE_TITLE_DATA_MANAGEMENT } from "../utils/pageHead";
 import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
@@ -29,7 +30,6 @@ import AccountDeleteDialog from "../containers/AccountDeleteDialogContainer";
 import Footer from "./Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import Head from "./Head";
-import { User } from "../models/user";
 
 const styles = (theme: Theme) => (
   createStyles({

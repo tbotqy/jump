@@ -2,7 +2,7 @@ import React from "react";
 import {
   fetchPublicTweets,
   fetchPublicSelectableDates
-} from "../utils/api";
+} from "../api";
 import TimelineBase from "../containers/TimelineBaseContainer";
 
 const PublicTimeline: React.FC = () => (

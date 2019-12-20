@@ -18,8 +18,9 @@ import {
   requestFolloweeImport,
   fetchImportProgress,
   API_ERROR_CODE_NOT_FOUND,
-  API_ERROR_CODE_TOO_MANY_REQUESTS
-} from "../utils/api";
+  API_ERROR_CODE_TOO_MANY_REQUESTS,
+  User
+} from "../api";
 import { PAGE_TITLE_IMPORT } from "../utils/pageHead";
 import { USER_TIMELINE_PATH } from "../utils/paths";
 import green from "@material-ui/core/colors/green";
@@ -28,7 +29,6 @@ import HeadAppBar from "./HeadAppBar";
 import UserMenu from "../containers/UserMenuContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import Head from "./Head";
-import { User } from "../models/user";
 
 const styles = (theme: Theme) => (
   createStyles({

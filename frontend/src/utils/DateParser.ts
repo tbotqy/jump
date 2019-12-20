@@ -2,14 +2,14 @@ import {
   TweetDays,
   TweetMonth,
   TweetYear,
-  TweetDates
-} from "../models/tweet_date";
+  TweetDate
+} from "../api";
 
 class DateParser {
   /*
     dates: [{"2019": [{"3": ["31", "29"]}]}]
   */
-  constructor(private dates: TweetDates) {
+  constructor(private dates: TweetDate[]) {
     if(dates.length === 0) {
       throw Error("Given dates is empty.");
     }

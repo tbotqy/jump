@@ -1,7 +1,7 @@
 import DateParser from "../utils/DateParser";
-import { TweetDates } from "../models/tweet_date";
+import { TweetDate } from "../api";
 
-const dates: TweetDates = [
+const dates: TweetDate[] = [
   {
     "2019": [ { "12": [ "31", "30" ] }, { "11": [ "30", "29" ] } ]
   },

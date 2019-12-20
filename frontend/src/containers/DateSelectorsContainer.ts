@@ -10,7 +10,7 @@ import {
 } from "../store/selected_date/actions";
 import { setApiErrorCode } from "../store/api_error/actions";
 import DateSelectors from "../components/timeline/DateSelectors";
-import { Tweet } from "../models/tweet";
+import { Tweet } from "../api";
 
 const mapDispatchToProps = (dispatch: any) => ({
   setTweets:        (tweets: Tweet[]) => dispatch(setTweets(tweets)),

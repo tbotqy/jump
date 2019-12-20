@@ -22,8 +22,10 @@ import { withStyles } from "@material-ui/core/styles";
 import formatDateString from "../utils/formatDateString";
 import linkifyTweetText from "../utils/linkifyTweetText";
 import TwitterIcon from "./TwitterIcon";
-import { TweetUser } from "../models/user";
-import { UrlEntity } from "../models/tweet";
+import {
+  TweetUser,
+  UrlEntity
+} from "../api";
 
 const styles = (theme: Theme) => (
   createStyles({

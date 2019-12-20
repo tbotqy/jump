@@ -37,9 +37,10 @@ import Head from "./Head";
 import {
   fetchStats,
   fetchNewArrivals,
-} from "../utils/api";
+  Stats,
+  NewArrival
+} from "../api";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
-import { Stats, NewArrival } from "../utils/api/types";
 
 const styles = (theme: Theme) => (
   createStyles({

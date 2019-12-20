@@ -1,4 +1,4 @@
-import { Tweet } from "../../models/tweet";
+import { Tweet } from "../../api";
 
 export interface TweetState {
   readonly tweets: Tweet[];

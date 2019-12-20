@@ -15,10 +15,11 @@ import TweetCard from "./TweetCard";
 import {
   API_ERROR_CODE_NOT_FOUND,
   PaginatableDateParams,
-  DateParams
-} from "../utils/api";
-import { Tweet, UrlEntity } from "../models/tweet";
-import { TweetUser } from "../models/user";
+  DateParams,
+  Tweet,
+  UrlEntity,
+  TweetUser
+} from "../api";
 import { AxiosPromise } from "axios";
 
 const styles = createStyles({

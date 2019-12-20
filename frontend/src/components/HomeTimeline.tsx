@@ -2,7 +2,7 @@ import React from "react";
 import {
   fetchFolloweeTweets,
   fetchFolloweeSelectableDates
-} from "../utils/api";
+} from "../api";
 import TimelineBase from "../containers/TimelineBaseContainer";
 
 const HomeTimeline: React.FC = () => (

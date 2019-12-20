@@ -9,5 +9,3 @@ export interface TweetYear {
 }
 
 export type TweetDate = TweetYear
-
-export type TweetDates = TweetDate[]
