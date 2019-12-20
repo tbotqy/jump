@@ -3,7 +3,6 @@ import {
   withRouter,
   RouteComponentProps
 } from "react-router-dom";
-import scrollToTop    from "../../utils/scrollToTop";
 import { Grid }       from "@material-ui/core";
 import Selector       from "./date_selectors/Selector";
 
@@ -78,7 +77,6 @@ class DateSelectors extends React.Component<Props, State> {
     this.fetchTweets(year, month, day);
     this.updateDatePath(year);
     this.propagateSelectedValues(year, month, day);
-    scrollToTop();
   }
 
   handleMonthChange(month: string) {
@@ -92,7 +90,6 @@ class DateSelectors extends React.Component<Props, State> {
     this.fetchTweets(year, month, day);
     this.updateDatePath(`${year}/${month}`);
     this.propagateSelectedValues(year, month, day);
-    scrollToTop();
   }
 
   handleDayChange(day: string) {
@@ -102,7 +99,6 @@ class DateSelectors extends React.Component<Props, State> {
     this.fetchTweets(selectedYear, selectedMonth, day);
     this.updateDatePath(`${selectedYear}/${selectedMonth}/${day}`);
     this.propagateSelectedValues(selectedYear, selectedMonth, day);
-    scrollToTop();
   }
 
   updateDatePath(datePath: string) {

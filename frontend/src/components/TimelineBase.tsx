@@ -16,7 +16,6 @@ import HeadProgressBar from "../containers/HeadProgressBarContainer";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import timelineTitleText from "../utils/timelineTitleText";
-import scrollToTop   from "../utils/scrollToTop";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import TweetList     from "../containers/TweetListContainer";
 import TweetButton from "./TweetButton";
@@ -128,7 +127,6 @@ class TimelineBase extends React.Component<Props, State> {
   async onBackOrForwardButtonEvent(e: Event) {
     e.preventDefault();
     this.fetchTweets(this.props.match.params);
-    scrollToTop();
   }
 
   async fetchTweets(params: DateParams) {

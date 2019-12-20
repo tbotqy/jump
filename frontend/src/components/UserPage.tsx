@@ -34,7 +34,6 @@ import {
 import TweetList     from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import TweetButton from "./TweetButton";
-import scrollToTop   from "../utils/scrollToTop";
 import { RouteComponentProps } from "react-router-dom";
 import { UserPageParams } from "./types";
 import { AxiosError } from "axios";
@@ -165,7 +164,6 @@ class UserPage extends React.Component<Props, State> {
     e.preventDefault();
     const { year, month, day } = this.props.match.params;
     this.fetchTweets((this.state.user as any).id, { year, month, day } as DateParams);
-    scrollToTop();
   }
 
   async fetchTweets(userId: number, date: DateParams) {
