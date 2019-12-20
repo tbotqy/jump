@@ -21,10 +21,12 @@ import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import TweetList     from "../containers/TweetListContainer";
 import TweetButton from "./TweetButton";
 import { TimelineParams } from "./types";
-import { Tweet } from "../models/tweet";
-import { TweetDates } from "../models/tweet_date";
+import {
+  Tweet,
+  TweetDate,
+  DateParams
+} from "../api";
 import { AxiosPromise } from "axios";
-import { DateParams } from "../utils/api";
 
 
 const styles = (theme: Theme) => (
@@ -63,7 +65,7 @@ interface Props extends DefaultProps, RouteComponentProps<TimelineParams>, WithS
 }
 
 interface State {
-  selectableDates: TweetDates;
+  selectableDates: TweetDate[];
 }
 
 class TimelineBase extends React.Component<Props, State> {

@@ -1,6 +1,6 @@
 import React from "react";
 import ErrorMessage from "./ErrorMessage";
-import { API_ERROR_CODE_NOT_FOUND } from "../utils/api";
+import { API_ERROR_CODE_NOT_FOUND } from "../api";
 
 const errorMessageByApiErrorCode = (apiErrorCode: number): string => {
   switch(apiErrorCode) {

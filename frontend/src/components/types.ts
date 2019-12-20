@@ -1,4 +1,4 @@
-import { DateParams } from "../utils/api";
+import { DateParams } from "../api";
 
 export type TimelineParams = DateParams & {
   screenName?: string;

@@ -3,7 +3,7 @@ import {
   SET_USER,
   SET_IS_AUTHENTICATED
 } from "./types";
-import { User } from "../../models/user";
+import { User } from "../../api";
 
 export function setUser(user: User): UserActionTypes {
   return {

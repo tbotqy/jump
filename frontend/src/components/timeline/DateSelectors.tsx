@@ -8,16 +8,18 @@ import { Grid }       from "@material-ui/core";
 import Selector       from "./date_selectors/Selector";
 
 import DateParser from "../../utils/DateParser";
-import { TweetDates } from "../../models/tweet_date";
-import { Tweet } from "../../models/tweet";
 import { AxiosPromise } from "axios";
 import {
   TimelineParams
 } from "../types";
-import { DateParams } from "../../utils/api";
+import {
+  DateParams,
+  TweetDate,
+  Tweet
+} from "../../api";
 
 interface Props extends RouteComponentProps<TimelineParams> {
-  selectableDates: TweetDates;
+  selectableDates: TweetDate[];
   onSelectionChangeTweetsFetchFunc: ({ year, month, day }: DateParams) => AxiosPromise;
   setIsFetching: (flag: boolean) => void;
   setTweets: (tweets: Tweet[]) => void;

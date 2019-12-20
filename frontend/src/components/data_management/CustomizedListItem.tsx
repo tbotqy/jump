@@ -18,7 +18,7 @@ import {
   API_NORMAL_CODE_OK,
   API_NORMAL_CODE_ACCEPTED,
   API_ERROR_CODE_TOO_MANY_REQUESTS
-} from "../../utils/api";
+} from "../../api";
 
 const styles = (theme: Theme) => (
   createStyles({

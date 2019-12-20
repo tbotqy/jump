@@ -1,5 +1,5 @@
 import dateText from "./dateText";
-import { DateParams } from "./api";
+import { DateParams } from "../api";
 const serviceName = process.env.REACT_APP_SERVICE_NAME;
 
 export default function timelineTitleText(timelineName: string, { year, month, day }: DateParams): string {

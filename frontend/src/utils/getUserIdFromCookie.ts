@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 
-export default function getUserIdFromCookie(): string | undefined {
-  return Cookie.get("user_id");
+export default function getUserIdFromCookie(): number | undefined {
+  const userId = Cookie.get("user_id");
+  if(userId) return parseInt(userId);
 }

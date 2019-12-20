@@ -1,6 +1,6 @@
 import twitter, { AutoLinkOptions } from "twitter-text";
 import { filterXSS } from "xss";
-import { UrlEntity } from "../models/tweet";
+import { UrlEntity } from "../api";
 
 
 const autoLinkOptions: AutoLinkOptions = {

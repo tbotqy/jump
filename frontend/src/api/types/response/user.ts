@@ -1,5 +1,5 @@
 export interface User {
-  id: number | string;
+  id: number;
   name: string;
   screenName: string;
   avatarUrl: string;
@@ -9,6 +9,11 @@ export interface User {
   followeeCount: string;
   statusesUpdatedAt: string;
   followeesUpdatedAt: string;
+}
+
+export interface NewArrival {
+  screenName: string;
+  avatarUrl: string;
 }
 
 export interface TweetUser {

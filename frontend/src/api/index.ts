@@ -1,5 +1,15 @@
 import axios, { AxiosPromise } from "axios";
-import getUserIdFromCookie from "./getUserIdFromCookie";
+import getUserIdFromCookie from "../utils/getUserIdFromCookie";
+import {
+  User,
+  Tweet,
+  PaginatableDateParams,
+  TweetDate,
+  ImportProgress,
+  Stats,
+  NewArrival
+} from "./types";
+export * from "./types";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
@@ -30,17 +40,17 @@ const api = {
 
 export default api;
 
-const authenticatedUserId: string | undefined = getUserIdFromCookie();
+const authenticatedUserId: number | undefined = getUserIdFromCookie();
 
 /*
  * User
  */
 
-export function fetchAuthenticatedUser(): AxiosPromise {
+export function fetchAuthenticatedUser(): AxiosPromise<User> {
   return api.get("/me");
 }
 
-export function fetchUserByScreenName(screenName: string): AxiosPromise {
+export function fetchUserByScreenName(screenName: string): AxiosPromise<User> {
   return api.get(`/users/${screenName}`);
 }
 
@@ -49,48 +59,18 @@ export function deleteUser(): AxiosPromise {
 }
 
 /*
- * Types of date parameter
- */
-
-interface None {
-  year: undefined;
-  month: undefined;
-  day: undefined;
-}
-
-interface YearOnly {
-  year: string;
-  month: undefined;
-  day: undefined;
-}
-
-interface YearAndMonthOnly {
-  year: string;
-  month: string;
-  day: undefined;
-}
-
-interface All {
-  year: string;
-  month: string;
-  day: string;
-}
-
-export type DateParams = None | YearOnly | YearAndMonthOnly | All
-export type PaginatableDateParams = DateParams & { page?: number }
-/*
  * Tweet
  */
 
-export function fetchPublicTweets(params: PaginatableDateParams): AxiosPromise {
+export function fetchPublicTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
   return api.get("/statuses", params);
 }
 
-export function fetchUserTweets(params: PaginatableDateParams, userId = authenticatedUserId): AxiosPromise {
+export function fetchUserTweets(params: PaginatableDateParams, userId = authenticatedUserId): AxiosPromise<Tweet[]> {
   return api.get(`/users/${userId}/statuses`, params);
 }
 
-export function fetchFolloweeTweets(params: PaginatableDateParams): AxiosPromise {
+export function fetchFolloweeTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
   return api.get(`/users/${authenticatedUserId}/followees/statuses`, params);
 }
 
@@ -103,18 +83,18 @@ export function requestAdditionalTweetImport(): AxiosPromise {
 }
 
 /*
- * SelectableDate
+ * SelectableDate TODO: rename to TweetDate
  */
 
-export function fetchPublicSelectableDates(): AxiosPromise  {
+export function fetchPublicSelectableDates(): AxiosPromise<TweetDate[]> {
   return api.get("/tweeted_dates");
 }
 
-export function fetchUserSelectableDates(userId = authenticatedUserId): AxiosPromise  {
+export function fetchUserSelectableDates(userId = authenticatedUserId): AxiosPromise<TweetDate[]> {
   return api.get(`/users/${userId}/tweeted_dates`);
 }
 
-export function fetchFolloweeSelectableDates(): AxiosPromise  {
+export function fetchFolloweeSelectableDates(): AxiosPromise<TweetDate[]> {
   return api.get(`/users/${authenticatedUserId}/followees/tweeted_dates`);
 }
 
@@ -122,7 +102,7 @@ export function fetchFolloweeSelectableDates(): AxiosPromise  {
  * Followee
  */
 
-export function requestFolloweeImport(): AxiosPromise  {
+export function requestFolloweeImport(): AxiosPromise {
   return api.post(`/users/${authenticatedUserId}/followees`);
 }
 
@@ -130,7 +110,7 @@ export function requestFolloweeImport(): AxiosPromise  {
  * ImportProgress
  */
 
-export function fetchImportProgress(): AxiosPromise  {
+export function fetchImportProgress(): AxiosPromise<ImportProgress> {
   return api.get(`/users/${authenticatedUserId}/tweet_import_progress`);
 }
 
@@ -138,15 +118,14 @@ export function fetchImportProgress(): AxiosPromise  {
  * stats
  */
 
-export function fetchStats(): AxiosPromise  {
+export function fetchStats(): AxiosPromise<Stats> {
   return api.get("/stats");
 }
-
 
 /*
  * New arrivals
  */
 
-export function fetchNewArrivals(): AxiosPromise  {
+export function fetchNewArrivals(): AxiosPromise<NewArrival[]> {
   return api.get("/users");
 }
