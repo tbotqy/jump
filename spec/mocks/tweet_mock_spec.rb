@@ -73,12 +73,12 @@ describe TweetMock do
           it { expect(subject.media.count).to eq 2 }
           it do
             expect(subject.media.first).to have_attributes(
-              url: "url 1", media_url: "media url 1", display_url: "display url 1", indices: [0, 4]
+              url: "url 1", media_url_https: "media url 1", display_url: "display url 1", indices: [0, 4]
             )
           end
           it do
             expect(subject.media.last).to have_attributes(
-              url: "url 2", media_url: "media url 2", display_url: "display url 2", indices: [0, 4]
+              url: "url 2", media_url_https: "media url 2", display_url: "display url 2", indices: [0, 4]
             )
           end
         end
@@ -187,12 +187,12 @@ describe TweetMock do
             it { expect(subject.retweeted_tweet.media.count).to eq 2 }
             it do
               expect(subject.retweeted_tweet.media.first).to have_attributes(
-                url: "url 1", media_url: "media url 1", display_url: "display url 1", indices: [0, 4]
+                url: "url 1", media_url_https: "media url 1", display_url: "display url 1", indices: [0, 4]
               )
             end
             it do
               expect(subject.retweeted_tweet.media.last).to have_attributes(
-                url: "url 2", media_url: "media url 2", display_url: "display url 2", indices: [0, 4]
+                url: "url 2", media_url_https: "media url 2", display_url: "display url 2", indices: [0, 4]
               )
             end
           end
@@ -280,12 +280,12 @@ describe TweetMock do
       it { expect(subject.media.count).to eq 2 }
       it do
         expect(subject.media.first).to have_attributes(
-          url: "url 1", media_url: "media url 1", display_url: "display url 1", indices: [0, 4]
+          url: "url 1", media_url_https: "media url 1", display_url: "display url 1", indices: [0, 4]
         )
       end
       it do
         expect(subject.media.last).to have_attributes(
-          url: "url 2", media_url: "media url 2", display_url: "display url 2", indices: [0, 4]
+          url: "url 2", media_url_https: "media url 2", display_url: "display url 2", indices: [0, 4]
         )
       end
     end
@@ -311,7 +311,7 @@ describe TweetMock do
     subject { incomplete_media_mock }
     it do
       is_expected.to have_attributes(
-        url: "", media_url: "media url", display_url: "display url", indices: [0, 4]
+        url: "", media_url_https: "media url", display_url: "display url", indices: [0, 4]
       )
     end
   end
