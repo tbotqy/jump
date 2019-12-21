@@ -32,9 +32,9 @@ RSpec.describe Medium, type: :model do
     let(:index_l)    { 10 }
     it do
       is_expected.to include(
-        url:         url,
-        display_url: display_url,
-        indices:     [index_f, index_l]
+        url:        url,
+        displayUrl: display_url,
+        indices:    [index_f, index_l]
       )
     end
   end
