@@ -11,7 +11,8 @@ import {
   Link,
   Theme,
   createStyles,
-  WithStyles
+  WithStyles,
+  CardActionArea
 } from "@material-ui/core";
 import {
   Reply,
@@ -22,6 +23,7 @@ import { withStyles } from "@material-ui/core/styles";
 import formatDateString from "../utils/formatDateString";
 import linkifyTweetText from "../utils/linkifyTweetText";
 import TwitterIcon from "./TwitterIcon";
+import PhotoGrid from "./tweet_card/PhotoGrid";
 import {
   TweetUser,
   UrlEntity
@@ -75,6 +77,8 @@ const TweetCard: React.FC<Props> = props => {
   const text       = linkifyTweetText(props.text, props.urlEntities);
   const tweetedAt  = formatDateString(props.tweetedAt);
   const user       = props.user;
+  const photoUrls  = props.urlEntities.map( entity => entity.directUrl ).filter( directUrl => directUrl !== undefined ) as string[];
+  const linkToTweet = `https://twitter.com/${user.screenName}/status/${tweetId}`;
 
   return (
     <Card elevation={ 0 } className={ classes.card } >
@@ -114,6 +118,14 @@ const TweetCard: React.FC<Props> = props => {
         </Typography>
       </CardContent>
 
+      { photoUrls.length > 0 &&
+        <CardActionArea href={ linkToTweet } target="_blank">
+          <CardContent>
+            <PhotoGrid photoUrls={ photoUrls } />
+          </CardContent>
+        </CardActionArea>
+      }
+
       <CardActions>
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
@@ -136,7 +148,7 @@ const TweetCard: React.FC<Props> = props => {
           <Grid item className={ classes.tweetedAt }>
             <Link
               color="inherit"
-              href={ `https://twitter.com/${user.screenName}/status/${tweetId}` }
+              href={ linkToTweet }
               target="_blank"
             >
               { isRetweet ? `${tweetedAt} にリツイート` : tweetedAt }
