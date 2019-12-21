@@ -8,5 +8,15 @@ class Medium < ApplicationRecord
   validates :direct_url,  length: { maximum: 255 }
   validates :display_url, presence: true, length: { maximum: 255 }
 
-  include UrlEntityPresentable
+  def as_json(options = {})
+    {
+      url:        url,
+      displayUrl: display_url,
+      directUrl:  direct_url,
+      indices: [
+        index_f,
+        index_l
+      ]
+    }.compact
+  end
 end

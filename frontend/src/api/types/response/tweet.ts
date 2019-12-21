@@ -3,6 +3,7 @@ import { TweetUser } from "./user";
 export interface UrlEntity {
   url: string;
   displayUrl: string;
+  directUrl?: string;
   indices: [number, number];
 }
 
