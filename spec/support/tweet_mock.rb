@@ -91,7 +91,7 @@ module TweetMock
 
     def medium_mocks
       (1..2).to_a.map do |i|
-        medium_mock(url: "url #{i}", media_url: "media url #{i}", display_url: "display url #{i}", indices: [0, 4])
+        medium_mock(url: "url #{i}", media_url_https: "media url #{i}", display_url: "display url #{i}", indices: [0, 4])
       end
     end
 
@@ -103,8 +103,8 @@ module TweetMock
       instance_double("Twitter::Entity::URI", url: url, display_url: display_url, indices: indices)
     end
 
-    def medium_mock(url: "url", media_url: "media url", display_url: "display url", indices: [0, 4])
-      instance_double("Twitter::Media::Photo", url: url, media_url: media_url, display_url: display_url, indices: indices)
+    def medium_mock(url: "url", media_url_https: "media url", display_url: "display url", indices: [0, 4])
+      instance_double("Twitter::Media::Photo", url: url, media_url_https: media_url_https, display_url: display_url, indices: indices)
     end
 
     def place_mock

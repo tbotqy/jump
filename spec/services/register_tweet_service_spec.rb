@@ -115,7 +115,7 @@ describe RegisterTweetService do
               *tweet.retweeted_tweet.media.map do |retweeted_tweet_medium|
                 [
                   retweeted_tweet_medium.url,
-                  retweeted_tweet_medium.media_url,
+                  retweeted_tweet_medium.media_url_https,
                   retweeted_tweet_medium.display_url,
                   retweeted_tweet_medium.indices.first,
                   retweeted_tweet_medium.indices.last
@@ -285,7 +285,7 @@ describe RegisterTweetService do
               *tweet.media.map do |tweet_medium|
                 [
                   tweet_medium.url,
-                  tweet_medium.media_url,
+                  tweet_medium.media_url_https,
                   tweet_medium.display_url,
                   tweet_medium.indices.first,
                   tweet_medium.indices.last

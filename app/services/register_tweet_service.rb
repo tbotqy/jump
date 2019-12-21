@@ -88,7 +88,7 @@ class RegisterTweetService
         tweet_media.map do |tweet_medium|
           {
             url:         tweet_medium.url,
-            direct_url:  tweet_medium.media_url,
+            direct_url:  tweet_medium.media_url_https,
             display_url: tweet_medium.display_url,
             index_f:     tweet_medium.indices.first,
             index_l:     tweet_medium.indices.last
