@@ -30,6 +30,7 @@ import {
   SCREEN_NAME_PARAM,
   TIMELINE_DATE_PARAMS
 } from "./utils/paths";
+import ScrollToTop from "./components/ScrollToTop";
 
 const ANALYTICS_ID: string = process.env.REACT_APP_ANALYTICS_ID || "";
 
@@ -37,6 +38,7 @@ const Routes = (): React.ReactElement => (
   <SessionManage>
     <Router>
       <Analytics id={ ANALYTICS_ID }>
+        <ScrollToTop />
         <Switch>
           <Route exact path={ ROOT_PATH } component={ TopContainer } />
           <Route exact path={ USER_PAGE_PATH + SCREEN_NAME_PARAM + TIMELINE_DATE_PARAMS } component={ UserPageContainer } />
