@@ -1,9 +1,13 @@
 name: Frontend
-on: push
+on:
+  push:
+    paths:
+    - 'frontend/**'
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/master'
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
