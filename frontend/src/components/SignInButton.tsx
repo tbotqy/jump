@@ -5,11 +5,12 @@ import blue from "@material-ui/core/colors/blue";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { SIGN_IN_URL } from "../utils/paths";
 import { ButtonTypeMap } from "@material-ui/core/Button";
+import { TWITTER_BRAND_COLOR } from "../utils/colors";
 
 const styles = (theme: Theme) => (
   createStyles({
     button: {
-      backgroundColor: blue["400"],
+      backgroundColor: TWITTER_BRAND_COLOR,
       color: "white",
       textTransform: "none",
       "&:hover": {
