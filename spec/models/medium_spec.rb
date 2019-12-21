@@ -27,15 +27,33 @@ RSpec.describe Medium, type: :model do
     let!(:record)     { create(:medium, url: url, display_url: display_url, direct_url: direct_url, index_f: index_f, index_l: index_l) }
     let(:url)         { "url" }
     let(:display_url) { "display_url" }
-    let(:direct_url)  { "direct_url" }
     let(:index_f)    { 1 }
     let(:index_l)    { 10 }
-    it do
-      is_expected.to include(
-        url:        url,
-        displayUrl: display_url,
-        indices:    [index_f, index_l]
-      )
+    context "direct_url is present" do
+      let(:direct_url)  { "direct_url" }
+      it do
+        is_expected.to include(
+          url:        url,
+          displayUrl: display_url,
+          directUrl:  direct_url,
+          indices:    [index_f, index_l]
+        )
+      end
+    end
+    context "direct_url is blank" do
+      let(:direct_url)  { nil }
+      it do
+        is_expected.to include(
+          url:        url,
+          displayUrl: display_url,
+          indices:    [index_f, index_l]
+        )
+      end
+      it do
+        is_expected.not_to include(
+          directUrl:  direct_url,
+        )
+      end
     end
   end
 end
