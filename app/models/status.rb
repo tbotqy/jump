@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class Status < ApplicationRecord
-  EXPECTED_MAX_TWEET_LENGTH = 304 # = 280 + (1 + 23(for url of attached image(s)) )
-  private_constant :EXPECTED_MAX_TWEET_LENGTH
-
   belongs_to :user
   has_many   :hashtags, dependent: :delete_all
   has_many   :urls,     dependent: :delete_all
@@ -16,13 +13,13 @@ class Status < ApplicationRecord
   validates :place_full_name,         allow_nil: true, length: { maximum: 255 }
   validates :retweet_count,           allow_nil: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :source,                  presence: true,  length: { maximum: 255 }
-  validates :text,                    presence: true,  length: { maximum: EXPECTED_MAX_TWEET_LENGTH }
+  validates :text,                    presence: true
   validates :is_retweet_before_type_cast, inclusion: { in: [1, 0, true, false] }
   with_options if: :is_retweet? do |retweet|
     retweet.validates :rt_name,        presence: true, length: { maximum: 280 }
     retweet.validates :rt_screen_name, presence: true, length: { maximum: 255 }
     retweet.validates :rt_avatar_url,  presence: true, length: { maximum: 255 }
-    retweet.validates :rt_text,        presence: true, length: { maximum: EXPECTED_MAX_TWEET_LENGTH }
+    retweet.validates :rt_text,        presence: true
     retweet.validates :rt_source,      presence: true, length: { maximum: 255 }
     retweet.validates :rt_created_at,  presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   end
