@@ -50,7 +50,8 @@
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
-    }
+    },
+    "rootDir": "src/__tests__"
   },
   "eslintConfig": {
     "extends": "react-app"
