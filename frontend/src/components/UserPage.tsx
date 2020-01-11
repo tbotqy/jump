@@ -33,7 +33,7 @@ import {
 } from "@material-ui/core";
 import TweetList     from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
-import TweetButton from "./TweetButton";
+import ShareButton from "./ShareButton";
 import { RouteComponentProps } from "react-router-dom";
 import { UserPageParams } from "./types";
 import { AxiosError } from "axios";
@@ -131,7 +131,7 @@ class UserPage extends React.Component<Props, State> {
                           { this.headerText() }
                         </Grid>
                         <Grid item>
-                          <TweetButton buttonText={ "共有" } inTwitterBrandColor />
+                          <ShareButton inTwitterBrandColor />
                         </Grid>
                       </Grid>
                       <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>

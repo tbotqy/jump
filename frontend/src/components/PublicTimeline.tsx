@@ -10,7 +10,7 @@ const PublicTimeline: React.FC = () => (
     tweetsFetchFunc={ fetchPublicTweets }
     selectableDatesFetchFunc={ fetchPublicSelectableDates }
     timelineName={ "パブリックタイムライン" } // TODO: rename param name
-    showTweetButton
+    showShareButton
   />
 );
 
