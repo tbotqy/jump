@@ -30,11 +30,10 @@ const styles = (theme: Theme) => (
 );
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
-  buttonText?: string;
   inTwitterBrandColor?: boolean;
 }
 
-const TweetButton: React.FC<Props> = ({ buttonText = "ツイート", classes, match, inTwitterBrandColor = false }) => {
+const ShareButton: React.FC<Props> = ({ classes, match, inTwitterBrandColor = false }) => {
   const [ title, setTitle ] = useState("");
   const iconColor = inTwitterBrandColor ? "white" : "gray";
   const textProps = inTwitterBrandColor ? (
@@ -49,10 +48,10 @@ const TweetButton: React.FC<Props> = ({ buttonText = "ツイート", classes, ma
     <TwitterShareButton url={ url() } title={ title }>
       <Button size="small" className={ clsx({ [classes.button]: inTwitterBrandColor }) }>
         <TwitterIcon htmlColor={ iconColor } fontSize="small" />
-        <Typography variant="body2" { ...textProps }>{ buttonText }</Typography>
+        <Typography variant="body2" { ...textProps }>シェア</Typography>
       </Button>
     </TwitterShareButton>
   );
 };
 
-export default withRouter(withStyles(styles)(TweetButton));
+export default withRouter(withStyles(styles)(ShareButton));

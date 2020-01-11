@@ -18,7 +18,7 @@ import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import timelineTitleText from "../utils/timelineTitleText";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import TweetList     from "../containers/TweetListContainer";
-import TweetButton from "./TweetButton";
+import ShareButton from "./ShareButton";
 import { TimelineParams } from "./types";
 import {
   Tweet,
@@ -47,7 +47,7 @@ const styles = (theme: Theme) => (
 
 // TODO: define DRYly
 interface DefaultProps {
-  showTweetButton: boolean;
+  showShareButton: boolean;
 }
 
 interface Props extends DefaultProps, RouteComponentProps<TimelineParams>, WithStyles<typeof styles> {
@@ -78,7 +78,7 @@ class TimelineBase extends React.Component<Props, State> {
   }
 
   static defaultProps: DefaultProps = {
-    showTweetButton: false
+    showShareButton: false
   }
 
   componentDidMount() {
@@ -100,7 +100,7 @@ class TimelineBase extends React.Component<Props, State> {
                 { this.headerText() }
               </Grid>
               <Grid item>
-                { this.props.showTweetButton && <TweetButton buttonText={ "共有" } inTwitterBrandColor /> }
+                { this.props.showShareButton && <ShareButton inTwitterBrandColor /> }
               </Grid>
             </Grid>
             <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>

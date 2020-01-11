@@ -17,7 +17,7 @@ import {
   TERMS_AND_PRIVACY_PATH
 } from "../utils/paths";
 import { CARAMEL_COLOR } from "../utils/colors";
-import TweetButton from "./TweetButton";
+import ShareButton from "./ShareButton";
 
 const styles = (theme: Theme) => (
   createStyles({
@@ -50,7 +50,7 @@ const Footer: React.FC<Props> = ({ bgCaramel, classes }) => {
     >
       <Grid container direction="column" alignItems="center" justify="center" spacing={ 2 }>
         <Grid item>
-          <TweetButton />
+          <ShareButton />
         </Grid>
         <Grid item>
           <Typography variant="subtitle1" color="textSecondary">
