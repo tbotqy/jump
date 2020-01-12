@@ -4,6 +4,22 @@ on:
     paths:
     - 'frontend/**'
 
+env:
+  REACT_APP_SERVICE_NAME: test
+  REACT_APP_SERVICE_DOMAIN: localhost
+  REACT_APP_META_DESCRIPTION: foo
+  REACT_APP_OG_TITLE: bar
+  REACT_APP_API_ORIGIN: http://localhost:3000
+  REACT_APP_AUTH_ORIGIN: http://localhost:3000
+  REACT_APP_SITE_HOST_URL: http://foo.com
+  REACT_APP_SENTRY_DSN: https://123@sentry.io/123456
+  REACT_APP_ANALYTICS_ID: foo
+  REACT_APP_AD_ID: foo
+  REACT_APP_AD_SLOT_ABOVE_TWEETS: 111
+  REACT_APP_AD_SLOT_TOP: 111
+  REACT_APP_HIDE_AD: true
+  REACT_APP_ADMIN_TWITTER_SCREEN_NAME: foo
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -16,7 +32,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ${{ github.workspace }}/frontend/node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-node-modules-
     - name: Lint
@@ -25,7 +41,7 @@ jobs:
         yarn install
         yarn lint
 
-  test:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -35,14 +51,39 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ${{ github.workspace }}/frontend/node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-node-modules-
-    - name: Test
+    - name: Run tests
       working-directory: frontend
       run: |
         yarn install
         yarn test:ci
+
+  E2E:
+    runs-on: ubuntu-latest
+    env:
+      CYPRESS_baseUrl: http://localhost:3000
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Deal with the cache of the app dependencies
+      uses: actions/cache@v1
+      with:
+        path: ${{ github.workspace }}/frontend/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+    - name: Start the frontend server
+      working-directory: frontend
+      run: |
+        yarn install
+        yarn start &
+    - uses: cypress-io/github-action@v1
+      with:
+        working-directory: frontend/e2e
 
   build:
     runs-on: ubuntu-latest
@@ -54,7 +95,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ${{ github.workspace }}/frontend/node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-node-modules-
     - name: Build
