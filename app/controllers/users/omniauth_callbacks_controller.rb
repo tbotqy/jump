@@ -2,7 +2,7 @@
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def twitter
-    user = User.register_or_update!(user_params)
+    user = User.register_or_update!(**user_params)
     sign_in user
 
     if user.has_any_status?

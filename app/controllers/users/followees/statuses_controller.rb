@@ -8,7 +8,7 @@ module Users
       def index
         user = User.find(params[:user_id])
         authorize_operation_for!(user)
-        statuses = CollectFolloweeStatusesService.call!(params_to_collect_by)
+        statuses = CollectFolloweeStatusesService.call!(**params_to_collect_by)
         render json: statuses
       end
 

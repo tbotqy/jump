@@ -9,7 +9,7 @@ module Users
 
       check_ownership_of!(user) if user.protected_flag?
 
-      statuses = CollectUserStatusesService.call!(params_to_collect_by)
+      statuses = CollectUserStatusesService.call!(**params_to_collect_by)
       render json: statuses
     end
 
