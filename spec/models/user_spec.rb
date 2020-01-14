@@ -85,7 +85,7 @@ RSpec.describe User, type: :model do
   end
 
   describe ".register_or_update!" do
-    subject { User.register_or_update!(params) }
+    subject { User.register_or_update!(**params) }
     context "register new user" do
       let(:valid_params) do
         {

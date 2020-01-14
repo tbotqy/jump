@@ -2,7 +2,7 @@
 
 class StatusesController < ApplicationController
   def index
-    statuses = CollectPublicStatusesService.call!(params_to_collect_by)
+    statuses = CollectPublicStatusesService.call!(**params_to_collect_by)
     render json: statuses
   end
 
