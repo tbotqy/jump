@@ -268,7 +268,7 @@ GEM
       redis (>= 3.0.4)
     redis-objects (1.5.0)
       redis (~> 4.0)
-    request_store (1.4.1)
+    request_store (1.5.0)
       rack (>= 1.4)
     responders (3.0.0)
       actionpack (>= 5.0)
