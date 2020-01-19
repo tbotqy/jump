@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
 
   private
     def authenticate_user!
-      raise Errors::Unauthorized, "The request need authentication." unless user_signed_in?
+      raise Errors::Unauthorized, "The request needs authentication." unless user_signed_in?
     end
 
     def authorize_operation_for!(resource)
