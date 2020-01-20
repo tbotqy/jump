@@ -63,7 +63,7 @@ interface Props extends RouteComponentProps<UserPageParams>, WithStyles<typeof s
   setApiErrorCode: (code: number) => void;
   setIsFetching: (flag: boolean) => void;
   setTweets: (tweets: Tweet[]) => void;
-  isFetching: boolean;
+  tweets: Tweet[];
   selectedYear?: string;
   selectedMonth?: string;
   selectedDay?: string;
@@ -135,7 +135,7 @@ class UserPage extends React.Component<Props, State> {
                         </Grid>
                       </Grid>
                       <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
-                        { !this.props.isFetching && <TweetList onLoadMoreTweetsFetchFunc={ this.tweetsFetchFunc } /> }
+                        { this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={ this.tweetsFetchFunc } /> }
                       </Grid>
                     </Box>
                   }
