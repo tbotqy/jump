@@ -61,7 +61,7 @@ jobs:
         yarn test:ci
 
   E2E:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     env:
       CYPRESS_baseUrl: http://localhost:3000
     steps:
