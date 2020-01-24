@@ -23,7 +23,7 @@ import {
   Textsms as TextsmsIcon,
   People as PeopleIcon
 } from "@material-ui/icons";
-import { deleteUser } from "../../api/";
+import { deleteMe } from "../../api/";
 import { ROOT_PATH } from "../../utils/paths";
 
 const styles = (theme: Theme) => (
@@ -130,7 +130,7 @@ class AccountDeleteDialog extends React.Component<Props, State> {
   async handleDeleteButtonClick() {
     this.setState({ disableButton: true });
     try {
-      await deleteUser();
+      await deleteMe();
       this.setState({ showByeMessage: true });
       setTimeout( () => { document.location.href = ROOT_PATH; }, redirectInterval );
     } catch(error) {

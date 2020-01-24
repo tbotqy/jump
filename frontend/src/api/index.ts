@@ -1,5 +1,4 @@
 import axios, { AxiosPromise } from "axios";
-import getUserIdFromCookie from "../utils/getUserIdFromCookie";
 import {
   User,
   Tweet,
@@ -39,13 +38,11 @@ const api = {
 
 export default api;
 
-const authenticatedUserId: number | undefined = getUserIdFromCookie();
-
 /*
  * User
  */
 
-export function fetchAuthenticatedUser(): AxiosPromise<User> {
+export function fetchMe(): AxiosPromise<User> {
   return api.get("/me");
 }
 
@@ -53,8 +50,8 @@ export function fetchUserByScreenName(screenName: string): AxiosPromise<User> {
   return api.get(`/users/${screenName}`);
 }
 
-export function deleteUser(): AxiosPromise {
-  return api.delete(`/users/${authenticatedUserId}`);
+export function deleteMe(): AxiosPromise {
+  return api.delete("/me");
 }
 
 /*
@@ -65,20 +62,24 @@ export function fetchPublicTweets(params: PaginatableDateParams): AxiosPromise<T
   return api.get("/statuses", params);
 }
 
-export function fetchUserTweets(params: PaginatableDateParams, userId = authenticatedUserId): AxiosPromise<Tweet[]> {
+export function fetchMeTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
+  return api.get("/me/statuses", params);
+}
+
+export function fetchUserTweets(params: PaginatableDateParams, userId: number): AxiosPromise<Tweet[]> {
   return api.get(`/users/${userId}/statuses`, params);
 }
 
-export function fetchFolloweeTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
-  return api.get(`/users/${authenticatedUserId}/followees/statuses`, params);
+export function fetchMeFolloweeTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
+  return api.get("/me/followees/statuses", params);
 }
 
 export function requestInitialTweetImport(): AxiosPromise {
-  return api.post(`/users/${authenticatedUserId}/statuses`);
+  return api.post("/me/statuses");
 }
 
 export function requestAdditionalTweetImport(): AxiosPromise {
-  return api.put(`/users/${authenticatedUserId}/statuses`);
+  return api.put("/me/statuses");
 }
 
 /*
@@ -89,12 +90,16 @@ export function fetchPublicSelectableDates(): AxiosPromise<TweetDate[]> {
   return api.get("/tweeted_dates");
 }
 
-export function fetchUserSelectableDates(userId = authenticatedUserId): AxiosPromise<TweetDate[]> {
+export function fetchMeSelectableDates(): AxiosPromise<TweetDate[]> {
+  return api.get("/me/tweeted_dates");
+}
+
+export function fetchUserSelectableDates(userId: number): AxiosPromise<TweetDate[]> {
   return api.get(`/users/${userId}/tweeted_dates`);
 }
 
-export function fetchFolloweeSelectableDates(): AxiosPromise<TweetDate[]> {
-  return api.get(`/users/${authenticatedUserId}/followees/tweeted_dates`);
+export function fetchMeFolloweeSelectableDates(): AxiosPromise<TweetDate[]> {
+  return api.get("/me/followees/tweeted_dates");
 }
 
 /*
@@ -102,7 +107,7 @@ export function fetchFolloweeSelectableDates(): AxiosPromise<TweetDate[]> {
  */
 
 export function requestFolloweeImport(): AxiosPromise {
-  return api.post(`/users/${authenticatedUserId}/followees`);
+  return api.post("/me/followees");
 }
 
 /*
@@ -110,7 +115,7 @@ export function requestFolloweeImport(): AxiosPromise {
  */
 
 export function fetchImportProgress(): AxiosPromise<ImportProgress> {
-  return api.get(`/users/${authenticatedUserId}/tweet_import_progress`);
+  return api.get("/me/tweet_import_progress");
 }
 
 /*
