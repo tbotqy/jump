@@ -16,7 +16,6 @@ axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
 
 export const API_NORMAL_CODE_OK               = 200;
 export const API_NORMAL_CODE_ACCEPTED         = 202;
-export const API_ERROR_CODE_BAD_REQUEST       = 400;
 export const API_ERROR_CODE_UNAUTHORIZED      = 401;
 export const API_ERROR_CODE_NOT_FOUND         = 404;
 export const API_ERROR_CODE_TOO_MANY_REQUESTS = 429;

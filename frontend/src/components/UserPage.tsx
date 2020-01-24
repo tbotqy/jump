@@ -4,7 +4,6 @@ import {
   fetchUserByScreenName,
   fetchUserTweets,
   fetchUserSelectableDates,
-  API_ERROR_CODE_BAD_REQUEST,
   API_ERROR_CODE_UNAUTHORIZED,
   API_ERROR_CODE_NOT_FOUND,
   DateParams,
@@ -205,7 +204,6 @@ class UserPage extends React.Component<Props, State> {
 
   handleTweetDataApiError(error: AxiosError) {
     switch(error.response!.status) {
-    case API_ERROR_CODE_BAD_REQUEST:
     case API_ERROR_CODE_UNAUTHORIZED:
       this.setState({ showMessage: true, message: "非公開ユーザーです" });
       break;
