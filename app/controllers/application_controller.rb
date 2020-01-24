@@ -12,19 +12,10 @@ class ApplicationController < ActionController::API
   rescue_from Errors::NotFound,             with: :render_404
 
   private
-    def authenticate_user!
-      raise Errors::Unauthorized, "The request needs authentication." unless user_signed_in?
-    end
-
-    def authorize_operation_for!(resource)
-      unless current_user === resource
-        raise Errors::InvalidParam, "Attempting to operate on other's resource."
+    def authorize_operation_for!(user)
+      unless current_user&.id === user.id
+        raise Errors::Unauthorized, "Attempting to operate on other's resource."
       end
-    end
-
-    def check_ownership_of!(resource)
-      authenticate_user!
-      authorize_operation_for!(resource)
     end
 
     def render_400(e)

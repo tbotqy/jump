@@ -5,7 +5,7 @@ module Users
     def index
       user = User.find(params[:user_id])
 
-      check_ownership_of!(user) if user.protected_flag?
+      authorize_operation_for!(user) if user.protected_flag?
 
       tweeted_dates = StatusesDecorator.new(user.statuses).tweeted_dates
       raise Errors::NotFound if tweeted_dates.blank?

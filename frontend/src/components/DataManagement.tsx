@@ -17,7 +17,7 @@ import {
 } from "@material-ui/icons";
 import { withStyles } from "@material-ui/core/styles";
 import {
-  fetchAuthenticatedUser,
+  fetchMe,
   requestAdditionalTweetImport,
   requestFolloweeImport,
   User
@@ -56,7 +56,7 @@ interface Props extends WithStyles<typeof styles>{
 class DataManagement extends React.Component<Props> {
   async componentDidMount() {
     try {
-      const response = await fetchAuthenticatedUser();
+      const response = await fetchMe();
       this.props.setUser(response.data);
     } catch(error) {
       this.props.setApiErrorCode(error.response.status);

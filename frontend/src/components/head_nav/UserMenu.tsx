@@ -25,7 +25,7 @@ import {
 } from "../../utils/paths";
 import {
   User,
-  fetchAuthenticatedUser
+  fetchMe
 } from "../../api";
 
 interface DefaultProps {
@@ -57,7 +57,7 @@ class UserMenu extends React.Component<Props, State> {
     if(!this.props.user) {
       this.setState({ fetchingUser: true });
       try {
-        const response = await fetchAuthenticatedUser();
+        const response = await fetchMe();
         this.props.setUser(response.data);
       } catch(error) {
         this.props.setApiErrorCode(error.response.status);
