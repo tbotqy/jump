@@ -44,7 +44,11 @@ const Routes = (): React.ReactElement => (
           <Route exact path={ USER_PAGE_PATH + SCREEN_NAME_PARAM + TIMELINE_DATE_PARAMS } component={ UserPageContainer } />
           <Route exact path={ TERMS_AND_PRIVACY_PATH } component={ TermsAndPrivacy } />
           <Route exact path={ PUBLIC_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ PublicTimeline } />
-          <Route exact path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS } component={ UserTimeline } />
+          <Route
+            exact
+            path={ USER_TIMELINE_PATH + TIMELINE_DATE_PARAMS }
+            render={ () => <Auth><UserTimeline /></Auth> }
+          />
           <Route
             exact
             path={ HOME_TIMELINE_PATH + TIMELINE_DATE_PARAMS }
