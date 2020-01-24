@@ -1,8 +1,5 @@
 name: Frontend
-on:
-  push:
-    paths:
-    - 'frontend/**'
+on: push
 
 env:
   REACT_APP_SERVICE_NAME: test
