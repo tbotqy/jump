@@ -1,5 +1,5 @@
 ---
-:concurrency: 2
+:concurrency: 1
 :max_retries: 0
 :queues:
   - default
