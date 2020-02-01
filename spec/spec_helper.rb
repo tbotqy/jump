@@ -125,7 +125,6 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    DatabaseCleaner[:redis].clean
     DatabaseCleaner.clean
 
     if Bullet.enable?
