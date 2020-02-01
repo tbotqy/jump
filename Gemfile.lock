@@ -81,7 +81,13 @@ GEM
       dry-validation (~> 1.0, >= 1.0.0)
     connection_pool (2.2.2)
     crass (1.0.6)
-    database_cleaner (1.7.0)
+    database_cleaner (1.8.1)
+    database_cleaner-active_record (1.8.0)
+      activerecord
+      database_cleaner (~> 1.8.0)
+    database_cleaner-redis (1.8.0)
+      database_cleaner (~> 1.8.0)
+      redis
     deep_merge (1.2.1)
     devise (4.7.1)
       bcrypt (~> 3.0)
@@ -375,7 +381,8 @@ DEPENDENCIES
   bullet
   codecov
   config
-  database_cleaner
+  database_cleaner-active_record
+  database_cleaner-redis
   devise
   dotenv-rails
   draper

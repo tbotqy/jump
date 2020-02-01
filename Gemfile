@@ -40,7 +40,8 @@ group :development, :test do
   gem "rspec-rails", "~> 3.9"
   gem "listen"
   gem "factory_bot_rails"
-  gem "database_cleaner"
+  gem "database_cleaner-active_record"
+  gem "database_cleaner-redis"
   gem "rspec_junit_formatter"
   gem "rubocop", require: false
   gem "rubocop-rails_config", require: false
