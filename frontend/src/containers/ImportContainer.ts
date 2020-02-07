@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { setApiErrorCode } from "../store/api_error/actions";
-import Import from "../components/Import";
+import Import from "../pages/Import";
 import { AppState } from "../store";
 
 const mapStateToProps = (state: AppState) => ({

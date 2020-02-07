@@ -13,14 +13,14 @@ import {
   TweetDate
 } from "../api";
 import timelineTitleText from "../utils/timelineTitleText";
-import Head from "./Head";
+import Head from "../components/Head";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import HeadNav from "../containers/HeadNavContainer";
 import HeadProgressBar from "../containers/HeadProgressBarContainer";
-import UserProfile from "./UserProfile";
+import UserProfile from "../components/UserProfile";
 import DateSelectors from "../containers/DateSelectorsContainer";
-import FullPageLoading from "./FullPageLoading";
-import Footer from "./Footer";
+import FullPageLoading from "../components/FullPageLoading";
+import Footer from "../components/Footer";
 import {
   Container,
   Grid,
@@ -32,9 +32,9 @@ import {
 } from "@material-ui/core";
 import TweetList     from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
-import ShareButton from "./ShareButton";
+import ShareButton from "../components/ShareButton";
 import { RouteComponentProps } from "react-router-dom";
-import { UserPageParams } from "./types";
+import { UserPageParams } from "../components/types";
 import { AxiosError } from "axios";
 
 const styles = (theme: Theme) => (

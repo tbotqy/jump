@@ -1,16 +1,16 @@
 import React from "react";
 import HeadNav from "../containers/HeadNavContainer";
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 import { Container, createStyles, Theme } from "@material-ui/core";
 import {
   withStyles,
   WithStyles
 } from "@material-ui/core/styles";
 import { PAGE_TITLE_TERMS_AND_PRIVACY } from "../utils/pageHead";
-import TermsOfService from "./terms_and_privacy/TermsOfService";
-import PrivacyPolicy from "./terms_and_privacy/PrivacyPolicy";
+import TermsOfService from "../components/terms_and_privacy/TermsOfService";
+import PrivacyPolicy from "../components/terms_and_privacy/PrivacyPolicy";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
-import Head from "./Head";
+import Head from "../components/Head";
 
 const styles = (theme: Theme) => (
   createStyles({

@@ -4,7 +4,7 @@ import {
   setIsFetching
 } from "../store/tweet/actions";
 import { setApiErrorCode } from "../store/api_error/actions";
-import UserPage from "../components/UserPage";
+import UserPage from "../pages/UserPage";
 import { AppState } from "../store";
 import { Tweet } from "../api";
 

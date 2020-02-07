@@ -27,13 +27,13 @@ import {
   USER_PAGE_PATH
 } from "../utils/paths";
 import { Input as InputIcon } from "@material-ui/icons";
-import BrandLogo from "./BrandLogo";
-import SignInButton from "./SignInButton";
-import Ad from "./Ad";
-import Footer from "./Footer";
-import LeadText from "./top/LeadText";
-import MockUp from "./top/MockUp";
-import Head from "./Head";
+import BrandLogo from "../components/BrandLogo";
+import SignInButton from "../components/SignInButton";
+import Ad from "../components/Ad";
+import Footer from "../components/Footer";
+import LeadText from "../components/top/LeadText";
+import MockUp from "../components/top/MockUp";
+import Head from "../components/Head";
 import {
   fetchStats,
   fetchNewArrivals,
