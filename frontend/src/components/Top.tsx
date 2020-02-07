@@ -122,8 +122,7 @@ const Top: React.FC<Props> = ({ setApiErrorCode, classes }) => {
                       fullWidth
                       variant="contained"
                       color="primary"
-                      component={ Link }
-                      to={ PUBLIC_TIMELINE_PATH }
+                      href={ PUBLIC_TIMELINE_PATH }
                     >
                       公開タイムラインを見てみる
                       <InputIcon
