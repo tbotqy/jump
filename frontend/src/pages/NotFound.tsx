@@ -15,7 +15,7 @@ import {
   PAGE_TITLE_NOT_FOUND,
   TOP_DESCRIPTION
 } from "../utils/pageHead";
-import Head from "./Head";
+import Head from "../components/Head";
 
 const styles = createStyles({
   container: {

@@ -11,12 +11,12 @@ import Auth from "./containers/AuthContainer";
 import TopContainer from "./containers/TopContainer";
 import ImportContainer from "./containers/ImportContainer";
 import DataManagementContainer from "./containers/DataManagementContainer";
-import TermsAndPrivacy from "./components/TermsAndPrivacy";
-import PublicTimeline from "./components/PublicTimeline";
-import UserTimeline from "./components/UserTimeline";
-import HomeTimeline from "./components/HomeTimeline";
+import TermsAndPrivacy from "./pages/TermsAndPrivacy";
+import PublicTimeline from "./pages/PublicTimeline";
+import UserTimeline from "./pages/UserTimeline";
+import HomeTimeline from "./pages/HomeTimeline";
 import UserPageContainer from "./containers/UserPageContainer";
-import NotFound from "./components/NotFound";
+import NotFound from "./pages/NotFound";
 
 import {
   ROOT_PATH,

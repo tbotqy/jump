@@ -25,10 +25,10 @@ import { PAGE_TITLE_IMPORT } from "../utils/pageHead";
 import { USER_TIMELINE_PATH } from "../utils/paths";
 import green from "@material-ui/core/colors/green";
 import CheckIcon from "@material-ui/icons/Check";
-import HeadAppBar from "./HeadAppBar";
+import HeadAppBar from "../components/HeadAppBar";
 import UserMenu from "../containers/UserMenuContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
-import Head from "./Head";
+import Head from "../components/Head";
 
 const styles = (theme: Theme) => (
   createStyles({

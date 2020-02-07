@@ -27,9 +27,9 @@ import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "../containers/CustomizedListItemContainer";
 import AccountDeleteDialog from "../containers/AccountDeleteDialogContainer";
-import Footer from "./Footer";
+import Footer from "../components/Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
-import Head from "./Head";
+import Head from "../components/Head";
 
 const styles = (theme: Theme) => (
   createStyles({
