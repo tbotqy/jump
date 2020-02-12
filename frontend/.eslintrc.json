@@ -28,7 +28,10 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "indent": ["error", 2],
+    "indent": [
+      "error",
+      2
+    ],
     "quotes": [
       "error",
       "double"
@@ -55,11 +58,17 @@
     ],
     "arrow-spacing": [
       "error",
-      { "before": true, "after": true }
+      {
+        "before": true,
+        "after": true
+      }
     ],
     "comma-spacing": [
       "error",
-      { "before": false, "after": true }
+      {
+        "before": false,
+        "after": true
+      }
     ],
     "no-console": "off",
     "no-duplicate-imports": "error",
