@@ -82,14 +82,14 @@ const Top: React.FC<Props> = ({ classes }) => {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} component="nav">
-              <NewArrivalList />
-            </Grid>
-
             <Grid item xs={12} component="section">
               <Box textAlign="center">
                 <Ad slot={process.env.REACT_APP_AD_SLOT_TOP || ""} />
               </Box>
+            </Grid>
+
+            <Grid item xs={12} component="nav">
+              <NewArrivalList />
             </Grid>
           </Grid>
         </Container>
