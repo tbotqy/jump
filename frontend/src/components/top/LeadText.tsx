@@ -11,10 +11,10 @@ interface Props {
 
 const LeadText: React.FC<Props> = ({ align }) => (
   <>
-    <Typography align={ align } variant="h2" gutterBottom>
+    <Typography align={align} variant="h2" component="h1" gutterBottom>
       <BrandLogo />
     </Typography>
-    <Typography align={ align } variant="h4" color="textSecondary" gutterBottom>
+    <Typography align={align} variant="h4" component="h2" color="textSecondary" gutterBottom>
       過去ツイへひとっ飛び!
     </Typography>
   </>
