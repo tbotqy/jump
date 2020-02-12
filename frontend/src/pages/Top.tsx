@@ -5,7 +5,6 @@ import {
   Box,
   Typography,
   Container,
-  Hidden,
   Chip,
   Theme,
   createStyles,
@@ -47,43 +46,34 @@ const Top: React.FC<Props> = ({ classes }) => {
       <Head title={PAGE_TITLE_TOP} description={TOP_DESCRIPTION} />
       <div className={classes.contentContainer}>
         <Container>
-          <Grid container>
-            <Grid item md={6} sm={12}>
-              <Hidden smDown><LeadText /></Hidden>
-              <Hidden mdUp>
-                <LeadText align="center" />
-                <Box pt={6}><MockUp /></Box>
-              </Hidden>
-              <Grid item lg={8}>
-                <Box mt={5}>
-                  <Typography variant="body1" color="textSecondary" gutterBottom>
-                    <BrandLogo />
-                    は、みんなやあなたの過去のツイートを、クリック一つでサクサク見られるウェブサービスです
-                  </Typography>
-                </Box>
-              </Grid>
-              <Box mt={5}>
-                <Grid container justify="center" spacing={4}>
-                  <Grid item lg={6} xs={12}>
-                    <ButtonToPublicTimeline />
-                    <Box p={2} textAlign="center">
-                      <StatsChip />
-                    </Box>
-                  </Grid>
-                  <Grid item lg={6} xs={12}>
-                    <SignInButton size="large" fullWidth variant="contained" text="Twitterアカウントで利用する" />
-                    <Box pt={2} textAlign="center">
-                      <Chip label="利用規約はこちら" component={Link} clickable to={TERMS_AND_PRIVACY_PATH} />
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
+          <Grid container alignItems="center" justify="center" spacing={4}>
+            <Grid item md={6} xs={12}>
+              <LeadText align="center" />
             </Grid>
-            <Hidden smDown>
-              <Grid item md={6} sm={12} justify="center">
-                <MockUp />
+            <Grid item md={6} xs={12}>
+              <MockUp />
+            </Grid>
+            <Grid item md={12}>
+              <Typography variant="h6" component="h3" color="textSecondary" align="center" gutterBottom>
+                <BrandLogo /> は、みんなやあなたの過去のツイートを、クリック一つでサクサク見られるウェブサービスです
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container justify="space-evenly" spacing={4}>
+                <Grid item md={4} xs={12}>
+                  <ButtonToPublicTimeline />
+                  <Box pt={2} textAlign="center">
+                    <StatsChip />
+                  </Box>
+                </Grid>
+                <Grid item md={4} xs={12}>
+                  <SignInButton size="large" fullWidth variant="contained" text="Twitterアカウントで利用する" />
+                  <Box pt={2} textAlign="center">
+                    <Chip label="利用規約はこちら" component={Link} clickable to={TERMS_AND_PRIVACY_PATH} />
+                  </Box>
+                </Grid>
               </Grid>
-            </Hidden>
+            </Grid>
           </Grid>
           <Box pt={6} pb={6}>
             <NewArrivalList />
