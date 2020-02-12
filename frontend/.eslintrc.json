@@ -74,15 +74,13 @@
     "template-curly-spacing": "error",
     "yield-star-spacing": "error",
     "react/prop-types": "off",
-    "react/jsx-curly-spacing": [
-      "error",
-      { "when": "always", "children": true }
-    ],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/camelcase": [
       "error",
-      { "properties": "always" }
+      {
+        "properties": "always"
+      }
     ]
   }
 }
