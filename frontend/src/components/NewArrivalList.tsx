@@ -48,8 +48,8 @@ class NewArrivalList extends React.Component<Props, State> {
     const { newArrivals } = this.state;
     const { classes } = this.props;
     return (
-      <>
-        <Typography gutterBottom variant="h5" component="h3" color="textSecondary">新着ユーザー</Typography>
+      <nav>
+        <Typography gutterBottom variant="h5" component="h4" color="textSecondary">新着ユーザー</Typography>
         <Box pt={2}>
           {newArrivals ? (
             <Grid container direction="row" alignItems="center" justify="space-between">
@@ -72,7 +72,7 @@ class NewArrivalList extends React.Component<Props, State> {
             )
           }
         </Box>
-      </>
+      </nav>
     );
   }
 }

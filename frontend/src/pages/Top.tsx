@@ -20,7 +20,6 @@ import BrandLogo from "../components/BrandLogo";
 import SignInButton from "../components/SignInButton";
 import Ad from "../components/Ad";
 import Footer from "../components/Footer";
-import LeadText from "../components/top/LeadText";
 import MockUp from "../components/top/MockUp";
 import Head from "../components/Head";
 import NewArrivalList from "../containers/NewArrivalListContainer";
@@ -47,18 +46,26 @@ const Top: React.FC<Props> = ({ classes }) => {
       <div className={classes.contentContainer}>
         <Container>
           <Grid container alignItems="center" justify="center" spacing={4}>
-            <Grid item md={6} xs={12}>
-              <LeadText align="center" />
+            <Grid item md={6} xs={12} component="header">
+              <Typography align="center" variant="h2" component="h1" gutterBottom>
+                <BrandLogo />
+              </Typography>
+              <Typography align="center" variant="h4" component="h2" color="textSecondary" gutterBottom>
+                過去ツイへひとっ飛び!
+              </Typography>
             </Grid>
-            <Grid item md={6} xs={12}>
+
+            <Grid item md={6} xs={12} component="section">
               <MockUp />
             </Grid>
-            <Grid item md={12}>
+
+            <Grid item md={12} component="section">
               <Typography variant="h6" component="h3" color="textSecondary" align="center" gutterBottom>
                 <BrandLogo /> は、みんなやあなたの過去のツイートを、クリック一つでサクサク見られるウェブサービスです
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+
+            <Grid item xs={12} component="nav">
               <Grid container justify="space-evenly" spacing={4}>
                 <Grid item md={4} xs={12}>
                   <ButtonToPublicTimeline />
@@ -74,14 +81,18 @@ const Top: React.FC<Props> = ({ classes }) => {
                 </Grid>
               </Grid>
             </Grid>
+
+            <Grid item xs={12} component="nav">
+              <NewArrivalList />
+            </Grid>
+
+            <Grid item xs={12} component="section">
+              <Box textAlign="center">
+                <Ad slot={process.env.REACT_APP_AD_SLOT_TOP || ""} />
+              </Box>
+            </Grid>
           </Grid>
-          <Box pt={6} pb={6}>
-            <NewArrivalList />
-          </Box>
         </Container>
-        <Box pt={5} textAlign="center">
-          <Ad slot={process.env.REACT_APP_AD_SLOT_TOP || ""} />
-        </Box>
       </div>
       <Footer bgCaramel />
     </ApiErrorBoundary>
