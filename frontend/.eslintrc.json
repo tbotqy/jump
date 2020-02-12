@@ -90,6 +90,7 @@
       {
         "properties": "always"
       }
-    ]
+    ],
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }
