@@ -13,17 +13,13 @@ import {
 } from "../types";
 import {
   DateParams,
-  TweetDate,
-  Tweet
+  TweetDate
 } from "../../api";
 
 interface Props extends RouteComponentProps<TimelineParams> {
   selectableDates: TweetDate[];
   onSelectionChangeTweetsFetchFunc: ({ year, month, day }: DateParams) => AxiosPromise;
   basePath: string;
-  setIsFetching: (flag: boolean) => void;
-  setTweets: (tweets: Tweet[]) => void;
-  setApiErrorCode: (code: number) => void;
   setSelectedYear: (year: string) => void;
   setSelectedMonth: (month: string) => void;
   setSelectedDay: (day: string) => void;
