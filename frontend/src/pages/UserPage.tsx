@@ -87,7 +87,7 @@ class UserPage extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
+    this.onPopStateFunc = this.onPathChange.bind(this);
     window.addEventListener("popstate", this.onPopStateFunc);
   }
 
@@ -106,6 +106,12 @@ class UserPage extends React.Component<Props, State> {
       this.fetchSelectableDates(userId);
     } catch (error) {
       this.props.setApiErrorCode(error.response.status);
+    }
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if(this.props.match.url !== prevProps.match.url) {
+      this.onPathChange();
     }
   }
 
@@ -162,8 +168,8 @@ class UserPage extends React.Component<Props, State> {
     window.removeEventListener("popstate", this.onPopStateFunc);
   }
 
-  async onBackOrForwardButtonEvent(e: Event) {
-    e.preventDefault();
+  async onPathChange(e?: Event) {
+    if(e) e.preventDefault();
     const { year, month, day } = this.props.match.params;
     this.fetchTweets((this.state.user as any).id, { year, month, day } as DateParams);
   }
