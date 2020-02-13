@@ -83,6 +83,7 @@
     "template-curly-spacing": "error",
     "yield-star-spacing": "error",
     "react/prop-types": "off",
+    "array-bracket-spacing": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/camelcase": [
