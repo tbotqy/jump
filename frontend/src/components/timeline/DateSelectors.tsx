@@ -3,8 +3,8 @@ import {
   withRouter,
   RouteComponentProps
 } from "react-router-dom";
-import { Grid }       from "@material-ui/core";
-import Selector       from "./date_selectors/Selector";
+import { Grid } from "@material-ui/core";
+import Selector from "./date_selectors/Selector";
 
 import DateParser from "../../utils/DateParser";
 import { AxiosPromise } from "axios";
@@ -45,17 +45,17 @@ class DateSelectors extends React.Component<Props, State> {
     super(props);
 
     const dateParser = new DateParser(props.selectableDates);
-    this.dateParser  = dateParser;
+    this.dateParser = dateParser;
 
     const { year, month, day } = props.match.params;
-    const selectedYear  = year  || dateParser.latestYear();
+    const selectedYear = year || dateParser.latestYear();
     const selectedMonth = month || dateParser.latestMonthByYear(selectedYear);
-    const selectedDay   = day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+    const selectedDay = day || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
 
     this.state = { selectedYear, selectedMonth, selectedDay };
-    this.selectedYear  = selectedYear;
+    this.selectedYear = selectedYear;
     this.selectedMonth = selectedMonth;
-    this.selectedDay   = selectedDay;
+    this.selectedDay = selectedDay;
 
     this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
     window.addEventListener("popstate", this.onPopStateFunc);
@@ -67,11 +67,11 @@ class DateSelectors extends React.Component<Props, State> {
 
   handleYearChange(year: string) {
     const month = this.dateParser.latestMonthByYear(year);
-    const day   = this.dateParser.latestDayByYearAndMonth(year, month);
+    const day = this.dateParser.latestDayByYearAndMonth(year, month);
     this.setState({
-      selectedYear:  year,
+      selectedYear: year,
       selectedMonth: month,
-      selectedDay:   day
+      selectedDay: day
     });
 
     this.fetchTweets(year, month, day);
@@ -81,10 +81,10 @@ class DateSelectors extends React.Component<Props, State> {
 
   handleMonthChange(month: string) {
     const year = this.state.selectedYear;
-    const day  = this.dateParser.latestDayByYearAndMonth(year, month);
+    const day = this.dateParser.latestDayByYearAndMonth(year, month);
     this.setState({
       selectedMonth: month,
-      selectedDay:   day
+      selectedDay: day
     });
 
     this.fetchTweets(year, month, day);
@@ -103,11 +103,11 @@ class DateSelectors extends React.Component<Props, State> {
 
   updateDatePath(datePath: string) {
     const { screenName } = this.props.match.params;
-    const timelineType   = this.props.match.path.split("/")[1]; // e.g public_timeline
+    const timelineType = this.props.match.path.split("/")[1]; // e.g public_timeline
     let newPath = "";
-    if(screenName) {
+    if (screenName) {
       newPath = `/${timelineType}/${screenName}/${datePath}`;
-    }else{
+    } else {
       newPath = `/${timelineType}/${datePath}`;
     }
     this.props.history.push(newPath);
@@ -117,35 +117,35 @@ class DateSelectors extends React.Component<Props, State> {
     e.preventDefault();
 
     const { year, month, day } = this.props.match.params;
-    const selectedYear  = year  || this.dateParser.latestYear();
+    const selectedYear = year || this.dateParser.latestYear();
     const selectedMonth = month || this.dateParser.latestMonthByYear(selectedYear);
-    const selectedDay   = day   || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+    const selectedDay = day || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
     this.setState({ selectedYear, selectedMonth, selectedDay });
     this.propagateSelectedValues(selectedYear, selectedMonth, selectedDay);
   }
 
   render() {
-    return(
-      <Grid container justify="flex-end" spacing={ 1 }>
+    return (
+      <Grid container justify="flex-end" spacing={1}>
         <Grid item>
           <Selector
-            selections={ this.dateParser.years() }
-            selectedValue={ this.state.selectedYear }
-            selectedValueUpdater={ this.handleYearChange.bind(this) }
+            selections={this.dateParser.years()}
+            selectedValue={this.state.selectedYear}
+            selectedValueUpdater={this.handleYearChange.bind(this)}
           />
         </Grid>
         <Grid item>
           <Selector
-            selections={ this.dateParser.monthsByYear(this.state.selectedYear) }
-            selectedValue={ this.state.selectedMonth }
-            selectedValueUpdater={ this.handleMonthChange.bind(this) }
+            selections={this.dateParser.monthsByYear(this.state.selectedYear)}
+            selectedValue={this.state.selectedMonth}
+            selectedValueUpdater={this.handleMonthChange.bind(this)}
           />
         </Grid>
         <Grid item>
           <Selector
-            selections={ this.dateParser.daysByYearAndMonth(this.state.selectedYear, this.state.selectedMonth) }
-            selectedValue={ this.state.selectedDay }
-            selectedValueUpdater={ this.handleDayChange.bind(this) }
+            selections={this.dateParser.daysByYearAndMonth(this.state.selectedYear, this.state.selectedMonth)}
+            selectedValue={this.state.selectedDay}
+            selectedValueUpdater={this.handleDayChange.bind(this)}
           />
         </Grid>
       </Grid>
@@ -161,7 +161,7 @@ class DateSelectors extends React.Component<Props, State> {
     try {
       const response = await this.props.onSelectionChangeTweetsFetchFunc({ year, month, day });
       this.props.setTweets(response.data);
-    } catch(error) {
+    } catch (error) {
       this.props.setApiErrorCode(error.response.status);
     } finally {
       this.props.setIsFetching(false);
