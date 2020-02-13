@@ -30,18 +30,19 @@ import {
   createStyles,
   WithStyles
 } from "@material-ui/core";
-import TweetList     from "../containers/TweetListContainer";
+import TweetList from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import ShareButton from "../components/ShareButton";
 import { RouteComponentProps } from "react-router-dom";
 import { UserPageParams } from "../components/types";
 import { AxiosError } from "axios";
+import { USER_PAGE_PATH } from "../utils/paths";
 
 const styles = (theme: Theme) => (
   createStyles({
     container: {
-      paddingTop:   theme.spacing(3),
-      paddingLeft:  theme.spacing(2),
+      paddingTop: theme.spacing(3),
+      paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2)
     },
     message: {
@@ -86,7 +87,7 @@ class UserPage extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
+    this.onPopStateFunc = this.onPathChange.bind(this);
     window.addEventListener("popstate", this.onPopStateFunc);
   }
 
@@ -108,47 +109,55 @@ class UserPage extends React.Component<Props, State> {
     }
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if(this.props.match.url !== prevProps.match.url) {
+      this.onPathChange();
+    }
+  }
+
   render() {
-    return(
+    return (
       <>
-        <Head title={ this.title() } />
+        <Head title={this.title()} />
         <HeadNav />
         <ApiErrorBoundary>
           <HeadProgressBar />
           {
             !this.state.user ? (
               <FullPageLoading />
-            ) : (
-              <>
-                <Container maxWidth="md" className={ this.props.classes.container }>
-                  <UserProfile user={ this.state.user! } /> { /** TODO: Replace with ProfileUser */ }
-                  { this.state.showMessage ?
-                    this.errorMessage() :
-                    <Box pt={ 3 }>
-                      <Grid container justify="space-between" alignItems="center">
-                        <Grid item>
-                          { this.headerText() }
+            ) :
+              (
+                <>
+                  <Container maxWidth="md" className={this.props.classes.container}>
+                    <UserProfile user={this.state.user!} /> { /** TODO: Replace with ProfileUser */}
+                    {this.state.showMessage ?
+                      this.errorMessage() :
+                      <Box pt={3}>
+                        <Grid container justify="space-between" alignItems="center">
+                          <Grid item>
+                            {this.headerText()}
+                          </Grid>
+                          <Grid item>
+                            <ShareButton inTwitterBrandColor />
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <ShareButton inTwitterBrandColor />
+                        <Grid container item justify="center" className={this.props.classes.tweetListContainer}>
+                          {this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={this.tweetsFetchFunc} />}
                         </Grid>
-                      </Grid>
-                      <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
-                        { this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={ this.tweetsFetchFunc } /> }
-                      </Grid>
+                      </Box>
+                    }
+                  </Container>
+                  {this.state.selectableDates.length > 0 &&
+                    <Box pr={2} className={this.props.classes.dateSelectorContainer}>
+                      <DateSelectors
+                        selectableDates={this.state.selectableDates}
+                        onSelectionChangeTweetsFetchFunc={this.tweetsFetchFunc}
+                        basePath={`${USER_PAGE_PATH}/${this.props.match.params.screenName}`}
+                      />
                     </Box>
                   }
-                </Container>
-                { this.state.selectableDates.length > 0 &&
-                  <Box pr={ 2 } className={ this.props.classes.dateSelectorContainer }>
-                    <DateSelectors
-                      selectableDates={ this.state.selectableDates }
-                      onSelectionChangeTweetsFetchFunc={ this.tweetsFetchFunc }
-                    />
-                  </Box>
-                }
-              </>
-            )
+                </>
+              )
           }
         </ApiErrorBoundary>
       </>
@@ -159,8 +168,8 @@ class UserPage extends React.Component<Props, State> {
     window.removeEventListener("popstate", this.onPopStateFunc);
   }
 
-  async onBackOrForwardButtonEvent(e: Event) {
-    e.preventDefault();
+  async onPathChange(e?: Event) {
+    if(e) e.preventDefault();
     const { year, month, day } = this.props.match.params;
     this.fetchTweets((this.state.user as any).id, { year, month, day } as DateParams);
   }
@@ -170,7 +179,7 @@ class UserPage extends React.Component<Props, State> {
     try {
       const response = await fetchUserTweets({ ...date, page: 1 }, userId);
       this.props.setTweets(response.data);
-    } catch(error) {
+    } catch (error) {
       this.handleTweetDataApiError(error);
     } finally {
       this.props.setIsFetching(false);
@@ -181,7 +190,7 @@ class UserPage extends React.Component<Props, State> {
     try {
       const response = await fetchUserSelectableDates(userId);
       this.setState({ selectableDates: response.data });
-    } catch(error) {
+    } catch (error) {
       this.handleTweetDataApiError(error);
     }
   }
@@ -203,7 +212,7 @@ class UserPage extends React.Component<Props, State> {
   }
 
   handleTweetDataApiError(error: AxiosError) {
-    switch(error.response!.status) {
+    switch (error.response!.status) {
     case API_ERROR_CODE_UNAUTHORIZED:
       this.setState({ showMessage: true, message: "非公開ユーザーです" });
       break;
@@ -217,10 +226,10 @@ class UserPage extends React.Component<Props, State> {
   }
 
   errorMessage() {
-    return(
+    return (
       <>
-        <Grid container item justify="center" className={ this.props.classes.message }>
-          <Typography variant="h4" component="p" color="textSecondary">{ this.state.message }</Typography>
+        <Grid container item justify="center" className={this.props.classes.message}>
+          <Typography variant="h4" component="p" color="textSecondary">{this.state.message}</Typography>
         </Grid>
         <Footer />
       </>
@@ -229,10 +238,10 @@ class UserPage extends React.Component<Props, State> {
 
   headerText() {
     const { selectedYear, selectedMonth, selectedDay } = this.props;
-    if( selectedYear && selectedMonth && selectedDay ) {
+    if (selectedYear && selectedMonth && selectedDay) {
       return (
         <Typography component="h1" variant="h5" color="textSecondary">
-          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay) }
+          {timelinePageHeaderText(selectedYear, selectedMonth, selectedDay)}
         </Typography>
       );
     } else {

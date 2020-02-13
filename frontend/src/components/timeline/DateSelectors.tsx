@@ -3,8 +3,8 @@ import {
   withRouter,
   RouteComponentProps
 } from "react-router-dom";
-import { Grid }       from "@material-ui/core";
-import Selector       from "./date_selectors/Selector";
+import { Grid } from "@material-ui/core";
+import Selector from "./date_selectors/Selector";
 
 import DateParser from "../../utils/DateParser";
 import { AxiosPromise } from "axios";
@@ -13,16 +13,13 @@ import {
 } from "../types";
 import {
   DateParams,
-  TweetDate,
-  Tweet
+  TweetDate
 } from "../../api";
 
 interface Props extends RouteComponentProps<TimelineParams> {
   selectableDates: TweetDate[];
   onSelectionChangeTweetsFetchFunc: ({ year, month, day }: DateParams) => AxiosPromise;
-  setIsFetching: (flag: boolean) => void;
-  setTweets: (tweets: Tweet[]) => void;
-  setApiErrorCode: (code: number) => void;
+  basePath: string;
   setSelectedYear: (year: string) => void;
   setSelectedMonth: (month: string) => void;
   setSelectedDay: (day: string) => void;
@@ -36,116 +33,70 @@ interface State {
 
 class DateSelectors extends React.Component<Props, State> {
   private dateParser: DateParser
-  private selectedYear: string
-  private selectedMonth: string
-  private selectedDay: string
   private onPopStateFunc: (e: Event) => void
 
   constructor(props: Props) {
     super(props);
 
     const dateParser = new DateParser(props.selectableDates);
-    this.dateParser  = dateParser;
+    this.dateParser = dateParser;
 
     const { year, month, day } = props.match.params;
-    const selectedYear  = year  || dateParser.latestYear();
+    const selectedYear = year || dateParser.latestYear();
     const selectedMonth = month || dateParser.latestMonthByYear(selectedYear);
-    const selectedDay   = day   || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+    const selectedDay = day || dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
 
     this.state = { selectedYear, selectedMonth, selectedDay };
-    this.selectedYear  = selectedYear;
-    this.selectedMonth = selectedMonth;
-    this.selectedDay   = selectedDay;
 
     this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
     window.addEventListener("popstate", this.onPopStateFunc);
+
+    this.propagateSelectedDate(selectedYear, selectedMonth, selectedDay);
   }
 
-  componentDidMount() {
-    this.propagateSelectedValues(this.selectedYear, this.selectedMonth, this.selectedDay);
-  }
-
-  handleYearChange(year: string) {
-    const month = this.dateParser.latestMonthByYear(year);
-    const day   = this.dateParser.latestDayByYearAndMonth(year, month);
-    this.setState({
-      selectedYear:  year,
-      selectedMonth: month,
-      selectedDay:   day
-    });
-
-    this.fetchTweets(year, month, day);
-    this.updateDatePath(year);
-    this.propagateSelectedValues(year, month, day);
-  }
-
-  handleMonthChange(month: string) {
-    const year = this.state.selectedYear;
-    const day  = this.dateParser.latestDayByYearAndMonth(year, month);
-    this.setState({
-      selectedMonth: month,
-      selectedDay:   day
-    });
-
-    this.fetchTweets(year, month, day);
-    this.updateDatePath(`${year}/${month}`);
-    this.propagateSelectedValues(year, month, day);
-  }
-
-  handleDayChange(day: string) {
-    this.setState({ selectedDay: day });
-
-    const { selectedYear, selectedMonth } = this.state;
-    this.fetchTweets(selectedYear, selectedMonth, day);
-    this.updateDatePath(`${selectedYear}/${selectedMonth}/${day}`);
-    this.propagateSelectedValues(selectedYear, selectedMonth, day);
-  }
-
-  updateDatePath(datePath: string) {
-    const { screenName } = this.props.match.params;
-    const timelineType   = this.props.match.path.split("/")[1]; // e.g public_timeline
-    let newPath = "";
-    if(screenName) {
-      newPath = `/${timelineType}/${screenName}/${datePath}`;
-    }else{
-      newPath = `/${timelineType}/${datePath}`;
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.match.url !== prevProps.match.url) {
+      this.resetSelectedDate();
     }
-    this.props.history.push(newPath);
   }
 
   onBackOrForwardButtonEvent(e: Event) {
     e.preventDefault();
+    this.resetSelectedDate();
+  }
 
+  resetSelectedDate() {
     const { year, month, day } = this.props.match.params;
-    const selectedYear  = year  || this.dateParser.latestYear();
+    const selectedYear = year || this.dateParser.latestYear();
     const selectedMonth = month || this.dateParser.latestMonthByYear(selectedYear);
-    const selectedDay   = day   || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
+    const selectedDay = day || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
     this.setState({ selectedYear, selectedMonth, selectedDay });
-    this.propagateSelectedValues(selectedYear, selectedMonth, selectedDay);
+    this.propagateSelectedDate(selectedYear, selectedMonth, selectedDay);
   }
 
   render() {
-    return(
-      <Grid container justify="flex-end" spacing={ 1 }>
+    const { basePath } = this.props;
+    return (
+      <Grid container justify="flex-end" spacing={1}>
         <Grid item>
           <Selector
-            selections={ this.dateParser.years() }
-            selectedValue={ this.state.selectedYear }
-            selectedValueUpdater={ this.handleYearChange.bind(this) }
+            paths={this.dateParser.years().map(y => `${basePath}/${y}`)}
+            selectedValue={this.state.selectedYear}
           />
         </Grid>
         <Grid item>
           <Selector
-            selections={ this.dateParser.monthsByYear(this.state.selectedYear) }
-            selectedValue={ this.state.selectedMonth }
-            selectedValueUpdater={ this.handleMonthChange.bind(this) }
+            paths={this.dateParser.monthsByYear(this.state.selectedYear).map(m => `${basePath}/${this.state.selectedYear}/${m}`)}
+            selectedValue={this.state.selectedMonth}
           />
         </Grid>
         <Grid item>
           <Selector
-            selections={ this.dateParser.daysByYearAndMonth(this.state.selectedYear, this.state.selectedMonth) }
-            selectedValue={ this.state.selectedDay }
-            selectedValueUpdater={ this.handleDayChange.bind(this) }
+            paths={
+              this.dateParser.daysByYearAndMonth(this.state.selectedYear, this.state.selectedMonth)
+                .map(d => `${basePath}/${this.state.selectedYear}/${this.state.selectedMonth}/${d}`)
+            }
+            selectedValue={this.state.selectedDay}
           />
         </Grid>
       </Grid>
@@ -156,19 +107,7 @@ class DateSelectors extends React.Component<Props, State> {
     window.removeEventListener("popstate", this.onPopStateFunc);
   }
 
-  async fetchTweets(year: string, month: string, day: string) {
-    this.props.setIsFetching(true);
-    try {
-      const response = await this.props.onSelectionChangeTweetsFetchFunc({ year, month, day });
-      this.props.setTweets(response.data);
-    } catch(error) {
-      this.props.setApiErrorCode(error.response.status);
-    } finally {
-      this.props.setIsFetching(false);
-    }
-  }
-
-  propagateSelectedValues(year: string, month: string, day: string) {
+  propagateSelectedDate(year: string, month: string, day: string) {
     this.props.setSelectedYear(year);
     this.props.setSelectedMonth(month);
     this.props.setSelectedDay(day);

@@ -17,7 +17,7 @@ import DateSelectors from "../containers/DateSelectorsContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import timelineTitleText from "../utils/timelineTitleText";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
-import TweetList     from "../containers/TweetListContainer";
+import TweetList from "../containers/TweetListContainer";
 import ShareButton from "./ShareButton";
 import { TimelineParams } from "./types";
 import {
@@ -27,12 +27,11 @@ import {
 } from "../api";
 import { AxiosPromise } from "axios";
 
-
 const styles = (theme: Theme) => (
   createStyles({
     container: {
-      paddingTop:   theme.spacing(3),
-      paddingLeft:  theme.spacing(2),
+      paddingTop: theme.spacing(3),
+      paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2)
     },
     dateSelectorContainer: {
@@ -53,6 +52,7 @@ interface DefaultProps {
 interface Props extends DefaultProps, RouteComponentProps<TimelineParams>, WithStyles<typeof styles> {
   tweets: Tweet[];
   tweetsFetchFunc: (params: DateParams) => AxiosPromise;
+  basePath: string;
   setTweets: (tweets: Tweet[]) => void;
   setApiErrorCode: (code: number) => void;
   setIsFetching: (flag: boolean) => void;
@@ -87,31 +87,38 @@ class TimelineBase extends React.Component<Props, State> {
     this.fetchSelectableDates();
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.match.url !== prevProps.match.url) {
+      this.fetchTweets(this.props.match.params);
+    }
+  }
+
   render() {
     return (
       <>
-        <Head title={ this.title() } />
+        <Head title={this.title()} />
         <HeadNav />
         <ApiErrorBoundary>
           <HeadProgressBar />
-          <Container maxWidth="md" className={ this.props.classes.container }>
+          <Container maxWidth="md" className={this.props.classes.container}>
             <Grid container justify="space-between" alignItems="center">
               <Grid item>
-                { this.headerText() }
+                {this.headerText()}
               </Grid>
               <Grid item>
-                { this.props.showShareButton && <ShareButton inTwitterBrandColor /> }
+                {this.props.showShareButton && <ShareButton inTwitterBrandColor />}
               </Grid>
             </Grid>
-            <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
-              { this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={ this.props.tweetsFetchFunc } /> }
+            <Grid container item justify="center" className={this.props.classes.tweetListContainer}>
+              {this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={this.props.tweetsFetchFunc} />}
             </Grid>
           </Container>
-          { this.state.selectableDates.length > 0 &&
-            <Box pr={ 2 } className={ this.props.classes.dateSelectorContainer }>
+          {this.state.selectableDates.length > 0 &&
+            <Box pr={2} className={this.props.classes.dateSelectorContainer}>
               <DateSelectors
-                selectableDates={ this.state.selectableDates }
-                onSelectionChangeTweetsFetchFunc={ this.props.tweetsFetchFunc }
+                selectableDates={this.state.selectableDates}
+                onSelectionChangeTweetsFetchFunc={this.props.tweetsFetchFunc}
+                basePath={this.props.basePath}
               />
             </Box>
           }
@@ -134,7 +141,7 @@ class TimelineBase extends React.Component<Props, State> {
     try {
       const response = await this.props.tweetsFetchFunc(params);
       this.props.setTweets(response.data);
-    } catch(error) {
+    } catch (error) {
       error.response && this.props.setApiErrorCode(error.response.status);
     } finally {
       this.props.setIsFetching(false);
@@ -145,7 +152,7 @@ class TimelineBase extends React.Component<Props, State> {
     try {
       const response = await this.props.selectableDatesFetchFunc();
       this.setState({ selectableDates: response.data });
-    } catch(error) {
+    } catch (error) {
       error.response && this.props.setApiErrorCode(error.response.status);
     }
   }
@@ -160,10 +167,10 @@ class TimelineBase extends React.Component<Props, State> {
   headerText() {
     const { selectedYear, selectedMonth, selectedDay } = this.props;
     const { screenName } = this.props.match.params;
-    if( selectedYear && selectedMonth && selectedDay ) {
+    if (selectedYear && selectedMonth && selectedDay) {
       return (
         <Typography component="h1" variant="h5" color="textSecondary">
-          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName) }
+          {timelinePageHeaderText(selectedYear, selectedMonth, selectedDay, screenName)}
         </Typography>
       );
     } else {
