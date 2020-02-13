@@ -213,15 +213,15 @@ class UserPage extends React.Component<Props, State> {
 
   handleTweetDataApiError(error: AxiosError) {
     switch (error.response!.status) {
-      case API_ERROR_CODE_UNAUTHORIZED:
-        this.setState({ showMessage: true, message: "非公開ユーザーです" });
-        break;
-      case API_ERROR_CODE_NOT_FOUND:
-        this.setState({ showMessage: true, message: "ツイートが未登録です" });
-        break;
-      default:
-        this.props.setApiErrorCode(error.response!.status);
-        break;
+    case API_ERROR_CODE_UNAUTHORIZED:
+      this.setState({ showMessage: true, message: "非公開ユーザーです" });
+      break;
+    case API_ERROR_CODE_NOT_FOUND:
+      this.setState({ showMessage: true, message: "ツイートが未登録です" });
+      break;
+    default:
+      this.props.setApiErrorCode(error.response!.status);
+      break;
     }
   }
 
