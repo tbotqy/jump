@@ -7,9 +7,9 @@ import TimelineBase from "../containers/TimelineBaseContainer";
 
 const UserTimeline: React.FC = () => (
   <TimelineBase
-    tweetsFetchFunc={ fetchMeTweets }
-    selectableDatesFetchFunc={ fetchMeSelectableDates }
-    timelineName={ "ユーザータイムライン" }
+    tweetsFetchFunc={fetchMeTweets}
+    selectableDatesFetchFunc={fetchMeSelectableDates}
+    timelineName={"ユーザータイムライン"}
   />
 );
 
