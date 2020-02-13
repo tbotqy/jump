@@ -54,6 +54,8 @@ class DateSelectors extends React.Component<Props, State> {
 
     this.onPopStateFunc = this.onBackOrForwardButtonEvent.bind(this);
     window.addEventListener("popstate", this.onPopStateFunc);
+
+    this.propagateSelectedDate(selectedYear, selectedMonth, selectedDay);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -73,6 +75,7 @@ class DateSelectors extends React.Component<Props, State> {
     const selectedMonth = month || this.dateParser.latestMonthByYear(selectedYear);
     const selectedDay = day || this.dateParser.latestDayByYearAndMonth(selectedYear, selectedMonth);
     this.setState({ selectedYear, selectedMonth, selectedDay });
+    this.propagateSelectedDate(selectedYear, selectedMonth, selectedDay);
   }
 
   render() {
@@ -106,6 +109,12 @@ class DateSelectors extends React.Component<Props, State> {
 
   componentWillUnmount() {
     window.removeEventListener("popstate", this.onPopStateFunc);
+  }
+
+  propagateSelectedDate(year: string, month: string, day: string) {
+    this.props.setSelectedYear(year);
+    this.props.setSelectedMonth(month);
+    this.props.setSelectedDay(day);
   }
 }
 
