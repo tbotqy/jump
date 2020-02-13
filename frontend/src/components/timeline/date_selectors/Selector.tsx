@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Fab,
   Menu,
@@ -6,41 +7,38 @@ import {
 } from "@material-ui/core";
 
 interface Props {
-  selections: string[];
+  paths: string[];
   selectedValue: string;
-  selectedValueUpdater: (value: string) => void;
 }
 
-const Selector: React.FC<Props> = ({ selections, selectedValue, selectedValueUpdater }) => {
-  const [ anchorEl, setAnchorEl ] = React.useState<Element | null>(null);
+const Selector: React.FC<Props> = ({ paths, selectedValue }) => {
+  const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
   const handleClose = () => setAnchorEl(null);
 
-  const handleItemSelect = (value: string) => {
-    setAnchorEl(null);
-    selectedValueUpdater(value);
-  };
+  const handleItemSelect = () => setAnchorEl(null);
 
-  if(selections.length > 0) {
-    return(
-      <>
-        <Fab variant="extended" color="primary" onClick={ handleClick }>{ selectedValue }</Fab>
-        <Menu anchorEl={ anchorEl } open={ Boolean(anchorEl) } onClose={ handleClose }>
-          {
-            selections.map((selection, i) => (
-              <MenuItem key={ i } onClick={ () => handleItemSelect(selection) } >
-                { selection }
+  if (paths.length <= 0) return null;
+
+  return (
+    <>
+      <Fab variant="extended" color="primary" onClick={handleClick}>{selectedValue}</Fab>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {
+          paths.map((path, i) => {
+            const presence = path.split("/").slice(-1)[0];
+            return (
+              <MenuItem key={i} component={Link} to={path} onClick={handleItemSelect} >
+                {presence}
               </MenuItem>
-            ))
-          }
-        </Menu>
-      </>
-    );
-  }else{
-    return <></>;
-  }
+            );
+          })
+        }
+      </Menu>
+    </>
+  );
 };
 
 export default Selector;

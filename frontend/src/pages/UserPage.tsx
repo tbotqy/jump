@@ -30,18 +30,19 @@ import {
   createStyles,
   WithStyles
 } from "@material-ui/core";
-import TweetList     from "../containers/TweetListContainer";
+import TweetList from "../containers/TweetListContainer";
 import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import ShareButton from "../components/ShareButton";
 import { RouteComponentProps } from "react-router-dom";
 import { UserPageParams } from "../components/types";
 import { AxiosError } from "axios";
+import { USER_PAGE_PATH } from "../utils/paths";
 
 const styles = (theme: Theme) => (
   createStyles({
     container: {
-      paddingTop:   theme.spacing(3),
-      paddingLeft:  theme.spacing(2),
+      paddingTop: theme.spacing(3),
+      paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2)
     },
     message: {
@@ -109,46 +110,48 @@ class UserPage extends React.Component<Props, State> {
   }
 
   render() {
-    return(
+    return (
       <>
-        <Head title={ this.title() } />
+        <Head title={this.title()} />
         <HeadNav />
         <ApiErrorBoundary>
           <HeadProgressBar />
           {
             !this.state.user ? (
               <FullPageLoading />
-            ) : (
-              <>
-                <Container maxWidth="md" className={ this.props.classes.container }>
-                  <UserProfile user={ this.state.user! } /> { /** TODO: Replace with ProfileUser */ }
-                  { this.state.showMessage ?
-                    this.errorMessage() :
-                    <Box pt={ 3 }>
-                      <Grid container justify="space-between" alignItems="center">
-                        <Grid item>
-                          { this.headerText() }
+            ) :
+              (
+                <>
+                  <Container maxWidth="md" className={this.props.classes.container}>
+                    <UserProfile user={this.state.user!} /> { /** TODO: Replace with ProfileUser */}
+                    {this.state.showMessage ?
+                      this.errorMessage() :
+                      <Box pt={3}>
+                        <Grid container justify="space-between" alignItems="center">
+                          <Grid item>
+                            {this.headerText()}
+                          </Grid>
+                          <Grid item>
+                            <ShareButton inTwitterBrandColor />
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <ShareButton inTwitterBrandColor />
+                        <Grid container item justify="center" className={this.props.classes.tweetListContainer}>
+                          {this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={this.tweetsFetchFunc} />}
                         </Grid>
-                      </Grid>
-                      <Grid container item justify="center" className={ this.props.classes.tweetListContainer }>
-                        { this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={ this.tweetsFetchFunc } /> }
-                      </Grid>
+                      </Box>
+                    }
+                  </Container>
+                  {this.state.selectableDates.length > 0 &&
+                    <Box pr={2} className={this.props.classes.dateSelectorContainer}>
+                      <DateSelectors
+                        selectableDates={this.state.selectableDates}
+                        onSelectionChangeTweetsFetchFunc={this.tweetsFetchFunc}
+                        basePath={`${USER_PAGE_PATH}/${this.props.match.params.screenName}`}
+                      />
                     </Box>
                   }
-                </Container>
-                { this.state.selectableDates.length > 0 &&
-                  <Box pr={ 2 } className={ this.props.classes.dateSelectorContainer }>
-                    <DateSelectors
-                      selectableDates={ this.state.selectableDates }
-                      onSelectionChangeTweetsFetchFunc={ this.tweetsFetchFunc }
-                    />
-                  </Box>
-                }
-              </>
-            )
+                </>
+              )
           }
         </ApiErrorBoundary>
       </>

@@ -53,6 +53,7 @@ interface DefaultProps {
 interface Props extends DefaultProps, RouteComponentProps<TimelineParams>, WithStyles<typeof styles> {
   tweets: Tweet[];
   tweetsFetchFunc: (params: DateParams) => AxiosPromise;
+  basePath: string;
   setTweets: (tweets: Tweet[]) => void;
   setApiErrorCode: (code: number) => void;
   setIsFetching: (flag: boolean) => void;
@@ -87,6 +88,12 @@ class TimelineBase extends React.Component<Props, State> {
     this.fetchSelectableDates();
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.match.url !== prevProps.match.url) {
+      this.fetchTweets(this.props.match.params);
+    }
+  }
+
   render() {
     return (
       <>
@@ -112,6 +119,7 @@ class TimelineBase extends React.Component<Props, State> {
               <DateSelectors
                 selectableDates={this.state.selectableDates}
                 onSelectionChangeTweetsFetchFunc={this.props.tweetsFetchFunc}
+                basePath={this.props.basePath}
               />
             </Box>
           }

@@ -11,6 +11,7 @@ const PublicTimeline: React.FC = () => (
     tweetsFetchFunc={fetchPublicTweets}
     selectableDatesFetchFunc={fetchPublicSelectableDates}
     timelineName={"パブリックタイムライン"} // TODO: rename param name
+    basePath={PUBLIC_TIMELINE_PATH}
     showShareButton
   />
 );
