@@ -27,7 +27,6 @@ import {
 } from "../api";
 import { AxiosPromise } from "axios";
 
-
 const styles = (theme: Theme) => (
   createStyles({
     container: {

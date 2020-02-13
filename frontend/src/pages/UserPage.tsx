@@ -173,7 +173,7 @@ class UserPage extends React.Component<Props, State> {
     try {
       const response = await fetchUserTweets({ ...date, page: 1 }, userId);
       this.props.setTweets(response.data);
-    } catch(error) {
+    } catch (error) {
       this.handleTweetDataApiError(error);
     } finally {
       this.props.setIsFetching(false);
@@ -184,7 +184,7 @@ class UserPage extends React.Component<Props, State> {
     try {
       const response = await fetchUserSelectableDates(userId);
       this.setState({ selectableDates: response.data });
-    } catch(error) {
+    } catch (error) {
       this.handleTweetDataApiError(error);
     }
   }
@@ -206,24 +206,24 @@ class UserPage extends React.Component<Props, State> {
   }
 
   handleTweetDataApiError(error: AxiosError) {
-    switch(error.response!.status) {
-    case API_ERROR_CODE_UNAUTHORIZED:
-      this.setState({ showMessage: true, message: "非公開ユーザーです" });
-      break;
-    case API_ERROR_CODE_NOT_FOUND:
-      this.setState({ showMessage: true, message: "ツイートが未登録です" });
-      break;
-    default:
-      this.props.setApiErrorCode(error.response!.status);
-      break;
+    switch (error.response!.status) {
+      case API_ERROR_CODE_UNAUTHORIZED:
+        this.setState({ showMessage: true, message: "非公開ユーザーです" });
+        break;
+      case API_ERROR_CODE_NOT_FOUND:
+        this.setState({ showMessage: true, message: "ツイートが未登録です" });
+        break;
+      default:
+        this.props.setApiErrorCode(error.response!.status);
+        break;
     }
   }
 
   errorMessage() {
-    return(
+    return (
       <>
-        <Grid container item justify="center" className={ this.props.classes.message }>
-          <Typography variant="h4" component="p" color="textSecondary">{ this.state.message }</Typography>
+        <Grid container item justify="center" className={this.props.classes.message}>
+          <Typography variant="h4" component="p" color="textSecondary">{this.state.message}</Typography>
         </Grid>
         <Footer />
       </>
@@ -232,10 +232,10 @@ class UserPage extends React.Component<Props, State> {
 
   headerText() {
     const { selectedYear, selectedMonth, selectedDay } = this.props;
-    if( selectedYear && selectedMonth && selectedDay ) {
+    if (selectedYear && selectedMonth && selectedDay) {
       return (
         <Typography component="h1" variant="h5" color="textSecondary">
-          { timelinePageHeaderText(selectedYear, selectedMonth, selectedDay) }
+          {timelinePageHeaderText(selectedYear, selectedMonth, selectedDay)}
         </Typography>
       );
     } else {
