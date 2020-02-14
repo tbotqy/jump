@@ -11,45 +11,26 @@ import {
 } from "./types";
 export * from "./types";
 
-export const API_NORMAL_CODE_OK               = 200;
-export const API_NORMAL_CODE_ACCEPTED         = 202;
-export const API_ERROR_CODE_UNAUTHORIZED      = 401;
-export const API_ERROR_CODE_NOT_FOUND         = 404;
+export const API_NORMAL_CODE_OK = 200;
+export const API_NORMAL_CODE_ACCEPTED = 202;
+export const API_ERROR_CODE_UNAUTHORIZED = 401;
+export const API_ERROR_CODE_NOT_FOUND = 404;
 export const API_ERROR_CODE_TOO_MANY_REQUESTS = 429;
-
-const apiOrigin = process.env.REACT_APP_API_ORIGIN;
-
-const api = {
-  get: (path: string, params = {}): AxiosPromise => {
-    return client.get(apiOrigin + path, { params });
-  },
-  post: (path: string, params = {}): AxiosPromise => {
-    return client.post(apiOrigin + path, { params });
-  },
-  put: (path: string): AxiosPromise => {
-    return client.put(apiOrigin + path);
-  },
-  delete: (path: string): AxiosPromise => {
-    return client.delete(apiOrigin + path);
-  }
-};
-
-export default api;
 
 /*
  * User
  */
 
 export function fetchMe(): AxiosPromise<User> {
-  return api.get("/me");
+  return client.get("/me");
 }
 
 export function fetchUserByScreenName(screenName: string): AxiosPromise<User> {
-  return api.get(`/users/${screenName}`);
+  return client.get(`/users/${screenName}`);
 }
 
 export function deleteMe(): AxiosPromise {
-  return api.delete("/me");
+  return client.delete("/me");
 }
 
 /*
@@ -57,27 +38,27 @@ export function deleteMe(): AxiosPromise {
  */
 
 export function fetchPublicTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
-  return api.get("/statuses", params);
+  return client.get("/statuses", { params });
 }
 
 export function fetchMeTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
-  return api.get("/me/statuses", params);
+  return client.get("/me/statuses", { params });
 }
 
 export function fetchUserTweets(params: PaginatableDateParams, userId: number): AxiosPromise<Tweet[]> {
-  return api.get(`/users/${userId}/statuses`, params);
+  return client.get(`/users/${userId}/statuses`, { params });
 }
 
 export function fetchMeFolloweeTweets(params: PaginatableDateParams): AxiosPromise<Tweet[]> {
-  return api.get("/me/followees/statuses", params);
+  return client.get("/me/followees/statuses", { params });
 }
 
 export function requestInitialTweetImport(): AxiosPromise {
-  return api.post("/me/statuses");
+  return client.post("/me/statuses");
 }
 
 export function requestAdditionalTweetImport(): AxiosPromise {
-  return api.put("/me/statuses");
+  return client.put("/me/statuses");
 }
 
 /*
@@ -85,19 +66,19 @@ export function requestAdditionalTweetImport(): AxiosPromise {
  */
 
 export function fetchPublicSelectableDates(): AxiosPromise<TweetDate[]> {
-  return api.get("/tweeted_dates");
+  return client.get("/tweeted_dates");
 }
 
 export function fetchMeSelectableDates(): AxiosPromise<TweetDate[]> {
-  return api.get("/me/tweeted_dates");
+  return client.get("/me/tweeted_dates");
 }
 
 export function fetchUserSelectableDates(userId: number): AxiosPromise<TweetDate[]> {
-  return api.get(`/users/${userId}/tweeted_dates`);
+  return client.get(`/users/${userId}/tweeted_dates`);
 }
 
 export function fetchMeFolloweeSelectableDates(): AxiosPromise<TweetDate[]> {
-  return api.get("/me/followees/tweeted_dates");
+  return client.get("/me/followees/tweeted_dates");
 }
 
 /*
@@ -105,7 +86,7 @@ export function fetchMeFolloweeSelectableDates(): AxiosPromise<TweetDate[]> {
  */
 
 export function requestFolloweeImport(): AxiosPromise {
-  return api.post("/me/followees");
+  return client.post("/me/followees");
 }
 
 /*
@@ -113,7 +94,7 @@ export function requestFolloweeImport(): AxiosPromise {
  */
 
 export function fetchImportProgress(): AxiosPromise<ImportProgress> {
-  return api.get("/me/tweet_import_progress");
+  return client.get("/me/tweet_import_progress");
 }
 
 /*
@@ -121,7 +102,7 @@ export function fetchImportProgress(): AxiosPromise<ImportProgress> {
  */
 
 export function fetchStats(): AxiosPromise<Stats> {
-  return api.get("/stats");
+  return client.get("/stats");
 }
 
 /*
@@ -129,5 +110,5 @@ export function fetchStats(): AxiosPromise<Stats> {
  */
 
 export function fetchNewArrivals(): AxiosPromise<NewArrival[]> {
-  return api.get("/users");
+  return client.get("/users");
 }

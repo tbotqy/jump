@@ -4,6 +4,7 @@ import { setApiErrorCode } from "../store/api_error/actions";
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
+axios.defaults.baseURL = process.env.REACT_APP_API_ORIGIN;
 
 const onSuccess = (response: AxiosResponse) => response;
 
