@@ -94,7 +94,9 @@ export function requestFolloweeImport(): AxiosPromise {
  */
 
 export function fetchImportProgress(): AxiosPromise<ImportProgress> {
-  return client.get("/me/tweet_import_progress");
+  return client.get("/me/tweet_import_progress", {
+    validateStatus: status => (status >= 200 && status < 300) || status === 404
+  });
 }
 
 /*
