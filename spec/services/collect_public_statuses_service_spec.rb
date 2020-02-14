@@ -6,16 +6,12 @@ describe CollectPublicStatusesService do
   describe ".call!" do
     subject { CollectPublicStatusesService.call!(year: year, month: month, day: day, page: page) }
 
-    shared_examples "raises Errors::NotFound error" do
-      it { expect { subject }.to raise_error(Errors::NotFound, "No status found.") }
-    end
-
     context "no status exists" do
       let(:year)  { 2019 }
       let(:month) { 10 }
       let(:day)   { 1 }
       let(:page)  { 1 }
-      it_behaves_like "raises Errors::NotFound error"
+      it { is_expected.to be_empty }
     end
     context "some statuses exist" do
       describe "boundary test on date-search" do
@@ -130,7 +126,7 @@ describe CollectPublicStatusesService do
         context "paging to a blank page" do
           context "page 3" do
             let(:page) { 3 }
-            it_behaves_like "raises Errors::NotFound error"
+            it { is_expected.to be_empty }
           end
         end
       end

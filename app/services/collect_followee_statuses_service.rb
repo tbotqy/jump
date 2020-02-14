@@ -27,7 +27,6 @@ class CollectFolloweeStatusesService
       fetch_followee_statuses_all!
       scope_by_date if date_specified?
       apply_pagination
-      check_if_collection_exists!
       @collection.order_by_newest_to_oldest
     end
 
@@ -43,9 +42,5 @@ class CollectFolloweeStatusesService
 
     def apply_pagination
       @collection = @collection.page(page)
-    end
-
-    def check_if_collection_exists!
-      raise Errors::NotFound, "No status found." unless @collection.exists?
     end
 end
