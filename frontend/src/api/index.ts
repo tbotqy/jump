@@ -1,4 +1,5 @@
-import axios, { AxiosPromise } from "axios";
+import client from "./client";
+import { AxiosPromise } from "axios";
 import {
   User,
   Tweet,
@@ -10,9 +11,6 @@ import {
 } from "./types";
 export * from "./types";
 
-axios.defaults.withCredentials = true;
-axios.defaults.headers["X-Requested-With"] = "XMLHttpRequest";
-
 export const API_NORMAL_CODE_OK               = 200;
 export const API_NORMAL_CODE_ACCEPTED         = 202;
 export const API_ERROR_CODE_UNAUTHORIZED      = 401;
@@ -23,16 +21,16 @@ const apiOrigin = process.env.REACT_APP_API_ORIGIN;
 
 const api = {
   get: (path: string, params = {}): AxiosPromise => {
-    return axios.get(apiOrigin + path, { params });
+    return client.get(apiOrigin + path, { params });
   },
   post: (path: string, params = {}): AxiosPromise => {
-    return axios.post(apiOrigin + path, { params });
+    return client.post(apiOrigin + path, { params });
   },
   put: (path: string): AxiosPromise => {
-    return axios.put(apiOrigin + path);
+    return client.put(apiOrigin + path);
   },
   delete: (path: string): AxiosPromise => {
-    return axios.delete(apiOrigin + path);
+    return client.delete(apiOrigin + path);
   }
 };
 
