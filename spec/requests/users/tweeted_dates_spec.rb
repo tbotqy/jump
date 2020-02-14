@@ -68,7 +68,7 @@ RSpec.describe "Users::TweetedDates", type: :request do
               sign_in user
               subject
             end
-            it_behaves_like "respond with status code", :not_found
+            it { expect(response.parsed_body).to eq([]) }
           end
           context "user has status" do
             let!(:user)    { create(:user) }
