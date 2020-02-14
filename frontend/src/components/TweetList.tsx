@@ -88,8 +88,13 @@ interface Props extends RouteComponentProps<DateParams>, WithStyles<typeof style
 
 class TweetList extends React.Component<Props> {
   componentDidMount() {
-    this.props.resetPage();
-    this.props.resetHasMore();
+    this.resetPageState();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.match.url !== prevProps.match.url) {
+      this.resetPageState();
+    }
   }
 
   render() {
