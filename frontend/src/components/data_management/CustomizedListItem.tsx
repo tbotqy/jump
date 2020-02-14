@@ -16,8 +16,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Autorenew as AutorenewIcon } from "@material-ui/icons";
 import {
   API_NORMAL_CODE_OK,
-  API_NORMAL_CODE_ACCEPTED,
-  API_ERROR_CODE_TOO_MANY_REQUESTS
+  API_NORMAL_CODE_ACCEPTED
 } from "../../api";
 
 const styles = (theme: Theme) => (
@@ -98,17 +97,6 @@ class CustomizedListItem extends React.Component<Props, State> {
         break;
       default:
         throw new Error(`Unexpected status code returned from API: ${response.status}`);
-      }
-    } catch(error) {
-      if(error.response) {
-        const { status } = error.response;
-        if(status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
-          this.setState({ buttonText: "処理中..." });
-        }else{
-          this.props.setApiErrorCode(status);
-        }
-      } else {
-        throw error;
       }
     } finally {
       this.setState({ isRequesting: false });
