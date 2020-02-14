@@ -35,7 +35,6 @@ interface DefaultProps {
 interface Props extends DefaultProps {
   user?: User;
   setUser: (user: User) => void;
-  setApiErrorCode: (code: number) => void;
 }
 
 interface State {
@@ -59,8 +58,6 @@ class UserMenu extends React.Component<Props, State> {
       try {
         const response = await fetchMe();
         this.props.setUser(response.data);
-      } catch(error) {
-        this.props.setApiErrorCode(error.response.status);
       } finally {
         this.setState({ fetchingUser: false });
       }

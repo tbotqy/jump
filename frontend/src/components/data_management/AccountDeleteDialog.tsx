@@ -40,9 +40,7 @@ const styles = (theme: Theme) => (
 
 const redirectInterval = 3000;
 
-interface Props extends WithStyles<typeof styles> {
-  setApiErrorCode: (code: number) => void;
-}
+type Props = WithStyles<typeof styles>
 
 interface State {
   open: boolean;
@@ -129,13 +127,9 @@ class AccountDeleteDialog extends React.Component<Props, State> {
 
   async handleDeleteButtonClick() {
     this.setState({ disableButton: true });
-    try {
-      await deleteMe();
-      this.setState({ showByeMessage: true });
-      setTimeout( () => { document.location.href = ROOT_PATH; }, redirectInterval );
-    } catch(error) {
-      this.props.setApiErrorCode(error.response.status);
-    }
+    await deleteMe();
+    this.setState({ showByeMessage: true });
+    setTimeout( () => { document.location.href = ROOT_PATH; }, redirectInterval );
   }
 }
 

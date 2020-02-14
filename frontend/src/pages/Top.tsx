@@ -22,8 +22,8 @@ import Ad from "../components/Ad";
 import Footer from "../components/Footer";
 import MockUp from "../components/top/MockUp";
 import Head from "../components/Head";
-import NewArrivalList from "../containers/NewArrivalListContainer";
-import StatsChip from "../containers/StatsChipContainer";
+import NewArrivalList from "../components/NewArrivalList";
+import StatsChip from "../components/StatsChip";
 import ButtonToPublicTimeline from "../components/top/ButtonToPublicTimeline";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 

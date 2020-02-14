@@ -62,7 +62,6 @@ const styles = (theme: Theme) => (
 
 interface Props extends WithStyles<typeof styles> {
   user?: User;
-  setApiErrorCode: (code: number) => void;
 }
 
 interface State {

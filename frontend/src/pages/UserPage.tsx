@@ -4,8 +4,6 @@ import {
   fetchUserByScreenName,
   fetchUserTweets,
   fetchUserSelectableDates,
-  API_ERROR_CODE_UNAUTHORIZED,
-  API_ERROR_CODE_NOT_FOUND,
   DateParams,
   PaginatableDateParams,
   Tweet,
@@ -35,7 +33,6 @@ import timelinePageHeaderText from "../utils/timelinePageHeaderText";
 import ShareButton from "../components/ShareButton";
 import { RouteComponentProps } from "react-router-dom";
 import { UserPageParams } from "../components/types";
-import { AxiosError } from "axios";
 import { USER_PAGE_PATH } from "../utils/paths";
 
 const styles = (theme: Theme) => (
@@ -60,7 +57,6 @@ const styles = (theme: Theme) => (
 );
 
 interface Props extends RouteComponentProps<UserPageParams>, WithStyles<typeof styles> {
-  setApiErrorCode: (code: number) => void;
   setIsFetching: (flag: boolean) => void;
   setTweets: (tweets: Tweet[]) => void;
   tweets: Tweet[];
@@ -96,17 +92,13 @@ class UserPage extends React.Component<Props, State> {
     const { screenName, year, month, day } = this.props.match.params;
     const date = { year, month, day };
 
-    try {
-      const response = await fetchUserByScreenName(screenName);
-      const user = response.data;
-      this.setState({ user });
+    const response = await fetchUserByScreenName(screenName);
+    const user = response.data;
+    this.setState({ user });
 
-      const userId = user.id;
-      this.fetchTweets(userId, date as DateParams);
-      this.fetchSelectableDates(userId);
-    } catch (error) {
-      this.props.setApiErrorCode(error.response.status);
-    }
+    const userId = user.id;
+    await this.fetchTweets(userId, date as DateParams);
+    this.fetchSelectableDates(userId);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -178,21 +170,21 @@ class UserPage extends React.Component<Props, State> {
     this.props.setIsFetching(true);
     try {
       const response = await fetchUserTweets({ ...date, page: 1 }, userId);
-      this.props.setTweets(response.data);
-    } catch (error) {
-      this.handleTweetDataApiError(error);
+      const tweets = response.data;
+
+      if(tweets.length > 0) {
+        this.props.setTweets(response.data);
+      } else {
+        this.setState({ showMessage: true, message: "ツイートが未登録です" });
+      }
     } finally {
       this.props.setIsFetching(false);
     }
   }
 
   async fetchSelectableDates(userId: number) {
-    try {
-      const response = await fetchUserSelectableDates(userId);
-      this.setState({ selectableDates: response.data });
-    } catch (error) {
-      this.handleTweetDataApiError(error);
-    }
+    const response = await fetchUserSelectableDates(userId);
+    this.setState({ selectableDates: response.data });
   }
 
   // to be passed to the child
@@ -209,20 +201,6 @@ class UserPage extends React.Component<Props, State> {
     const leadText = year ? `${userName}のツイート` : `${userName}の過去のツイート`;
     const date = { year, month, day } as DateParams;
     return timelineTitleText(leadText, date);
-  }
-
-  handleTweetDataApiError(error: AxiosError) {
-    switch (error.response!.status) {
-    case API_ERROR_CODE_UNAUTHORIZED:
-      this.setState({ showMessage: true, message: "非公開ユーザーです" });
-      break;
-    case API_ERROR_CODE_NOT_FOUND:
-      this.setState({ showMessage: true, message: "ツイートが未登録です" });
-      break;
-    default:
-      this.props.setApiErrorCode(error.response!.status);
-      break;
-    }
   }
 
   errorMessage() {

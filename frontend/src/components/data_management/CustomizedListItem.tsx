@@ -40,7 +40,6 @@ interface Props extends WithStyles<typeof styles> {
   numberText: string;
   updatedAt: string;
   apiFunc: () => AxiosPromise;
-  setApiErrorCode: (code: number) => void;
 }
 
 interface State {

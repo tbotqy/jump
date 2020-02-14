@@ -25,8 +25,8 @@ import {
 import { PAGE_TITLE_DATA_MANAGEMENT } from "../utils/pageHead";
 import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
-import CustomizedListItem from "../containers/CustomizedListItemContainer";
-import AccountDeleteDialog from "../containers/AccountDeleteDialogContainer";
+import CustomizedListItem from "../components/data_management/CustomizedListItem";
+import AccountDeleteDialog from "../components/data_management/AccountDeleteDialog";
 import Footer from "../components/Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import Head from "../components/Head";
@@ -50,17 +50,12 @@ const styles = (theme: Theme) => (
 interface Props extends WithStyles<typeof styles>{
   user?: User;
   setUser: (user: User) => void;
-  setApiErrorCode: (code: number) => void;
 }
 
 class DataManagement extends React.Component<Props> {
   async componentDidMount() {
-    try {
-      const response = await fetchMe();
-      this.props.setUser(response.data);
-    } catch(error) {
-      this.props.setApiErrorCode(error.response.status);
-    }
+    const response = await fetchMe();
+    this.props.setUser(response.data);
   }
 
   render() {
