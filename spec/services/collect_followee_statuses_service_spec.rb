@@ -22,7 +22,7 @@ describe CollectFolloweeStatusesService do
         let(:month)   { 10 }
         let(:day)     { 1 }
         let(:page)    { 1 }
-        it { expect { subject }.to raise_error(Errors::NotFound, "User has no followee.") }
+        it { is_expected.to be_empty }
       end
       context "user has followee" do
         context "followee has no status" do
