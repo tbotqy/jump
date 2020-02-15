@@ -10,9 +10,9 @@ const onSuccess = (response: AxiosResponse) => response;
 
 const onFailure = (error: any) => {
   if (error.response) {
-    store.dispatch(setApiErrorCode(error.response));
+    store.dispatch(setApiErrorCode(error.response.status));
   }
-  Promise.reject(error);
+  throw Error(error);
 };
 
 axios.interceptors.response.use(onSuccess, onFailure);
