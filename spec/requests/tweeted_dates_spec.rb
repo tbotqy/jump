@@ -16,7 +16,7 @@ RSpec.describe "TweetedDates", type: :request do
 
     context "no status exists" do
       before { subject }
-      it_behaves_like "respond with status code", :not_found
+      it { expect(response.parsed_body).to eq([]) }
     end
     context "status exists" do
       describe "response is well structured" do

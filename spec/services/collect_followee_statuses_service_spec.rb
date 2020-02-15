@@ -6,10 +6,6 @@ describe CollectFolloweeStatusesService do
   describe ".call!" do
     subject { CollectFolloweeStatusesService.call!(user_id: user_id, year: year, month: month, day: day, page: page) }
 
-    shared_examples "raises Errors::NotFound error" do
-      it { expect { subject }.to raise_error(Errors::NotFound, "No status found.") }
-    end
-
     context "targeting user was not found" do
       let!(:user)   { create(:user) }
       let(:user_id) { User.maximum(:id) + 1 } # set not to point the existing user
@@ -26,7 +22,7 @@ describe CollectFolloweeStatusesService do
         let(:month)   { 10 }
         let(:day)     { 1 }
         let(:page)    { 1 }
-        it { expect { subject }.to raise_error(Errors::NotFound, "User has no followee.") }
+        it { is_expected.to be_empty }
       end
       context "user has followee" do
         context "followee has no status" do
@@ -41,7 +37,7 @@ describe CollectFolloweeStatusesService do
           let(:month)   { 10 }
           let(:day)     { 1 }
           let(:page)    { 1 }
-          it_behaves_like "raises Errors::NotFound error"
+          it { is_expected.to be_empty }
         end
         context "followee has some statuses" do
           shared_context "user's followee has 3 statuses tweeted around the boundary_time" do
@@ -180,7 +176,7 @@ describe CollectFolloweeStatusesService do
             context "paging to a blank page" do
               context "page 3" do
                 let(:page) { 3 }
-                it_behaves_like "raises Errors::NotFound error"
+                it { is_expected.to be_empty }
               end
             end
           end

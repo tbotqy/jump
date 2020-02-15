@@ -3,7 +3,6 @@ import {
   setTweets,
   setIsFetching
 } from "../store/tweet/actions";
-import { setApiErrorCode } from "../store/api_error/actions";
 import UserPage from "../pages/UserPage";
 import { AppState } from "../store";
 import { Tweet } from "../api";
@@ -16,9 +15,8 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  setTweets:       (tweets: Tweet[]) => dispatch(setTweets(tweets)),
-  setIsFetching:   (flag: boolean) => dispatch(setIsFetching(flag)),
-  setApiErrorCode: (code: number) => dispatch(setApiErrorCode(code))
+  setTweets:     (tweets: Tweet[]) => dispatch(setTweets(tweets)),
+  setIsFetching: (flag: boolean) => dispatch(setIsFetching(flag))
 });
 
 export default connect(

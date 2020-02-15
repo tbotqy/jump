@@ -91,7 +91,7 @@ RSpec.describe "Users::Statuses", type: :request do
               sign_in user
               subject
             end
-            it_behaves_like "respond with status code", :not_found
+            it { expect(response.parsed_body).to eq([]) }
           end
           context "user has some statuses" do
             describe "boundary test on date-search" do
@@ -239,7 +239,7 @@ RSpec.describe "Users::Statuses", type: :request do
               context "paging to a blank page" do
                 context "page 3" do
                   let(:page) { 3 }
-                  it_behaves_like "respond with status code", :not_found
+                  it { expect(response.parsed_body).to eq([]) }
                 end
               end
             end

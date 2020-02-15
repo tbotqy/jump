@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 import TweetCard from "./TweetCard";
 import {
-  API_ERROR_CODE_NOT_FOUND,
   PaginatableDateParams,
   DateParams,
   Tweet,
@@ -89,8 +88,13 @@ interface Props extends RouteComponentProps<DateParams>, WithStyles<typeof style
 
 class TweetList extends React.Component<Props> {
   componentDidMount() {
-    this.props.resetPage();
-    this.props.resetHasMore();
+    this.resetPageState();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.match.url !== prevProps.match.url) {
+      this.resetPageState();
+    }
   }
 
   render() {
@@ -115,17 +119,20 @@ class TweetList extends React.Component<Props> {
   async loadMore() {
     const { year, month, day } = this.props.match.params;
     const nextPage: number = this.props.page + 1;
-    try {
-      const response = await this.props.onLoadMoreTweetsFetchFunc({ year, month, day, page: nextPage } as PaginatableDateParams);
+
+    const response = await this.props.onLoadMoreTweetsFetchFunc({ year, month, day, page: nextPage } as PaginatableDateParams);
+    const tweets = response.data;
+    if (tweets.length > 0) {
       this.props.appendTweets(response.data);
       this.props.setPage(nextPage);
-    } catch(error) {
+    } else {
       this.props.setHasMore(false);
-      const statusCode = error.response.status;
-      if(statusCode !== API_ERROR_CODE_NOT_FOUND) {
-        this.props.setApiErrorCode(statusCode);
-      }
     }
+  }
+
+  resetPageState() {
+    this.props.resetPage();
+    this.props.resetHasMore();
   }
 }
 

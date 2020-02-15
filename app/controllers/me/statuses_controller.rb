@@ -5,28 +5,24 @@ module Me
     before_action :authenticate_user!
 
     def index
-      user_id  = current_user.id
+      user_id = current_user.id
       statuses = CollectUserStatusesService.call!(**params_to_collect_by, user_id: user_id)
       render json: statuses
     end
 
     def create
-      if current_user.tweet_import_progress.present?
-        head :too_many_requests
-      else
+      if current_user.tweet_import_progress.blank?
         MakeInitialTweetImportJob.perform_later(user_id: current_user.id)
-        head :accepted
       end
+      head :accepted
     end
 
     # PUT /me/statuses
     def update
-      if current_user.tweet_import_lock.present?
-        head :too_many_requests
-      else
+      if current_user.tweet_import_lock.blank?
         MakeAdditionalTweetImportJob.perform_later(user_id: current_user.id)
-        head :accepted
       end
+      head :accepted
     end
 
     private

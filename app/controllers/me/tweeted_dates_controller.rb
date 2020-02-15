@@ -6,7 +6,6 @@ module Me
 
     def index
       tweeted_dates = StatusesDecorator.new(current_user.statuses).tweeted_dates
-      raise Errors::NotFound if tweeted_dates.blank?
       render json: tweeted_dates
     end
   end

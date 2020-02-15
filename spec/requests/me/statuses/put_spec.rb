@@ -25,7 +25,7 @@ RSpec.describe "Me::Statuses", type: :request do
           subject
         end
         it_behaves_like "doesn't enqueue the job"
-        it_behaves_like "respond with status code", :too_many_requests
+        it_behaves_like "respond with status code", :accepted
       end
       context "user has no working job" do
         context "fails to kick the job" do

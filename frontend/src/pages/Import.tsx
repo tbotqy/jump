@@ -17,8 +17,6 @@ import {
   requestInitialTweetImport,
   requestFolloweeImport,
   fetchImportProgress,
-  API_ERROR_CODE_NOT_FOUND,
-  API_ERROR_CODE_TOO_MANY_REQUESTS,
   User
 } from "../api";
 import { PAGE_TITLE_IMPORT } from "../utils/pageHead";
@@ -64,7 +62,6 @@ const styles = (theme: Theme) => (
 
 interface Props extends WithStyles<typeof styles> {
   user?: User;
-  setApiErrorCode: (code: number) => void;
 }
 
 interface State {
@@ -133,22 +130,8 @@ class Import extends React.Component<Props, State> {
     this.setState({ isInProgress: true });
 
     // kick the import jobs on the server
-    try {
-      await requestFolloweeImport();
-    } catch(error) {
-      return this.props.setApiErrorCode(error.response.status);
-    }
-
-    try {
-      await requestInitialTweetImport();
-    } catch(error) {
-      if(error.response.status === API_ERROR_CODE_TOO_MANY_REQUESTS) {
-        // A job is already kicked working.
-        // Do nothing.
-      } else {
-        return this.props.setApiErrorCode(error.response.status);
-      }
-    }
+    await requestFolloweeImport();
+    await requestInitialTweetImport();
 
     this.setState({ showProgressBar: true });
     // check for the import progress once per 2 seconds.
@@ -160,32 +143,25 @@ class Import extends React.Component<Props, State> {
     const redirectInterval = 3000;
 
     this.setState({ showTweet: false });
-    try {
-      const response = await fetchImportProgress();
-      const progress = response.data;
-      if(progress.finished) {
-        clearInterval(interval);
-        this.setState({
-          isInProgress: false,
-          hasFinished:  true,
-          progress:     100,
-          lastTweetId:  progress.lastTweetId,
-          showTweet:    true
-        });
-        setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, redirectInterval );
-      } else {
-        this.setState({
-          progress:    progress.percentage,
-          lastTweetId: progress.lastTweetId,
-          showTweet:   true
-        });
-      }
-    } catch(error) {
-      if( error.response.status !== API_ERROR_CODE_NOT_FOUND ) {
-        clearInterval(interval);
-        this.setState({ isInProgress: false });
-        this.props.setApiErrorCode(error.response.status);
-      }
+
+    const response = await fetchImportProgress();
+    const progress = response.data;
+    if(progress.finished) {
+      clearInterval(interval);
+      this.setState({
+        isInProgress: false,
+        hasFinished:  true,
+        progress:     100,
+        lastTweetId:  progress.lastTweetId,
+        showTweet:    true
+      });
+      setTimeout( () => { document.location.href = USER_TIMELINE_PATH; }, redirectInterval );
+    } else {
+      this.setState({
+        progress:    progress.percentage,
+        lastTweetId: progress.lastTweetId,
+        showTweet:   true
+      });
     }
   }
 }

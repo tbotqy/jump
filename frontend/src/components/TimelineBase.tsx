@@ -140,21 +140,20 @@ class TimelineBase extends React.Component<Props, State> {
     this.props.setIsFetching(true);
     try {
       const response = await this.props.tweetsFetchFunc(params);
-      this.props.setTweets(response.data);
-    } catch (error) {
-      error.response && this.props.setApiErrorCode(error.response.status);
+      const tweets = response.data;
+      if(tweets.length > 0) {
+        this.props.setTweets(response.data);
+      } else {
+        this.props.setApiErrorCode(404);
+      }
     } finally {
       this.props.setIsFetching(false);
     }
   }
 
   async fetchSelectableDates() {
-    try {
-      const response = await this.props.selectableDatesFetchFunc();
-      this.setState({ selectableDates: response.data });
-    } catch (error) {
-      error.response && this.props.setApiErrorCode(error.response.status);
-    }
+    const response = await this.props.selectableDatesFetchFunc();
+    this.setState({ selectableDates: response.data });
   }
 
   // TODO: consider to be given as param

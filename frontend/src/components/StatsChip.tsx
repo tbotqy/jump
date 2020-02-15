@@ -5,24 +5,16 @@ import {
 } from "@material-ui/core";
 import { fetchStats, Stats } from "../api";
 
-interface Props {
-  setApiErrorCode: (code: number) => void;
-}
-
 interface State {
   stats?: Stats;
 }
 
-class StatsChip extends React.Component<Props, State> {
+class StatsChip extends React.Component<{}, State> {
   state = { stats: undefined }
 
   async componentDidMount() {
-    try {
-      const response = await fetchStats();
-      this.setState({ stats: response.data });
-    } catch (error) {
-      this.props.setApiErrorCode(error.response.status);
-    }
+    const response = await fetchStats();
+    this.setState({ stats: response.data });
   }
 
   render() {

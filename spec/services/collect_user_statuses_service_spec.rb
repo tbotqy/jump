@@ -6,10 +6,6 @@ describe CollectUserStatusesService do
   describe ".call!" do
     subject { CollectUserStatusesService.call!(user_id: user_id, year: year, month: month, day: day, page: page) }
 
-    shared_examples "raises Errors::NotFound error" do
-      it { expect { subject }.to raise_error(Errors::NotFound, "No status found.") }
-    end
-
     context "targeting user was not found" do
       # set params
       let!(:user)   { create(:user) }
@@ -27,7 +23,7 @@ describe CollectUserStatusesService do
         let(:month)   { 10 }
         let(:day)     { 1 }
         let(:page)    { 1 }
-        it_behaves_like "raises Errors::NotFound error"
+        it { is_expected.to be_empty }
       end
       context "user has some statuses" do
         describe "boundary test on date-search" do
@@ -153,7 +149,7 @@ describe CollectUserStatusesService do
           context "paging to a blank page" do
             context "page 3" do
               let(:page) { 3 }
-              it_behaves_like "raises Errors::NotFound error"
+              it { is_expected.to be_empty }
             end
           end
         end

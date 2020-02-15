@@ -24,9 +24,7 @@ const styles = createStyles({
   }
 });
 
-interface Props extends WithStyles<typeof styles> {
-  setApiErrorCode: (code: number) => void;
-}
+type Props = WithStyles<typeof styles>
 
 interface State {
   newArrivals?: NewArrival[];
@@ -36,12 +34,8 @@ class NewArrivalList extends React.Component<Props, State> {
   state = { newArrivals: undefined }
 
   async componentDidMount() {
-    try {
-      const response = await fetchNewArrivals();
-      this.setState({ newArrivals: response.data });
-    } catch (error) {
-      this.props.setApiErrorCode(error.response.status);
-    }
+    const response = await fetchNewArrivals();
+    this.setState({ newArrivals: response.data });
   }
 
   render() {
