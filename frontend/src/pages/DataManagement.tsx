@@ -61,16 +61,15 @@ class DataManagement extends React.Component<Props> {
   render() {
     const { user, classes } = this.props;
     return (
-      <>
+      <ApiErrorBoundary>
         <Head title={ PAGE_TITLE_DATA_MANAGEMENT } />
         <HeadNav />
         <Container className={ classes.container }>
-          <ApiErrorBoundary>
-            <Typography variant="h4" className={ classes.typography }>
+          <Typography variant="h4" className={ classes.typography }>
               データ管理
-            </Typography>
-            {
-              user ? (
+          </Typography>
+          {
+            user ? (
                 <>
                   <List>
                     <CustomizedListItem
@@ -97,12 +96,11 @@ class DataManagement extends React.Component<Props> {
                     </ListItem>
                   </List>
                 </>
-              ): <CircularProgress />
-            }
-          </ApiErrorBoundary>
+            ): <CircularProgress />
+          }
         </Container>
         <Footer bgCaramel />
-      </>
+      </ApiErrorBoundary>
     );
   }
 }

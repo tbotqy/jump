@@ -26,27 +26,25 @@ const Header = ({ text }: { text: string }) => <Typography variant="h6" componen
 type Props = WithStyles<typeof styles>
 
 const TermsAndPrivacy: React.FC<Props> = ({ classes }) => (
-  <>
+  <ApiErrorBoundary>
     <Head title={ PAGE_TITLE_TERMS_AND_PRIVACY } />
     <HeadNav />
     <Container className={ classes.container } component="main" maxWidth="md">
-      <ApiErrorBoundary>
-        <Box mt={2} component="section">
-          <Header text="利用規約" />
-          <article>
-            <TermsOfServiceList />
-          </article>
-        </Box>
-        <Box mt={2} component="section">
-          <Header text="プライバシーポリシー" />
-          <article>
-            <PrivacyPolicyList />
-          </article>
-        </Box>
-      </ApiErrorBoundary>
+      <Box mt={2} component="section">
+        <Header text="利用規約" />
+        <article>
+          <TermsOfServiceList />
+        </article>
+      </Box>
+      <Box mt={2} component="section">
+        <Header text="プライバシーポリシー" />
+        <article>
+          <PrivacyPolicyList />
+        </article>
+      </Box>
     </Container>
     <Footer />
-  </>
+  </ApiErrorBoundary>
 );
 
 export default withStyles(styles)(TermsAndPrivacy);
