@@ -120,12 +120,14 @@ class UserPage extends React.Component<Props, State> {
             ) :
               (
                 <>
-                  <Container maxWidth="md" className={this.props.classes.container}>
-                    <UserProfile user={this.state.user!} /> { /** TODO: Replace with ProfileUser */}
+                  <Container maxWidth="md" className={this.props.classes.container} component="main">
+                    <header>
+                      <UserProfile user={this.state.user!} /> { /** TODO: Replace with ProfileUser */}
+                    </header>
                     {this.state.showMessage ?
                       this.errorMessage() :
-                      <Box pt={3}>
-                        <Grid container justify="space-between" alignItems="center">
+                      <Box pt={3} component="section">
+                        <Grid container justify="space-between" alignItems="center" component="header">
                           <Grid item>
                             {this.headerText()}
                           </Grid>
@@ -218,7 +220,7 @@ class UserPage extends React.Component<Props, State> {
     const { selectedYear, selectedMonth, selectedDay } = this.props;
     if (selectedYear && selectedMonth && selectedDay) {
       return (
-        <Typography component="h1" variant="h5" color="textSecondary">
+        <Typography component="h2" variant="h5" color="textSecondary">
           {timelinePageHeaderText(selectedYear, selectedMonth, selectedDay)}
         </Typography>
       );
