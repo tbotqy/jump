@@ -22,7 +22,7 @@ const styles = (theme: Theme) => createStyles({
 
 type Props = WithStyles<typeof styles>
 
-const HeadNav: React.FC<Props> = ({ classes, children }) => (
+const HeadAppBar: React.FC<Props> = ({ classes, children }) => (
   <AppBar position="static" className={ classes.appBar }>
     <Toolbar>
       <Typography variant="h6" className={ classes.typography }>
@@ -33,4 +33,4 @@ const HeadNav: React.FC<Props> = ({ classes, children }) => (
   </AppBar>
 );
 
-export default withStyles(styles)(HeadNav);
+export default withStyles(styles)(HeadAppBar);
