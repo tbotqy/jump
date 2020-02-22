@@ -95,25 +95,24 @@ class TimelineBase extends React.Component<Props, State> {
 
   render() {
     return (
-      <>
+      <ApiErrorBoundary>
         <Head title={this.title()} />
         <HeadNav />
-        <ApiErrorBoundary>
-          <HeadProgressBar />
-          <Container maxWidth="md" className={this.props.classes.container} component="main">
-            <Grid container justify="space-between" alignItems="center" component="header">
-              <Grid item>
-                {this.headerText()}
-              </Grid>
-              <Grid item>
-                {this.props.showShareButton && <ShareButton inTwitterBrandColor />}
-              </Grid>
+        <HeadProgressBar />
+        <Container maxWidth="md" className={this.props.classes.container} component="main">
+          <Grid container justify="space-between" alignItems="center" component="header">
+            <Grid item>
+              {this.headerText()}
             </Grid>
-            <Grid container item justify="center" className={this.props.classes.tweetListContainer}>
-              {this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={this.props.tweetsFetchFunc} />}
+            <Grid item>
+              {this.props.showShareButton && <ShareButton inTwitterBrandColor />}
             </Grid>
-          </Container>
-          {this.state.selectableDates.length > 0 &&
+          </Grid>
+          <Grid container item justify="center" className={this.props.classes.tweetListContainer}>
+            {this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={this.props.tweetsFetchFunc} />}
+          </Grid>
+        </Container>
+        {this.state.selectableDates.length > 0 &&
             <Box pr={2} className={this.props.classes.dateSelectorContainer}>
               <DateSelectors
                 selectableDates={this.state.selectableDates}
@@ -121,9 +120,8 @@ class TimelineBase extends React.Component<Props, State> {
                 basePath={this.props.basePath}
               />
             </Box>
-          }
-        </ApiErrorBoundary>
-      </>
+        }
+      </ApiErrorBoundary>
     );
   }
 

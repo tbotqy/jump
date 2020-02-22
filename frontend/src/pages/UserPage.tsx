@@ -109,16 +109,15 @@ class UserPage extends React.Component<Props, State> {
 
   render() {
     return (
-      <>
+      <ApiErrorBoundary>
         <Head title={this.title()} />
         <HeadNav />
-        <ApiErrorBoundary>
-          <HeadProgressBar />
-          {
-            !this.state.user ? (
-              <FullPageLoading />
-            ) :
-              (
+        <HeadProgressBar />
+        {
+          !this.state.user ? (
+            <FullPageLoading />
+          ) :
+            (
                 <>
                   <Container maxWidth="md" className={this.props.classes.container} component="main">
                     <header>
@@ -151,10 +150,9 @@ class UserPage extends React.Component<Props, State> {
                     </Box>
                   }
                 </>
-              )
-          }
-        </ApiErrorBoundary>
-      </>
+            )
+        }
+      </ApiErrorBoundary>
     );
   }
 

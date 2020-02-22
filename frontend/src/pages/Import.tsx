@@ -85,43 +85,41 @@ class Import extends React.Component<Props, State> {
 
   render() {
     return (
-      <>
+      <ApiErrorBoundary>
         <Head title={ PAGE_TITLE_IMPORT } />
         <HeadAppBar>
           <UserMenu hideLinkToData />
         </HeadAppBar>
         <div className={ this.props.classes.gridContainerWrapper }>
-          <ApiErrorBoundary>
-            <Grid container direction="column" alignItems="center" spacing={ 6 }>
-              <Grid item>
-                { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screenName } のツイートを取り込む</Typography> }
-              </Grid>
-              <Grid item>
-                <div className={ this.props.classes.buttonWrapper }>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disabled={ this.state.isInProgress }
-                    onClick={ this.handleClick.bind(this) }
-                    className={ clsx({ [this.props.classes.buttonSuccess]: this.state.hasFinished }) }
-                  >
-                    { this.state.hasFinished ? <><CheckIcon className={ this.props.classes.checkIcon } /> 完了! リダイレクトします ...</> : "開始" }
-                  </Button>
-                  { this.state.isInProgress && <CircularProgress size={ 24 } className={ this.props.classes.circularProgress } /> }
-                </div>
-              </Grid>
-              <Grid item className={ this.props.classes.progressContainer }>
-                { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
-              </Grid>
-              <Fade in={ this.state.showTweet }>
-                <Grid item className={ this.props.classes.tweetWrapper }>
-                  { this.state.lastTweetId && <TweetEmbed id={ this.state.lastTweetId || "" } options={ { align: "center" } } /> }
-                </Grid>
-              </Fade>
+          <Grid container direction="column" alignItems="center" spacing={ 6 }>
+            <Grid item>
+              { this.props.user && <Typography variant="h5" component="h1">@{ this.props.user.screenName } のツイートを取り込む</Typography> }
             </Grid>
-          </ApiErrorBoundary>
+            <Grid item>
+              <div className={ this.props.classes.buttonWrapper }>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  disabled={ this.state.isInProgress }
+                  onClick={ this.handleClick.bind(this) }
+                  className={ clsx({ [this.props.classes.buttonSuccess]: this.state.hasFinished }) }
+                >
+                  { this.state.hasFinished ? <><CheckIcon className={ this.props.classes.checkIcon } /> 完了! リダイレクトします ...</> : "開始" }
+                </Button>
+                { this.state.isInProgress && <CircularProgress size={ 24 } className={ this.props.classes.circularProgress } /> }
+              </div>
+            </Grid>
+            <Grid item className={ this.props.classes.progressContainer }>
+              { this.state.showProgressBar && <LinearProgress variant="determinate" value={ this.state.progress } /> }
+            </Grid>
+            <Fade in={ this.state.showTweet }>
+              <Grid item className={ this.props.classes.tweetWrapper }>
+                { this.state.lastTweetId && <TweetEmbed id={ this.state.lastTweetId || "" } options={ { align: "center" } } /> }
+              </Grid>
+            </Fade>
+          </Grid>
         </div>
-      </>
+      </ApiErrorBoundary>
     );
   }
 
