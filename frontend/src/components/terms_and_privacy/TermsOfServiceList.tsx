@@ -1,13 +1,10 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
-  CardContent,
-  Typography,
   List,
-  ListItem,
-  ListItemText,
   Link
 } from "@material-ui/core";
+import ListItems from "./ListItems";
 import { PUBLIC_TIMELINE_PATH } from "../../utils/paths";
 
 const texts = [
@@ -19,21 +16,10 @@ const texts = [
   "当サービスの提供は予告無く停止・変更される場合がある事を予めご了承ください。"
 ];
 
-const TermsOfService: React.FC = () => (
-  <CardContent>
-    <Typography gutterBottom variant="h4">
-      利用規約
-    </Typography>
-    <List>
-      { texts.map( (text, i) => (
-        <ListItem key={ i }>
-          <ListItemText>
-            { text }
-          </ListItemText>
-        </ListItem>
-      )) }
-    </List>
-  </CardContent>
+const TermsOfServiceList: React.FC = () => (
+  <List>
+    <ListItems texts={texts} />
+  </List>
 );
 
-export default TermsOfService;
+export default TermsOfServiceList;

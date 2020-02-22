@@ -8,12 +8,12 @@ describe("/terms_and_privacy", () => {
   describe("1st section", () => {
     describe("header", () => {
       it("", () => {
-        cy.get("h4").first().should("have.text", "利用規約");
+        cy.get("h2").first().should("have.text", "利用規約");
       });
     });
     describe("list items", () => {
       it("", () => {
-        cy.get("h4").contains("利用規約").next().children() // li tags
+        cy.get("ul").first().children()
           .first()
           .should("have.text", "このアプリケーションでは、Twitter が提供している仕組みを利用して、ユーザーが Twitter で保有しているデータを取得・保存します。")
           .next()
@@ -28,7 +28,7 @@ describe("/terms_and_privacy", () => {
           .should("have.text", "当サービスの提供は予告無く停止・変更される場合がある事を予めご了承ください。");
       });
       it("2nd item has a valid link to the public timeline", () => {
-        cy.get("h4").contains("利用規約").next().children().eq(1).find("a").click();
+        cy.get("ul").first().children().eq(1).find("a").click();
         cy.url().should("include", "/public_timeline");
       });
     });
@@ -37,12 +37,12 @@ describe("/terms_and_privacy", () => {
   describe("2nd section", () => {
     describe("header", () => {
       it("", () => {
-        cy.get("h4").last().should("have.text", "プライバシーポリシー");
+        cy.get("h2").last().should("have.text", "プライバシーポリシー");
       });
     });
     describe("list items", () => {
       it("", () => {
-        cy.get("h4").contains("プライバシーポリシー").next().children() // li tags
+        cy.get("ul").eq(1).children()
           .first()
           .should("have.text", "ユーザーのデータの取り扱いについて")
           .should("have.class", "MuiListSubheader-root")
@@ -56,7 +56,7 @@ describe("/terms_and_privacy", () => {
           .next()
           .should("have.text", "当サービスでは、Google が提供する広告サービス「Google アドセンス」を利用しています。")
           .next()
-          .should("have.text", "Google アドセンス では、ユーザーの興味に基づいた広告の表示をするため、当サイトや他サイトへのアクセスに関する情報 （Cookie）を使用することがあります。")
+          .should("have.text", "Google アドセンス では、ユーザーの興味に基づいた広告の表示をするため、当サイトや他サイトへのアクセスに関する情報（Cookie）を使用することがあります。")
           .next()
           .should("have.text", "Cookie を無効にする設定および Google アドセンス に関する詳細はこちら をご覧ください。")
           .next()

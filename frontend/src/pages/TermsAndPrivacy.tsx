@@ -1,14 +1,14 @@
 import React from "react";
 import HeadNav from "../containers/HeadNavContainer";
 import Footer from "../components/Footer";
-import { Container, createStyles, Theme } from "@material-ui/core";
+import { Container, createStyles, Theme, Box, Typography } from "@material-ui/core";
 import {
   withStyles,
   WithStyles
 } from "@material-ui/core/styles";
 import { PAGE_TITLE_TERMS_AND_PRIVACY } from "../utils/pageHead";
-import TermsOfService from "../components/terms_and_privacy/TermsOfService";
-import PrivacyPolicy from "../components/terms_and_privacy/PrivacyPolicy";
+import TermsOfServiceList from "../components/terms_and_privacy/TermsOfServiceList";
+import PrivacyPolicyList from "../components/terms_and_privacy/PrivacyPolicyList";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import Head from "../components/Head";
 
@@ -21,16 +21,28 @@ const styles = (theme: Theme) => (
   })
 );
 
+const Header = ({ text }: { text: string }) => <Typography variant="h6" component="h2">{text}</Typography>;
+
 type Props = WithStyles<typeof styles>
 
 const TermsAndPrivacy: React.FC<Props> = ({ classes }) => (
   <>
     <Head title={ PAGE_TITLE_TERMS_AND_PRIVACY } />
     <HeadNav />
-    <Container className={ classes.container }>
+    <Container className={ classes.container } component="main" maxWidth="md">
       <ApiErrorBoundary>
-        <TermsOfService />
-        <PrivacyPolicy />
+        <Box mt={2} component="section">
+          <Header text="利用規約" />
+          <article>
+            <TermsOfServiceList />
+          </article>
+        </Box>
+        <Box mt={2} component="section">
+          <Header text="プライバシーポリシー" />
+          <article>
+            <PrivacyPolicyList />
+          </article>
+        </Box>
       </ApiErrorBoundary>
     </Container>
     <Footer />
