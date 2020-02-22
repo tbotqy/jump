@@ -102,4 +102,14 @@ class User < ApplicationRecord
   def tokens
     { access_token: access_token, access_token_secret: access_token_secret }
   end
+
+  # defined for development purpose
+  def twitter_client
+    @twitter_client ||= Twitter::REST::Client.new do |config|
+      config.consumer_key        = Settings.twitter.consumer_key
+      config.consumer_secret     = Settings.twitter.consumer_secret
+      config.access_token        = access_token
+      config.access_token_secret = access_token_secret
+    end
+  end
 end

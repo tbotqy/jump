@@ -418,4 +418,9 @@ RSpec.describe User, type: :model do
     let(:user) { create(:user, access_token: access_token, access_token_secret: access_token_secret) }
     it { is_expected.to eq({ access_token: access_token, access_token_secret: access_token_secret }) }
   end
+
+  describe "#twitter_client" do
+    subject { create(:user).twitter_client }
+    it { is_expected.to be_a(Twitter::REST::Client) }
+  end
 end
