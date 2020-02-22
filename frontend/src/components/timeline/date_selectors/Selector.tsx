@@ -30,9 +30,11 @@ const Selector: React.FC<Props> = ({ paths, selectedValue }) => {
           paths.map((path, i) => {
             const presence = path.split("/").slice(-1)[0];
             return (
-              <MenuItem key={i} component={Link} to={path} onClick={handleItemSelect} >
-                {presence}
-              </MenuItem>
+              <li key={i}>
+                <MenuItem component={Link} to={path} onClick={handleItemSelect} >
+                  {presence}
+                </MenuItem>
+              </li>
             );
           })
         }

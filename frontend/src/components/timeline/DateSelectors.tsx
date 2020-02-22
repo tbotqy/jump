@@ -77,7 +77,7 @@ class DateSelectors extends React.Component<Props, State> {
   render() {
     const { basePath } = this.props;
     return (
-      <Grid container justify="flex-end" spacing={1}>
+      <Grid container justify="flex-end" spacing={1} component="nav">
         <Grid item>
           <Selector
             paths={this.dateParser.years().map(y => `${basePath}/${y}`)}

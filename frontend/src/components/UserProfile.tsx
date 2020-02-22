@@ -9,7 +9,8 @@ import {
   Link,
   Theme,
   createStyles,
-  WithStyles
+  WithStyles,
+  Typography
 } from "@material-ui/core";
 import LockIcon from "@material-ui/icons/Lock";
 import TwitterIcon from "./TwitterIcon";
@@ -69,13 +70,15 @@ const UserProfile: React.FC<Props> = ({ user, classes }) => {
         title={
         <>
           { protectedFlag && <LockIcon className={ classes.lockIcon } /> }
-          <Link
-            color="inherit"
-            href={ `https://twitter.com/${screenName}` }
-            target="_blank"
-          >
-            { name }
-          </Link>
+          <Typography component="h1" variant="h5">
+            <Link
+              color="inherit"
+              href={ `https://twitter.com/${screenName}` }
+              target="_blank"
+            >
+              { name }
+            </Link>
+          </Typography>
         </>
         }
         subheader={
