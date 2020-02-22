@@ -99,7 +99,7 @@ class TweetList extends React.Component<Props> {
 
   render() {
     return(
-      <List className={ this.props.classes.list }>
+      <List className={ this.props.classes.list } component="section">
         <InfiniteScroll
           dataLength={ this.props.tweets.length }
           next={ this.loadMore.bind(this) }
@@ -107,7 +107,7 @@ class TweetList extends React.Component<Props> {
           loader={ loader }
         >
           { this.props.tweets.map( tweet => (
-            <ListItem divider disableGutters key={ tweet.tweetId }>
+            <ListItem divider disableGutters key={ tweet.tweetId } component="article">
               <TweetCard { ...tweetCardPropsByTweet(tweet) } />
             </ListItem>
           )) }

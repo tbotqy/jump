@@ -100,8 +100,8 @@ class TimelineBase extends React.Component<Props, State> {
         <HeadNav />
         <ApiErrorBoundary>
           <HeadProgressBar />
-          <Container maxWidth="md" className={this.props.classes.container}>
-            <Grid container justify="space-between" alignItems="center">
+          <Container maxWidth="md" className={this.props.classes.container} component="main">
+            <Grid container justify="space-between" alignItems="center" component="header">
               <Grid item>
                 {this.headerText()}
               </Grid>
