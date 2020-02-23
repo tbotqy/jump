@@ -82,6 +82,7 @@ jobs:
       with:
         working-directory: frontend/e2e
         wait-on: 'http://localhost:3000'
+        wait-on-timeout: 120
 
   build:
     runs-on: ubuntu-latest
