@@ -118,29 +118,29 @@ class UserPage extends React.Component<Props, State> {
             <FullPageLoading />
           ) :
             (
-                <>
-                  <Container maxWidth="md" className={this.props.classes.container} component="main">
-                    <header>
-                      <UserProfile user={this.state.user!} /> { /** TODO: Replace with ProfileUser */}
-                    </header>
-                    {this.state.showMessage ?
-                      this.errorMessage() :
-                      <Box pt={3} component="section">
-                        <Grid container justify="space-between" alignItems="center" component="header">
-                          <Grid item>
-                            {this.headerText()}
-                          </Grid>
-                          <Grid item>
-                            <ShareButton inTwitterBrandColor />
-                          </Grid>
+              <>
+                <Container maxWidth="md" className={this.props.classes.container} component="main">
+                  <header>
+                    <UserProfile user={this.state.user!} /> { /** TODO: Replace with ProfileUser */}
+                  </header>
+                  {this.state.showMessage ?
+                    this.errorMessage() :
+                    <Box pt={3} component="section">
+                      <Grid container justify="space-between" alignItems="center" component="header">
+                        <Grid item>
+                          {this.headerText()}
                         </Grid>
-                        <Grid container item justify="center" className={this.props.classes.tweetListContainer}>
-                          {this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={this.tweetsFetchFunc} />}
+                        <Grid item>
+                          <ShareButton inTwitterBrandColor />
                         </Grid>
-                      </Box>
-                    }
-                  </Container>
-                  {this.state.selectableDates.length > 0 &&
+                      </Grid>
+                      <Grid container item justify="center" className={this.props.classes.tweetListContainer}>
+                        {this.props.tweets.length > 0 && <TweetList onLoadMoreTweetsFetchFunc={this.tweetsFetchFunc} />}
+                      </Grid>
+                    </Box>
+                  }
+                </Container>
+                {this.state.selectableDates.length > 0 &&
                     <Box pr={2} className={this.props.classes.dateSelectorContainer}>
                       <DateSelectors
                         selectableDates={this.state.selectableDates}
@@ -148,8 +148,8 @@ class UserPage extends React.Component<Props, State> {
                         basePath={`${USER_PAGE_PATH}/${this.props.match.params.screenName}`}
                       />
                     </Box>
-                  }
-                </>
+                }
+              </>
             )
         }
       </ApiErrorBoundary>

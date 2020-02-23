@@ -70,32 +70,32 @@ class DataManagement extends React.Component<Props> {
           </Typography>
           {
             user ? (
-                <>
-                  <List>
-                    <CustomizedListItem
-                      icon={ <TextsmsIcon /> }
-                      headerText="ツイート"
-                      numberText={ `${user.statusCount} 件` }
-                      updatedAt={ user.statusesUpdatedAt ? formatDateString(user.statusesUpdatedAt) : "-" }
-                      apiFunc={ requestAdditionalTweetImport }
-                    />
-                    <CustomizedListItem
-                      icon={ <PeopleIcon /> }
-                      headerText="フォローリスト"
-                      numberText={ `${user.followeeCount} 件` }
-                      updatedAt={ user.followeesUpdatedAt ? formatDateString(user.followeesUpdatedAt) : "-" }
-                      apiFunc={ requestFolloweeImport }
-                    />
-                  </List>
-                  <Divider />
-                  <List>
-                    <ListItem className={ classes.deleteButtonListItem }>
-                      <ListItemSecondaryAction>
-                        <AccountDeleteDialog />
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  </List>
-                </>
+              <>
+                <List>
+                  <CustomizedListItem
+                    icon={ <TextsmsIcon /> }
+                    headerText="ツイート"
+                    numberText={ `${user.statusCount} 件` }
+                    updatedAt={ user.statusesUpdatedAt ? formatDateString(user.statusesUpdatedAt) : "-" }
+                    apiFunc={ requestAdditionalTweetImport }
+                  />
+                  <CustomizedListItem
+                    icon={ <PeopleIcon /> }
+                    headerText="フォローリスト"
+                    numberText={ `${user.followeeCount} 件` }
+                    updatedAt={ user.followeesUpdatedAt ? formatDateString(user.followeesUpdatedAt) : "-" }
+                    apiFunc={ requestFolloweeImport }
+                  />
+                </List>
+                <Divider />
+                <List>
+                  <ListItem className={ classes.deleteButtonListItem }>
+                    <ListItemSecondaryAction>
+                      <AccountDeleteDialog />
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                </List>
+              </>
             ): <CircularProgress />
           }
         </Container>

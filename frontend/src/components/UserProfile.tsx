@@ -68,30 +68,30 @@ const UserProfile: React.FC<Props> = ({ user, classes }) => {
       <CardHeader
         className={ classes.cardHeader }
         title={
-        <>
-          { protectedFlag && <LockIcon className={ classes.lockIcon } /> }
-          <Typography component="h1" variant="h5">
+          <>
+            { protectedFlag && <LockIcon className={ classes.lockIcon } /> }
+            <Typography component="h1" variant="h5">
+              <Link
+                color="inherit"
+                href={ `https://twitter.com/${screenName}` }
+                target="_blank"
+              >
+                { name }
+              </Link>
+            </Typography>
+          </>
+        }
+        subheader={
+          <>
+            <TwitterIcon className={ classes.twitterIcon } />
             <Link
               color="inherit"
               href={ `https://twitter.com/${screenName}` }
               target="_blank"
             >
-              { name }
+              { `@${screenName}` }
             </Link>
-          </Typography>
-        </>
-        }
-        subheader={
-        <>
-          <TwitterIcon className={ classes.twitterIcon } />
-          <Link
-            color="inherit"
-            href={ `https://twitter.com/${screenName}` }
-            target="_blank"
-          >
-            { `@${screenName}` }
-          </Link>
-        </>
+          </>
         }
       />
     </Card>
