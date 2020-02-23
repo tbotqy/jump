@@ -81,6 +81,7 @@ jobs:
     - uses: cypress-io/github-action@v1
       with:
         working-directory: frontend/e2e
+        wait-on: 'http://localhost:3000'
 
   build:
     runs-on: ubuntu-latest
