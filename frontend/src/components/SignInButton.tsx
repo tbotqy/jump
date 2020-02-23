@@ -32,10 +32,12 @@ interface Props extends ButtonProps, WithStyles<typeof styles> {
 const SignInButton: React.FC<Props> = ({ text, classes, ...others }) => {
   const [ disabled, setDisabled ] = useState<boolean>(false);
   return(
-    <Button { ...others } className={ classes.button } href={ SIGN_IN_URL } disabled={ disabled } onClick={ () => setDisabled(true) } >
-      <TwitterIcon fontSize="small" className={ classes.icon } />
-      { text }
-    </Button>
+    <form method="post" action={SIGN_IN_URL} onSubmit={ () => setDisabled(true) }>
+      <Button { ...others } className={ classes.button } type="submit" disabled={ disabled } >
+        <TwitterIcon fontSize="small" className={ classes.icon } />
+        { text }
+      </Button>
+    </form>
   );
 };
 
