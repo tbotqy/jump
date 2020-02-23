@@ -8340,7 +8340,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8684,15 +8684,13 @@ react-scripts@3.2.0:
   optionalDependencies:
     fsevents "2.0.7"
 
-react-share@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-share/-/react-share-3.0.1.tgz#be9dc3f80059c4fed33542472f4e7425bb3a76cb"
-  integrity sha512-xo4zjYP78h6zrBN5rlC06bb877js7216KFeZELAZP6sYxVoqmU27ChrfnpKUCL9H8F5PwYXh6DLNdAp+0E17GA==
+react-share@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-share/-/react-share-4.0.1.tgz#6a291552185178e4b980936546c8d13cf2e67c82"
+  integrity sha512-01Bpres5m74gaz7+scWSHZMCQftuZoOgi7v2fyAC71fC26wMZkQKQUGyx7cgLaDVyizpfj5D9IMfdeqiskDYRA==
   dependencies:
-    babel-runtime "^6.26.0"
     classnames "^2.2.5"
     jsonp "^0.2.1"
-    prop-types "^15.5.8"
 
 react-transition-group@^4.3.0:
   version "4.3.0"

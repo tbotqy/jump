@@ -29,7 +29,7 @@
     "react-router-dom": "^5.1.2",
     "react-router-ga": "^1.2.2",
     "react-scripts": "3.2.0",
-    "react-share": "^3.0.1",
+    "react-share": "^4.0.1",
     "react-tweet-embed": "^1.2.2",
     "redux": "^4.0.4",
     "redux-sentry-middleware": "^0.1.3",
