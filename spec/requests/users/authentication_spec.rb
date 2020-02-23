@@ -4,11 +4,6 @@ require "rails_helper"
 
 RSpec.describe "User authentication", type: :request do
   describe "GET /users/auth/twitter" do
-    after :each do
-      # reset the configured mock at the end of each examples
-      OmniAuth.config.mock_auth[:twitter] = nil
-    end
-
     describe "lead the user to authorize our app and finally get back to our callback action" do
       before { get user_twitter_omniauth_authorize_path }
       it { expect(response).to have_http_status(302) }
@@ -17,6 +12,10 @@ RSpec.describe "User authentication", type: :request do
   end
 
   describe "GET /users/auth/twitter/callback" do
+    after :each do
+      # reset the configured mock at the end of each examples
+      OmniAuth.config.mock_auth[:twitter] = nil
+    end
     context "obtained auth hash is invalid" do
       before do
         OmniAuth.config.mock_auth[:twitter] = :invalid_credentials
