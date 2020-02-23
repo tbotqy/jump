@@ -10,7 +10,7 @@ const PublicTimeline: React.FC = () => (
   <TimelineBase
     tweetsFetchFunc={fetchPublicTweets}
     selectableDatesFetchFunc={fetchPublicSelectableDates}
-    timelineName={"パブリックタイムライン"} // TODO: rename param name
+    timelineName="過去のツイート" // TODO: rename param name
     basePath={PUBLIC_TIMELINE_PATH}
     showShareButton
   />
