@@ -27,6 +27,7 @@ import {
   User,
   fetchMe
 } from "../../api";
+import avatarAltText from "../../utils/avatarAltText";
 
 interface DefaultProps {
   hideLinkToData: boolean;
@@ -108,7 +109,7 @@ class UserMenu extends React.Component<Props, State> {
 
   UserAvatar() {
     const { user } = this.props;
-    return user && <Avatar src={ user.avatarUrl } />;
+    return user && <Avatar src={ user.avatarUrl } alt={avatarAltText(user.name, user.screenName)} />;
   }
 }
 

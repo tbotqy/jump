@@ -60,6 +60,7 @@ class User < ApplicationRecord
 
   def as_index_json
     {
+      name: name,
       screenName: screen_name,
       avatarUrl:  avatar_url
     }

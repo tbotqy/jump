@@ -281,6 +281,7 @@ RSpec.describe User, type: :model do
 
   describe "#as_index_json" do
     subject { user.as_index_json }
+    let(:name) { "name" }
     let(:screen_name) { "screen_name" }
     let(:avatar_url)  { "avatar_url" }
     let(:user) do
