@@ -74,7 +74,7 @@ class UserMenu extends React.Component<Props, State> {
           </IconButton>
           <Menu anchorEl={ this.state.anchorEl } open={ Boolean(this.state.anchorEl) } onClose={ () => this.setState( { anchorEl: null } ) }>
             <Box pb={ 1 }>
-              <CardActionArea href={ `${USER_PAGE_PATH}/${this.props.user.screenName}` } target="_blank">
+              <CardActionArea component={Link} to={ `${USER_PAGE_PATH}/${this.props.user.screenName}` }>
                 <CardHeader
                   avatar={ this.UserAvatar() }
                   title={ this.props.user.name }
