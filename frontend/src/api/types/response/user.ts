@@ -12,6 +12,7 @@ export interface User {
 }
 
 export interface NewArrival {
+  name: string;
   screenName: string;
   avatarUrl: string;
 }

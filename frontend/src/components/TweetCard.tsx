@@ -28,6 +28,7 @@ import {
   TweetUser,
   UrlEntity
 } from "../api";
+import avatarAltText from "../utils/avatarAltText";
 
 const styles = (theme: Theme) => (
   createStyles({
@@ -90,7 +91,7 @@ const TweetCard: React.FC<Props> = props => {
       <CardHeader
         avatar={
           <IconButton href={ `https://twitter.com/${screenName}` } target="_blank">
-            <Avatar src={ avatarUrl } />
+            <Avatar src={ avatarUrl } alt={avatarAltText(name, screenName)} />
           </IconButton>
         }
         title={

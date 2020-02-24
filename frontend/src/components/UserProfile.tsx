@@ -15,6 +15,7 @@ import {
 import LockIcon from "@material-ui/icons/Lock";
 import TwitterIcon from "./TwitterIcon";
 import { User } from "../api";
+import avatarAltText from "../utils/avatarAltText";
 
 const styles = (theme: Theme) => (
   createStyles({
@@ -62,7 +63,7 @@ const UserProfile: React.FC<Props> = ({ user, classes }) => {
     <Card className={ classes.card }>
       <CardMedia image={ profileBannerUrl } className={ classes.cardMedia }>
         <IconButton href={ `https://twitter.com/${screenName}` } target="_blank" className={ classes.avatarWrapper }>
-          <Avatar src={ avatarUrl.replace("_normal", "") } className={ classes.avatar } />
+          <Avatar src={ avatarUrl.replace("_normal", "") } className={ classes.avatar } alt={avatarAltText(user.name, user.screenName)} />
         </IconButton>
       </CardMedia>
       <CardHeader

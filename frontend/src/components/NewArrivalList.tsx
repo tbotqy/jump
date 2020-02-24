@@ -16,6 +16,7 @@ import { USER_PAGE_PATH } from "../utils/paths";
 import {
   fetchNewArrivals, NewArrival
 } from "../api";
+import avatarAltText from "../utils/avatarAltText";
 
 const styles = createStyles({
   avatar: {
@@ -50,7 +51,7 @@ class NewArrivalList extends React.Component<Props, State> {
               {(newArrivals! as NewArrival[]).map(user => (
                 <Grid item key={shortid.generate()}>
                   <IconButton component={Link} to={`${USER_PAGE_PATH}/${user.screenName}`}>
-                    <Avatar className={classes.avatar} src={user.avatarUrl.replace("_normal", "_bigger")} />
+                    <Avatar className={classes.avatar} src={user.avatarUrl.replace("_normal", "_bigger")} alt={avatarAltText(user.name, user.screenName)} />
                   </IconButton>
                 </Grid>
               ))

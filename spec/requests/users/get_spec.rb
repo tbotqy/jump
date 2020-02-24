@@ -56,6 +56,7 @@ RSpec.describe "Users", type: :request do
         it do
           subject
           expect(response.parsed_body.first.symbolize_keys).to eq ({
+            "name": user.name,
             "screenName": user.screen_name,
             "avatarUrl":  user.avatar_url
           })
