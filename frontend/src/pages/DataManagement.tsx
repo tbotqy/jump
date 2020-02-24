@@ -27,14 +27,12 @@ import formatDateString from "../utils/formatDateString";
 import HeadNav from "../containers/HeadNavContainer";
 import CustomizedListItem from "../components/data_management/CustomizedListItem";
 import AccountDeleteDialog from "../components/data_management/AccountDeleteDialog";
-import Footer from "../components/Footer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import Head from "../components/Head";
 
 const styles = (theme: Theme) => (
   createStyles({
     container: {
-      minHeight: "100vh",
       paddingTop: theme.spacing(2)
     },
     typography: {
@@ -99,7 +97,6 @@ class DataManagement extends React.Component<Props> {
             ): <CircularProgress />
           }
         </Container>
-        <Footer bgCaramel />
       </ApiErrorBoundary>
     );
   }

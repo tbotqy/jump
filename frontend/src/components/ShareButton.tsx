@@ -45,8 +45,8 @@ const ShareButton: React.FC<Props> = ({ classes, match, inTwitterBrandColor = fa
   useEffect(() => setTitle(document.title), [ match.url ]);
 
   return(
-    <TwitterShareButton url={ url() } title={ title }>
-      <Button size="small" className={ clsx({ [classes.button]: inTwitterBrandColor }) }>
+    <TwitterShareButton url={ url() } title={ title } id="btn">
+      <Button component="div" className={ clsx({ [classes.button]: inTwitterBrandColor }) }>
         <TwitterIcon htmlColor={ iconColor } fontSize="small" />
         <Typography variant="body2" { ...textProps }>シェア</Typography>
       </Button>
