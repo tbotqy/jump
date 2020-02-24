@@ -90,7 +90,7 @@ const TweetCard: React.FC<Props> = props => {
       }
       <CardHeader
         avatar={
-          <IconButton href={ `https://twitter.com/${screenName}` } target="_blank">
+          <IconButton href={ `https://twitter.com/${screenName}` } target="_blank" rel="noopener">
             <Avatar src={ avatarUrl } alt={avatarAltText(name, screenName)} />
           </IconButton>
         }
@@ -99,6 +99,7 @@ const TweetCard: React.FC<Props> = props => {
             color="inherit"
             href={ `https://twitter.com/${screenName}` }
             target="_blank"
+            rel="noopener"
           >
             { name }
           </Link>
@@ -108,6 +109,7 @@ const TweetCard: React.FC<Props> = props => {
             color="inherit"
             href={ `https://twitter.com/${screenName}` }
             target="_blank"
+            rel="noopener"
           >{ `@${screenName}` }</Link>
         }
         action={ <TwitterIcon className={ classes.logo } /> }
@@ -120,7 +122,7 @@ const TweetCard: React.FC<Props> = props => {
       </CardContent>
 
       { photoUrls.length > 0 &&
-        <CardActionArea href={ linkToTweet } target="_blank">
+        <CardActionArea href={ linkToTweet } target="_blank" rel="noopener">
           <CardContent>
             <PhotoGrid photoUrls={ photoUrls } />
           </CardContent>
@@ -151,6 +153,7 @@ const TweetCard: React.FC<Props> = props => {
               color="inherit"
               href={ linkToTweet }
               target="_blank"
+              rel="noopener"
             >
               { isRetweet ? `${tweetedAt} にリツイート` : tweetedAt }
             </Link>

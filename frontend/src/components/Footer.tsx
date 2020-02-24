@@ -43,7 +43,7 @@ const Footer: React.FC<Props> = ({ bgCaramel }) => {
             </Grid>
             <Grid item>
               <Typography color="textSecondary">
-                <Link color="inherit" href={ `//twitter.com/${adminTwitterScreenName}` } target="_blank">
+                <Link color="inherit" href={ `//twitter.com/${adminTwitterScreenName}` } target="_blank" rel="noopener">
                   {`@${adminTwitterScreenName}`}
                 </Link>
               </Typography>

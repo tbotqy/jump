@@ -62,7 +62,7 @@ const UserProfile: React.FC<Props> = ({ user, classes }) => {
   return(
     <Card className={ classes.card }>
       <CardMedia image={ profileBannerUrl } className={ classes.cardMedia }>
-        <IconButton href={ `https://twitter.com/${screenName}` } target="_blank" className={ classes.avatarWrapper }>
+        <IconButton href={ `https://twitter.com/${screenName}` } target="_blank" rel="noopener" className={ classes.avatarWrapper }>
           <Avatar src={ avatarUrl.replace("_normal", "") } className={ classes.avatar } alt={avatarAltText(user.name, user.screenName)} />
         </IconButton>
       </CardMedia>
@@ -76,6 +76,7 @@ const UserProfile: React.FC<Props> = ({ user, classes }) => {
                 color="inherit"
                 href={ `https://twitter.com/${screenName}` }
                 target="_blank"
+                rel="noopener"
               >
                 { name }
               </Link>
@@ -89,6 +90,7 @@ const UserProfile: React.FC<Props> = ({ user, classes }) => {
               color="inherit"
               href={ `https://twitter.com/${screenName}` }
               target="_blank"
+              rel="noopener"
             >
               { `@${screenName}` }
             </Link>
