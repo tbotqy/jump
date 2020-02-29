@@ -1,5 +1,9 @@
 name: Frontend
-on: push
+on:
+  push:
+    paths:
+    - 'frontend/**'
+    - '.github/workflows/frontend.yml'
 
 env:
   REACT_APP_SERVICE_NAME: test
