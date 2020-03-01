@@ -25,7 +25,7 @@ GEM
       capistrano (~> 3.7)
       capistrano-bundler
       puma (~> 4.0)
-    concurrent-ruby (1.1.5)
+    concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
