@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Button,
   WithStyles,
@@ -25,7 +26,8 @@ const ButtonToPublicTimeline: React.FC<Props> = ({ classes }) => (
     fullWidth
     variant="contained"
     color="primary"
-    href={PUBLIC_TIMELINE_PATH}
+    component={RouterLink}
+    to={PUBLIC_TIMELINE_PATH}
   >
     公開タイムラインを見てみる
     <InputIcon
