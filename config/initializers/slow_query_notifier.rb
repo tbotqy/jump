@@ -11,4 +11,5 @@ class SlowQueryNotifier
   end
 end
 
-SlowQueryNotifier.initialize! if Rails.env.production?
+# Disable
+# SlowQueryNotifier.initialize! if Rails.env.production?
