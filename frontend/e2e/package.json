@@ -6,7 +6,7 @@
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.1",
     "cypress": "^4.1.0",
-    "ts-loader": "^6.2.1",
+    "ts-loader": "^6.2.2",
     "typescript": "^3.7.4",
     "webpack": "^4.42.0"
   }
