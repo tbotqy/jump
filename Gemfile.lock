@@ -149,7 +149,7 @@ GEM
       dry-schema (~> 1.5)
     equalizer (0.0.11)
     erubi (1.9.0)
-    et-orbi (1.2.3)
+    et-orbi (1.2.4)
       tzinfo
     factory_bot (5.1.1)
       activesupport (>= 4.2.0)
@@ -162,7 +162,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    fugit (1.3.3)
+    fugit (1.3.4)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.1)
     globalid (0.4.2)
@@ -335,7 +335,7 @@ GEM
       rack (~> 2.0)
       rack-protection (>= 2.0.0)
       redis (>= 4.1.0)
-    sidekiq-cron (1.1.0)
+    sidekiq-cron (1.2.0)
       fugit (~> 1.1)
       sidekiq (>= 4.2.1)
     simple_oauth (0.3.1)
@@ -366,7 +366,7 @@ GEM
       multipart-post (~> 2.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    tzinfo (1.2.6)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
