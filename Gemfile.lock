@@ -71,7 +71,7 @@ GEM
     bullet (6.1.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    codecov (0.1.16)
+    codecov (0.1.17)
       json
       simplecov
       url
@@ -181,7 +181,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
-    json (2.3.0)
+    json (2.3.1)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
