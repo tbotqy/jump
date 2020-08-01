@@ -71,10 +71,11 @@ GEM
     bullet (6.1.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    codecov (0.1.17)
+    codecov (0.2.3)
+      colorize
       json
       simplecov
-      url
+    colorize (0.8.1)
     concurrent-ruby (1.1.6)
     config (2.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -374,7 +375,6 @@ GEM
     unf_ext (0.0.7.6)
     unicode-display_width (1.7.0)
     uniform_notifier (1.13.0)
-    url (0.3.2)
     warden (1.2.8)
       rack (>= 2.0.6)
     websocket-driver (0.7.2)
