@@ -151,10 +151,10 @@ GEM
     erubi (1.9.0)
     et-orbi (1.2.4)
       tzinfo
-    factory_bot (6.0.2)
+    factory_bot (6.1.0)
       activesupport (>= 5.0.0)
-    factory_bot_rails (6.0.0)
-      factory_bot (~> 6.0.0)
+    factory_bot_rails (6.1.0)
+      factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
@@ -179,7 +179,7 @@ GEM
     http-parser (1.2.1)
       ffi-compiler (>= 1.0, < 2.0)
     http_parser.rb (0.6.0)
-    i18n (1.8.3)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     json (2.3.1)
     kaminari (1.2.1)
@@ -216,7 +216,7 @@ GEM
     mysql2 (0.5.3)
     naught (1.1.0)
     nio4r (2.5.2)
-    nokogiri (1.10.9)
+    nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
     oauth (0.5.4)
     omniauth (1.9.1)
@@ -380,7 +380,7 @@ GEM
     websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.3.1)
+    zeitwerk (2.4.0)
 
 PLATFORMS
   ruby
