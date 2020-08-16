@@ -21,4 +21,4 @@ staging:
 
 production:
   <<: *base
-  database: <%= ENV['JUMP_DB_NAME'] %>
+  database: jump_production
