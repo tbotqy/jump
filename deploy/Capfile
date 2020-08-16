@@ -39,7 +39,6 @@ require "capistrano/puma"
 install_plugin Capistrano::Puma, load_hooks: false
 
 require "capistrano/sidekiq"
-require "capistrano/sidekiq/monit"
 
 require "capistrano/yarn"
 
