@@ -71,11 +71,9 @@ GEM
     bullet (6.1.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    codecov (0.2.3)
-      colorize
+    codecov (0.2.9)
       json
       simplecov
-    colorize (0.8.1)
     concurrent-ruby (1.1.7)
     config (2.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -341,7 +339,7 @@ GEM
       fugit (~> 1.1)
       sidekiq (>= 4.2.1)
     simple_oauth (0.3.1)
-    simplecov (0.18.5)
+    simplecov (0.19.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.2)
