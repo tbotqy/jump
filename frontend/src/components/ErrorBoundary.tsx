@@ -1,6 +1,7 @@
 import React from "react";
 import ErrorMessage from "./ErrorMessage";
 import Sentry from "../sentry";
+import { Extras } from '@sentry/types';
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +20,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: object) {
     Sentry.withScope(scope => {
-      scope.setExtras(errorInfo);
+      scope.setExtras(errorInfo as Extras);
       Sentry.captureException(error);
     });
   }
