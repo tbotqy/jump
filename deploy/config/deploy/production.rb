@@ -12,7 +12,7 @@
 server ENV.fetch("DEPLOY_TO_IP"), user: ENV.fetch("DEPLOY_USER"), roles: %w{app web db}
 
 set :puma_threads,            [5, 5]
-set :puma_workers,            2
+set :puma_workers,            1
 set :puma_preload_app,        true
 set :puma_init_active_record, true
 set :puma_daemonize,          true
