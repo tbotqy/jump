@@ -61,32 +61,6 @@ jobs:
         yarn install
         yarn test:ci
 
-  E2E:
-    runs-on: ubuntu-16.04
-    env:
-      CYPRESS_baseUrl: http://localhost:3000
-    steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - name: Deal with the cache of the app dependencies
-      uses: actions/cache@v1
-      with:
-        path: ${{ github.workspace }}/frontend/node_modules
-        key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-node-modules-
-    - name: Start the frontend server
-      working-directory: frontend
-      run: |
-        yarn install
-        yarn start &
-    - uses: cypress-io/github-action@v1
-      with:
-        working-directory: frontend/e2e
-        wait-on: 'http://localhost:3000'
-
   build:
     runs-on: ubuntu-latest
     steps:
