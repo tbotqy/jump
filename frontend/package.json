@@ -17,7 +17,7 @@
     "@types/redux-sentry-middleware": "^0.1.1",
     "@types/shortid": "^0.0.29",
     "@types/twitter-text": "^2.0.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "clsx": "^1.0.4",
     "js-cookie": "^2.2.1",
     "prop-types": "^15.7.2",
