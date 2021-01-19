@@ -25,7 +25,7 @@ shared_examples "should validate before_type_cast is a boolean" do |model_name, 
   subject do
     record = build(model_name, "#{attr_name}": value)
     record.valid?
-    record.errors.messages
+    record.errors.messages.to_hash
   end
   context "valid" do
     shared_examples "doesn't include error message" do |value_to_be_validated|
