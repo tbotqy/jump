@@ -178,7 +178,7 @@ GEM
     http-parser (1.2.1)
       ffi-compiler (>= 1.0, < 2.0)
     http_parser.rb (0.6.0)
-    i18n (1.8.5)
+    i18n (1.8.7)
       concurrent-ruby (~> 1.0)
     json (2.3.1)
     kaminari (1.2.1)
@@ -209,7 +209,7 @@ GEM
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.5.0)
-    minitest (5.14.2)
+    minitest (5.14.3)
     msgpack (1.3.3)
     multipart-post (2.1.1)
     mysql2 (0.5.3)
@@ -332,7 +332,7 @@ GEM
     ruby-progressbar (1.10.1)
     sentry-raven (3.1.1)
       faraday (>= 1.0)
-    shoulda-matchers (4.4.1)
+    shoulda-matchers (4.5.0)
       activesupport (>= 4.2.0)
     sidekiq (6.1.2)
       connection_pool (>= 2.2.2)
@@ -369,7 +369,7 @@ GEM
       multipart-post (~> 2.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    tzinfo (1.2.7)
+    tzinfo (1.2.9)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
@@ -381,7 +381,7 @@ GEM
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
