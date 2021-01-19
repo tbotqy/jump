@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/resque/redis-namespace.git
+  revision: c31e63dc3cd5e59ef5ea394d4d46ac60d1e6f82e
+  specs:
+    redis-namespace (1.8.0)
+      redis (>= 3.0.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -277,8 +284,6 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redis (4.2.5)
-    redis-namespace (1.8.0)
-      redis (>= 3.0.4)
     redis-objects (1.5.0)
       redis (~> 4.0)
     regexp_parser (2.0.3)
@@ -415,7 +420,7 @@ DEPENDENCIES
   puma (~> 4.0)
   rack-cors
   rails (~> 6.1.1)
-  redis-namespace
+  redis-namespace!
   redis-objects
   rspec-rails (~> 4.0)
   rspec_junit_formatter
@@ -432,7 +437,7 @@ DEPENDENCIES
   twitter
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 3.0.0p0
 
 BUNDLED WITH
-   2.1.4
+   2.2.3
