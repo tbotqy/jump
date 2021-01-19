@@ -19,7 +19,7 @@ gem "omniauth"
 gem "omniauth-twitter"
 gem "sidekiq"
 gem "sidekiq-cron", "~> 1.1"
-gem "redis-namespace"
+gem "redis-namespace", github: "resque/redis-namespace"
 gem "redis-objects"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "devise"
