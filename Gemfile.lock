@@ -278,7 +278,7 @@ GEM
       redis (>= 3.0.4)
     redis-objects (1.5.0)
       redis (~> 4.0)
-    regexp_parser (1.8.1)
+    regexp_parser (2.0.3)
     request_store (1.5.0)
       rack (>= 1.4)
     responders (3.0.1)
