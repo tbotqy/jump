@@ -8,7 +8,7 @@
     "@sentry/browser": "^5.13.2",
     "@types/js-cookie": "^2.2.5",
     "@types/node": "^13.9.0",
-    "@types/react": "^16.9.23",
+    "@types/react": "^17.0.0",
     "@types/react-dom": "^16.9.4",
     "@types/react-infinite-scroll-component": "^4.2.5",
     "@types/react-redux": "^7.1.7",
