@@ -110,9 +110,6 @@ GEM
     connection_pool (2.2.3)
     crass (1.0.6)
     database_cleaner (1.8.5)
-    database_cleaner-active_record (1.8.0)
-      activerecord
-      database_cleaner (~> 1.8.0)
     database_cleaner-redis (1.8.0)
       database_cleaner (~> 1.8.0)
       redis
@@ -423,7 +420,6 @@ DEPENDENCIES
   bullet
   codecov
   config
-  database_cleaner-active_record
   database_cleaner-redis
   devise!
   dotenv-rails
