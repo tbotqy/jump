@@ -30,7 +30,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - uses: actions/cache@v1
+    - uses: actions/cache@v2
       with:
         path: ${{ github.workspace }}/frontend/node_modules
         key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
@@ -49,7 +49,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - uses: actions/cache@v1
+    - uses: actions/cache@v2
       with:
         path: ${{ github.workspace }}/frontend/node_modules
         key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
@@ -68,7 +68,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - uses: actions/cache@v1
+    - uses: actions/cache@v2
       with:
         path: ${{ github.workspace }}/frontend/node_modules
         key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/yarn.lock') }}
