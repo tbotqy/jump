@@ -109,9 +109,9 @@ GEM
       dry-validation (~> 1.0, >= 1.0.0)
     connection_pool (2.2.3)
     crass (1.0.6)
-    database_cleaner (1.8.5)
-    database_cleaner-redis (1.8.0)
-      database_cleaner (~> 1.8.0)
+    database_cleaner-core (2.0.0)
+    database_cleaner-redis (2.0.0)
+      database_cleaner-core (~> 2.0.0)
       redis
     deep_merge (1.2.1)
     diff-lcs (1.4.4)
