@@ -22,7 +22,7 @@ gem "sidekiq-cron", "~> 1.1"
 gem "redis-namespace", github: "resque/redis-namespace"
 gem "redis-objects"
 gem "bootsnap", ">= 1.1.0", require: false
-gem "devise"
+gem "devise", github: "heartcombo/devise", branch: "ca-omniauth-2" # Workaround
 gem "sentry-raven"
 gem "kaminari"
 gem "ruby-progressbar"
