@@ -101,7 +101,7 @@ GEM
     bullet (6.1.3)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    codecov (0.3.0)
+    codecov (0.4.2)
       simplecov (>= 0.15, < 0.22)
     concurrent-ruby (1.1.8)
     config (2.2.3)
