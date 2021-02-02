@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ErrorInfo } from "react";
 import ErrorMessage from "./ErrorMessage";
 import Sentry from "../sentry";
 
@@ -17,9 +17,9 @@ class ErrorBoundary extends React.Component<Props, State> {
     return { hasClientError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: object) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     Sentry.withScope(scope => {
-      scope.setExtras(errorInfo);
+      scope.setExtras({'React.ErrorInfo': errorInfo});
       Sentry.captureException(error);
     });
   }
