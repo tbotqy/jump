@@ -39,7 +39,7 @@ const ShareButton: React.FC<Props> = ({ classes, match, inTwitterBrandColor = fa
   const textProps = inTwitterBrandColor ? (
     { className: clsx(classes.iconText, classes.iconTextWhite) }
   ) : (
-    { color: "textSecondary" as "textSecondary", className: classes.iconText }
+    { color: "textSecondary" as const, className: classes.iconText }
   );
 
   useEffect(() => setTitle(document.title), [ match.url ]);

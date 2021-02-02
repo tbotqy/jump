@@ -23,7 +23,7 @@ const styles = (theme: Theme) => (
   })
 );
 
-type ButtonProps = Extract<ButtonTypeMap["props"], {}>
+type ButtonProps = Extract<ButtonTypeMap["props"], Record<string, unknown>>
 
 interface Props extends ButtonProps, WithStyles<typeof styles> {
   text: string;
