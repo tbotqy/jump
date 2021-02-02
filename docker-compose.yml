@@ -34,8 +34,10 @@ services:
       - cache
 
   db:
-    image: mysql:5.7
+    image: mysql:8.0
     restart: always
+    cap_add:
+      - SYS_NICE
     environment:
       MYSQL_ROOT_PASSWORD: password
       TZ: Asia/Tokyo
