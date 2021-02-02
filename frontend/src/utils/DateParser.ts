@@ -75,7 +75,7 @@ class DateParser {
     }
   }
 
-  private keysOf(collectionOfHash: {}[]): string[] {
+  private keysOf(collectionOfHash: (TweetYear | TweetMonth)[]): string[] {
     return collectionOfHash.flatMap( (item: TweetYear | TweetMonth): string[] => Object.keys(item) );
   }
 }

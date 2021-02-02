@@ -9,7 +9,7 @@ interface State {
   stats?: Stats;
 }
 
-class StatsChip extends React.Component<{}, State> {
+class StatsChip extends React.Component<Record<string, unknown>, State> {
   state = { stats: undefined }
 
   async componentDidMount() {
