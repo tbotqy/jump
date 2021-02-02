@@ -8,7 +8,7 @@
       "es6",
       "esnext"
     ],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "outDir": "build",
     "rootDir": "src",
     "skipLibCheck": true,
@@ -20,7 +20,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "allowJs": true
+    "allowJs": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
