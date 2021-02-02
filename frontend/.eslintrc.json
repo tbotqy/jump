@@ -30,7 +30,6 @@
   "rules": {
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/camelcase": "off",
     "indent": [
       "error",
       2
@@ -82,12 +81,7 @@
     "array-bracket-spacing": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/camelcase": [
-      "error",
-      {
-        "properties": "always"
-      }
-    ],
+    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-non-null-assertion": "off"
   }
 }
