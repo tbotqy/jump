@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/tbotaq/slack-notifier.git
-  revision: 2ac32893a3f74e5280a26fd8cff3c188c80b0b25
+  revision: 0e56fc36a35cb9f47938061c360903ea2f83e70d
   branch: ruby3-compatibility
   specs:
     slack-notifier (2.3.2)
