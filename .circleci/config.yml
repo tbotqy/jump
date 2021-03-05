@@ -116,5 +116,5 @@ workflows:
           filters:
             branches:
               ignore:
-                - master
+                - main
       - build_backend
