@@ -1,31 +1,23 @@
-import React from "react";
-import {
-  Chip,
-  CircularProgress
-} from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Chip, CircularProgress } from "@material-ui/core";
 import { fetchStats, Stats } from "../api";
 
-interface State {
-  stats?: Stats;
-}
+const StatsChip: React.FC = () => {
+  const [stats, setStats] = useState<Stats | undefined>(undefined);
 
-class StatsChip extends React.Component<Record<string, unknown>, State> {
-  state = { stats: undefined }
+  useEffect(() => {
+    (async() => {
+      const response = await fetchStats();
+      setStats(response.data);
+    })();
+  }, []);
 
-  async componentDidMount() {
-    const response = await fetchStats();
-    this.setState({ stats: response.data });
+  if (stats) {
+    const { statusCount, userCount } = stats;
+    return <Chip label={`${statusCount} ツイート / ${userCount} ユーザー`} />;
+  } else {
+    return <CircularProgress size={24} />;
   }
-
-  render() {
-    const { stats } = this.state;
-    if (stats) {
-      const { statusCount, userCount } = stats as unknown as Stats;
-      return <Chip label={`${statusCount} ツイート / ${userCount} ユーザー`} />;
-    } else {
-      return <CircularProgress size={24} />;
-    }
-  }
-}
+};
 
 export default StatsChip;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import shortid from "shortid";
 import {
@@ -10,66 +10,81 @@ import {
   IconButton,
   WithStyles,
   withStyles,
-  createStyles
+  createStyles,
 } from "@material-ui/core";
 import { USER_PAGE_PATH } from "../utils/paths";
-import {
-  fetchNewArrivals, NewArrival
-} from "../api";
+import { fetchNewArrivals, NewArrival } from "../api";
 import avatarAltText from "../utils/avatarAltText";
 
 const styles = createStyles({
   avatar: {
     width: 50,
-    height: 50
-  }
+    height: 50,
+  },
 });
 
-type Props = WithStyles<typeof styles>
+type Props = WithStyles<typeof styles>;
 
-interface State {
-  newArrivals?: NewArrival[];
-}
+const NewArrivalList: React.FC<Props> = ({ classes }) => {
+  const [newArrivals, setNewArrivals] = useState<NewArrival[] | undefined>(
+    undefined
+  );
+  useEffect(() => {
+    (async() => {
+      const response = await fetchNewArrivals();
+      setNewArrivals(response.data);
+    })();
+  }, []);
 
-class NewArrivalList extends React.Component<Props, State> {
-  state = { newArrivals: undefined }
-
-  async componentDidMount() {
-    const response = await fetchNewArrivals();
-    this.setState({ newArrivals: response.data });
-  }
-
-  render() {
-    const { newArrivals } = this.state;
-    const { classes } = this.props;
-    return (
-      <nav>
-        <Typography gutterBottom variant="h5" component="h4" color="textSecondary">新着ユーザー</Typography>
-        <Box pt={2}>
-          {newArrivals ? (
-            <Grid container direction="row" alignItems="center" justify="space-between">
-              {(newArrivals! as NewArrival[]).map(user => (
-                <Grid item key={shortid.generate()}>
-                  <IconButton component={Link} to={`${USER_PAGE_PATH}/${user.screenName}`}>
-                    <Avatar className={classes.avatar} src={user.avatarUrl.replace("_normal", "_bigger")} alt={avatarAltText(user.name, user.screenName)} />
-                  </IconButton>
-                </Grid>
-              ))
-              }
+  const content = () => {
+    if (newArrivals) {
+      return (
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          justify="space-between"
+        >
+          {newArrivals.map((user) => (
+            <Grid item key={shortid.generate()}>
+              <IconButton
+                component={Link}
+                to={`${USER_PAGE_PATH}/${user.screenName}`}
+              >
+                <Avatar
+                  className={classes.avatar}
+                  src={user.avatarUrl.replace("_normal", "_bigger")}
+                  alt={avatarAltText(user.name, user.screenName)}
+                />
+              </IconButton>
             </Grid>
-          ) :
-            (
-              <Grid container alignItems="center" justify="center">
-                <Grid item>
-                  <CircularProgress />
-                </Grid>
-              </Grid>
-            )
-          }
-        </Box>
-      </nav>
-    );
-  }
-}
+          ))}
+        </Grid>
+      );
+    } else {
+      return (
+        <Grid container alignItems="center" justify="center">
+          <Grid item>
+            <CircularProgress />
+          </Grid>
+        </Grid>
+      );
+    }
+  };
+
+  return (
+    <nav>
+      <Typography
+        gutterBottom
+        variant="h5"
+        component="h4"
+        color="textSecondary"
+      >
+        新着ユーザー
+      </Typography>
+      <Box pt={2}>{content}</Box>
+    </nav>
+  );
+};
 
 export default withStyles(styles)(NewArrivalList);
