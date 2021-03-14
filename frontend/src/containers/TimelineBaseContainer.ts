@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import {
   setTweets,
-  setIsFetching
 } from "../store/tweet/actions";
 import { setApiErrorCode } from "../store/api_error/actions";
 import TimelineBase from "../components/TimelineBase";
@@ -18,7 +17,6 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   setTweets:       (tweets: Tweet[]) => dispatch(setTweets(tweets)),
-  setIsFetching:   (flag: boolean) => dispatch(setIsFetching(flag)),
   setApiErrorCode: (code: number) => dispatch(setApiErrorCode(code))
 });
 

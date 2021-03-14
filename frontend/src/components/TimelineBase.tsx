@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import Head from "./Head";
 import HeadNav from "../containers/HeadNavContainer";
-import HeadProgressBar from "../containers/HeadProgressBarContainer";
+import HeadProgressBar from "./HeadProgressBar";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import timelineTitleText from "../utils/timelineTitleText";
@@ -55,7 +55,6 @@ interface Props extends DefaultProps, RouteComponentProps<TimelineParams>, WithS
   basePath: string;
   setTweets: (tweets: Tweet[]) => void;
   setApiErrorCode: (code: number) => void;
-  setIsFetching: (flag: boolean) => void;
   selectableDatesFetchFunc: () => AxiosPromise;
   selectedYear?: string;
   selectedMonth?: string;
@@ -65,11 +64,12 @@ interface Props extends DefaultProps, RouteComponentProps<TimelineParams>, WithS
 
 interface State {
   selectableDates: TweetDate[];
+  isFetching: boolean;
 }
 
 class TimelineBase extends React.Component<Props, State> {
   private onPopStateFunc: any
-  state = { selectableDates: [] }
+  state = { selectableDates: [], isFetching: false }
 
   constructor(props: Props) {
     super(props);
@@ -98,7 +98,7 @@ class TimelineBase extends React.Component<Props, State> {
       <ApiErrorBoundary>
         <Head title={this.title()} />
         <HeadNav />
-        <HeadProgressBar />
+        <HeadProgressBar isFetching={this.state.isFetching} />
         <Container maxWidth="md" className={this.props.classes.container} component="main">
           <Grid container justify="space-between" alignItems="center" component="header">
             <Grid item>
@@ -135,7 +135,7 @@ class TimelineBase extends React.Component<Props, State> {
   }
 
   async fetchTweets(params: DateParams) {
-    this.props.setIsFetching(true);
+    this.setState({isFetching: true});
     try {
       const response = await this.props.tweetsFetchFunc(params);
       const tweets = response.data;
@@ -145,7 +145,7 @@ class TimelineBase extends React.Component<Props, State> {
         this.props.setApiErrorCode(404);
       }
     } finally {
-      this.props.setIsFetching(false);
+      this.setState({isFetching: false});
     }
   }
 
