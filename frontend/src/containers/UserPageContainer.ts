@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import {
   setTweets,
-  setIsFetching
 } from "../store/tweet/actions";
 import UserPage from "../pages/UserPage";
 import { AppState } from "../store";
@@ -15,8 +14,7 @@ const mapStateToProps = (state: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  setTweets:     (tweets: Tweet[]) => dispatch(setTweets(tweets)),
-  setIsFetching: (flag: boolean) => dispatch(setIsFetching(flag))
+  setTweets:     (tweets: Tweet[]) => dispatch(setTweets(tweets))
 });
 
 export default connect(

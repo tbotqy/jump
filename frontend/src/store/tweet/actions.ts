@@ -2,7 +2,6 @@ import {
   TweetActionTypes,
   SET_TWEETS,
   APPEND_TWEETS,
-  SET_IS_FETCHING,
   SET_HAS_MORE,
   RESET_HAS_MORE
 } from "./types";
@@ -19,13 +18,6 @@ export function appendTweets(tweets: Tweet[]): TweetActionTypes {
   return {
     type: APPEND_TWEETS,
     tweets
-  };
-}
-
-export function setIsFetching(flag: boolean): TweetActionTypes {
-  return {
-    type: SET_IS_FETCHING,
-    flag
   };
 }
 

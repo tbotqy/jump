@@ -14,7 +14,7 @@ import timelineTitleText from "../utils/timelineTitleText";
 import Head from "../components/Head";
 import ApiErrorBoundary from "../containers/ApiErrorBoundaryContainer";
 import HeadNav from "../containers/HeadNavContainer";
-import HeadProgressBar from "../containers/HeadProgressBarContainer";
+import HeadProgressBar from "../components/HeadProgressBar";
 import UserProfile from "../components/UserProfile";
 import DateSelectors from "../containers/DateSelectorsContainer";
 import FullPageLoading from "../components/FullPageLoading";
@@ -57,7 +57,6 @@ const styles = (theme: Theme) => (
 );
 
 interface Props extends RouteComponentProps<UserPageParams>, WithStyles<typeof styles> {
-  setIsFetching: (flag: boolean) => void;
   setTweets: (tweets: Tweet[]) => void;
   tweets: Tweet[];
   selectedYear?: string;
@@ -70,6 +69,7 @@ interface State {
   showMessage: boolean;
   selectableDates: TweetDate[];
   message: string;
+  isFetching: boolean;
 }
 
 class UserPage extends React.Component<Props, State> {
@@ -78,7 +78,8 @@ class UserPage extends React.Component<Props, State> {
     user: null,
     showMessage: false,
     selectableDates: [],
-    message: ""
+    message: "",
+    isFetching: false
   };
 
   constructor(props: Props) {
@@ -112,7 +113,7 @@ class UserPage extends React.Component<Props, State> {
       <ApiErrorBoundary>
         <Head title={this.title()} />
         <HeadNav />
-        <HeadProgressBar />
+        <HeadProgressBar isFetching={this.state.isFetching} />
         {
           !this.state.user ? (
             <FullPageLoading />
@@ -167,7 +168,7 @@ class UserPage extends React.Component<Props, State> {
   }
 
   async fetchTweets(userId: number, date: DateParams) {
-    this.props.setIsFetching(true);
+    this.setState({isFetching: true});
     try {
       const response = await fetchUserTweets({ ...date, page: 1 }, userId);
       const tweets = response.data;
@@ -178,7 +179,7 @@ class UserPage extends React.Component<Props, State> {
         this.setState({ showMessage: true, message: "ツイートが未登録です" });
       }
     } finally {
-      this.props.setIsFetching(false);
+      this.setState({isFetching: false});
     }
   }
 
