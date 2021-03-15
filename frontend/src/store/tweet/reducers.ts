@@ -6,8 +6,7 @@ import {
 } from "./types";
 
 const initialState: TweetState = {
-  tweets: [],
-  noTweetFound: false
+  tweets: []
 };
 
 export default function tweetsReducer(
