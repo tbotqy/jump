@@ -140,7 +140,7 @@ class TimelineBase extends React.Component<Props, State> {
       const response = await this.props.tweetsFetchFunc(params);
       const tweets = response.data;
       if(tweets.length > 0) {
-        this.props.setTweets(response.data);
+        this.props.setTweets(tweets);
       } else {
         this.props.setApiErrorCode(404);
       }
