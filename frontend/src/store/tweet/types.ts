@@ -2,7 +2,6 @@ import { Tweet } from "../../api";
 
 export interface TweetState {
   readonly tweets: Tweet[];
-  readonly noTweetFound: boolean;
 }
 
 export const SET_TWEETS = "SET_TWEETS";
