@@ -74,8 +74,6 @@ const loader = (
 );
 
 interface Props extends RouteComponentProps<DateParams>, WithStyles<typeof styles> {
-  setPage: (page: number) => void;
-  resetPage: () => void;
   setHasMore: (flag: boolean) => void;
   resetHasMore: () => void;
   appendTweets: (tweets: Tweet[]) => void;
@@ -83,10 +81,16 @@ interface Props extends RouteComponentProps<DateParams>, WithStyles<typeof style
   onLoadMoreTweetsFetchFunc: ({ year, month, day, page }: PaginatableDateParams) => AxiosPromise;
   tweets: Tweet[];
   hasMore: boolean;
+}
+
+interface State {
   page: number;
 }
 
-class TweetList extends React.Component<Props> {
+class TweetList extends React.Component<Props, State> {
+  private INITIAL_PAGE = 1
+  state = { page: this.INITIAL_PAGE }
+
   componentDidMount() {
     this.resetPageState();
   }
@@ -118,20 +122,20 @@ class TweetList extends React.Component<Props> {
 
   async loadMore() {
     const { year, month, day } = this.props.match.params;
-    const nextPage: number = this.props.page + 1;
+    const nextPage: number = this.state.page + 1;
 
     const response = await this.props.onLoadMoreTweetsFetchFunc({ year, month, day, page: nextPage } as PaginatableDateParams);
     const tweets = response.data;
     if (tweets.length > 0) {
       this.props.appendTweets(response.data);
-      this.props.setPage(nextPage);
+      this.setState({page: nextPage});
     } else {
       this.props.setHasMore(false);
     }
   }
 
   resetPageState() {
-    this.props.resetPage();
+    this.setState({page: this.INITIAL_PAGE});
     this.props.resetHasMore();
   }
 }
