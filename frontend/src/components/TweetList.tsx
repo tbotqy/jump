@@ -130,7 +130,7 @@ class TweetList extends React.Component<Props, State> {
     const response = await this.props.onLoadMoreTweetsFetchFunc({ year, month, day, page: nextPage } as PaginatableDateParams);
     const tweets = response.data;
     if (tweets.length > 0) {
-      this.props.appendTweets(response.data);
+      this.props.appendTweets(tweets);
       this.setState({page: nextPage});
     } else {
       this.setState({hasMore: false});
