@@ -38,7 +38,7 @@ group :test do
 end
 
 group :development, :test do
-  gem "rspec-rails", "~> 4.0"
+  gem "rspec-rails", "~> 5.0"
   gem "listen"
   gem "factory_bot_rails"
   gem "database_cleaner-redis"
