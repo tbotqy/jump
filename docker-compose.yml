@@ -3,7 +3,6 @@ services:
   app:
     build: .
     command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
-    restart: always
     env_file: .env
     environment:
       TZ: Asia/Tokyo
@@ -21,7 +20,6 @@ services:
   worker:
     build: .
     command: bundle exec sidekiq -C config/sidekiq.yml -e development
-    restart: always
     env_file: .env
     environment:
       TZ: Asia/Tokyo
@@ -35,7 +33,6 @@ services:
 
   db:
     image: mysql:8.0
-    restart: always
     cap_add:
       - SYS_NICE
     environment:
@@ -48,7 +45,6 @@ services:
       - mysql-store:/var/lib/mysql
 
   cache:
-    restart: always
     image: redis:5
     environment:
       TZ: Asia/Tokyo
