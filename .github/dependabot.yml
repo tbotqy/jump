@@ -1,0 +1,32 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "10:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
+  assignees:
+  - tbotaq
+  labels:
+  - Backend
+  - dependencies
+  ignore:
+  - dependency-name: puma
+    versions:
+    - 5.2.0
+    - 5.2.1
+    - 5.2.2
+  - dependency-name: database_cleaner-redis
+    versions:
+    - 2.0.0
+  - dependency-name: database_cleaner-active_record
+    versions:
+    - 2.0.0
+  - dependency-name: rubocop-ast
+    versions:
+    - 1.4.1
+  - dependency-name: omniauth-oauth
+    versions:
+    - 1.2.0
