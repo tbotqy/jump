@@ -2,8 +2,14 @@ require: rubocop-rspec
 inherit_gem:
   rubocop-rails_config:
     - config/rails.yml
+inherit_mode:
+  merge:
+    - Exclude
 AllCops:
   TargetRubyVersion: 3.0.0
+  Exclude:
+    - 'config/**/*'
+    - 'db/migrate/*'
 FactoryBot/AttributeDefinedStatically:
   Enabled: true
 Layout/EmptyLinesAroundAccessModifier:
