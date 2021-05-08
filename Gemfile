@@ -29,7 +29,7 @@ gem "kaminari"
 gem "ruby-progressbar"
 gem "draper"
 gem "rack-cors"
-gem "slack-notifier", github: "tbotaq/slack-notifier", branch: "ruby3-compatibility"
+gem "slack-notifier"
 gem "sitemap_generator"
 
 group :test do
