@@ -19,7 +19,7 @@ set :puma_daemonize,          true
 # set :puma_control_app,       true MEMO: Disabling to prevent an useless socket(pumactl.sock) from being generated.
 
 set :yarn_target_path, -> { release_path.join("frontend") }
-set :yarn_flags, "--production --silent --no-progress --prefer-offline"
+set :yarn_flags, "--silent --no-progress --prefer-offline"
 
 # role-based syntax
 # ==================
