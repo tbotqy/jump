@@ -10,7 +10,7 @@ end
 ruby "3.0.0"
 
 gem "dotenv-rails"
-gem "rails", "~> 6.1.3"
+gem "rails", "~> 6.1.4"
 gem "mysql2"
 gem "puma", "~> 4.3"
 gem "config"
